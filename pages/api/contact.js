@@ -8,7 +8,7 @@ export default function (req, res) {
   let subject="";
   let html = "";
   if (!req.body.Newsletter) {
-    subject= `Mensaje enviado desde Website Central Cam`,
+    subject= `Mensaje enviado desde Website eshopdevices`,
     html = `
     <p>La Persona ha hecho contacto desde el sitio web:</p>
     <p>Nombre: ${req.body.name}</p>
@@ -16,7 +16,7 @@ export default function (req, res) {
     <p>Mensaje: ${req.body.message}</p>
     `;
   } else {
-    subject= `Agregar Email al NEWSLETTER - Central Cam`,
+    subject= `Agregar Email al NEWSLETTER - eshopDevices`,
     html = `
       <p>La Persona ha hecho contacto desde el sitio web:</p>
       <p>Quiere sumarse al Newsletter</p>

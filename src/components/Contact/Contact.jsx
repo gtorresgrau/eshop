@@ -40,11 +40,11 @@ export default function Contact() {
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 md:pt-8 pb-16 grid md:grid-cols-2 lg:grid-cols-2 gap-y-8 md:gap-x-8 md:gap-y-8 lg:gap-x-8 lg:gap-y-16">
         <article>
-          <h2 className="font-lato text-[#000000] ">CONTACTAME</h2>
+          <h2 className="font-lato text-[#000000] "> {userData.botonNav} </h2>
           <p className="max-w-sm mt-4 mb-4 text-[#000000]">Completa el formulario, envía un correo o escribime por whatsapp. </p>
           <div className="flex items-center mt-8 space-x-2 text-dark-600 text-[#000000]">
             <MapIcon className="w-4 h-4" />
-            <span>Av Champagnat 1167, Mar del Plata</span>
+            <span> {userData.direccion} </span>
           </div>
 
           <div className="flex items-center mt-2 space-x-2 text-dark-600  text-[#000000] ">

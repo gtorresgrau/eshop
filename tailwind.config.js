@@ -22,53 +22,53 @@ module.exports = {
       },
       colors: {
         primary: {
-          DEFAULT: '#1a2f98',  // Color de fondo predeterminado
-          hover: '#354aad',    // Nuevo color de fondo al pasar el mouse
-          active: '#142579',   // Color de fondo al hacer clic
-          background: '#F1F4F7', // Color de backgorun
-          background2:'#FFFFFF',
-          whats:'#22c55e', // Color de whatsapp y contacto
-          whatsHover:'#1ca84f' // color de whats hover
+          DEFAULT: '#007ACC',  // Azul claro para un diseño limpio y tecnológico
+          hover: '#005FA3',    // Azul más oscuro para el efecto hover
+          active: '#004080',   // Azul oscuro al hacer clic
+          background: '#F5F8FA', // Color de fondo claro y fresco
+          background2: '#FFFFFF',
+          whats: '#25D366',    // Color para el logo de WhatsApp (verde característico)
+          whatsHover: '#20B458' // Un poco más oscuro para hover
         },
         secondary: {
-          DEFAULT: '#AD0631',  // Color de fondo predeterminado
-          hover: '#9C052B',    // Nuevo color de fondo al pasar el mouse
-          active: '#870525',   // Color de fondo al hacer clic
-          background:'#14294C' // Color de fondo secundario
+          DEFAULT: '#FF5733',  // Naranja vibrante para atraer la atención
+          hover: '#C7391F',    // Un naranja más oscuro al pasar el mouse
+          active: '#A0281A',   // O un tono marrón para clic
+          background: '#2C2F33' // Color de fondo secundario gris oscuro
         },
         tertiary: {
-          DEFAULT: '#C85B6A',  // Color de fondo predeterminado
-          hover: '#B2525F',    // Nuevo color de fondo al pasar el mouse
-          active: '#9D4954',   // Color de fondo al hacer clic
+          DEFAULT: '#5F27CD',  // Un morado que está en tendencia para tecnología
+          hover: '#4E1DAC',    // Morado oscuro al pasar el mouse
+          active: '#3E1C8B',   // Un matiz más oscuro al hacer clic
         },
         boton: {
           primary: {
-            DEFAULT: '#1a2f98',  // Color de fondo predeterminado
-            hover: '#354aad',    // Nuevo color de fondo al pasar el mouse
-            active: '#142579',   // Color de fondo al hacer clic
+            DEFAULT: '#007ACC',  // Manteniéndolo consistente con el color primario
+            hover: '#005FA3',
+            active: '#004080',
           },
           secondary: {
-            DEFAULT: '#E2E2E2',  // Color de fondo predeterminado
-            hover: '#43515E20',    // Color de fondo al pasar el mouse
-            active: '#43515E50',   // Color de fondo al hacer clic
+            DEFAULT: '#E2E2E2',  // Color neutro que combina bien
+            hover: '#BDC3C7',    // Color más oscuro para hover
+            active: '#95A5A6',   // Un tono gris más oscuro al hacer clic
           }
         },
         text: {
           primary: {
-            DEFAULT: '#43515E',  // Color de fondo predeterminado
-            title:'#111827',     // Color para los titulos
-            hover: '#E2E2E2',    // Nuevo color de fondo al pasar el mouse
-            active: '#1a2f98',   // Color de fondo al hacer clic
+            DEFAULT: '#2C3E50',  // Un azul-gris oscuro para el texto
+            title: '#111827',     // Color oscuro para los títulos
+            hover: '#2980B9',    // Azul más brillante al pasar el mouse
+            active: '#007ACC',   // Match con el color primario
           },
           secondary: {
-            DEFAULT: '#E2E2E2',  // Color de fondo predeterminado
-            hover: '#43515E',    // Color de fondo al pasar el mouse
-            active: '#1a2f98',   // Color de fondo al hacer clic
+            DEFAULT: '#7F8C8D',  // Gris intermedio para el texto secundario
+            hover: '#34495E',    // Gris más oscuro al pasar el mouse
+            active: '#007ACC',   // Match con el color primario
           },
           danger: {
-            DEFAULT: '#AD0631',  // Color de fondo predeterminado
-            hover: '#E2E2E2',    // Color de fondo al pasar el mouse
-            active: '#ffffff',   // Color de fondo al hacer clic
+            DEFAULT: '#E74C3C',  // Rojo claro para indicar peligro
+            hover: '#C0392B',    // Un rojo más oscuro al pasar el mouse
+            active: '#FFFFFF',    // Texto blanco al hacer clic
           }
         }
       },
