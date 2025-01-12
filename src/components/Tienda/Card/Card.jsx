@@ -1,9 +1,11 @@
 'use client'
 import React, { useContext } from 'react';
+import { MdStore } from 'react-icons/md';
 import IconShoopingCart from '../ShoopingCart/IconShoopingCart';
 import userData from '@/app/constants/userData';
 import addToCart from '@/Utils/addToCart';
 import { CartContext } from '@/components/Context/ShoopingCartContext';
+import Link from 'next/link';
 
 const Card = ({ product, handleProductSelect }) => {
   
@@ -53,10 +55,14 @@ const Card = ({ product, handleProductSelect }) => {
               {String(product.n_serie).length > 6
                 ? `${String(product.n_serie).slice(0, 6)}...`
                 : product.n_serie}</p>
-              {product.n_electronica ? <p className="block text-xs md:text-base text-gray-700"><strong>N° Sensor:</strong> {
-              String(product.n_electronica).length > 5
-                ? `${String(product.n_electronica).slice(0, 5)}...`
-                : product.n_electronica} </p> : null}
+            </div>
+            <div className="w-full flex justify-end">
+              {product.n_electronica ?
+              <Link href={product.n_electronica}>
+                <button className="flex text-sm items-center gap-2 px-2 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition duration-200">
+                  <MdStore size={16} />MercadoShop
+                </button>
+              </Link> : null}
             </div>
           </div>
           </div>

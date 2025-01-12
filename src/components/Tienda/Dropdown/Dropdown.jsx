@@ -15,21 +15,21 @@ const Dropdown = ({
   selectedBrands,
   setSelectedBrands,
   vehiculos,
-  handleShowAllVehiculos,
-  showAllVehiculos,
-  selectedVehiculos,
-  setSelectedVehiculos,
+  // handleShowAllVehiculos,
+  //showAllVehiculos,
+  //selectedVehiculos,
+  //setSelectedVehiculos,
 }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(true);
   const [isBrandsOpen, setIsBrandsOpen] = useState(true);
-  const [isVehiculosOpen, setIsVehiculosOpen] = useState(true);
+  // const [isVehiculosOpen, setIsVehiculosOpen] = useState(true);
 
   // Función para cerrar todos los dropdowns
   const closeDropdowns = () => {
     setIsCategoriesOpen(true);
     setIsBrandsOpen(true);
-    setIsVehiculosOpen(true);
+    // setIsVehiculosOpen(true);
   };
 
   // Función para toggle del drawer
@@ -176,7 +176,7 @@ const Dropdown = ({
                 </div>
               )}
             </li>
-            <li>
+            {/* <li>
               <button
                 className="flex font-medium place-items-center w-full text-left px-4 py-2 hover:bg-gray-100 self-center"
                 aria-label="filtrar por vehiculo"
@@ -218,7 +218,7 @@ const Dropdown = ({
                   )}
                 </div>
               )}
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

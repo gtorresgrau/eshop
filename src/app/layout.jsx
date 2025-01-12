@@ -4,21 +4,21 @@ import { Toaster } from 'react-hot-toast';
 import { ShoppingCartProvider } from '@/components/Context/ShoopingCartContext';
 
 export const metadata = {
-  title: 'eshop | Venta de insumos de informatica para tus dispositivos electronicos',
-  description: "Central CAM es tu proveedor confiable de repuestos de alta calidad para camiones y vehículos pesados. Ofrecemos una amplia gama de repuestos y accesorios para mantener tus vehículos en óptimas condiciones, con envío rápido, atención personalizada y presupuestos gratuitos.",
-  keywords: 'repuestos para camiones, vehículos pesados, mecánica, piezas de camiones, accesorios, envíos rápidos, ecommerce, Central CAM',
+  title: 'eshopDevices | Venta de insumos de informatica para tus dispositivos electronicos',
+  description: "eshop devices es una emprendimiento de venta de insumos informaticos, orientado a la atencion personalizada y dispositivos electronicos. nos encontras en wilde. ",
+  keywords: 'repuestos para computadoras, ecommerce, eshop devices, dispositivos informaticos, insumos de informatica, memorias, ssd, disco solido, mvne',
   charSet: 'UTF-8',
   icons: '/favicon.ico',
   manifest: '/manifest.json',
   robots: '/robots.txt',
-  authors: [{ name: 'Programundo', url: 'https://programundo.dev' }],
-  publisher: 'CENTRAL CAM | Venta de Repuestos para Camiones y Vehículos Pesados',
+  authors: [{ name: 'Gonzalo Torres Grau', url: 'https://gonzalotorresgrau.com' }],
+  publisher: 'eshopDevices | Venta de insumos de informatica para tus dispositivos electronicos',
   openGraph: {
-    title: 'CENTRAL CAM | Venta de Repuestos para Camiones y Vehículos Pesados',
-    description: "Encuentra en Central CAM una amplia gama de repuestos y accesorios para camiones y vehículos pesados. Calidad garantizada y envíos a todo el país.",
+    title: 'eshopDevices | Venta de insumos de informatica para tus dispositivos electronicos',
+    description: "eshop devices es una emprendimiento de venta de insumos informaticos, orientado a la atencion personalizada y dispositivos electronicos. nos encontras en wilde.",
     type: 'website',
-    url: 'https://centralcamshop.com/',
-    image: 'https://centralcamshop.com/logos/LogoCentral.webp',
+    url: 'https://eshopdevices.com/',
+    image: 'https://eshopdevices.com/logos/LogoCentral.webp',
   },
 };
 
@@ -63,7 +63,6 @@ export default function RootLayout({ children }) {
         <link rel="canonical" href={metadata.openGraph.url} />
 
         {/* Preload Critical Resources */}
-        <link rel="preload" href="/bg/bg-banner.webp" as="image" />
         <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" as="style" />
 
         {/* Structured Data */}
@@ -77,18 +76,15 @@ export default function RootLayout({ children }) {
               "description": metadata.description,
               "image": metadata.openGraph.image,
               "url": metadata.openGraph.url,
-              "telephone": "+541162574919",
+              "telephone": "+541136317470",
               "address": {
                 "@type": "PostalAddress",
-                "streetAddress": "Av Champagnat 1167",
-                "addressLocality": "Mar del Plata",
-                "addressRegion": "Mar del Plata",
-                "postalCode": "B7604",
+                "streetAddress": "Las Flores 1600",
+                "addressLocality": "Wilde",
+                "addressRegion": "Avellaneda",
+                "postalCode": "1875",
                 "addressCountry": "Argentina",
               },
-              "sameAs": [
-                "https://www.instagram.com/centralcamshop/",
-              ],
             }),
           }}
         />

@@ -24,13 +24,13 @@ export default function Admin() {
     products,
     categories,
     brands,
-    vehiculos,
+    // vehiculos,
     selectedCategories,
     selectedBrands,
-    selectedVehiculos,
+    // selectedVehiculos,
     showAllCategories,
     showAllBrands,
-    showAllVehiculos,
+    // showAllVehiculos,
     totalPages,
     currentPage,
     isLoading,
@@ -39,10 +39,10 @@ export default function Admin() {
     handleClearFilters,
     handleShowAllCategories,
     handleShowAllBrands,
-    handleShowAllVehiculos,
+    // handleShowAllVehiculos,
     setSelectedCategories,
     setSelectedBrands,
-    setSelectedVehiculos,
+    // setSelectedVehiculos,
     fetchProducts
   } = useProducts();
   
@@ -189,18 +189,18 @@ export default function Admin() {
                           setSelectedBrands={setSelectedBrands}
                           handleShowAllBrands={handleShowAllBrands}
                           isLoading={isLoading}
-                          vehiculos={vehiculos}
-                          handleShowAllVehiculos={handleShowAllVehiculos}
-                          showAllVehiculos={showAllVehiculos}
-                          selectedVehiculos={selectedVehiculos}
-                          setSelectedVehiculos={setSelectedVehiculos}
+                          // vehiculos={vehiculos}
+                          // // handleShowAllVehiculos={handleShowAllVehiculos}
+                          // showAllVehiculos={showAllVehiculos}
+                          // selectedVehiculos={selectedVehiculos}
+                          // setSelectedVehiculos={setSelectedVehiculos}
                           />
                           </div>
                       <div className="col-span-3">
 
                       <button type="button" aria-label="agregar producto" className="flex items-center text-white border bg-boton-primary hover:bg-boton-primary-hover active:bg-boton-primary-active font-medium w-full justify-center rounded-lg h-10 text-xs xs:text-sm px-5 py-2 text-center " onClick={() => openModal('add')}>+  Agregar producto</button>
                       {isModalOpen && modalType === 'add' && (
-                        <AddProduct toggleModal={closeModal} isOpenModal={isModalOpen} marca={brands} categoria={categories} vehiculo={vehiculos} />
+                        <AddProduct toggleModal={closeModal} isOpenModal={isModalOpen} marca={brands} categoria={categories} />
                       )}
                     </div>
                       </div>
@@ -273,7 +273,6 @@ export default function Admin() {
                 product={selectedProduct}
                 marca={brands}
                 categoria={categories}
-                vehiculo={vehiculos}
               />
             )}
           </div>

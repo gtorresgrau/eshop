@@ -12,14 +12,14 @@ export default function UpdateProduct({
   product,
   categoria,
   marca,
-  vehiculo,
+  // vehiculo,
 }) {
   const [isDropdownMarcaOpen, setIsDropdownMarcaOpen] = useState(false);
   const [isDropdownCategoriaOpen, setIsDropdownCategoriaOpen] = useState(false);
-  const [isDropdownVehiculoOpen, setIsDropdownVehiculoOpen] = useState(false);
+  // const [isDropdownVehiculoOpen, setIsDropdownVehiculoOpen] = useState(false);
   const [marcas, setMarcas] = useState(marca);
   const [categorias, setCategorias] = useState(categoria);
-  const [vehiculos, setVehiculos] = useState(vehiculo);
+  // const [vehiculos, setVehiculos] = useState(vehiculo);
 
   //('productoSeleccionado:',product)
   // Estado para mantener las imágenes originales
@@ -35,13 +35,13 @@ export default function UpdateProduct({
     n_producto: product.n_producto,
     cod_producto: product.cod_producto,
     marca: product.marca,
-    vehiculo: product.vehiculo,
+    // vehiculo: product.vehiculo,
     categoria: product.categoria,
     nombre: product.nombre,
     modelo: product.modelo,
     n_serie: product.n_serie || "",
     titulo_de_producto: product.titulo_de_producto,
-    vehiculo: product.vehiculo,
+    // vehiculo: product.vehiculo,
     _id: product._id,
     destacados:product.destacados,
     descripcion: product.descripcion,
@@ -55,7 +55,7 @@ export default function UpdateProduct({
 
   const marcaDropdownRef = useRef(null);
   const categoriaDropdownRef = useRef(null);
-  const vehiculoDropdownRef = useRef(null);
+  // const vehiculoDropdownRef = useRef(null);
 
   // Efecto para manejar clics fuera de los dropdowns y cerrarlos si es necesario
   useEffect(() => {
@@ -73,9 +73,9 @@ export default function UpdateProduct({
     if (categoriaDropdownRef.current && !categoriaDropdownRef.current.contains(event.target)) {
       setIsDropdownCategoriaOpen(false);
     }
-    if ( vehiculoDropdownRef.current &&!vehiculoDropdownRef.current.contains(event.target)) {
-      setIsDropdownVehiculoOpen(false);
-    }
+    // if ( vehiculoDropdownRef.current &&!vehiculoDropdownRef.current.contains(event.target)) {
+    //   setIsDropdownVehiculoOpen(false);
+    // }
   };
 
   // Función para manejar cambios en los inputs del formulario del producto
@@ -101,10 +101,10 @@ export default function UpdateProduct({
   };
   
   // Función para alternar la visibilidad del dropdown de categoría
-  const toggleVehiculo = (e) => {
-    e.preventDefault();
-    setIsDropdownVehiculoOpen(!isDropdownVehiculoOpen);
-  };
+  // const toggleVehiculo = (e) => {
+  //   e.preventDefault();
+  //   setIsDropdownVehiculoOpen(!isDropdownVehiculoOpen);
+  // };
   
 
   // Función para agregar una nueva marca a la lista de marcas disponibles
@@ -114,10 +114,10 @@ export default function UpdateProduct({
   };
   
   // Función para agregar una nueva marca a la lista de marcas disponibles
-  const handleAgregarNuevoVehiculo = (campo, valorNuevo) => {
-    setVehiculos([...vehiculo, { vehiculo: valorNuevo }]);
-    setIsDropdownVehiculoOpen(false);
-  };
+  // const handleAgregarNuevoVehiculo = (campo, valorNuevo) => {
+  //   setVehiculos([...vehiculo, { vehiculo: valorNuevo }]);
+  //   setIsDropdownVehiculoOpen(false);
+  // };
 
   // Función para agregar una nueva categoría a la lista de categorías disponibles
   const handleAgregarNuevaCategoria = (campo, valorNuevo) => {
@@ -433,7 +433,7 @@ export default function UpdateProduct({
                 </div>
 
                 {/* Vehiculo */}
-                <div>
+                {/* <div>
                   <label
                     htmlFor="vehiculoUpdate"
                     className="block mb-2 text-sm font-medium text-gray-900"
@@ -449,7 +449,7 @@ export default function UpdateProduct({
                       value={producto.vehiculo}
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                     >
-                     {/* {console.log(vehiculos,'vehi')} */}
+                     {/* {console.log(vehiculos,'vehi')}
                       {vehiculos.map((vehiculo, index) => (
                         <option key={index} value={vehiculo.vehiculo}>
                           {vehiculo.vehiculo}
@@ -506,7 +506,7 @@ export default function UpdateProduct({
                       )}
                     </div>
                   </div>
-                </div>
+                </div> */}
 
                 {/* Modelo */}
                 <div>

@@ -2,15 +2,74 @@ import React from 'react';
 import Card from '../Card/Card';
 import SkeletonCard from '../Card/SkeletonCard';
 
-const Cards = ({ products, handleProductSelect, isLoading }) => {
+const Cards = ({ 
+  products, 
+  handleProductSelect, 
+  isLoading 
+}) => {
+
+  // const products = [
+  //   {
+  //     cod_producto: "PROD001",
+  //     n_producto: 1,
+  //     marca: "Apple",
+  //     categoria: "Laptops",
+  //     nombre: "MacBook Pro",
+  //     modelo: "M2 Max",
+  //     n_serie: "SN123456789",
+  //     titulo_de_producto: "MacBook Pro M2 Max 2024",
+  //     descripcion: "Portátil de alto rendimiento con chip M2 Max, ideal para profesionales creativos.",
+  //     n_electronica: "MBP2024",
+  //     destacados: true,
+  //     medidas: "30.41 x 21.24 x 1.55 cm",
+  //     foto_1_1: "https://example.com/macbookpro1.jpg",
+  //     foto_1_2: "https://example.com/macbookpro2.jpg",
+  //     foto_1_3: "https://example.com/macbookpro3.jpg",
+  //     foto_1_4: "https://example.com/macbookpro4.jpg",
+  //   },
+  //   {
+  //     cod_producto: "PROD002",
+  //     n_producto: 2,
+  //     marca: "Dell",
+  //     categoria: "Monitores",
+  //     nombre: "Dell UltraSharp",
+  //     modelo: "U3223QE",
+  //     n_serie: "SN987654321",
+  //     titulo_de_producto: "Dell UltraSharp 32 4K Monitor",
+  //     descripcion: "Monitor 4K de 32 pulgadas con color preciso y múltiples opciones de conectividad.",
+  //     n_electronica: "DELLMON3223",
+  //     destacados: false,
+  //     medidas: "71.2 x 23.1 x 52.9 cm",
+  //     foto_1_1: "https://example.com/dellmonitor1.jpg",
+  //     foto_1_2: "https://example.com/dellmonitor2.jpg",
+  //     foto_1_3: "https://example.com/dellmonitor3.jpg",
+  //     foto_1_4: "https://example.com/dellmonitor4.jpg",
+  //   },
+  //   {
+  //     cod_producto: "PROD003",
+  //     n_producto: 3,
+  //     marca: "Logitech",
+  //     categoria: "Periféricos",
+  //     nombre: "Logitech MX Master 3",
+  //     modelo: "MX Master 3",
+  //     n_serie: "SN111222333",
+  //     titulo_de_producto: "Ratón Inalámbrico Logitech MX Master 3",
+  //     descripcion: "Ratón inalámbrico avanzado con desplazamiento electromagnético y ergonomía superior.",
+  //     n_electronica: "LOGIMX3",
+  //     destacados: true,
+  //     medidas: "12.5 x 8.4 x 5.1 cm",
+  //     foto_1_1: "https://example.com/logimouse1.jpg",
+  //     foto_1_2: "https://example.com/logimouse2.jpg",
+  //     foto_1_3: "https://example.com/logimouse3.jpg",
+  //     foto_1_4: "https://example.com/logimouse4.jpg",
+  //   },
+  // ];
+
   return (
     <ul className="grid grid-cols-2 lg:grid-cols-3 gap-4 py-1">
       {isLoading ? (
         // Mostrar esqueletos cuando isLoading es true
         <>
-          <SkeletonCard />
-          <SkeletonCard />
-          <SkeletonCard />
           <SkeletonCard />
           <SkeletonCard />
           <SkeletonCard />

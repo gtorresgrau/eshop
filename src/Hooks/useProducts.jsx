@@ -7,19 +7,21 @@ import { usePathname } from "next/navigation";
 const useProducts = () => {
   const path = usePathname()
   const [products, setProducts] = useState([]);
+  const [allDestacados, setAllDestacados] = useState([]);
+
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
-  const [vehiculos, setVehiculos] = useState([]);
-  const [allDestacados, setAllDestacados] = useState([]);
+  // const [vehiculos, setVehiculos] = useState([]);
+  
 
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedBrands, setSelectedBrands] = useState([]);
-  const [selectedVehiculos, setSelectedVehiculos] = useState([]);
+  // const [selectedVehiculos, setSelectedVehiculos] = useState([]);
 
 
   const [showAllCategories, setShowAllCategories] = useState(false);
   const [showAllBrands, setShowAllBrands] = useState(false);
-  const [showAllVehiculos, setShowAllVehiculos] = useState(false);
+  // const [showAllVehiculos, setShowAllVehiculos] = useState(false);
 
 
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -44,7 +46,7 @@ const useProducts = () => {
     setTotalPages(data.totalPage || 1);
     setCategories(data.totalCategories || []);
     setBrands(data.totalBrands || []);
-    setVehiculos(data.totalVehiculos || []);
+    // setVehiculos(data.totalVehiculos || []);
     setAllDestacados(data.allproductosDestacados || []);
     setIsLoading(false);
   };
@@ -90,7 +92,7 @@ const useProducts = () => {
     const urlSearchParams = new URLSearchParams(window.location.search);
     setSelectedCategories(urlSearchParams.getAll("category"));
     setSelectedBrands(urlSearchParams.getAll("brand"));
-    setSelectedVehiculos(urlSearchParams.getAll("vehiculo"));
+    // setSelectedVehiculos(urlSearchParams.getAll("vehiculo"));
   }, []);
 
   const handlePageChange = (event, value) => {
@@ -119,11 +121,11 @@ const handleCheckboxChange = (e, key, selectedValues, setSelectedValues) => {
     params.delete("search");
     params.delete("category");
     params.delete("brand");
-    params.delete("vehiculo");
+    // params.delete("vehiculo");
     params.set("page", 1);
     setSelectedCategories([]);
     setSelectedBrands([]);
-    setSelectedVehiculos([]);
+    // setSelectedVehiculos([]);
     path === '/Admin'
     ? router.push(`/Admin?${params.toString()}`)
     : router.push(`/?${params.toString()}#productos`);
@@ -137,9 +139,9 @@ const handleCheckboxChange = (e, key, selectedValues, setSelectedValues) => {
     setShowAllBrands(!showAllBrands);
   };
 
-  const handleShowAllVehiculos = () => {
-    setShowAllVehiculos(!showAllVehiculos);
-  };
+  // const handleShowAllVehiculos = () => {
+  //   setShowAllVehiculos(!showAllVehiculos);
+  // };
 
   const updateSearchParams = (key, values) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -158,13 +160,13 @@ const handleCheckboxChange = (e, key, selectedValues, setSelectedValues) => {
     allDestacados,
     categories,
     brands,
-    vehiculos,
+    // vehiculos,
     selectedCategories,
     selectedBrands,
-    selectedVehiculos,
+    // selectedVehiculos,
     showAllCategories,
     showAllBrands,
-    showAllVehiculos,
+    // showAllVehiculos,
     selectedProduct,
     isModalOpen,
     totalPages,
@@ -173,13 +175,13 @@ const handleCheckboxChange = (e, key, selectedValues, setSelectedValues) => {
     setIsModalOpen,
     setSelectedCategories,
     setSelectedBrands,
-    setSelectedVehiculos,
+    // setSelectedVehiculos,
     handlePageChange,
     handleCheckboxChange,
     handleClearFilters,
     handleShowAllCategories,
     handleShowAllBrands,
-    handleShowAllVehiculos,
+    // handleShowAllVehiculos,
     closeModal,
     handleProductSelect,
     fetchProducts,

@@ -18,11 +18,11 @@ const Filtros = ({
     selectedBrands,
     setSelectedBrands,
 
-    vehiculos,
-    handleShowAllVehiculos,
-    showAllVehiculos,
-    selectedVehiculos,
-    setSelectedVehiculos,
+    // vehiculos,
+    // handleShowAllVehiculos,
+    // showAllVehiculos,
+    // selectedVehiculos,
+    // setSelectedVehiculos,
 
 }) => {
 
@@ -49,7 +49,7 @@ const Filtros = ({
                       ))}
                     {brands.length > 5 && (<button onClick={handleShowAllBrands} className="px-4 text-blue-700 hover:text-white hover:bg-blue-400 rounded border cursor-pointer my-2 w-full" aria-label={showAllVehiculos ? "Ver menos..." : "Ver más..."}>{showAllBrands ? "Ver menos..." : "Ver más..."} </button>)}
               </div>
-              <div className='flex flex-col'>
+              {/* <div className='flex flex-col'>
                 <h3 className='mx-2 mt-4 text-blue-600'>VEHICULOS</h3>
                     {isLoading 
                     ?<SkeletonFilter/>
@@ -58,7 +58,7 @@ const Filtros = ({
                         <input type="checkbox" value={vehiculo} checked={selectedVehiculos.includes(vehiculo)} onChange={(e) => handleCheckboxChange( e,"vehiculo", selectedVehiculos, setSelectedVehiculos)}/> {vehiculo} ({count})</label>
                       ))}
                     {vehiculos.length > 5 && (<button onClick={handleShowAllVehiculos} className="px-4 text-blue-700 hover:text-white hover:bg-blue-400 rounded border cursor-pointer my-2 w-full" aria-label={showAllVehiculos ? "Ver menos..." : "Ver más..."} >{showAllVehiculos ? "Ver menos..." : "Ver más..."} </button>)}
-              </div>
+              </div> */}
               <button onClick={handleClearFilters} className="text-white bg-boton-primary hover:bg-boton-primary-hover active:bg-boton-primary-active font-medium rounded-lg text-sm px-4 py-2 my-2 w-full" aria-label='limpiar filtros'>Limpiar Filtros</button>
         </section>
   )

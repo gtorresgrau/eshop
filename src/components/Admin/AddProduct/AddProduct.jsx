@@ -12,14 +12,14 @@ export default function AddProduct({
     toggleModal,
     categoria,
     marca,
-    vehiculo,
+    // vehiculo,
   }) {
     const [isDropdownMarcaOpen, setIsDropdownMarcaOpen] = useState(false);
     const [isDropdownCategoriaOpen, setIsDropdownCategoriaOpen] = useState(false);
     const [isDropdownVehiculoOpen, setIsDropdownVehiculoOpen] = useState(false);
     const [marcas, setMarcas] = useState(marca);
     const [categorias, setCategorias] = useState(categoria);
-    const [vehiculos, setVehiculos] = useState(vehiculo);
+    // const [vehiculos, setVehiculos] = useState(vehiculo);
 
   
     // Estado para mantener las imágenes originales
@@ -35,7 +35,7 @@ export default function AddProduct({
       n_producto:'',
       cod_producto:'',
       marca: '',
-      vehiculo: '',
+      // vehiculo: '',
       categoria: '',
       nombre: '',
       modelo: '',
@@ -54,7 +54,7 @@ export default function AddProduct({
   
     const marcaDropdownRef = useRef(null);
     const categoriaDropdownRef = useRef(null);
-    const vehiculoDropdownRef = useRef(null);
+    // const vehiculoDropdownRef = useRef(null);
   
     // Efecto para manejar clics fuera de los dropdowns y cerrarlos si es necesario
     useEffect(() => {
@@ -72,9 +72,9 @@ export default function AddProduct({
       if (categoriaDropdownRef.current && !categoriaDropdownRef.current.contains(event.target)) {
         setIsDropdownCategoriaOpen(false);
       }
-      if ( vehiculoDropdownRef.current &&!vehiculoDropdownRef.current.contains(event.target)) {
-        setIsDropdownVehiculoOpen(false);
-      }
+      // if ( vehiculoDropdownRef.current &&!vehiculoDropdownRef.current.contains(event.target)) {
+      //   setIsDropdownVehiculoOpen(false);
+      // }
     };
   
     
@@ -93,10 +93,10 @@ export default function AddProduct({
     };
     
     // Función para alternar la visibilidad del dropdown de categoría
-    const toggleVehiculo = (e) => {
-        e.preventDefault();
-        setIsDropdownVehiculoOpen(!isDropdownVehiculoOpen);
-    };
+    // const toggleVehiculo = (e) => {
+    //     e.preventDefault();
+    //     setIsDropdownVehiculoOpen(!isDropdownVehiculoOpen);
+    // };
     
     
     // Función para agregar una nueva marca a la lista de marcas disponibles
@@ -106,10 +106,10 @@ export default function AddProduct({
     };
     
     // Función para agregar una nueva marca a la lista de marcas disponibles
-    const handleAgregarNuevoVehiculo = (campo, valorNuevo) => {
-        setVehiculos([...vehiculo, { vehiculo: valorNuevo }]);
-        setIsDropdownVehiculoOpen(false);
-    };
+    // const handleAgregarNuevoVehiculo = (campo, valorNuevo) => {
+    //     setVehiculos([...vehiculo, { vehiculo: valorNuevo }]);
+    //     setIsDropdownVehiculoOpen(false);
+    // };
     
     // Función para agregar una nueva categoría a la lista de categorías disponibles
     const handleAgregarNuevaCategoria = (campo, valorNuevo) => {
@@ -182,7 +182,7 @@ const hasImageChanges = () => {
         setProducto ( (prevState) => ({
         ...prevState,
         [name]: type === "checkbox" ? checked : value,
-        titulo_de_producto:`${producto.nombre} ${producto.marca} para ${producto.vehiculo}`
+        titulo_de_producto:`${producto.nombre} ${producto.marca}`
         }
         ));
     //console.log(producto,'acaas')
@@ -484,7 +484,7 @@ const hasImageChanges = () => {
                   </div>
   
                   {/* Vehiculo */}
-                  <div>
+                  {/* <div>
                     <label
                       htmlFor="vehiculoAdd"
                       className="block mb-2 text-sm font-medium text-gray-900"
@@ -559,7 +559,7 @@ const hasImageChanges = () => {
                       </div>
                     </div>
                   </div>
-  
+   */}
                   {/* Modelo */}
                   <div>
                     <label

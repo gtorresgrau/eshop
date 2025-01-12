@@ -76,7 +76,7 @@ const ShopCart = () => {
           className="text-3xl sm:text-4xl md:text-5xl text-transparent font-bold m-6 md:my-8 px-4 bg-clip-text bg-gradient-to-br from-boton-primary via-boton-secondary to-boton-primary"
           style={{ textShadow: "2px 2px 8px rgba(0, 0, 255, 0.2)" }}
         >
-          CENTRAL CAM
+          eshop Devices
         </h2>
       </div>
       <article className=" flex flex-col max-w-[1200px] m-2 self-center">

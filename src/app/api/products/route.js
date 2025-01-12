@@ -40,7 +40,6 @@ export async function GET(request) {
   const search = normalizeString(searchParams.get('search') || '');
   const categories = searchParams.getAll('category');
   const brands = searchParams.getAll('brand');
-  const vehiculos = searchParams.getAll('vehiculo');
   const page = parseInt(searchParams.get('page') || '1');
   const pageSize = parseInt(searchParams.get('pageSize') || '9');
 
@@ -50,7 +49,7 @@ export async function GET(request) {
   // Filtrar por búsqueda
   if (search) {
     filteredProducts = filteredProducts.filter(product =>
-      ['nombre', 'marca', 'vehiculo', 'cod_producto', 'categoria'].some(field =>
+      ['nombre', 'marca', 'cod_producto', 'categoria'].some(field =>
         normalizeString(product[field] || '').includes(search) // Evita errores con campos faltantes
       )
     );
@@ -59,16 +58,13 @@ export async function GET(request) {
   // Aplicar filtros específicos
   filteredProducts = filterByField(filteredProducts, 'categoria', categories);
   filteredProducts = filterByField(filteredProducts, 'marca', brands);
-  filteredProducts = filterByField(filteredProducts, 'vehiculo', vehiculos);
 
   // Calcular conteos de categorías, marcas y vehículos
   const totalCategories = Object.entries(countByField(productsData, 'categoria')).sort();
   const totalBrands = Object.entries(countByField(productsData, 'marca')).sort();
-  const totalVehiculos = Object.entries(countByField(productsData, 'vehiculo')).sort();
 
   const filteredCategories = Object.entries(countByField(filteredProducts, 'categoria')).sort();
   const filteredBrands = Object.entries(countByField(filteredProducts, 'marca')).sort();
-  const filteredVehiculos = Object.entries(countByField(filteredProducts, 'vehiculo')).sort();
 
   // Paginar resultados
   const startIndex = (page - 1) * pageSize;
@@ -81,9 +77,7 @@ export async function GET(request) {
     allproductosDestacados,
     totalBrands: totalBrands.map(([brand, count]) => ({ brand, count })),
     totalCategories: totalCategories.map(([category, count]) => ({ category, count })),
-    totalVehiculos: totalVehiculos.map(([vehiculo, count]) => ({ vehiculo, count })),
     filteredBrands: filteredBrands.map(([brand, count]) => ({ brand, count })),
     filteredCategories: filteredCategories.map(([category, count]) => ({ category, count })),
-    filteredVehiculos: filteredVehiculos.map(([vehiculo, count]) => ({ vehiculo, count })),
   });
 }
