@@ -13,14 +13,14 @@ export default function Tienda() {
     products,
     categories,
     brands,
-    vehiculos,
+    //vehiculos,
     selectedCategories,
     selectedBrands,
-    selectedVehiculos,
+    //selectedVehiculos,
     showAllCategories,
     showAllBrands,
     selectedProduct,
-    showAllVehiculos,
+    //showAllVehiculos,
     isModalOpen,
     totalPages,
     currentPage,
@@ -30,12 +30,12 @@ export default function Tienda() {
     handleClearFilters,
     handleShowAllCategories,
     handleShowAllBrands,
-    handleShowAllVehiculos,
+    //handleShowAllVehiculos,
     closeModal,
     handleProductSelect,
     setSelectedCategories,
     setSelectedBrands,
-    setSelectedVehiculos,
+    //setSelectedVehiculos,
   } = useProducts();
 
   return (
@@ -68,11 +68,11 @@ export default function Tienda() {
                   selectedBrands={selectedBrands}
                   setSelectedBrands={setSelectedBrands}
                   handleShowAllBrands={handleShowAllBrands}
-                  vehiculos={vehiculos}
-                  handleShowAllVehiculos={handleShowAllVehiculos}
-                  showAllVehiculos={showAllVehiculos}
-                  selectedVehiculos={selectedVehiculos}
-                  setSelectedVehiculos={setSelectedVehiculos}
+                  //vehiculos={vehiculos}
+                  //handleShowAllVehiculos={handleShowAllVehiculos}
+                  //showAllVehiculos={showAllVehiculos}
+                  //selectedVehiculos={selectedVehiculos}
+                  //setSelectedVehiculos={setSelectedVehiculos}
                 />
               </div>
               <div className="hidden md:block">
@@ -91,11 +91,11 @@ export default function Tienda() {
                   setSelectedBrands={setSelectedBrands}
                   handleShowAllBrands={handleShowAllBrands}
                   isLoading={isLoading}
-                  vehiculos={vehiculos}
-                  handleShowAllVehiculos={handleShowAllVehiculos}
-                  showAllVehiculos={showAllVehiculos}
-                  selectedVehiculos={selectedVehiculos}
-                  setSelectedVehiculos={setSelectedVehiculos}
+                  //vehiculos={vehiculos}
+                  //handleShowAllVehiculos={handleShowAllVehiculos}
+                  //showAllVehiculos={showAllVehiculos}
+                  //selectedVehiculos={selectedVehiculos}
+                  //setSelectedVehiculos={setSelectedVehiculos}
                 />
               </div>
             </article>
