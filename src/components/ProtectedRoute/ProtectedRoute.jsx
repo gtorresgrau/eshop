@@ -15,7 +15,7 @@ const ProtectedRoute = ({ children }) => {
   const pathName = usePathname();
   
   const protectedRoutes = ['/Admin'];
-  const authRoutes = ['/user/login'];
+  const authRoutes = ['/user/Login'];
   
   const isInProtectedRoute = protectedRoutes.includes(pathName);
   const isInAuthRoute = authRoutes.includes(pathName);
