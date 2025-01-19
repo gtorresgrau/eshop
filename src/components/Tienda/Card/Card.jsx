@@ -58,7 +58,7 @@ const Card = ({ product, handleProductSelect }) => {
             </div>
             <div className="w-full flex justify-end">
               {product.n_electronica ?
-              <Link href={product.n_electronica}>
+              <Link href={product.n_electronica} target='_blank' rel="noopener noreferrer">
                 <button className="flex text-sm items-center gap-2 px-2 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition duration-200">
                   <MdStore size={16} />MercadoShop
                 </button>
