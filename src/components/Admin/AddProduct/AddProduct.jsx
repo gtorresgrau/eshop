@@ -16,7 +16,7 @@ export default function AddProduct({
   }) {
     const [isDropdownMarcaOpen, setIsDropdownMarcaOpen] = useState(false);
     const [isDropdownCategoriaOpen, setIsDropdownCategoriaOpen] = useState(false);
-    const [isDropdownVehiculoOpen, setIsDropdownVehiculoOpen] = useState(false);
+    // const [isDropdownVehiculoOpen, setIsDropdownVehiculoOpen] = useState(false);
     const [marcas, setMarcas] = useState(marca);
     const [categorias, setCategorias] = useState(categoria);
     // const [vehiculos, setVehiculos] = useState(vehiculo);

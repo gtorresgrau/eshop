@@ -28,7 +28,7 @@ const productoSchema = new mongoose.Schema({
     },
     n_serie: {
         type: String,
-        required: true
+        required: false
     },
     titulo_de_producto: {
         type: String,
