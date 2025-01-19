@@ -246,7 +246,7 @@ export default function UpdateProduct({
     toggleModal(); // Cerrar modal de edición
 
     // Manejar la respuesta si es necesario
-    console.log(data.descripcion, "dataaaaaa");
+    //console.log(data.descripcion, "dataaaaaa");
   } catch (error) {
     // Cerrar SweetAlert en caso de error
     Swal.fire({

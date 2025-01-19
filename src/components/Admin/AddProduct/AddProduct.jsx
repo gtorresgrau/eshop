@@ -215,7 +215,7 @@ const hasImageChanges = () => {
       for (const [key, value] of Object.entries(filteredProducto)) {
         formData.append(key, value);
       }
-      console.log('formData:', formData);
+      //console.log('formData:', formData);
       
     
       try {
@@ -244,7 +244,7 @@ const hasImageChanges = () => {
         });
     
         toggleModal();
-        console.log("ADD data", data.descripcion);
+        //console.log("ADD data", data.descripcion);
       } catch (error) {
         Swal.fire({
           icon: 'error',

@@ -1,5 +1,5 @@
 const processImages = (imageFiles) => {
-    console.log('Ajustando fotos para subir en processImages');
+    //console.log('Ajustando fotos para subir en processImages');
     
     // Crear una lista de promesas para procesar cada archivo individualmente
     const processingPromises = Array.from(imageFiles).map((imageFile) => {

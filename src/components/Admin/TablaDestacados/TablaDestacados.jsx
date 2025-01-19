@@ -10,7 +10,7 @@ function TablaDestacados() {
   const [products, setProducts] = useState([]);
 
   const {allDestacados} = useProducts()
-  console.log(allDestacados,'destacados')
+  //console.log(allDestacados,'destacados')
 
   const handleToggleDestacados = async (updatedProduct) => {
     try {

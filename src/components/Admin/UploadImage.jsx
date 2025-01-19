@@ -49,7 +49,7 @@ export default function UploadImage({ imagenes, updateImages, handleRemoveImage 
   const handleArchivoSeleccionado = async (e) => {
     const nuevosArchivos = [...archivos];
     const archivito = await processImage(e.target.files)
-    console.log('archivito:', archivito);
+    //console.log('archivito:', archivito);
     
     const filesToUpload = archivito;
 
