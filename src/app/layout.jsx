@@ -5,7 +5,7 @@ import { ShoppingCartProvider } from '@/components/Context/ShoopingCartContext';
 
 export const metadata = {
   title: 'eshopDevices | Venta de insumos de informatica para tus dispositivos electronicos',
-  description: "eshop devices es una emprendimiento de venta de insumos informaticos, orientado a la atencion personalizada y dispositivos electronicos. nos encontras en wilde. ",
+  description: "Eshop devices es una emprendimiento de venta de insumos informaticos, orientado a la atencion personalizada y dispositivos electronicos. nos encontras en wilde. ",
   keywords: 'repuestos para computadoras, ecommerce, eshop devices, dispositivos informaticos, insumos de informatica, memorias, ssd, disco solido, mvne',
   charSet: 'UTF-8',
   icons: '/favicon.ico',
@@ -15,10 +15,10 @@ export const metadata = {
   publisher: 'eshopDevices | Venta de insumos de informatica para tus dispositivos electronicos',
   openGraph: {
     title: 'eshopDevices | Venta de insumos de informatica para tus dispositivos electronicos',
-    description: "eshop devices es una emprendimiento de venta de insumos informaticos, orientado a la atencion personalizada y dispositivos electronicos. nos encontras en wilde.",
+    description: "Eshop devices es una emprendimiento de venta de insumos informaticos, orientado a la atencion personalizada y dispositivos electronicos. nos encontras en wilde.",
     type: 'website',
     url: 'https://eshopdevices.com/',
-    image: 'https://eshopdevices.com/logos/LogoCentral.webp',
+    image: 'https://eshopdevices.com/logos/logoEshop.webp',
   },
 };
 
@@ -28,12 +28,13 @@ export default function RootLayout({ children }) {
       <head>
         <meta charSet={metadata.charSet} />
         <meta name="viewport" content="minimum-scale=1, width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, viewport-fit=cover" />
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#007BC7" />
         <meta name="description" content={metadata.description} />
         <meta name="keywords" content={metadata.keywords} />
         <meta name="author" content={metadata.authors[0].name} />
         <meta name="robots" content="index, follow" />
         <meta name="publisher" content={metadata.publisher} />
+        <meta name="rating" content="General" />
 
         {/* Open Graph Meta Tags */}
         <meta property="og:title" content={metadata.openGraph.title} />
@@ -61,9 +62,6 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
         <link rel="canonical" href={metadata.openGraph.url} />
-
-        {/* Preload Critical Resources */}
-        <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" as="style" />
 
         {/* Structured Data */}
         <script
