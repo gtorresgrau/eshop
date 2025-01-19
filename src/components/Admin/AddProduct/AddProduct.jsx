@@ -197,89 +197,66 @@ const hasImageChanges = () => {
     container.appendChild(loadingElement);
 
 
-    // Función para enviar el formulario actualizado del producto
     const submitAddProduct = async (e) => {
       e.preventDefault();
-      //console.log(producto,'submit')
+    
+      if (!producto.nombre.trim()) {
+        alert("Por favor ingrese un nombre para el producto.");
+        return;
+      }
+    
+      const filteredProducto = Object.fromEntries(
+        Object.entries(producto).filter(
+          ([_, value]) => value !== undefined && value !== null && value !== ""
+        )
+      );
+    
+      const formData = new FormData();
+      for (const [key, value] of Object.entries(filteredProducto)) {
+        formData.append(key, value);
+      }
+      console.log('formData:', formData);
       
-      //   // Validación básica del campo nombre
-      //   if (!producto.nombre.trim()) {
-        //     alert("Por favor ingrese un nombre para el producto.");
-        //     return;
-        //   }
-  
-       // Filtrar solo las propiedades que no están vacías o que tienen algún valor
-       const filteredProducto = {};
-       Object.keys(producto).forEach((key) => {
-           if (
-           producto[key] !== undefined &&
-           producto[key] !== null &&
-           producto[key] !== ""
-         ) {
-           filteredProducto[key] = producto[key];
-         }
-       });
-       // Crear FormData y agregar propiedades del producto filtrado
-       const formData = new FormData();
-       Object.keys(filteredProducto).forEach((key) => {
-         formData.append(key, filteredProducto[key]);
-       });
-       
-       //console.log(formData,'formdatasubmit')
-      Swal.fire({
-    title: 'Agregando producto...',
-    allowOutsideClick: false,
-    didOpen: () => {
-      Swal.showLoading();
-    },
-  });
-
-  try {
-    // Mostrar SweetAlert con indicador de carga
-    Swal.fire({
-      title: 'Agregando producto...',
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
-
-    // Realizar la solicitud para agregar el producto
-    const res = await fetch("api/addProduct", {
-      method: "POST",
-      body: formData,
-    });
-
-    // Obtener datos de la respuesta
-    const data = await res.json();
-
-    // Cerrar SweetAlert al completar la solicitud con éxito
-    Swal.fire({
-      icon: 'success',
-      title: 'Producto agregado',
-      showConfirmButton: false,
-      timer: 1500 // Tiempo en milisegundos para cerrar automáticamente
-    });
-
-    // Cerrar modal de añadir producto
-    toggleModal();
-
-    // Manejar la respuesta si es necesario
-    console.log(data.descripcion, "dataaaaaa");
-  } catch (error) {
-    // Cerrar SweetAlert en caso de error
-    Swal.fire({
-      icon: 'error',
-      title: 'Error al agregar producto',
-      text: 'Por favor, inténtelo de nuevo más tarde.',
-    });
-
-    // Cerrar modal de añadir producto
-    toggleModal();
-
-    console.error("Error al agregar el producto:", error);
-  }
-};
+    
+      try {
+        Swal.fire({
+          title: 'Agregando producto...',
+          allowOutsideClick: false,
+          didOpen: () => Swal.showLoading(),
+        });
+    
+        const res = await fetch("api/addProduct", {
+          method: "POST",
+          body: formData,
+        });
+    
+        if (!res.ok) {
+          throw new Error(`Error HTTP: ${res.status}`);
+        }
+    
+        const data = await res.json();
+    
+        Swal.fire({
+          icon: 'success',
+          title: 'Producto agregado',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+    
+        toggleModal();
+        console.log("ADD data", data.descripcion);
+      } catch (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al agregar producto',
+          text: 'Por favor, inténtelo de nuevo más tarde.',
+        });
+    
+        toggleModal();
+        console.error("Error al agregar el producto:", error);
+      }
+    };
+    
     // Filtrar las imágenes que existen para pasarle a UploadImage
     const imagenes = [
       producto.foto_1_1,
