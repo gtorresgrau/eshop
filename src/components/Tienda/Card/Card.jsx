@@ -1,6 +1,7 @@
 'use client'
 import React, { useContext } from 'react';
 import { MdStore } from 'react-icons/md';
+import { RiWhatsappLine } from "react-icons/ri";
 import IconShoopingCart from '../ShoopingCart/IconShoopingCart';
 import userData from '@/app/constants/userData';
 import addToCart from '@/Utils/addToCart';
@@ -56,18 +57,60 @@ const Card = ({ product, handleProductSelect }) => {
                 ? `${String(product.n_serie).slice(0, 6)}...`
                 : product.n_serie}</p>
             </div>
-            <div className="w-full flex justify-end">
-              {product.n_electronica ?
-              <Link href={product.n_electronica} target='_blank' rel="noopener noreferrer">
-                <button className="flex text-sm items-center gap-2 px-2 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition duration-200">
-                  <MdStore size={16} />MercadoShop
-                </button>
-              </Link> : null}
-            </div>
           </div>
           </div>
-          <div className='px-2 pb-2'>
-              <button onClick={handleConsult} className="  py-1.5 px-3 inline-flex items-center justify-center w-full h-6 md:h-8 bg-primary-whats rounded-md text-white hover:bg-primary-whatsHover transition-all duration-300 ease-in-out " target='_blank'>Consultar</button>
+          <div className="px-2 pb-2">
+            {/* Si `product.n_electronica` está disponible */}
+            {product.n_electronica ? (
+              <>
+                {/* Pantallas `md` o más grandes: Mostrar ambos botones */}
+                <div className="hidden md:flex xl:hidden justify-between gap-2 text-xs xl:text-sm">
+                  <Link href={product.n_electronica} target="_blank" rel="noopener noreferrer">
+                    <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition duration-200">
+                      <MdStore size={16} /> Shop..
+                    </button>
+                  </Link>
+                  <button onClick={handleConsult} className="flex items-center gap-2 px-4 py-2 bg-primary-whats text-white rounded-lg shadow hover:bg-primary-whatsHover transition duration-300" target="_blank" >
+                    <RiWhatsappLine size={16} /> Cons...
+                  </button>
+                </div>
+                <div className="hidden xl:flex justify-between gap-2 text-xs xl:text-sm">
+                  <Link href={product.n_electronica} target="_blank" rel="noopener noreferrer">
+                    <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition duration-200">
+                      <MdStore size={16} /> MercadoShop
+                    </button>
+                  </Link>
+                  <button onClick={handleConsult} className="flex items-center gap-2 px-4 py-2 bg-primary-whats text-white rounded-lg shadow hover:bg-primary-whatsHover transition duration-300" target="_blank" >
+                    <RiWhatsappLine size={16} /> Consultar
+                  </button>
+                </div>
+
+                {/* Pantallas más pequeñas: Mostrar solo los íconos */}
+                <div className="flex md:hidden justify-around gap-2">
+                  <Link href={product.n_electronica} target="_blank" rel="noopener noreferrer">
+                    <button className="flex items-center justify-center w-10 h-10 bg-blue-600 text-white rounded-full shadow hover:bg-blue-700 transition duration-200">
+                      <MdStore size={16} />
+                    </button>
+                  </Link>
+                  <button
+                    onClick={handleConsult}
+                    className="flex items-center justify-center w-10 h-10 bg-primary-whats text-white rounded-full shadow hover:bg-primary-whatsHover transition duration-300"
+                    target="_blank"
+                  >
+                    <RiWhatsappLine size={16} />
+                  </button>
+                </div>
+              </>
+            ) : (
+              // Si no tiene `product.n_electronica`, mostrar solo el botón "Consultar" ocupando todo el ancho
+              <button
+                onClick={handleConsult}
+                className="flex items-center justify-center w-full px-4 py-2 bg-primary-whats text-white rounded-lg shadow hover:bg-primary-whatsHover transition duration-300"
+                target="_blank"
+              >
+                <RiWhatsappLine size={16} /> Consultar
+              </button>
+            )}
           </div>
         </div>
       </li>
