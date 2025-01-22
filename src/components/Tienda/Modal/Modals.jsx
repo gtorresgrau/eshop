@@ -37,8 +37,11 @@ const Modals = ({ selectedProduct, closeModal }) => {
           <div className="max-w-screen-xl px-2 mx-auto 2xl:px-0">
             <div className="lg:grid lg:grid-cols-2 lg:gap-6 xl:gap-12">
             <div id='imagenes' className="shrink-0 max-w-md lg:max-w-lg mx-auto flex flex-col justify-center">
-                <div className="flex justify-center">
+                <div className="flex justify-center relative">
                   <img className="rounded-lg md:w-96 md:h-96" src={mainImage?mainImage:'/images/sinFoto.webp'} alt={selectedProduct.nombre} width={220} height={220} loading='lazy'/>
+                  <div className="absolute top-1 left-1 text-sm md:text-base bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-bold px-3 py-1 rounded-tr-lg rounded-bl-lg shadow-md shadow-orange-300">
+                    ${selectedProduct.precio}
+                  </div>
                 </div>
                 <div className="flex mt-2 justify-center">
                   {selectedProduct.foto_1_1 && <img className="w-16 h-16 cursor-pointer rounded-lg mr-2 border border-gray-200" src={selectedProduct.foto_1_1} alt={`${selectedProduct.nombre}-thumbnail-1`} onClick={() => handleThumbnailClick(selectedProduct.foto_1_1)} loading='lazy' title={`${selectedProduct.nombre}-thumbnail-1`}/>}

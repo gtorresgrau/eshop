@@ -46,6 +46,7 @@ export default function UpdateProduct({
     destacados:product.destacados,
     descripcion: product.descripcion,
     n_electronica:product.n_electronica || '',
+    precio:product.precio||'',
     medidas:product.medidas || '',
     foto_1_1: product.foto_1_1 || "",
     foto_1_2: product.foto_1_2 || "",
@@ -577,6 +578,21 @@ export default function UpdateProduct({
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                     placeholder="Medidas del producto"
                   />
+                </div>
+                {/* Precio */}
+                <div>
+                    <label htmlFor="precioUpdate" className="block mb-2 text-sm font-medium text-gray-900">
+                      Precio
+                    </label>
+                    <input
+                      onChange={handleChangeInput}
+                      type="text"
+                      name="precio"
+                      id="precioUpdate"
+                      value={producto.precio}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      placeholder="$100.000"
+                    />
                 </div>
 
                 {/* Descripción */}

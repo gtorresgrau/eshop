@@ -210,6 +210,7 @@ export default function Admin() {
                       <thead className="text-xs text-gray-900 uppercase bg-gray-400">
                         <tr>
                           <th scope="col" className="px-1 py-2 md:px-4 md:py-3 text-center">Producto</th>
+                          <th scope="col" className="px-1 py-2 md:px-4 md:py-3 text-center">Precio</th>
                           <th scope="col" className="px-1 py-2 md:px-4 md:py-3 text-center hidden md:table-cell">Categoría</th>
                           <th scope="col" className="px-1 py-2 md:px-4 md:py-3 text-center hidden md:table-cell">Marca</th>
                           <th scope="col" className="px-1 py-2 md:px-4 md:py-3 text-center hidden lg:table-cell">Descripción</th>
@@ -221,6 +222,7 @@ export default function Admin() {
                           {products.map((product, index) => (
                             <tr key={index} className={`border-b ${index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"}`}>
                               <th scope="row" className="px-1 py-6 md:px-4 md:py-4 font-medium text-gray-900 whitespace-nowrap">{product.nombre}</th>
+                              <th scope="row" className="px-1 py-6 md:px-4 md:py-4 font-medium text-gray-900 whitespace-nowrap">{product.precio}</th>
                               <td scope="row" className="px-1 py-6 md:px-4 md:py-4 hidden md:table-cell">{product.categoria}</td>
                               <td scope="row" className="px-1 py-6 md:px-4 md:py-4 hidden md:table-cell">{product.marca}</td>
                               <td scope="row" title={product.descripcion} className="px-1 py-1 md:px-4 md:py-3 text-center text-ellipsis hidden lg:table-cell">{product.descripcion.length > 50 ? `${product.descripcion.slice(0, 50)}...` : product.descripcion}</td>

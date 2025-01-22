@@ -43,6 +43,7 @@ export default function AddProduct({
       titulo_de_producto:'',
       descripcion: '',
       n_electronica: '',
+      precio:'',
       medidas: '',
       foto_1_1:  "",
       foto_1_2:  "",
@@ -610,6 +611,22 @@ const hasImageChanges = () => {
                       value={producto.medidas}
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                       placeholder="Medidas del producto"
+                    />
+                  </div>
+
+                  {/* Precio */}
+                  <div>
+                    <label htmlFor="precioAdd" className="block mb-2 text-sm font-medium text-gray-900">
+                      Precio
+                    </label>
+                    <input
+                      onChange={handleChangeInput}
+                      type="text"
+                      name="precio"
+                      id="precioAdd"
+                      value={producto.precio}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      placeholder="$100.000"
                     />
                   </div>
   

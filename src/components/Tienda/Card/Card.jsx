@@ -44,6 +44,9 @@ const Card = ({ product, handleProductSelect }) => {
                   <IconShoopingCart ancho={icon.ancho} alto={icon.alto} color={icon.color} aria-label="agregar al carrito" />
                 </button>
                 <img className="rounded-t-lg w-full xs:w-36 xs:h-36 sm:w-44 sm:h-44 lg:w-52 lg:h-52 xl:w-64 xl:h-64 md:w-60 md:h-60 object-cover" src={product.foto_1_1 ? product.foto_1_1 : '/images/sinFoto.webp'} alt={product.nombre} title={product.nombre} loading="lazy" />
+                <div className="absolute top-1 left-1 text-sm md:text-base bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-bold px-3 py-1 rounded-tr-lg rounded-bl-lg shadow-md shadow-orange-300">
+                  ${product.precio}
+                </div>
               </div>
               <p className="top-[-20px] text-end text-gray-700 px-2 font-extralight text-xs z-10"><strong>Cod: </strong>{product.cod_producto}</p>
             </div>
@@ -52,8 +55,8 @@ const Card = ({ product, handleProductSelect }) => {
                 <h2 className="text-sm font-semibold tracking-tight text-gray-900 md:text-lg md:font-bold">{product.nombre}</h2>
               </div>
               <div className="pb-1 text-left">
-                <p className="text-xs text-gray-700 "><strong>Marca:</strong> {product.marca}</p>
-                <p className="hidden text-xs  text-gray-700 md:block md:text-base"><strong>Categoría:</strong>{product.categoria.length > 15 ? `${product.categoria.slice(0, 15)}...` : product.categoria}</p>
+                <p className="hidden text-xs text-gray-700 md:block md:text-base"><strong>Marca:</strong>{product.marca}</p>
+                <p className="hidden text-xs text-gray-700 md:block md:text-base"><strong>Categoría:</strong>{product.categoria.length > 15 ? `${product.categoria.slice(0, 15)}...` : product.categoria}</p>
                 <p className="hidden text-xs text-gray-700 md:block md:text-base"><strong>N° Serie:</strong>
                 {String(product.n_serie).length > 6
                   ? `${String(product.n_serie).slice(0, 6)}...`
