@@ -40,7 +40,7 @@ const Modals = ({ selectedProduct, closeModal }) => {
                 <div className="flex justify-center relative">
                   <img className="rounded-lg md:w-96 md:h-96" src={mainImage?mainImage:'/images/sinFoto.webp'} alt={selectedProduct.nombre} width={220} height={220} loading='lazy'/>
                   <div className="absolute top-1 left-1 text-sm md:text-base bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-bold px-3 py-1 rounded-tr-lg rounded-bl-lg shadow-md shadow-orange-300">
-                    ${selectedProduct.precio}
+                    {Number(selectedProduct.precio).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}
                   </div>
                 </div>
                 <div className="flex mt-2 justify-center">
