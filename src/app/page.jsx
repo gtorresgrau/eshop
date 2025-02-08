@@ -12,6 +12,7 @@ import Tienda from "@/components/Tienda/Tienda";
 import VolverArriba from "@/components/VolverArriba/VolverArriba";
 import Loading from "@/components/Loading/Loading";
 import SearchBase from "@/components/Search/SearchBase";
+import PreguntasFrecuentes from "@/components/PreguntasFrecuentas/PreguntasFrecuentas";
 
 export default function Home() {
 
@@ -35,6 +36,7 @@ export default function Home() {
           {/* <Carrusel /> */}
           <Sobre/>
           <Ubicacion/>
+          <PreguntasFrecuentes />
           <Contact />
       </main>
       <footer>

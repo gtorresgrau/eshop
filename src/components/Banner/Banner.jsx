@@ -1,4 +1,4 @@
-import infoWeb from '@/app/constants/infoWeb';
+import {infoWeb} from '@/app/constants/infoWeb';
 import React from 'react';
 
 const Banner = () => {
