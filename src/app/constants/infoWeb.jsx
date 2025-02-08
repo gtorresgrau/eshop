@@ -1,5 +1,5 @@
 const infoWeb = {
-    title:'Repuestos y accesorios de informatica en Wilde',
+    title:'Computadoras, Pc mini y accesorios de informatica en Wilde',
     subtitle: 'compra por el eshop de MercadoLibre o consulta por Whatsapp el producto que necesitas',
     contact:1136317470,
     codigoPais:54,
