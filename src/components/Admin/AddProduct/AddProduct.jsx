@@ -43,6 +43,7 @@ export default function AddProduct({
       titulo_de_producto:'',
       descripcion: '',
       n_electronica: '',
+      usd:'',
       precio:'',
       medidas: '',
       foto_1_1:  "",
@@ -628,6 +629,11 @@ const hasImageChanges = () => {
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                       placeholder="$100.000"
                     />
+                   {/* usd */}
+                    <div className='flex gap-2 mb-2'>
+                      <input onChange={handleChangeInput} type="checkbox" name="usd" id="usdAdd" checked={producto.usd}/>
+                      <label htmlFor="usdAdd" className="block  text-sm font-medium text-gray-900" >usd?</label>
+                    </div>
                   </div>
   
                   {/* Descripción */}
@@ -648,12 +654,11 @@ const hasImageChanges = () => {
                       name="descripcion"
                     />
                   </div>
-
                     {/* destacados */}
-                <div className='flex gap-2 mb-2'>
-                  <input onChange={handleChangeInput} type="checkbox" name="destacados" id="destacadosAdd" checked={producto.destacados}/>
-                  <label htmlFor="destacadosAdd" className="block  text-sm font-medium text-gray-900" >Producto Destacado</label>
-                </div>
+                  <div className='flex gap-2 mb-2'>
+                    <input onChange={handleChangeInput} type="checkbox" name="destacados" id="destacadosAdd" checked={producto.destacados}/>
+                    <label htmlFor="destacadosAdd" className="block  text-sm font-medium text-gray-900" >Producto Destacado</label>
+                  </div>
                 </div>
   
                 {/* Subir Archivo */}

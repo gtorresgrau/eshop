@@ -50,7 +50,12 @@ const productoSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
         required: false
-      },
+    },
+    usd: {
+        type: Boolean,
+        default: false,
+        required: false
+    },
     medidas: { 
         type: String, 
         required: false 
