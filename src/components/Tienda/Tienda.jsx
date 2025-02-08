@@ -108,7 +108,7 @@ export default function Tienda() {
         </section>
 
         {/* Paginación inferior */}
-        <nav aria-label="Paginación de productos" className="flex justify-center my-6" >
+        <nav aria-label="Paginación de productos" className="flex justify-center py-6" >
           <Pagination
             count={totalPages}
             page={currentPage}
