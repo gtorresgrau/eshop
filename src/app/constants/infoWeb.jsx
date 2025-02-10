@@ -43,7 +43,7 @@ export const faqData = [
     answer:
       "Sí, realizamos envíos a todo el país. Aprovecha nuestras opciones de envío rápido y seguro para recibir tus productos directamente en tu hogar o negocio, sin importar dónde te encuentres.",
     linkText: "Consulta nuestras opciones de envío",
-    linkUrl: "https://eshopdevices.com/#nosotros"
+    linkUrl: "https://eshopdevices.com/envios"
   }
 ];
 
@@ -51,14 +51,14 @@ export const shippingOptions = [
   {
     id: 1,
     name: "Envío Estándar",
-    description: "Entrega en 5-7 días hábiles en todo el país.",
+    description: "Entrega en 7 días hábiles en todo el país.",
     cost: "Gratis en compras superiores a $50000.",
     icon: "",
   },
   {
     id: 2,
     name: "Envío Express",
-    description: "Entrega en 2-3 días hábiles para mayor rapidez.",
+    description: "Entrega en 5 días hábiles para mayor rapidez.",
     cost: "",
     icon: "",
   },
