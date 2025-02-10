@@ -100,14 +100,56 @@ const ShopCart = () => {
             )}
           </div>
 
-          <div className="bg-slate-100 rounded-lg shadow-xl p-7 flex flex-col justify-between">
-            <h2 className="text-2xl mb-2">Resumen de Consulta</h2>
-            <span><strong>Cant. de productos:</strong> {cart.length}</span>
-            <span><strong>Usted va a enviar:</strong></span>
-            <span id="preguntar" ref={preguntarRef}>Hola, me gustaría consultar precio y disponibilidad de los siguientes artículos:<br />{cart.map((item) => <span key={item.cod_producto}>{item.nombre} - cod: {item.cod_producto} <br /></span>)}</span>
-            <button onClick={handleConsulta} className="px-3 py-2 text-sm font-medium text-white bg-boton-primary hover:bg-boton-primary-hover w-full rounded-lg mt-4" title="Contactar por WhatsApp" aria-label="Contactar por WhatsApp">
-              CONTACTAR
-            </button>
+          <div className="">
+            <div
+              id="resumen"
+              className="bg-slate-100 rounded-lg shadow-xl p-7 relative flex flex-col justify-between"
+              style={{ alignSelf: "start" }}
+            >
+              <h2 className="text-2xl mb-2">Resumen de Consulta</h2>
+              <div className="grid grid-cols-1  flex-grow">
+               
+                <span >
+                  <strong>Cant. de productos: </strong> {cart.length}
+                </span>
+                <span>
+                  <strong>Usted va a enviar: </strong>
+                </span>
+                <span id="preguntar" ref={preguntarRef}>
+                  Hola, me gustaría consultar precio y disponibilidad de los
+                  siguientes artículos:
+                  <br />
+                  {cart.map((item) => (
+                    <span key={item.cod_producto} className="text-right">
+                      {item.nombre} - cod: {item.cod_producto} <br />
+                    </span>
+                  ))}
+                </span>
+              </div>
+              <div className="flex justify-between items-center mt-4"></div>
+              <button
+                onClick={handleConsulta}
+                className="inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-center text-white bg-boton-primary hover:bg-boton-primary-hover active:bg-boton-primary-active w-full rounded-lg"
+                aria-label="contactar por todo el carrito"
+              >
+                CONTACTAR
+                <svg
+                  className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 14 10"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M1 5h12m0 0L9 1m4 4L9 9"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       </article>
