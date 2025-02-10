@@ -10,10 +10,12 @@ import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import { logOut } from '../../lib/firebase';
 import useLinks from '@/app/constants/Links';
+import { usePathname } from 'next/navigation';
 
 const NavBar = () => {
   const [cart, setCart] = useContext(CartContext);
   const Links = useLinks(); 
+  const path =usePathname()
 
   const quantity = cart ? cart.reduce((acc, curr) => acc + curr.quantity, 0) : 0;
 
@@ -61,7 +63,7 @@ const NavBar = () => {
   return (
     <nav className="bg-white border-gray-200">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-2 py-1">
-        <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse rounded-full my-3" title="CentralCam Logo">
+        <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse rounded-full my-3" title="Eshopdevices Logo">
           <img src={Logo.src} width={60} height={60} alt="eshopDevicesLogo" title="eshopDevices Logo" loading='lazy' className='rounded-full w-8 md:w-10 lg:w-12'/>
           <p className='uppercase text-xl text-transparent font-bold bg-clip-text bg-gradient-to-r from-primary via-secondary to-primary'>eshopDevices</p>
         </Link>
@@ -94,7 +96,7 @@ const NavBar = () => {
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border items-center border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white">
             {Links?.map((link, key) => (
               <li key={key}>
-                <Link href={link.href} className={`block py-2 px-3 ${currentLink === link.href ? 'text-blue-700' : 'text-gray-900'} rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0`}
+                <Link href={path === '/nosotros'? '/'+link.href : link.href} className={`block py-2 px-3 ${currentLink === link.href ? 'text-blue-700' : 'text-gray-900'} rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0`}
                   aria-current="page" onClick={() => handleLinkClick(link.href)} title={link.name.toLocaleUpperCase()}>
                   {link.name.toLocaleUpperCase()}
                 </Link>

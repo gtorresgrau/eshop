@@ -70,3 +70,26 @@ export const shippingOptions = [
     icon: "",
   },
 ];
+
+export const someProducts = [
+  {
+    title:'PC MINI BMAX B6 PR BMAX',
+    descripcion:'El Bmax B6 Pro es una mini PC que combina potencia y eficiencia en un diseño compacto y elegante. Equipado con un procesador Intel Core i5 de 10ª generación y 16 GB de memoria RAM DDR4, este dispositivo ofrece un rendimiento fluido para tareas diarias, navegación y entretenimiento. Su capacidad de almacenamiento de 512 GB en SSD garantiza un acceso rápido a tus archivos y aplicaciones, optimizando tu productividad.'
+  },
+  {
+    title:'HUB 8 EN 1 USB-C GENERICO',
+    descripcion:'El Adaptador HUB Multifuncional HUB 8 en 1, construido con chip para conversión plug and play. Material de Metal Plateado. 1. HDTV (HDMI), UHD entregando 4k,2K (3840x2160) a 30Hz y compatible con 1080p y 720p. 2. USB x2, puertos de alta velocidad 5Gbps y 480 Mbps y suministro de poder hasta 4.5Watts 3.'
+  },
+  {
+    title:'PLAYSTATION 5 SLIM SONY',
+    descripcion:'PlayStation 5 Slim 1TB con Lectora e incluye 1 Joystick. Disfruta de la potencia de última generación con la PS5 Slim, una versión más compacta y eficiente de la icónica consola de Sony. Con un almacenamiento de 1TB'
+  },
+  {
+    title:'SSD M.2 CORSAIR 2TB CORSAIR',
+    descripcion:'SSD Corsair MP600 Pro LPX 2TB Gen4 M.2 NVMe, Máxima velocidad y rendimiento Optimiza el rendimiento de tu PC o consola con el Corsair MP600 Pro LPX 2TB**, un SSD de última generación diseñado para ofrecer velocidades ultra rápidas de hasta 7100 MB/s de lectura y 6800 MB/s de escritura'
+  },
+  {
+    title:'PC GAMER INTEL ARMADA',
+    descripcion:'PC Gamer de Alto Rendimiento - ¡Lista para Dominar tus Juegos! ¡Experimenta el poder del alto rendimiento con esta PC Gamer diseñada para juegos exigentes y tareas profesionales! Equipada con componentes de última generación, disfrutarás de juegos fluidos y un rendimiento excepcional en cualquier tarea.'
+  }
+]
