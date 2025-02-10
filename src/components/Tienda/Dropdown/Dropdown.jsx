@@ -176,49 +176,6 @@ const Dropdown = ({
                 </div>
               )}
             </li>
-            {/* <li>
-              <button
-                className="flex font-medium place-items-center w-full text-left px-4 py-2 hover:bg-gray-100 self-center"
-                aria-label="filtrar por vehiculo"
-              >
-                Vehiculos
-              </button>
-              {isVehiculosOpen && (
-                <div className="flex flex-col p-2">
-                  {vehiculos
-                    .slice(0, showAllVehiculos ? vehiculos.length : 5)
-                    .map(({ vehiculo, count }) => (
-                      <label key={vehiculo} className="flex gap-2">
-                        <input
-                          type="checkbox"
-                          value={vehiculo}
-                          checked={selectedVehiculos.includes(vehiculo)}
-                          onChange={(e) =>
-                            handleCheckboxChange(
-                              e,
-                              "vehiculo",
-                              selectedVehiculos,
-                              setSelectedVehiculos
-                            )
-                          }
-                        />
-                        {vehiculo} ({count})
-                      </label>
-                    ))}
-                  {vehiculos.length > 5 && (
-                    <button
-                      onClick={handleShowAllVehiculos}
-                      className="px-4 text-blue-700 hover:text-white hover:bg-blue-400 rounded border cursor-pointer my-2 w-full"
-                      aria-label={
-                        showAllVehiculos ? "Ver menos..." : "Ver más..."
-                      }
-                    >
-                      {showAllVehiculos ? "Ver menos..." : "Ver más..."}
-                    </button>
-                  )}
-                </div>
-              )}
-            </li> */}
           </ul>
         </div>
       </div>
