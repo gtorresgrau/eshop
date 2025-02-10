@@ -43,7 +43,7 @@ const CardDestacado = ({ selectedProduct, handleProductSelect }) => {
           alt="Producto destacado" 
           loading='lazy' 
           title='Producto destacado' />
-        <div className="rounded-lg overflow-hidden p-2">
+        <div className="rounded-lg overflow-hidden p-1">
           <img 
             className="rounded-lg w-full md:w-48 md:h-48 lg:w-52 lg:h-52" 
             src={selectedProduct.foto_1_1 || '/images/sinFoto.webp'} 
@@ -52,6 +52,12 @@ const CardDestacado = ({ selectedProduct, handleProductSelect }) => {
             height={150} 
             loading="lazy" 
             title={selectedProduct.nombre} />
+          <img
+            className={`absolute bottom-1 right-1 inline-flex items-center justify-center bg-slate-200 hover:bg-boton-primary-hover active:bg-boton-primary-active rounded-md text-white z-10 ${selectedProduct.usado? 'w-28': 'w-16'}`}
+            src={selectedProduct.usado? '/images/USADO.webp': '/images/NUEVO.webp'}
+            alt={selectedProduct.usado? 'producto usado': 'producto nuevo'}
+            title={selectedProduct.usado? 'producto usado': 'producto nuevo'}
+            loading="lazy"/> 
         </div>      
       </div>
       <div className="px-5 pb-2">
