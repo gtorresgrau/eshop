@@ -2,8 +2,11 @@
 import React from 'react';
 import { infoWeb, shippingOptions, someProducts } from '@/app/constants/infoWeb';
 import PreguntasFrecuentes from '../PreguntasFrecuentas/PreguntasFrecuentas';
+import useProducts from '@/Hooks/useProducts';
 
 const NosotrosPage = () => {
+  const {products } = useProducts();
+
   return (
     <main className="container mx-auto px-4 py-8 max-w-6xl">
       {/* Sección: Acerca de Nosotros */}
@@ -29,13 +32,19 @@ const NosotrosPage = () => {
           ¿Qué productos ofrecemos?
         </h2>
         <div className="mt-6 grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {someProducts.map((prod, index) => (
+        {products
+          .sort(() => Math.random() - 0.5) // Mezcla aleatoriamente los productos
+          .slice(0, 6) // Toma los primeros 6 productos
+          .map((prod, index) => (
             <div key={index} className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200">
               <div className="flex flex-col items-center text-center">
-                <h3 className="text-xl font-semibold text-gray-700 mb-2" title={prod.title}>
-                  {prod.title}
+                <h3 className="text-xl font-semibold text-gray-700 mb-2" title={prod.nombre}>
+                  {prod.nombre}
                 </h3>
-                <p className='text-gray-600'>{prod.descripcion}</p>
+                <p className='text-gray-600'>
+                  {prod.descripcion.length > 150 ? `${prod.descripcion.slice(0, 150)}...` : prod.descripcion}
+                </p>
+
               </div>
             </div>
           ))}
