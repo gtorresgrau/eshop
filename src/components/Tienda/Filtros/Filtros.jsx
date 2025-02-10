@@ -23,7 +23,7 @@ const Filtros = ({
         <section>
             <button onClick={handleClearFilters} className="text-white bg-boton-primary hover:bg-boton-primary-hover active:bg-boton-primary-active font-medium rounded-lg text-sm px-4 py-2 w-full" aria-label='limpiar filtros'>Limpiar Filtros</button>
             <div className='flex flex-col'>
-              <h4 className='mx-2 mt-4 text-blue-600'>CATEGORIAS</h4>
+              <h3 className='mx-2 mt-4 text-blue-600'>CATEGORIAS</h3>
                   {isLoading
                     ?<SkeletonFilter /> 
                     :categories.slice(0, showAllCategories ? categories.length : 5).map(({ category, count }) => (
