@@ -47,6 +47,7 @@ export default function UpdateProduct({
     descripcion: product.descripcion,
     n_electronica:product.n_electronica || '',
     usd:product.usd,
+    usado:product.usado,
     precio:product.precio||'',
     medidas:product.medidas || '',
     foto_1_1: product.foto_1_1 || "",
@@ -618,7 +619,9 @@ export default function UpdateProduct({
               {/* destacados */}
               <div className='flex gap-2 mb-4'>
                 <input onChange={handleChangeInput} type="checkbox" name="destacados" id="destacadosUpdate" checked={producto.destacados}/>
-                <label htmlFor="destacadosUpdate" className="block text-sm font-medium text-gray-900" >Producto Destacado</label>
+                <label htmlFor="destacadosUpdate" className="block text-sm font-medium text-gray-900" >Destacado?</label>
+                <input onChange={handleChangeInput} type="checkbox" name="usado" id="usadoUpdate" checked={producto.usado}/>
+                <label htmlFor="usadoUpdate" className="block  text-sm font-medium text-gray-900" >Usado?</label>
               </div>
                 
               {/* Subir Archivo */}

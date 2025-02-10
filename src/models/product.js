@@ -56,6 +56,11 @@ const productoSchema = new mongoose.Schema({
         default: false,
         required: false
     },
+    usado: {
+        type: Boolean,
+        default: false,
+        required: false
+    },
     medidas: { 
         type: String, 
         required: false 

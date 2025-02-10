@@ -44,6 +44,7 @@ export default function AddProduct({
       descripcion: '',
       n_electronica: '',
       usd:'',
+      usado:'',
       precio:'',
       medidas: '',
       foto_1_1:  "",
@@ -654,10 +655,12 @@ const hasImageChanges = () => {
                       name="descripcion"
                     />
                   </div>
-                    {/* destacados */}
+                    {/* destacados y/o usado */}
                   <div className='flex gap-2 mb-2'>
                     <input onChange={handleChangeInput} type="checkbox" name="destacados" id="destacadosAdd" checked={producto.destacados}/>
-                    <label htmlFor="destacadosAdd" className="block  text-sm font-medium text-gray-900" >Producto Destacado</label>
+                    <label htmlFor="destacadosAdd" className="block  text-sm font-medium text-gray-900" >Destacado?</label>
+                    <input onChange={handleChangeInput} type="checkbox" name="usado" id="usadoAdd" checked={producto.usado}/>
+                    <label htmlFor="usadoAdd" className="block  text-sm font-medium text-gray-900" >Usado?</label>
                   </div>
                 </div>
   

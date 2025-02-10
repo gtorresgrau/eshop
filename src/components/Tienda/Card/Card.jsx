@@ -62,6 +62,13 @@ const Card = ({ product, handleProductSelect }) => {
                 title={product.nombre}
                 loading="lazy"
               />
+              {/* <img
+                className="absolute bottom-1 right-1 inline-flex items-center justify-center w-12 bg-slate-200 hover:bg-boton-primary-hover active:bg-boton-primary-active rounded-md text-white z-10"
+                src={product.usado? '/images/USADO.webp': '/images/NUEVO.webp'}
+                alt={product.usado? 'producto usado': 'producto nuevo'}
+                title={product.usado? 'producto usado': 'producto nuevo'}
+                loading="lazy"
+              /> */}
               <div
                 className="absolute top-1 left-1 text-sm md:text-base bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-bold px-3 py-1 rounded-tr-lg rounded-bl-lg shadow-md shadow-orange-300"
                 aria-label={`Precio: ${Number(product.precio).toLocaleString('es-AR', {
