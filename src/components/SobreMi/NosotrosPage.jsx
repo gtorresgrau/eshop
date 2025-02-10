@@ -1,6 +1,6 @@
 'use client'
 import React from 'react';
-import { infoWeb, shippingOptions, someProducts } from '@/app/constants/infoWeb';
+import { infoWeb, shippingOptions } from '@/app/constants/infoWeb';
 import PreguntasFrecuentes from '../PreguntasFrecuentas/PreguntasFrecuentas';
 import useProducts from '@/Hooks/useProducts';
 
@@ -24,6 +24,9 @@ const NosotrosPage = () => {
             <strong className="text-red-600 font-bold">ESHOP DEVICES</strong>, es una Startup joven que nos dedicamos a la venta de insumos informáticos. Trabajamos por WhatsApp para entregas en persona y MercadoShops para quienes quieren envíos.
           </div>
         </article>
+        {/* <article>
+
+        </article> */}
       </section>
 
       {/* Sección: Qué Ofrecemos */}

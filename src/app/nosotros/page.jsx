@@ -15,7 +15,9 @@ const NosPage = () => {
         </Suspense>
       </nav>
       <main className="flex-1 flex items-center justify-center bg-white">
+      <Suspense fallback={<Loading/>}>
         <NosotrosPage />
+      </Suspense>
       </main>
       <footer className="bg-gray-200">
         <Footer />
