@@ -9,7 +9,18 @@
 
 <url>
   <loc>https://eshopdevices.com/</loc>
-  <lastmod>2025-01-21T17:01:11+00:00</lastmod>
+  <lastmod>2025-02-10T15:07:39+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://eshopdevices.com/nosotros</loc>
+  <lastmod>2025-02-10T15:07:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://eshopdevices.com/envios</loc>
+  <lastmod>2025-02-10T15:07:39+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 
 

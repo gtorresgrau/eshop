@@ -12,7 +12,7 @@ const SobreMi = () => {
             <h2 className="mb-4  text-3xl md:text-4xl text-center md:text center tracking-tight font-extrabold text-text-primary-title uppercase">Nosotros</h2>
             <p className="mb-8 text-gray-500 sm:text-lg md:text-xl font-light" dangerouslySetInnerHTML={{ __html: infoWeb.sobremi }}></p>
             <Link href={'/nosotros'}>
-              <button className="text-white font-medium rounded-lg text-sm px-3 py-1.5 text-center bg-boton-primary hover:bg-boton-primary-hover active:bg-boton-primary-active" target='_blank' title='ver mas sobre nosotros' aria-label="ver mas sobre nosotros">Ver mas</button>
+              <button className="text-white font-medium rounded-lg text-sm px-3 py-1.5 text-center bg-boton-primary hover:bg-boton-primary-hover active:bg-boton-primary-active"  title='ver mas sobre nosotros' aria-label="ver mas sobre nosotros">Ver mas</button>
             </Link>
             <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
               <div>

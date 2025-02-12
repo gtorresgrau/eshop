@@ -14,8 +14,8 @@ export const metadata = {
   authors: [{ name: 'Gonzalo Torres Grau', url: 'https://gonzalotorresgrau.com' }],
   publisher: 'Eshop Devices Wilde Insumos Informáticos profesionales y standard',
   openGraph: {
-    title: 'Eshop Devices Wilde Insumos Informáticos profesionales y standard',
-    description: "Eshop Devices es tu aliado tecnológico en Wilde, especializado en la venta de insumos informáticos y dispositivos electrónicos. Con atención personalizada y asesoramiento experto, te ayudamos a encontrar la solución ideal para el hogar y negocio. Descubre componentes, accesorios y gadgets de última generación.",
+    title,
+    description,
     type: 'website',
     url: 'https://eshopdevices.com/',
     image: 'https://eshopdevices.com/logos/logoEshop.webp',
