@@ -96,3 +96,57 @@ export const someProducts = [
     descripcion:'PC Gamer de Alto Rendimiento - ¡Lista para Dominar tus Juegos! ¡Experimenta el poder del alto rendimiento con esta PC Gamer diseñada para juegos exigentes y tareas profesionales! Equipada con componentes de última generación, disfrutarás de juegos fluidos y un rendimiento excepcional en cualquier tarea.'
   }
 ]
+
+export  const storageOptions = [
+  {
+    title: 'HDD (Disco Duro Mecánico)',
+    description: 'Los discos duros mecánicos (HDD) utilizan platos magnéticos para almacenar datos. Son más económicos pero más lentos en comparación con los SSD.',
+    img: 'https://res.cloudinary.com/dnbrxpca3/image/upload/v1739372328/Almacenamiento_HDD_ayq3kf.webp',
+    alt: 'Imagen de un disco duro mecánico (HDD)'
+  },
+  {
+    title: 'SSD (Unidad de Estado Sólido)',
+    description: 'Los SSD utilizan memoria flash para almacenar datos, ofreciendo velocidades de lectura y escritura mucho más rápidas que los HDD.',
+    img: 'https://res.cloudinary.com/dnbrxpca3/image/upload/v1739372328/Amacenamiento_SSD_sata_im6d1t.webp',
+    alt: 'Imagen de un SSD convencional'
+  },
+  {
+    title: 'SSD M.2 SATA',
+    description: 'Las SSD M.2 SATA utilizan el mismo protocolo que un SSD tradicional pero en un formato más compacto, ideal para portátiles y dispositivos ultradelgados.',
+    img: 'https://res.cloudinary.com/dnbrxpca3/image/upload/v1739372329/Almacenamiento_SSD_M.2_SATA_wsw1j4.webp',
+    alt: 'Imagen de un SSD M.2 SATA'
+  },
+  {
+    title: 'SSD M.2 NVMe',
+    description: 'Los SSD M.2 NVMe aprovechan el protocolo NVMe y la interfaz PCIe para ofrecer velocidades significativamente más altas que los SSD SATA.',
+    img: 'https://res.cloudinary.com/dnbrxpca3/image/upload/v1739372328/Almacenamiento_SSD_M.2_nvme_l6ewvx.webp',
+    alt: 'Imagen de un SSD M.2 NVMe'
+  }
+];
+
+export const ramOptions = [
+  {
+    title: 'DDR3',
+    description: 'Memoria RAM DDR3 con velocidades de hasta 2133 MHz. Todavía utilizada en sistemas antiguos, pero con menor eficiencia y rendimiento.',
+    img: 'https://res.cloudinary.com/dnbrxpca3/image/upload/v1739381196/MemoriaRamDDR3_q5dvky.webp',
+    alt: 'Imagen de una memoria RAM DDR3'
+  },
+  {
+    title: 'DDR4',
+    description: 'Memoria RAM DDR4 con mayor ancho de banda y frecuencias de hasta 3200 MHz. Es el estándar más común en computadoras actuales.',
+    img: 'https://res.cloudinary.com/dnbrxpca3/image/upload/v1739381196/MemoriaRamDDR4_rof6vo.webp',
+    alt: 'Imagen de una memoria RAM DDR4'
+  },
+  {
+    title: 'DDR5',
+    description: 'Memoria RAM DDR5 con velocidades de hasta 7200 MHz, mejor eficiencia energética y mayor capacidad de almacenamiento.',
+    img: 'https://res.cloudinary.com/dnbrxpca3/image/upload/v1739381195/MemoriaRamDDR5_sbl5em.webp',
+    alt: 'Imagen de una memoria RAM DDR5'
+  },
+  {
+    title: 'RAM ECC',
+    description: 'Memoria RAM con corrección de errores (ECC), utilizada en servidores y estaciones de trabajo para mayor estabilidad y seguridad.',
+    img: 'https://res.cloudinary.com/dnbrxpca3/image/upload/v1739381195/MemoriaRamDDR5_ECC_bnyk0p.webp',
+    alt: 'Imagen de una memoria RAM ECC'
+  }
+];

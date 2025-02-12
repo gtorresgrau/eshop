@@ -24,6 +24,7 @@
     "heic2any": "^0.0.4",
     "i": "^0.3.7",
     "json2csv": "^6.0.0-alpha.2",
+    "lucide-react": "^0.475.0",
     "mongoose": "^8.9.5",
     "next": "14.2.5",
     "nodemailer": "^6.9.14",

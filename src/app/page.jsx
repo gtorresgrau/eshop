@@ -13,6 +13,7 @@ import VolverArriba from "@/components/VolverArriba/VolverArriba";
 import Loading from "@/components/Loading/Loading";
 import SearchBase from "@/components/Search/SearchBase";
 import PreguntasFrecuentes from "@/components/PreguntasFrecuentas/PreguntasFrecuentas";
+import Comparativas from "@/components/Comparativas/Comparativas";
 
 export default function Home() {
 
@@ -32,6 +33,7 @@ export default function Home() {
           {/* <UnderConstruction /> */}
           <Destacados />
           <Tienda />
+          <Comparativas />
         </Suspense>
           {/* <Carrusel /> */}
           <Sobre/>
