@@ -26,10 +26,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="es">
       <head>
-        <meta charSet={metadata.charSet} />
-        <meta name="viewport" content="minimum-scale=1, width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, viewport-fit=cover" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, shrink-to-fit=no, viewport-fit=cover" />
         <meta name="theme-color" content="#007BC7" />
-        <meta name="description" content={metadata.description} />
         <meta name="keywords" content={metadata.keywords} />
         <meta name="author" content={metadata.authors[0].name} />
         <meta name="robots" content="index, follow" />
