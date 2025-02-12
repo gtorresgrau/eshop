@@ -1,6 +1,5 @@
-'use client';
+'use client'
 import { useState, useEffect, useCallback } from 'react';
-import { useFetchProducts } from './useFetchProducts';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 
 const useProducts = () => {
@@ -8,13 +7,10 @@ const useProducts = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Obtén los datos, el estado de carga y la función para refrescar desde el hook de fetch
-  const { data, isLoading, fetchProducts } = useFetchProducts(searchParams);
-
   // Determina si la ruta actual es la de administración
   const isAdminPage = path === '/Admin';
 
-  // Estados locales para manejar la información que se utiliza en el componente
+  // Estados
   const [products, setProducts] = useState([]);
   const [allDestacados, setAllDestacados] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -24,43 +20,60 @@ const useProducts = () => {
   const [showAllCategories, setShowAllCategories] = useState(false);
   const [showAllBrands, setShowAllBrands] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Cuando los datos de la API se actualicen, actualiza los estados locales correspondientes
+  // Función auxiliar para actualizar la URL según la página actual
+  const pushUpdatedParams = useCallback((params, hash = '') => {
+    const url = isAdminPage
+      ? `/Admin?${params.toString()}`
+      : `/?${params.toString()}${hash}`;
+    router.push(url);
+  }, [router, isAdminPage]);
+
+  // Función para obtener los productos desde la API
+  const fetchProducts = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const params = new URLSearchParams(searchParams.toString());
+      const res = await fetch(`/api/products?${params.toString()}`);
+      if (!res.ok) {
+        console.error('Error al obtener los productos:', res.statusText);
+        return;
+      }
+      const data = await res.json();
+      setProducts(data.products || []);
+      setTotalPages(data.totalPage || 1);
+      setCategories(data.totalCategories || []);
+      setBrands(data.totalBrands || []);
+      setAllDestacados(data.allproductosDestacados || []);
+    } catch (error) {
+      console.error('Error en fetchProducts:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [searchParams]);
+
+  // Ejecuta la búsqueda de productos cuando cambian los parámetros de búsqueda
   useEffect(() => {
-    setProducts(data.products || []);
-    setTotalPages(data.totalPage || 1);
-    setCategories(data.totalCategories || []);
-    setBrands(data.totalBrands || []);
-    setAllDestacados(data.allproductosDestacados || []);
-  }, [data]);
+    fetchProducts();
+  }, [fetchProducts]);
 
-  // Actualiza el estado de la página actual según el parámetro "page" en la URL
+  // Actualiza el estado de la página actual según el parámetro "page"
   useEffect(() => {
     const page = Number(searchParams.get('page')) || 1;
     setCurrentPage(page);
   }, [searchParams]);
 
-  // Actualiza los filtros seleccionados (categorías y marcas) cuando cambian en la URL
+  // Actualiza los filtros seleccionados (categorías y marcas) cuando cambia la URL
   useEffect(() => {
     setSelectedCategories(searchParams.getAll('category'));
     setSelectedBrands(searchParams.getAll('brand'));
   }, [searchParams]);
 
-  // Función auxiliar para actualizar la URL según los parámetros y el hash (si corresponde)
-  const pushUpdatedParams = useCallback(
-    (params, hash = '') => {
-      const url = isAdminPage
-        ? `/Admin?${params.toString()}`
-        : `/?${params.toString()}${hash}`;
-      router.push(url);
-    },
-    [router, isAdminPage]
-  );
-
-  // Manejo del modal para mostrar los detalles de un producto
+  // Manejo del modal de producto
   const closeModal = useCallback(() => {
     setSelectedProduct(null);
     setIsModalOpen(false);
@@ -96,18 +109,15 @@ const useProducts = () => {
   };
 
   // Actualiza los parámetros de búsqueda según los filtros seleccionados
-  const updateSearchParams = useCallback(
-    (key, values) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.delete(key);
-      params.set('page', 1);
-      if (values.length > 0) {
-        values.forEach((value) => params.append(key, value));
-      }
-      pushUpdatedParams(params, isAdminPage ? '' : '#productos');
-    },
-    [searchParams, pushUpdatedParams, isAdminPage]
-  );
+  const updateSearchParams = useCallback((key, values) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete(key);
+    params.set('page', 1);
+    if (values.length > 0) {
+      values.forEach((value) => params.append(key, value));
+    }
+    pushUpdatedParams(params, isAdminPage ? '' : '#productos');
+  }, [searchParams, pushUpdatedParams, isAdminPage]);
 
   // Maneja el cambio en los checkboxes de filtros
   const handleCheckboxChange = (e, key, selectedValues, setSelectedValues) => {
