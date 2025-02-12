@@ -36,13 +36,15 @@ export default function Tienda() {
   return (
     <Suspense fallback={<Loading />}>
       <main id="productos" className="bg-primary-background min-h-screen">
-        <div className="text-center py-4 justify-center justify-items-center">
+        <div className="text-center py-4">
           <h2 title="Tienda de Productos" className="text-3xl font-bold">Tienda</h2>
-          <p className="text-lg max-w-6xl self-center">Encuentra los mejores productos informaticos aquí, PC Gamers, PC mini para oficinas, PC profesionales y muchos accesorios para informaticaz estamos en wilde.</p>
+          <p className="text-lg max-w-6xl mx-auto">
+            Encuentra los mejores productos informáticos aquí: PC Gamers, PC mini para oficinas, PC profesionales y muchos accesorios para informática.
+          </p>
         </div>
 
         {/* Paginación superior */}
-        <nav aria-label="Paginación de productos" className="flex justify-center my-6" >
+        <nav aria-label="Paginación de productos" className="flex justify-center my-6">
           <Pagination
             count={totalPages}
             page={currentPage}
@@ -99,16 +101,18 @@ export default function Tienda() {
           </aside>
 
           {/* Tarjetas de productos y modal */}
-          <article id="cardsTienda" className="col-span-1 md:col-start-4 md:col-span-9 flex justify-around" >
+          <article id="cardsTienda" className="col-span-1 md:col-start-4 md:col-span-9 flex justify-around">
             <div>
               <Cards handleProductSelect={handleProductSelect} products={products} isLoading={isLoading} />
-              {isModalOpen && selectedProduct && (<Modals closeModal={closeModal} selectedProduct={selectedProduct} /> )}
+              {isModalOpen && selectedProduct && (
+                <Modals closeModal={closeModal} selectedProduct={selectedProduct} />
+              )}
             </div>
           </article>
         </section>
 
         {/* Paginación inferior */}
-        <nav aria-label="Paginación de productos" className="flex justify-center py-6" >
+        <nav aria-label="Paginación de productos" className="flex justify-center py-6">
           <Pagination
             count={totalPages}
             page={currentPage}
