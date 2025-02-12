@@ -2,7 +2,7 @@ require('dotenv').config();
 const nodemailer = require('nodemailer');
 const { SENDER, PASSWORD, TO } = process.env;
 
-export default function (req, res) {
+export default function contactHandler(req, res) {
   //console.log('req body:', req.body);
 
   let subject="";
