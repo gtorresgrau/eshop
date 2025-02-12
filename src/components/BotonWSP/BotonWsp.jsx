@@ -31,14 +31,15 @@ const BotonWsp = ({texto}) => {
   const enviar = `https://wa.me/+${userData.codigoPais}${userData.contact}?text=${encodeURIComponent(texto?texto:userData.textoPredefinido)}`;
 
   return (
-    <article className="fixed bottom-6 right-6 z-40">
-      <Link href={enviar} title="Boton de contacto whatsaap">
-        <button rel="noopener noreferrer" className='flex items-center justify-center bg-green-500 text-white font-bold p-4 rounded-full' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} aria-label="Contact via WhatsApp" role="button" data-client={true} >
-          <FaWhatsapp className='text-white text-3xl'aria-label="Boton de contacto whatsaap"/>
-          {isHovered && <h2 className='ml-2'>{userData.textBoton}</h2>}
-        </button>
-      </Link>
-    </article>
+      <article className="fixed bottom-6 right-6 z-40">
+        <Link href={enviar} passHref title="Boton de contacto WhatsApp">
+          <a className="flex items-center justify-center bg-green-500 text-white font-bold p-4 rounded-full" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}  aria-label="Contact via WhatsApp" >
+            <FaWhatsapp className='text-white text-3xl' aria-label="Boton de contacto WhatsApp" />
+            {isHovered && <h2 className='ml-2'>{userData.textBoton}</h2>}
+          </a>
+        </Link>
+      </article>
+
   );
 }
 
