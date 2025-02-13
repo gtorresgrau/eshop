@@ -150,3 +150,24 @@ export const ramOptions = [
     alt: 'Imagen de una memoria RAM ECC'
   }
 ];
+
+export const fuenteOptions = [
+  {
+    title: 'Fuente Estándar',
+    description: 'Fuente de poder sin certificación, ideal para equipos básicos. Menor eficiencia y posibles variaciones de voltaje.',
+    img: 'https://res.cloudinary.com/dnbrxpca3/image/upload/v1739455732/AlimentacionStandard_ykkm8r.webp',
+    alt: 'Imagen de una fuente de poder estándar'
+  },
+  {
+    title: 'Fuente 80 PLUS Bronze',
+    description: 'Fuente certificada 80 PLUS Bronze con eficiencia del 82%-85%. Adecuada para computadoras de uso medio y gaming básico.',
+    img: 'https://res.cloudinary.com/dnbrxpca3/image/upload/v1739455732/Alimentacion80plusBroze_smxwru.webp',
+    alt: 'Imagen de una fuente de poder 80 PLUS Bronze'
+  },
+  {
+    title: 'Fuente 80 PLUS Gold',
+    description: 'Fuente certificada 80 PLUS Gold con eficiencia del 87%-90%. Recomendable para equipos de alto rendimiento y gaming.',
+    img: 'https://res.cloudinary.com/dnbrxpca3/image/upload/v1739455732/Alimentacion80plusGold_bj6zwz.webp',
+    alt: 'Imagen de una fuente de poder 80 PLUS Gold'
+  }
+];

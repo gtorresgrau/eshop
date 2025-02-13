@@ -2,7 +2,7 @@
 
 import React from "react"
 import Link from "next/link"
-import { HardDrive, MemoryStick } from "lucide-react"
+import { HardDrive, MemoryStick, SquarePower } from "lucide-react"
 
 const Comparativas = () => {
   return (
@@ -20,6 +20,12 @@ const Comparativas = () => {
           title="Memoria RAM"
           description="Explora las comparativas de los diferentes tipos de Memoria RAM"
           icon={<MemoryStick className="h-8 w-8" />}
+        />
+        <ComparisonCard
+          href="/comparativa/fuente"
+          title="Fuentes de Alimentacion"
+          description="Explora las comparativas de los diferentes tipos de Memoria RAM"
+          icon={<SquarePower className="h-8 w-8" />}
         />
       </div>
     </section>
