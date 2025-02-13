@@ -9,10 +9,10 @@ const SobreMi = () => {
       <article className="bg-primary-background">
         <div className="py-8 px-8 mx-auto max-w-screen-xl  sm:py-16 lg:px-6">
           <div className="max-w-screen-md">
-            <h2 className="mb-4  text-3xl md:text-4xl text-center md:text center tracking-tight font-extrabold text-text-primary-title uppercase">Nosotros</h2>
+            <h2 className="mb-8 text-3xl md:text-4xl text-center font-extrabold text-primary uppercase ">Nosotros</h2>
             <p className="mb-8 text-gray-500 sm:text-lg md:text-xl font-light" dangerouslySetInnerHTML={{ __html: infoWeb.sobremi }}></p>
             <Link href="/nosotros" title="Consulta">
-              <p className="block text-white font-medium rounded-lg text-sm px-3 py-1.5 text-center bg-boton-primary hover:bg-boton-primary-hover active:bg-boton-primary-active">
+              <p className="block w-1/3 text-white font-medium rounded-lg text-sm px-3 py-1.5 uppercase text-center bg-boton-primary hover:bg-boton-primary-hover active:bg-boton-primary-active">
                 Ver más
               </p>
             </Link>

@@ -14,6 +14,7 @@ import Loading from "@/components/Loading/Loading";
 import SearchBase from "@/components/Search/SearchBase";
 import PreguntasFrecuentes from "@/components/PreguntasFrecuentas/PreguntasFrecuentas";
 import Comparativas from "@/components/Comparativas/Comparativas";
+import CleanToolExplanation from "@/components/Tools/CleanToolExplanation";
 
 export default function Home() {
 
@@ -34,6 +35,7 @@ export default function Home() {
           <Destacados />
           <Tienda />
           <Comparativas />
+          <CleanToolExplanation />
         </Suspense>
           {/* <Carrusel /> */}
           <Sobre/>

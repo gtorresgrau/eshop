@@ -36,7 +36,7 @@ export default function Contact() {
   return (
     <section id="contacto" className='bg-primary-background'>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 text-center">
-        <h2 className="mb-4 text-3xl md:text-4xl text-center tracking-tight font-extrabold text-text-primary-title uppercase ">Contacto</h2>
+        <h2 className="mb-8 text-3xl md:text-4xl text-center font-extrabold text-primary uppercase ">Contacto</h2>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 md:pt-8 pb-16 grid md:grid-cols-2 lg:grid-cols-2 gap-y-8 md:gap-x-8 md:gap-y-8 lg:gap-x-8 lg:gap-y-16">
         <article>

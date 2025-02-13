@@ -25,10 +25,7 @@ const PreguntasFrecuentes = () => {
     >
       <div className="max-w-screen-md mx-auto">
         <div id="accordion-open" data-accordion="open">
-          <h2
-            id="faq-heading"
-            className="mb-4 text-3xl md:text-4xl text-center tracking-tight font-extrabold text-text-primary-title"
-          >
+          <h2 id="faq-heading" className="mb-8 text-3xl md:text-4xl text-center font-extrabold text-primary uppercase " >
             Preguntas frecuentes
           </h2>
           {faqData.map((faq) => (

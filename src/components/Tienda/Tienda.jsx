@@ -37,9 +37,10 @@ export default function Tienda() {
     <Suspense fallback={<Loading />}>
       <main id="productos" className="bg-primary-background min-h-screen">
         <div className="text-center py-4">
-          <h2 title="Tienda de Productos" className="text-3xl font-bold">Tienda</h2>
+          <h2 title="Tienda de Productos" className="mb-8 text-3xl md:text-4xl text-center font-extrabold text-primary uppercase ">Tienda</h2>
           <p className="text-lg max-w-6xl mx-auto">
-            Encuentra los mejores productos informáticos aquí: PC Gamers, PC mini para oficinas, PC profesionales y muchos accesorios para informática.
+            Encuentra los mejores productos y servicios informáticos aquí: PC Gamers, PC mini para oficinas, PC profesionales y muchos accesorios para informática.
+            Ademas contamos con Servicio de Mantenimiento de Consolas, y armado de computadoras segun tu necesidad. 
           </p>
         </div>
 

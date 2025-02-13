@@ -1,6 +1,6 @@
 export const infoWeb = {
-    title:'Computadoras, Pc mini y accesorios de informatica en Wilde',
-    subtitle: 'compra por el eshop de MercadoLibre o consulta por Whatsapp el producto que necesitas',
+    title:'Computadoras, Pc mini, accesorios de informatica y mantenimientos de consolas.',
+    subtitle: 'Consulta por Whatsapp el producto que necesitas, somos de Wilde, Buenos Aires',
     contact:1136317470,
     codigoPais:54,
     sobremi:'<strong class="text-text-danger font-bold">ESHOP DEVICES</strong>, es una Startup joven que nos dedicamos a la venta de insumos informaticos, trabajamos por whatsapp para entregas en persona y mercadoshops para quienes quieren envios. ',
@@ -47,6 +47,22 @@ export const faqData = [
       "Sí, realizamos envíos a todo el país. Aprovecha nuestras opciones de envío rápido y seguro para recibir tus productos directamente en tu hogar o negocio, sin importar dónde te encuentres.",
     linkText: "Consulta nuestras opciones de envío",
     linkUrl: "https://eshopdevices.com/envios"
+  },
+  {
+    id: 5,
+    question: "¿Realizan mantenimientos de Consolas y/o Computadoras?",
+    answer:
+      "Sí, realizamos mantenimiento de todas las consolas y de computadoras. Se recomienda que se realicen 1 vez al año, limpieza y cambio de pasta termica para asegurar su maximo rendimiento y durabilidad",
+    linkText: "Consulta nuestras opciones",
+    linkUrl: "https://eshopdevices.com//#productos"
+  },
+  {
+    id: 6,
+    question: "¿Que significa la etiqueta oportunidad en los productos?",
+    answer:
+      "La etiquete oportunidad significa que es un producto usado pero esta como nuevo, que es una oportunidad de compra.",
+    linkText: "Consulta nuestras producots de oportunidad",
+    linkUrl: "https://eshopdevices.com/#productos"
   }
 ];
 
@@ -171,3 +187,100 @@ export const fuenteOptions = [
     alt: 'Imagen de una fuente de poder 80 PLUS Gold'
   }
 ];
+
+export   const scriptCode = `# =====================================================
+# SISTEMA DE LIMPIEZA DE PC
+# Creado por Gonzalo Torres Grau - https://gonzalotorresgrau.com/
+# =====================================================
+
+$objShell = New-Object -ComObject Shell.Application
+$objFolder = $objShell.Namespace(0xA)
+
+# Mostrar Banner ASCII Art
+$banner = @"
+=============================================
+        SISTEMA DE LIMPIEZA DE PC
+  Creado por Gonzalo Torres Grau - https://gonzalotorresgrau.com/
+=============================================
+"@
+Write-Host $banner -ForegroundColor Magenta
+
+# Language Detection
+$language = (Get-WinSystemLocale).Name
+$languageUsed = $language
+
+# Localized Messages
+$localizedMessages = @{
+    "en-US" = @{
+        "StartCleanup" = "Starting cleanup process...";
+        "CleanupComplete" = "Cleanup completed successfully.";
+        "PathNotFound" = "Path not found:";
+        "Simulating" = "Simulating cleanup:";
+        "Performing" = "Performing cleanup:";
+        "ErrorRemoving" = "Error removing:";
+        "EmptyRecycleBin" = "Emptying Recycle Bin. This action cannot be undone.";
+        "RecycleBinEmptied" = "Recycle Bin emptied successfully.";
+        "DiskCleanup" = "Running Windows Disk Cleanup Tool.";
+        "DiskCleanupComplete" = "Disk Cleanup completed successfully.";
+        "CleanupTaskComplete" = "Cleanup task completed successfully. All unnecessary files have been removed.";
+        "ScriptCreatedBy" = "This script was created by Gonzalo Torres Grau. Visit https://gonzalotorresgrau.com/ for more information.";
+        "ExitMessage" = "Press Enter to exit.";
+        "MenuOption" = "Press 1 to clean your computer or 9 to exit.";
+        "Exiting" = "Exiting the script.";
+        "Confirmation" = "Are you sure you want to proceed with the cleanup? This action cannot be undone. (y/n)";
+        "ErrorLogged" = "Error logged for file:";
+        "FileRemoved" = "File removed:";
+        "DirectorySkipped" = "Directory skipped due to error:";
+    };
+    "es-ES" = @{
+        "StartCleanup" = "Iniciando el proceso de limpieza...";
+        "CleanupComplete" = "Limpieza completada exitosamente.";
+        "PathNotFound" = "Ruta no encontrada:";
+        "Simulating" = "Simulando limpieza:";
+        "Performing" = "Realizando limpieza:";
+        "ErrorRemoving" = "Error al eliminar:";
+        "EmptyRecycleBin" = "Vaciando la papelera de reciclaje. Esta acción no se puede deshacer.";
+        "RecycleBinEmptied" = "Papelera de reciclaje vaciada con éxito.";
+        "DiskCleanup" = "Ejecutando la herramienta de limpieza de disco de Windows.";
+        "DiskCleanupComplete" = "La limpieza de disco se completó con éxito.";
+        "CleanupTaskComplete" = "La tarea de limpieza se completó con éxito. Todos los archivos innecesarios fueron eliminados.";
+        "ScriptCreatedBy" = "Este script fue creado por Gonzalo Torres Grau. Visite https://gonzalotorresgrau.com/ para más información.";
+        "ExitMessage" = "Presiona Enter para salir.";
+        "MenuOption" = "Presiona 1 para limpiar tu equipo o 9 para salir.";
+        "Exiting" = "Saliendo del script.";
+        "Confirmation" = "¿Está seguro de que desea proceder con la limpieza? Esta acción no se puede deshacer. (y/n)";
+        "ErrorLogged" = "Error registrado para el archivo:";
+        "FileRemoved" = "Archivo eliminado:";
+        "DirectorySkipped" = "Directorio omitido debido a error:";
+    };
+}
+
+# Function: Get Localized Message
+function Get-LocalizedMessage {
+    param (
+        [string]$Key
+    )
+    if (-not $localizedMessages.ContainsKey($language)) {
+        $language = "en-US"
+        $languageUsed = $language
+    }
+    if (-not $localizedMessages[$language].ContainsKey($Key)) {
+        Write-Warning "Clave '$Key' no encontrada para el idioma '$language'. Usando idioma por defecto 'en-US'."
+        return ""
+    }
+    return $localizedMessages[$language][$Key]
+}
+
+# Function: Empty Recycle Bin
+function Empty-RecycleBin {
+    Write-Host (Get-LocalizedMessage "EmptyRecycleBin") -ForegroundColor Cyan
+    try {
+        $objFolder.items() | ForEach-Object { Remove-Item $_.path -Recurse -Confirm:$false }
+        Write-Host (Get-LocalizedMessage "RecycleBinEmptied") -ForegroundColor Green
+    } catch {
+        Write-Warning "Error emptying Recycle Bin: $($_.Exception.Message)"
+    }
+}
+
+# ... (resto del script)
+`;
