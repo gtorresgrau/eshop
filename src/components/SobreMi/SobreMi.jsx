@@ -18,7 +18,7 @@ const SobreMi = () => {
             </Link>
             <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
               <div>
-                <h2 className="mb-2 text-lg text-start font-semibold text-text-primary-title">¿Qué ofrecemos?</h2>
+                <h2 className="text-2xl font-semibold text-gray-800 mb-4">¿Qué ofrecemos?</h2>
                 <ul className="max-w-md space-y-1 text-gray-500 list-inside">
                   {infoWeb.ofrece.map((item, index) => (
                     <li key={index} className="flex items-center">

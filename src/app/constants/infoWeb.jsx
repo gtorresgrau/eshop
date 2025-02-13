@@ -10,7 +10,7 @@ export const infoWeb = {
         "Mantenimiento de pc",
         "Consolas",
         "Mantenimientos de consolas",
-        "Producotos nuevos y usados",
+        "Productos nuevos y usados",
         "Accesorios"
       ],
 };
