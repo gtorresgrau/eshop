@@ -12,7 +12,7 @@ const CleanToolExplanation = () => {
   const previewContent = scriptCode.slice(0, previewLength);
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-6xl mx-auto p-6">
       <div className="mb-8 text-center align-middle">
         <div className="flex text-center justify-center justify-items-center items-end">
           <img

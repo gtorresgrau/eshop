@@ -7,15 +7,19 @@ const SobreMi = () => {
   return (
     <section id="nosotros" className="shadow-xl shadow-blue-50" style={{textAlign:"-webkit-center"}}>
       <article className="bg-primary-background">
-        <div className="py-8 px-8 mx-auto max-w-screen-xl  sm:py-16 lg:px-6">
-          <div className="max-w-screen-md">
+        <div className="py-8 px-8 mx-auto max-w-6xl  sm:py-16 lg:px-6">
+          <div className="max-w-6xl">
             <h2 className="mb-8 text-3xl md:text-4xl text-center font-extrabold text-primary uppercase ">Nosotros</h2>
-            <p className="mb-8 text-gray-500 sm:text-lg md:text-xl font-light" dangerouslySetInnerHTML={{ __html: infoWeb.sobremi }}></p>
-            <Link href="/nosotros" title="Consulta">
-              <p className="block w-1/3 text-white font-medium rounded-lg text-sm px-3 py-1.5 uppercase text-center bg-boton-primary hover:bg-boton-primary-hover active:bg-boton-primary-active">
-                Ver más
+            <div className="flex flex-col md:flex-row items-center justify-items-center justify-between mb-8">
+              <p className="text-gray-500 sm:text-lg md:text-xl font-light w-3/4">
+                <strong class="text-text-danger font-bold">ESHOP DEVICES</strong>, es una Startup joven que nos dedicamos a la venta de insumos informaticos, trabajamos por whatsapp para entregas en persona y mercadoshops para quienes quieren envios.
               </p>
-            </Link>
+              <Link href="/nosotros" title="Consulta">
+                <p className="mt-4 md:mt-0 text-white font-medium rounded-lg text-sm px-3 py-2 uppercase text-center bg-boton-primary hover:bg-boton-primary-hover active:bg-boton-primary-active">
+                  Ver más
+                </p>
+              </Link>
+            </div>
             <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
               <div>
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">¿Qué ofrecemos?</h2>
