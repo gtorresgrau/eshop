@@ -3,7 +3,7 @@ import Card from '../Card/Card';
 import SkeletonCard from '../Card/SkeletonCard';
 
 const Cards = ({ 
-  products, 
+ // products, 
   handleProductSelect, 
   isLoading 
 }) => {
