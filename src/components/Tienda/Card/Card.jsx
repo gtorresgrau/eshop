@@ -55,6 +55,9 @@ const Card = ({ product, handleProductSelect }) => {
               >
                 <IconShoopingCart {...iconProps} />
               </button>
+              {product.vendido ? (
+                  <div className="absolute bottom-0 right-0 inline-flex items-center justify-center rounded-t-lg w-full xs:w-36 xs:h-36 sm:w-44 sm:h-44 lg:w-52 lg:h-52 xl:w-64 xl:h-64 md:w-60 md:h-60 object-cover bg-slate-500 opacity-50" />
+                ) : null}
               <img
                 className="rounded-t-lg w-full xs:w-36 xs:h-36 sm:w-44 sm:h-44 lg:w-52 lg:h-52 xl:w-64 xl:h-64 md:w-60 md:h-60 object-cover"
                 src={product.foto_1_1 || '/images/sinFoto.webp'}

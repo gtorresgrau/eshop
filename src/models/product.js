@@ -61,6 +61,11 @@ const productoSchema = new mongoose.Schema({
         default: false,
         required: false
     },
+    vendido: {
+        type: Boolean,
+        default: false,
+        required: false
+    },
     medidas: { 
         type: String, 
         required: false 

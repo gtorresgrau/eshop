@@ -48,6 +48,7 @@ export default function UpdateProduct({
     n_electronica:product.n_electronica || '',
     usd:product.usd,
     usado:product.usado,
+    vendido:product.vendido,
     precio:product.precio||'',
     medidas:product.medidas || '',
     foto_1_1: product.foto_1_1 || "",
@@ -622,6 +623,8 @@ export default function UpdateProduct({
                 <label htmlFor="destacadosUpdate" className="block text-sm font-medium text-gray-900" >Destacado?</label>
                 <input onChange={handleChangeInput} type="checkbox" name="usado" id="usadoUpdate" checked={producto.usado}/>
                 <label htmlFor="usadoUpdate" className="block  text-sm font-medium text-gray-900" >Usado?</label>
+                <input onChange={handleChangeInput} type="checkbox" name="vendido" id="vendidoUpdate" checked={producto.vendido}/>
+                <label htmlFor="vendidoUpdate" className="block  text-sm font-medium text-gray-900" >vendido?</label>
               </div>
                 
               {/* Subir Archivo */}

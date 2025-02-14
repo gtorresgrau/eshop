@@ -45,6 +45,7 @@ export default function AddProduct({
       n_electronica: '',
       usd:'',
       usado:'',
+      vendido:'',
       precio:'',
       medidas: '',
       foto_1_1:  "",
@@ -661,6 +662,8 @@ const hasImageChanges = () => {
                     <label htmlFor="destacadosAdd" className="block  text-sm font-medium text-gray-900" >Destacado?</label>
                     <input onChange={handleChangeInput} type="checkbox" name="usado" id="usadoAdd" checked={producto.usado}/>
                     <label htmlFor="usadoAdd" className="block  text-sm font-medium text-gray-900" >Usado?</label>
+                    <input onChange={handleChangeInput} type="checkbox" name="vendido" id="vendidoAdd" checked={producto.vendido}/>
+                    <label htmlFor="vendidoAdd" className="block  text-sm font-medium text-gray-900" >vendido?</label>
                   </div>
                 </div>
   
