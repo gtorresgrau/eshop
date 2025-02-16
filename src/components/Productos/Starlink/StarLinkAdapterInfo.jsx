@@ -9,11 +9,11 @@ export default function StarLinkAdapterInfo() {
         </title>
         <meta
           name="description"
-          content="Optimiza tu conexión Starlink Mini con nuestro cable adaptador. Entrada 12V, salida 30V 5A, protección avanzada y tensión estabilizada. Ideal para viajes y uso continuo."
+          content="Optimiza tu conexión Starlink Mini con nuestro cable adaptador. Entrada 12V, salida 35V 5A, protección avanzada y tensión estabilizada. Ideal para viajes y uso continuo."
         />
         <meta
           name="keywords"
-          content="Starlink Mini, cable adaptador, Trifix SL1230, conexión en ruta, 12V a 30V"
+          content="Starlink Mini, cable adaptador, Trifix SL1230, conexión en ruta, 12V a 35V"
         />
         <link
           rel="canonical"
@@ -41,69 +41,39 @@ export default function StarLinkAdapterInfo() {
         Presentamos nuestro Cable Adaptador para Antena Starlink Mini, diseñado especialmente para optimizar el rendimiento de tu conexión a internet en la ruta, asegurando máxima eficiencia y seguridad en todo momento.
       </p>
 
-      <h2 className="mb-8 text-3xl md:text-4xl text-center font-extrabold text-primary uppercase">
-        Características destacadas
-      </h2>
+      <h2 className="mb-8 text-3xl md:text-4xl text-center font-extrabold text-primary uppercase">Características destacadas</h2>
       <ul className="list-none space-y-2 mb-6">
         <li className="flex items-center">
-          <svg
-            className="w-6 h-6 text-green-500 mr-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+          <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
           </svg>
-          <span>
-            Entrada 12V / Salida 30V 5A – Convierte la energía de tu vehículo en un suministro estable y confiable.
-          </span>
+          <p>
+            Entrada 12V / Salida 35V 5A – Convierte la energía de tu vehículo en un suministro estable y confiable.
+          </p>
         </li>
         <li className="flex items-center">
-          <svg
-            className="w-6 h-6 text-green-500 mr-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+          <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
           </svg>
-          <span>
+          <p>
             Protección avanzada contra sobrecargas y cortocircuitos.
-          </span>
+          </p>
         </li>
         <li className="flex items-center">
-          <svg
-            className="w-6 h-6 text-green-500 mr-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+          <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
           </svg>
-          <span>
+          <p>
             Tensión estabilizada para un mejor rendimiento.
-          </span>
+          </p>
         </li>
         <li className="flex items-center">
-          <svg
-            className="w-6 h-6 text-green-500 mr-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+          <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
           </svg>
-          <span>
+          <p>
             Uso continuo y confiable, ideal para viajes largos o instalaciones fijas.
-          </span>
+          </p>
         </li>
       </ul>
 
