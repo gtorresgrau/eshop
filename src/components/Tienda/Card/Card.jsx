@@ -47,7 +47,7 @@ const Card = ({ product, handleProductSelect }) => {
           <div>
           <div className={`flex justify-center  relative ${product.vendido ? "rounded-t-lg w-full bg-black opacity-95 grayscale" : ''}`}>
               {product.vendido && (
-                <p className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-3xl font-bold shadow-lg">VENDIDO</p>
+                <p className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-3xl font-bold shadow-lg bg-red-400 px-2 rounded-md">VENDIDO</p>
               )}
               <button
                 onClick={handleAddToCart}
@@ -55,6 +55,7 @@ const Card = ({ product, handleProductSelect }) => {
                 aria-label="Agregar al carrito"
                 title="Agregar al carrito"
                 type="button"
+                disabled={product.vendido?true:false}
               >
                 <IconShoopingCart {...iconProps} />
               </button>

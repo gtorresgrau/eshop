@@ -35,13 +35,8 @@ const Modal = ({ selectedProduct, closeModal }) => {
   )}`;
 
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 overflow-hidden"
-    >
-      <div className="bg-white p-2 rounded-none lg:rounded-lg max-w-6xl w-full max-h-full overflow-y-auto">
+    <div role="dialog" aria-modal="true" aria-labelledby="modal-title" className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 overflow-hidden" >
+      <div className={`bg-white p-2 rounded-none lg:rounded-lg max-w-6xl w-full max-h-full overflow-y-auto ${selectedProduct.vendido ? "rounded-t-lg w-full bg-black opacity-95 grayscale" : ''}`}>
         {/* Botón para cerrar el modal */}
         <div className="flex justify-end">
           <button
@@ -69,7 +64,7 @@ const Modal = ({ selectedProduct, closeModal }) => {
           </button>
         </div>
 
-        <section className="py-0 bg-white md:py-10 antialiased">
+        <section className="py-0 bg-white md:py-4 antialiased">
           <div className="max-w-screen-xl px-2 mx-auto 2xl:px-0">
             <div className="lg:grid lg:grid-cols-2 lg:gap-6 xl:gap-12">
               {/* Sección de imágenes */}
@@ -77,6 +72,9 @@ const Modal = ({ selectedProduct, closeModal }) => {
                 id="imagenes"
                 className="shrink-0 max-w-md lg:max-w-lg mx-auto flex flex-col justify-center"
               >
+              {selectedProduct.vendido && (
+                <p className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-3xl font-bold shadow-lg bg-red-400 px-2 rounded-md">VENDIDO</p>
+              )}
                 <div className="flex justify-center relative">
                   {mainImage ? (
                     <Image
@@ -162,7 +160,7 @@ const Modal = ({ selectedProduct, closeModal }) => {
                   <strong>Código: </strong>
                   {selectedProduct.cod_producto}
                 </p>
-                <p className="mb-1 md:mb-4 text-gray-500 text-start">
+                <p className="mb-1 md:mb-4 text-gray-500 text-start whitespace-pre-line">
                   <strong>Descripción: </strong>
                   {selectedProduct.descripcion}
                 </p>
@@ -177,49 +175,57 @@ const Modal = ({ selectedProduct, closeModal }) => {
                       className="w-full text-gray-500 mt-2 md:mt-4 py-2 hover:bg-boton-primary-hover font-medium rounded-lg text-sm px-4 flex items-center justify-center"
                       target="_blank"
                     >
+                      {selectedProduct.vendido?'':<>
                       <MdStore size={16} aria-hidden="true" />
                       <span className="ms-1">MercadoShop</span>
+                      </>
+                    }
                     </Link>
                   )}
 
                   {/* Botón para agregar al carrito */}
-                  <button
-                    onClick={handleAddToCart}
-                    type="button"
-                    title="Agregar al carrito"
-                    aria-label="Agregar producto al carrito"
-                    className="text-gray-500 mt-2 md:mt-4 py-2 hover:bg-boton-secondary-hover font-medium rounded-lg text-sm px-4 flex items-center justify-center"
-                  >
-                    <svg
-                      className="w-5 h-5 -ms-2 me-2"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="none"
-                      viewBox="0 0 24 24"
+                  {selectedProduct.vendido?'':
+                    <button
+                      onClick={handleAddToCart}
+                      type="button"
+                      title="Agregar al carrito"
+                      aria-label="Agregar producto al carrito"
+                      className="text-gray-500 mt-2 md:mt-4 py-2 hover:bg-boton-secondary-hover font-medium rounded-lg text-sm px-4 flex items-center justify-center"
                     >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"
-                      />
-                    </svg>
-                    <span>AGREGAR</span>
-                  </button>
-
-                  {/* Enlace para consultar vía WhatsApp */}
-                  <Link
-                    href={enviar}
-                    title="Consultar producto por WhatsApp"
-                    aria-label="Consultar producto por WhatsApp"
-                    className="text-gray-500 mt-2 md:mt-4 py-2 hover:bg-boton-secondary-hover active:bg-boton-secondary-active font-medium rounded-lg text-sm px-4 flex items-center justify-center"
-                    target="_blank"
-                  >
-                    <span>CONSULTAR</span>
-                  </Link>
+                      <svg
+                        className="w-5 h-5 -ms-2 me-2"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"
+                        />
+                      </svg>
+                      <span>AGREGAR</span>
+                    </button>
+                  }
+                  {selectedProduct.vendido?'':
+                    <>
+                      {/* Enlace para consultar vía WhatsApp */}
+                      <Link
+                        href={enviar}
+                        title="Consultar producto por WhatsApp"
+                        aria-label="Consultar producto por WhatsApp"
+                        className="text-gray-500 mt-2 md:mt-4 py-2 hover:bg-boton-secondary-hover active:bg-boton-secondary-active font-medium rounded-lg text-sm px-4 flex items-center justify-center"
+                        target="_blank"
+                        >
+                        <span>CONSULTAR</span>
+                      </Link>
+                    </>
+                    }
                 </div>
               </div>
             </div>
