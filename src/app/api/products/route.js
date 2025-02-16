@@ -4,10 +4,7 @@ import Producto from '../../../models/product';
 
 // Función para normalizar cadenas y eliminar acentos
 function normalizeString(str) {
-  return str
-    ?.toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
+  return str?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
 // Función para filtrar productos basado en múltiples valores
@@ -15,7 +12,7 @@ function filterByField(products, field, values) {
   if (!values.length) return products;
   const normalizedValues = values.map(normalizeString);
   return products.filter(product => 
-    normalizedValues.includes(normalizeString(product[field]))
+    normalizedValues.includes(normalizeString(product[field] || ''))
   );
 }
 
@@ -32,11 +29,23 @@ function countByField(products, field) {
 
 export async function GET(request) {
   await connectDB();
-  const productsData = await Producto.find().lean();
   const { searchParams } = new URL(request.url);
+  const slug = searchParams.get('slug');
 
+  if (slug) {
+    // Si hay un slug, buscar un solo producto
+    const product = await Producto.findOne({ slug }).lean();
+    if (!product) {
+      return NextResponse.json({ error: 'Producto no encontrado' }, { status: 404 });
+    }
+    return NextResponse.json(product);
+  }
+
+  // Obtener todos los productos
+  const productsData = await Producto.find().lean();
   let filteredProducts = productsData;
 
+  // Filtros y paginación
   const search = normalizeString(searchParams.get('search') || '');
   const categories = searchParams.getAll('category');
   const brands = searchParams.getAll('brand');
@@ -50,7 +59,7 @@ export async function GET(request) {
   if (search) {
     filteredProducts = filteredProducts.filter(product =>
       ['nombre', 'marca', 'cod_producto', 'categoria'].some(field =>
-        normalizeString(product[field] || '').includes(search) // Evita errores con campos faltantes
+        normalizeString(product[field] || '').includes(search)
       )
     );
   }
@@ -59,10 +68,9 @@ export async function GET(request) {
   filteredProducts = filterByField(filteredProducts, 'categoria', categories);
   filteredProducts = filterByField(filteredProducts, 'marca', brands);
 
-  // Calcular conteos de categorías, marcas y vehículos
+  // Conteo de categorías y marcas
   const totalCategories = Object.entries(countByField(productsData, 'categoria')).sort();
   const totalBrands = Object.entries(countByField(productsData, 'marca')).sort();
-
   const filteredCategories = Object.entries(countByField(filteredProducts, 'categoria')).sort();
   const filteredBrands = Object.entries(countByField(filteredProducts, 'marca')).sort();
 

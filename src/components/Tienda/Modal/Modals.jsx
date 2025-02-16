@@ -6,6 +6,7 @@ import { CartContext } from '@/components/Context/ShoopingCartContext';
 import addToCart from '@/Utils/addToCart';
 import userData from '@/app/constants/userData';
 import { MdStore } from 'react-icons/md';
+//import { IoShareSocialSharp } from "react-icons/io5";
 
 const Modal = ({ selectedProduct, closeModal }) => {
   const [cart, setCart] = useContext(CartContext);
@@ -33,6 +34,32 @@ const Modal = ({ selectedProduct, closeModal }) => {
   const enviar = `https://wa.me/+${userData.codigoPais}${userData.contact}?text=${encodeURIComponent(
     texto || userData.textoPredefinido
   )}`;
+
+  
+  const handleShare = async () => {
+    // Convertir el nombre del producto en un slug amigable para URL
+    const slug = encodeURIComponent(
+      selectedProduct.nombre.trim().toLowerCase().replace(/\s+/g, '-')
+    );
+    // Construir la URL con la ruta deseada
+    const shareUrl = `${window.location.origin}/productos/${slug}`;
+  
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `Detalles del Producto: ${selectedProduct.nombre}`,
+          text: `No te lo podes perder: ${selectedProduct.nombre}`,
+          url: shareUrl,
+        });
+        // Puedes agregar una notificación de éxito o algún feedback si lo deseas.
+      } catch (error) {
+        console.error('Error al compartir:', error);
+      }
+    } else {
+      console.error('La API de compartir no está soportada en este navegador.');
+      // Aquí podrías implementar una alternativa, como copiar la URL al portapapeles.
+    }
+  };
 
   return (
     <div role="dialog" aria-modal="true" aria-labelledby="modal-title" className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 overflow-hidden" >
@@ -139,11 +166,6 @@ const Modal = ({ selectedProduct, closeModal }) => {
                   <strong>Nombre: </strong>
                   {selectedProduct.nombre}
                 </p>
-                {/* Se puede descomentar o agregar información adicional según se requiera */}
-                {/* <p className="mb-1 md:mb-4 text-gray-500 text-start">
-                  <strong>Vehículo: </strong>
-                  {selectedProduct.vehiculo}
-                </p> */}
                 <p className="mb-1 md:mb-4 text-gray-500 text-start">
                   <strong>Marca: </strong>
                   {selectedProduct.marca}
@@ -213,7 +235,7 @@ const Modal = ({ selectedProduct, closeModal }) => {
                     </button>
                   }
                   {selectedProduct.vendido?'':
-                    <>
+                    <div className='flex items-center justify-items-center'>
                       {/* Enlace para consultar vía WhatsApp */}
                       <Link
                         href={enviar}
@@ -224,7 +246,10 @@ const Modal = ({ selectedProduct, closeModal }) => {
                         >
                         <span>CONSULTAR</span>
                       </Link>
-                    </>
+                      {/* <button className="text-gray-500 mt-2 md:mt-4 py-2 hover:bg-boton-secondary-hover active:bg-boton-secondary-active font-medium rounded-lg px-4 flex items-center justify-center text-base" onClick={handleShare}>
+                            <IoShareSocialSharp />
+                      </button> */}
+                    </div>
                     }
                 </div>
               </div>
