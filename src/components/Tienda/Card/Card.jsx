@@ -45,7 +45,10 @@ const Card = ({ product, handleProductSelect }) => {
       >
         <div>
           <div>
-            <div className="flex justify-center relative">
+          <div className={`flex justify-center relative ${product.vendido ? "absolute top-0 left-0 rounded-t-lg w-full xs:w-36 xs:h-36 sm:w-44 sm:h-44 lg:w-52 lg:h-52 xl:w-64 xl:h-64 md:w-60 md:h-60 bg-black opacity-95 grayscale" : ''}`}>
+              {product.vendido && (
+                <p className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-3xl font-bold shadow-lg">VENDIDO</p>
+              )}
               <button
                 onClick={handleAddToCart}
                 className="absolute top-1 right-1 inline-flex items-center justify-center w-8 h-8 bg-boton-primary hover:bg-boton-primary-hover active:bg-boton-primary-active rounded-full text-white z-10"
@@ -55,9 +58,6 @@ const Card = ({ product, handleProductSelect }) => {
               >
                 <IconShoopingCart {...iconProps} />
               </button>
-              {product.vendido ? (
-                  <><div className="absolute bottom-0 right-0 rounded-t-lg w-full xs:w-36 xs:h-36 sm:w-44 sm:h-44 lg:w-52 lg:h-52 xl:w-64 xl:h-64 md:w-60 md:h-60 object-cover bg-slate-500 opacity-70 p-0 m-0" /><p className='absolute bottom-1 right-1 inline-flex items-center justify-center bg-slate-200 hover:bg-boton-primary-hover active:bg-boton-primary-active rounded-md text-white z-10 '>VENDIDO</p></>
-                ) : null}
               <img
                 className="rounded-t-lg w-full xs:w-36 xs:h-36 sm:w-44 sm:h-44 lg:w-52 lg:h-52 xl:w-64 xl:h-64 md:w-60 md:h-60 object-cover"
                 src={product.foto_1_1 || '/images/sinFoto.webp'}
@@ -151,7 +151,7 @@ const Card = ({ product, handleProductSelect }) => {
                 </Link>
                 <button
                   onClick={handleConsult}
-                  className="flex items-center gap-2 px-4 py-2 bg-primary-whats text-white rounded-lg shadow hover:bg-primary-whatsHover transition duration-300"
+                  className={`flex items-center gap-2 px-4 py-2  text-white rounded-lg shadow transition duration-300 ${product.vendido?'bg-slate-500':'bg-primary-whats hover:bg-primary-whatsHover'}`}
                   title="Consultar por WhatsApp"
                   aria-label="Consultar por WhatsApp"
                   type="button"
@@ -172,10 +172,11 @@ const Card = ({ product, handleProductSelect }) => {
                 </Link>
                 <button
                   onClick={handleConsult}
-                  className="flex items-center gap-2 px-4 py-2 bg-primary-whats text-white rounded-lg shadow hover:bg-primary-whatsHover transition duration-300"
+                  className={`flex items-center gap-2 px-4 py-2 text-white rounded-lg shadow transition duration-300 ${product.vendido?'bg-slate-500':'bg-primary-whats hover:bg-primary-whatsHover'}`}
                   title="Consultar por WhatsApp"
                   aria-label="Consultar por WhatsApp"
                   type="button"
+                  disabled={product.vendido?true:false}
                 >
                   <RiWhatsappLine size={16} /> <span>Consultar</span>
                 </button>
@@ -193,10 +194,12 @@ const Card = ({ product, handleProductSelect }) => {
                 </Link>
                 <button
                   onClick={handleConsult}
-                  className="flex items-center justify-center w-16 h-10 bg-primary-whats text-white rounded-full shadow hover:bg-primary-whatsHover transition duration-300"
+                  className={`flex items-center justify-center w-16 h-10  text-white rounded-full shadow transition duration-300 ${product.vendido?'bg-slate-500':'bg-primary-whats hover:bg-primary-whatsHover'}`}
                   title="Consultar por WhatsApp"
                   aria-label="Consultar por WhatsApp"
                   type="button"
+                  disabled={product.vendido?true:false}
+
                 >
                   <RiWhatsappLine size={16} />
                 </button>
@@ -205,10 +208,12 @@ const Card = ({ product, handleProductSelect }) => {
           ) : (
             <button
               onClick={handleConsult}
-              className="flex items-center justify-center w-full px-4 py-2 bg-primary-whats text-white rounded-lg shadow hover:bg-primary-whatsHover transition duration-300"
+              className={`flex items-center justify-center w-full px-4 py-2  text-white rounded-lg shadow  transition duration-300 ${product.vendido?'bg-slate-500':'bg-primary-whats hover:bg-primary-whatsHover'}`}
               title="Consultar por WhatsApp"
               aria-label="Consultar por WhatsApp"
               type="button"
+              disabled={product.vendido?true:false}
+
             >
               <RiWhatsappLine size={16} /> <span>Consultar</span>
             </button>
