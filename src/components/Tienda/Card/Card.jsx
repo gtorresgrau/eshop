@@ -45,7 +45,7 @@ const Card = ({ product, handleProductSelect }) => {
       >
         <div>
           <div>
-          <div className={`flex justify-center relative ${product.vendido ? "absolute top-0 left-0 rounded-t-lg w-full xs:w-36 xs:h-36 sm:w-44 sm:h-44 lg:w-52 lg:h-52 xl:w-64 xl:h-64 md:w-60 md:h-60 bg-black opacity-95 grayscale" : ''}`}>
+          <div className={`flex justify-center  relative ${product.vendido ? "rounded-t-lg w-full bg-black opacity-95 grayscale" : ''}`}>
               {product.vendido && (
                 <p className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-3xl font-bold shadow-lg">VENDIDO</p>
               )}
@@ -59,7 +59,7 @@ const Card = ({ product, handleProductSelect }) => {
                 <IconShoopingCart {...iconProps} />
               </button>
               <img
-                className="rounded-t-lg w-full xs:w-36 xs:h-36 sm:w-44 sm:h-44 lg:w-52 lg:h-52 xl:w-64 xl:h-64 md:w-60 md:h-60 object-cover"
+                className="rounded-t-lg w-full object-cover"
                 src={product.foto_1_1 || '/images/sinFoto.webp'}
                 alt={product.nombre}
                 title={product.nombre}
@@ -122,7 +122,7 @@ const Card = ({ product, handleProductSelect }) => {
                 aria-label={`Categoría: ${product.categoria}`}
               >
                 <strong>Categoría:</strong>{' '}
-                {product.categoria.length > 15 ? `${product.categoria.slice(0, 15)}...` : product.categoria}
+                {product.categoria.length > 10 ? `${product.categoria.slice(0, 10)}...` : product.categoria}
               </p>
               <p
                 className="hidden text-xs text-gray-700 md:block md:text-base"
@@ -208,7 +208,7 @@ const Card = ({ product, handleProductSelect }) => {
           ) : (
             <button
               onClick={handleConsult}
-              className={`flex items-center justify-center w-full px-4 py-2  text-white rounded-lg shadow  transition duration-300 ${product.vendido?'bg-slate-500':'bg-primary-whats hover:bg-primary-whatsHover'}`}
+              className={`flex items-center justify-center w-full px-4 py-2 gap-2   text-white rounded-lg shadow  transition duration-300 ${product.vendido?'bg-slate-500':'bg-primary-whats hover:bg-primary-whatsHover'}`}
               title="Consultar por WhatsApp"
               aria-label="Consultar por WhatsApp"
               type="button"
