@@ -7,6 +7,7 @@ import Dropdown from "./Dropdown/Dropdown";
 import Filtros from "./Filtros/Filtros";
 import useProducts from "@/Hooks/useProducts";
 import Loading from '../Loading/Loading';
+import StarlinkMiniBanner from '../Productos/Starlink/bannerStarLink';
 
 export default function Tienda() {
   const {
@@ -37,11 +38,11 @@ export default function Tienda() {
     <Suspense fallback={<Loading />}>
       <main id="productos" className="bg-primary-background min-h-screen">
         <div className="text-center py-4">
-          <h1 className="text-lg max-w-6xl mx-auto text-gray-600">
+          <h1 className="text-lg max-w-6xl mx-auto text-gray-600 px-2 text-justify md:text-center">
             Encuentra los mejores productos y servicios informáticos aquí: <strong>PC Gamers, PC mini para oficinas, PC profesionales</strong> y muchos accesorios para informática como la <strong>fuente adaptador de STARLINK mini. </strong> Ademas contamos con Servicio de Mantenimiento de Consolas, y armado de computadoras segun tu necesidad. 
           </h1>
         </div>
-
+        <StarlinkMiniBanner />
         {/* Paginación superior */}
         <nav aria-label="Paginación de productos" className="flex justify-center my-4">
           <Pagination

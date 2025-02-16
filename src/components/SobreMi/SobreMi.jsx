@@ -12,7 +12,7 @@ const SobreMi = () => {
             <h2 className="mb-8 text-3xl md:text-4xl text-center font-extrabold text-primary uppercase ">Nosotros</h2>
             <div className="flex flex-col md:flex-row items-center justify-items-center justify-between mb-8">
               <p className="text-gray-500 sm:text-lg md:text-xl font-light w-3/4">
-                <strong class="text-text-danger font-bold">ESHOP DEVICES</strong>, es una Startup joven que nos dedicamos a la venta de insumos informaticos, trabajamos por whatsapp para entregas en persona y mercadoshops para quienes quieren envios.
+                <strong className="text-text-danger font-bold">ESHOP DEVICES</strong>, es una Startup joven que nos dedicamos a la venta de insumos informaticos, trabajamos por whatsapp para entregas en persona y mercadoshops para quienes quieren envios.
               </p>
               <Link href="/nosotros" title="Consulta">
                 <p className="mt-4 md:mt-0 text-white font-medium rounded-lg text-sm px-3 py-2 uppercase text-center bg-boton-primary hover:bg-boton-primary-hover active:bg-boton-primary-active">
