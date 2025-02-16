@@ -68,38 +68,51 @@ export default function RootLayout({ children }) {
 
         {/* Structured Data */}
         <script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Store",
-      "name": metadata.title,
-      "description": metadata.description,
-      "image": metadata.openGraph.image,
-      "url": metadata.openGraph.url,
-      "telephone": "+541136317470",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Las Flores 1600",
-        "addressLocality": "Wilde",
-        "addressRegion": "Buenos Aires",
-        "postalCode": "1875",
-        "addressCountry": "AR"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": -34.698322,
-        "longitude": -58.313978
-      },
-      "openingHours": "Mo-Fr 09:00-18:00, Sa 10:00-14:00",
-      "priceRange": "$$",
-      "sameAs": [
-        "https://www.instagram.com/gonzalotorresgrau"
-      ],
-      "hasMap": "https://www.google.com/maps/place/Las+Flores+1600,+Wilde,+Buenos+Aires"
-    }),
-  }}
-/>
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Store",
+              "name": metadata.title,
+              "description": metadata.description,
+              "image": metadata.openGraph.image,
+              "url": metadata.openGraph.url,
+              "telephone": "+541136317470",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Las Flores 1600",
+                "addressLocality": "Wilde",
+                "addressRegion": "Buenos Aires",
+                "postalCode": "1875",
+                "addressCountry": "AR"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": -34.698322,
+                "longitude": -58.313978
+              },
+              "openingHours": "Mo-Fr 09:00-18:00, Sa 10:00-14:00",
+              "priceRange": "$$",
+              "sameAs": [
+                "https://www.instagram.com/gonzalotorresgrau"
+              ],
+              "hasMap": "https://www.google.com/maps/place/Las+Flores+1600,+Wilde,+Buenos+Aires"
+            }),
+          }}
+        />
+        {/* <!-- Google tag (gtag.js) --> */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-7LRLRDC81W"></script>
+        <script dangerouslySetInnerHTML={{
+            __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-7LRLRDC81W'{
+                  page_path: window.location.pathname,
+                });
+            `,
+          }}
+          />
 
       </head>
       <body>
