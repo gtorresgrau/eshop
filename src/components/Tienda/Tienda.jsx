@@ -37,15 +37,13 @@ export default function Tienda() {
     <Suspense fallback={<Loading />}>
       <main id="productos" className="bg-primary-background min-h-screen">
         <div className="text-center py-4">
-          <h2 title="Tienda de Productos" className="mb-8 text-3xl md:text-4xl text-center font-extrabold text-primary uppercase ">Tienda</h2>
-          <p className="text-lg max-w-6xl mx-auto">
-            Encuentra los mejores productos y servicios informáticos aquí: PC Gamers, PC mini para oficinas, PC profesionales y muchos accesorios para informática.
-            Ademas contamos con Servicio de Mantenimiento de Consolas, y armado de computadoras segun tu necesidad. 
-          </p>
+          <h1 className="text-lg max-w-6xl mx-auto text-gray-600">
+            Encuentra los mejores productos y servicios informáticos aquí: <strong>PC Gamers, PC mini para oficinas, PC profesionales</strong> y muchos accesorios para informática como la <strong>fuente adaptador de STARLINK mini. </strong> Ademas contamos con Servicio de Mantenimiento de Consolas, y armado de computadoras segun tu necesidad. 
+          </h1>
         </div>
 
         {/* Paginación superior */}
-        <nav aria-label="Paginación de productos" className="flex justify-center my-6">
+        <nav aria-label="Paginación de productos" className="flex justify-center my-4">
           <Pagination
             count={totalPages}
             page={currentPage}

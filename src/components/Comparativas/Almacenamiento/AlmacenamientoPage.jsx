@@ -1,5 +1,6 @@
 import React from 'react';
 import { storageOptions } from '@/app/constants/infoWeb';
+import Comparativas from '../Comparativas';
 
 const AlmacenamientoPage = () => {
 
@@ -43,7 +44,7 @@ const AlmacenamientoPage = () => {
             </p>
         </div>
         </article>
-
+        <Comparativas />
     </section>
   );
 };

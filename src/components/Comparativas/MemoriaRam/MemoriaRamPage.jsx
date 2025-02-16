@@ -1,5 +1,6 @@
 import React from 'react';
 import { ramOptions } from '@/app/constants/infoWeb';
+import Comparativas from '../Comparativas';
 
 const MemoriaRamPage = () => {
   return (
@@ -73,6 +74,7 @@ const MemoriaRamPage = () => {
             </p>
         </div>
       </article>
+      <Comparativas />
     </section>
   );
 };

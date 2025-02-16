@@ -1,5 +1,6 @@
 import React from 'react';
 import { fuenteOptions } from '@/app/constants/infoWeb';
+import Comparativas from '../Comparativas';
 
 const FuentePage = () => {
   return (
@@ -71,6 +72,7 @@ const FuentePage = () => {
             </p>
         </div>
       </article>
+      <Comparativas />
     </section>
   );
 };
