@@ -1,3 +1,4 @@
+
 'use client';
 import React, { useContext } from 'react';
 import { MdStore } from 'react-icons/md';
@@ -10,97 +11,97 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 const Card = ({ product, handleProductSelect }) => {
-  const [cart, setCart] = useContext(CartContext);
+    const [cart, setCart] = useContext(CartContext);
 
-  const handleAddToCart = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    addToCart(product, cart, setCart);
-  };
+    const handleAddToCart = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        addToCart(product, cart, setCart);
+    };
 
-  const handleConsult = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    window.open(enviar, '_blank');
-  };
+    const handleConsult = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        window.open(enviar, '_blank');
+    };
 
-  const iconProps = { ancho: 20, alto: 20, color: '#ffffff' };
+    const iconProps = { ancho: 20, alto: 20, color: '#ffffff' };
 
-  const consultMessage = `Hola, quería consultar por ${product.nombre} (${product.cod_producto})`;
-  const enviar = `https://wa.me/+${userData.codigoPais}${userData.contact}?text=${encodeURIComponent(
-    consultMessage || userData.textoPredefinido
-  )}`;
+    const consultMessage = `Hola, quería consultar por ${product.nombre} (${product.cod_producto})`;
+    const enviar = `https://wa.me/+${userData.codigoPais}${userData.contact}?text=${encodeURIComponent(
+        consultMessage || userData.textoPredefinido
+    )}`;
 
-  return (
-    <li className="relative xs:w-44 sm:w-48 md:w-64 lg:w-56 xl:w-72 lg:h-80 xl:h-96 sm:min-h-[320px] md:min-h-[430px] lg:min-h-[420px] xl:min-h-[465px] list-none cursor-pointer">
-      <div
-        className="relative flex flex-col justify-between w-full h-full bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition-shadow duration-300"
-        onClick={() => handleProductSelect(product)}
-        role="button"
-        tabIndex="0"
-        aria-label={`Ver detalles del producto ${product.nombre}`}
-        title={`Ver detalles del producto ${product.nombre}`}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') handleProductSelect(product);
-        }}
-      >
-        <div>
-          <div className="relative">
-            {/* Contenedor con relación de aspecto para reservar espacio */}
-            <div className="relative aspect-w-4 aspect-h-3">
-              {product.vendido && (
-                <p className="absolute inset-0 flex items-center justify-center text-white text-3xl font-bold bg-red-400 bg-opacity-80 rounded-t-lg grayscale">
-                  VENDIDO
-                </p>
-              )}
-              <button
-                onClick={handleAddToCart}
-                className="absolute top-1 right-1 inline-flex items-center justify-center w-8 h-8 bg-boton-primary hover:bg-boton-primary-hover active:bg-boton-primary-active rounded-full text-white z-10"
-                aria-label="Agregar al carrito"
-                title="Agregar al carrito"
-                type="button"
-                disabled={!!product.vendido}
-              >
-                <IconShoopingCart {...iconProps} />
-              </button>
-              <Image
-                className="rounded-t-lg w-full h-full object-cover"
-                src={product.foto_1_1 || '/images/sinFoto.webp'}
-                alt={product.nombre}
-                title={product.nombre}
-                // Se definen ancho y alto para reservar espacio en el layout
-                width={400}
-                height={300}
-                loading="lazy"
-              />
-              <Image
-                className={`absolute bottom-1 right-1 rounded-md z-10 ${product.usado ? 'w-28' : 'w-16'}`}
-                src={product.usado ? '/images/USADO.webp' : '/images/NUEVO.webp'}
-                alt={product.usado ? 'producto usado' : 'producto nuevo'}
-                title={product.usado ? 'producto usado' : 'producto nuevo'}
-                width={product.usado ? 112 : 64} // valores en píxeles aproximados
-                height={32}
-                loading="lazy"
-              />
-              <div
-                className="absolute top-1 left-1 text-sm md:text-base bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-bold px-3 py-1 rounded-tr-lg rounded-bl-lg shadow-md shadow-orange-300"
-                aria-label={`Precio: ${Number(product.precio).toLocaleString('es-AR', {
-                  style: 'currency',
-                  currency: 'ARS',
-                })}${product.usd ? ' usd' : ''}`}
-                title={`Precio: ${Number(product.precio).toLocaleString('es-AR', {
-                  style: 'currency',
-                  currency: 'ARS',
-                })}${product.usd ? ' usd' : ''}`}
-              >
-                {Number(product.precio).toLocaleString('es-AR', {
-                  style: 'currency',
-                  currency: 'ARS',
-                })}
-                {product.usd ? ' usd' : ''}
-              </div>
-            </div>
-            <p
+    return (
+        <li className="relative xs:w-44 sm:w-48 md:w-64 lg:w-56 xl:w-72 lg:h-80 xl:h-96 sm:min-h-[320px] md:min-h-[430px] lg:min-h-[420px] xl:min-h-[465px] list-none cursor-pointer">
+            <div
+                className="relative flex flex-col justify-between w-full h-full bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition-shadow duration-300"
+                onClick={() => handleProductSelect(product)}
+                role="button"
+                tabIndex="0"
+                aria-label={`Ver detalles del producto ${product.nombre}`}
+                title={`Ver detalles del producto ${product.nombre}`}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') handleProductSelect(product);
+                }}
+            >
+                <div>
+                    <div className="relative aspect-w-4 aspect-h-3 bg-gray-200"> {/* Placeholder */}
+                        {product.vendido && (
+                            <p className="absolute inset-0 flex items-center justify-center text-white text-3xl font-bold bg-red-400 bg-opacity-80 rounded-t-lg grayscale">
+                                VENDIDO
+                            </p>
+                        )}
+                        <button
+                            onClick={handleAddToCart}
+                            className="absolute top-1 right-1 inline-flex items-center justify-center w-8 h-8 bg-boton-primary hover:bg-boton-primary-hover active:bg-boton-primary-active rounded-full text-white z-10"
+                            aria-label="Agregar al carrito"
+                            title="Agregar al carrito"
+                            type="button"
+                            disabled={!!product.vendido}
+                        >
+                            <IconShoopingCart {...iconProps} />
+                        </button>
+                        <Image
+                            className="rounded-t-lg w-full h-full object-cover"
+                            src={product.foto_1_1 || '/images/sinFoto.webp'}
+                            alt={product.nombre}
+                            title={product.nombre}
+                            width={400} // Ancho fijo
+                            height={300} // Alto fijo
+                            placeholder="blur" // Placeholder de baja resolución
+                            blurDataURL={product.foto_1_1_baja_resolucion || '/images/placeholder.jpg'} // URL de baja resolución
+                            loading="lazy"
+                            onError={(e) => { e.target.onerror = null; e.target.src="/images/sinFoto.webp" }} // Manejo de errores
+                        />
+                        <Image
+                            className={`absolute bottom-1 right-1 rounded-md z-10 ${product.usado ? 'w-28' : 'w-16'}`}
+                            src={product.usado ? '/images/USADO.webp' : '/images/NUEVO.webp'}
+                            alt={product.usado ? 'producto usado' : 'producto nuevo'}
+                            title={product.usado ? 'producto usado' : 'producto nuevo'}
+                            width={product.usado ? 112 : 64} // Ancho fijo
+                            height={32}  // Alto fijo
+                            loading="lazy"
+                        />
+                        <div
+                            className="absolute top-1 left-1 text-sm md:text-base bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-bold px-3 py-1 rounded-tr-lg rounded-bl-lg shadow-md shadow-orange-300"
+                            aria-label={`Precio: ${Number(product.precio).toLocaleString('es-AR', {
+                                style: 'currency',
+                                currency: 'ARS',
+                            })}${product.usd ? ' usd' : ''}`}
+                            title={`Precio: ${Number(product.precio).toLocaleString('es-AR', {
+                                style: 'currency',
+                                currency: 'ARS',
+                            })}${product.usd ? ' usd' : ''}`}
+                        >
+                            {Number(product.precio).toLocaleString('es-AR', {
+                                style: 'currency',
+                                currency: 'ARS',
+                            })}
+                            {product.usd ? ' usd' : ''}
+                        </div>
+                    </div>
+                    <p
               className="mt-2 text-end text-gray-700 px-2 font-extralight text-xs z-10"
               aria-label={`Código: ${product.cod_producto}`}
               title={`Código: ${product.cod_producto}`}
@@ -242,7 +243,6 @@ const Card = ({ product, handleProductSelect }) => {
             </button>
           )}
         </div>
-      </div>
     </li>
   );
 };
