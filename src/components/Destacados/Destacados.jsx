@@ -7,6 +7,7 @@ import "@egjs/flicking-plugins/dist/arrow.css"
 import useProducts from "../../Hooks/useProducts"
 import SkeletonDestacado from "../Tienda/Card/SkeletonDestacados"
 import CardDestacado from "../Tienda/Card/CardDestacado"
+import Modal from "../Tienda/Modal/Modals"
 
 const DemoComponent = () => {
   const flickingRef = useRef<Flicking>(null)
@@ -16,7 +17,7 @@ const DemoComponent = () => {
 
   return (
     <section className="text-center max-w-7xl mx-auto" id="marcasDestacado">
-      {isModalOpen && selectedProduct && <Modals closeModal={closeModal} selectedProduct={selectedProduct} />}
+      {isModalOpen && selectedProduct && <Modal closeModal={closeModal} selectedProduct={selectedProduct} />}
       {isLoading ? (
         <div className="flex gap-2 items-center justify-around">
           <div className="hidden md:flex">
