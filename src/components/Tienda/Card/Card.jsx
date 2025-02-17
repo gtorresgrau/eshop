@@ -133,14 +133,14 @@ const Card = ({ product, handleProductSelect }) => {
                 <strong>Categoría:</strong>{' '}
                 {product.categoria.length > 10 ? `${product.categoria.slice(0, 10)}...` : product.categoria}
               </p>
-              <p
+              {/* <p
                 className="hidden text-xs text-gray-700 md:block md:text-base"
                 title={`Producto: ${product.n_serie}`}
                 aria-label={`Producto: ${product.n_serie}`}
               >
                 <strong>Product:</strong>{' '}
                 {String(product.n_serie).length > 6 ? `${String(product.n_serie).slice(0, 6)}...` : product.n_serie}
-              </p>
+              </p> */}
             </div>
           </div>
         </div>
