@@ -1,6 +1,6 @@
 
 'use client';
-import React, { useContext } from 'react';
+import React, { useContext, useState, useRef  } from 'react';
 import { MdStore } from 'react-icons/md';
 import { RiWhatsappLine } from 'react-icons/ri';
 import IconShoopingCart from '../ShoopingCart/IconShoopingCart';
@@ -12,6 +12,13 @@ import Image from 'next/image';
 
 const Card = ({ product, handleProductSelect }) => {
     const [cart, setCart] = useContext(CartContext);
+
+    const [imageLoaded, setImageLoaded] = useState(false);
+    const imageRef = useRef(null);
+
+    const handleImageLoad = () => {
+        setImageLoaded(true);
+    };
 
     const handleAddToCart = (e) => {
         e.preventDefault();
@@ -33,7 +40,7 @@ const Card = ({ product, handleProductSelect }) => {
     )}`;
 
     return (
-        <li className="relative xs:w-44 sm:w-48 md:w-64 lg:w-56 xl:w-72 lg:h-80 xl:h-96 sm:min-h-[320px] md:min-h-[430px] lg:min-h-[420px] xl:min-h-[465px] list-none cursor-pointer">
+      <li className="relative xs:w-44 sm:w-48 md:w-64 lg:w-56 xl:w-72 lg:h-80 xl:h-96 sm:min-h-[320px] md:min-h-[430px] lg:min-h-[420px] xl:min-h-[465px] list-none cursor-pointer">
             <div
                 className="relative flex flex-col justify-between w-full h-full bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition-shadow duration-300"
                 onClick={() => handleProductSelect(product)}
@@ -67,12 +74,15 @@ const Card = ({ product, handleProductSelect }) => {
                             src={product.foto_1_1 || '/images/sinFoto.webp'}
                             alt={product.nombre}
                             title={product.nombre}
-                            width={400} // Ancho fijo
-                            height={300} // Alto fijo
-                            placeholder="blur" // Placeholder de baja resolución
-                            blurDataURL={product.foto_1_1_baja_resolucion || '/images/placeholder.jpg'} // URL de baja resolución
+                            width={400} // Ancho fijo (necesario para next/image)
+                            height={300} // Alto fijo (necesario para next/image)
+                            placeholder="blur"
+                            blurDataURL={product.foto_1_1_baja_resolucion || '/images/placeholder.jpg'}
                             loading="lazy"
-                            onError={(e) => { e.target.onerror = null; e.target.src="/images/sinFoto.webp" }} // Manejo de errores
+                            onLoad={handleImageLoad} // Llama a esta función cuando la imagen carga
+                            onError={(e) => { e.target.onerror = null; e.target.src="/images/sinFoto.webp" }}
+                            ref={imageRef} // Referencia a la imagen
+                            style={imageLoaded ? {} : { display: 'none' }} // Oculta la imagen hasta que carga
                         />
                         <Image
                             className={`absolute bottom-1 right-1 rounded-md z-10 ${product.usado ? 'w-28' : 'w-16'}`}

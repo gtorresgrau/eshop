@@ -45,10 +45,10 @@ const DemoComponent = () => {
           </ViewportSlot>
       
           {allDestacados.map((product) => (
-            <div key={product.id} className="flicking-panel m-8 transition-transform transform hover:scale-105 w-64 p-6">
-              <CardDestacado product={product} onSelect={handleProductSelect} />
-            </div>
-          ))}
+                <div key={product.id} className="flicking-panel m-8 transition-transform transform hover:scale-105 w-64 p-6">
+                    <CardDestacado product={product} onSelect={handleProductSelect} />
+                </div>
+            ))}
       
         </Flicking>
       ) : (
