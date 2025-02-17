@@ -208,6 +208,7 @@ export default function UploadImage({ imagenes, updateImages, handleRemoveImage 
                   onClick={() => handleVerArchivo(archivo)}
                   loading='lazy'
                   title={archivo.name}
+                  height={144}
                 />
 
                  <Button

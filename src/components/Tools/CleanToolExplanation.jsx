@@ -21,7 +21,9 @@ const CleanToolExplanation = () => {
             title="CleanTool Icon"
             aria-label="CleanTool Icon"
             alt="CleanTool Icon"
-            className="w-14"
+            className="w-14 h-14"
+            width={56}
+            height={56}
           />
           <h2 className="text-3xl md:text-4xl text-center font-extrabold text-primary uppercase">
             Sistema de Limpieza de PC
