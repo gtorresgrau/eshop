@@ -32,15 +32,24 @@ const DemoComponent = () => {
           </div>
 
       ) : allDestacados.length > 0 ? (
-        <Flicking circular ref={flickingRef} plugins={pluginsRef.current} defaultIndex={Math.max(0, Math.floor(allDestacados.length / 3))}
-          className="flex overflow-hidden whitespace-nowrap" >
+        <Flicking 
+          circular 
+          ref={flickingRef} 
+          plugins={pluginsRef.current} 
+          defaultIndex={Math.max(0, Math.floor(allDestacados.length / 3))}
+          className="flex overflow-hidden whitespace-nowrap"
+        >
           <ViewportSlot>
             <span className="flicking-arrow-prev rounded-full" />
             <span className="flicking-arrow-next" />
           </ViewportSlot>
-          <div key={product.id} className="flicking-panel m-8 transition-transform transform hover:scale-105 w-64 p-6">
-            <CardDestacado product={product} onSelect={handleProductSelect} />
-          </div>
+      
+          {allDestacados.map((product) => (
+            <div key={product.id} className="flicking-panel m-8 transition-transform transform hover:scale-105 w-64 p-6">
+              <CardDestacado product={product} onSelect={handleProductSelect} />
+            </div>
+          ))}
+      
         </Flicking>
       ) : (
         <p className="text-center mt-4">No hay productos destacados en este momento.</p>
