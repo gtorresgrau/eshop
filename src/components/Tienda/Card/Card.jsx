@@ -48,7 +48,7 @@ const Card = ({ product, handleProductSelect }) => {
             {/* Contenedor con relación de aspecto para reservar espacio */}
             <div className="relative aspect-w-4 aspect-h-3">
               {product.vendido && (
-                <p className="absolute inset-0 flex items-center justify-center text-white text-3xl font-bold bg-red-400 bg-opacity-80 rounded-t-lg">
+                <p className="absolute inset-0 flex items-center justify-center text-white text-3xl font-bold bg-red-400 bg-opacity-80 rounded-t-lg grayscale">
                   VENDIDO
                 </p>
               )}
@@ -111,7 +111,7 @@ const Card = ({ product, handleProductSelect }) => {
           <div className="px-4 py-1">
             <div className="mb-1 min-h-[2.5rem]">
               <h2
-                className="text-sm font-semibold tracking-tight text-gray-900 md:text-lg md:font-bold"
+                className="text-sm font-semibold tracking-tight text-gray-900 md:text-base md:font-bold"
                 title={product.nombre}
               >
                 {product.nombre}
