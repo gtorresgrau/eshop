@@ -51,7 +51,7 @@ const ShopCart = () => {
     <section className="flex flex-col items-center md:items-start mb-6">
       <div className="w-full shadow-3xl opacity-90 bg-[url('/bg/bg-banner.webp')]">
         <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse rounded-full my-3" title="Eshopdevices Logo">
-          <img src={Logo.src} width={60} height={60} alt="eshopDevicesLogo" title="eshopDevices Logo" loading='lazy' className='rounded-full w-8 md:w-10 lg:w-12'/>
+          <Image src={Logo.src} width={60} height={60} alt="eshopDevicesLogo" title="eshopDevices Logo" loading='lazy' className='rounded-full w-8 md:w-10 lg:w-12'/>
           <p className='uppercase text-xl text-transparent font-bold bg-clip-text bg-gradient-to-r from-primary via-secondary to-primary'>eshopDevices</p>
         </Link>
       </div>
@@ -72,7 +72,7 @@ const ShopCart = () => {
             {cart.length ? (
               cart.map((item) => (
                 <div key={item.cod_producto} className="relative flex items-center shadow-xl rounded-lg bg-white border border-gray-50 gap-2 m-2 p-2">
-                  <img src={item.foto_1_1 || producto.src} alt={item.nombre} className="m-2 max-h-28 max-w-28 min-h-28 min-w-28" loading="lazy" />
+                  <Image src={item.foto_1_1 || producto.src} alt={item.nombre} className="m-2 max-h-28 max-w-28 min-h-28 min-w-28" loading="lazy" />
                   <div className="flex flex-col text-sm md:text-base p-2">
                     <p>{item.nombre}</p>
                     <p>{item.descripcion}</p>

@@ -200,7 +200,7 @@ export default function UploadImage({ imagenes, updateImages, handleRemoveImage 
             {archivos.map((archivo, index) => (
               <div key={index} className="relative shadow-md rounded-lg">
                 {/* Vista previa de la imagen */}
-                <img
+                <Image
                   src={archivo.preview || URL.createObjectURL(archivo)}
                   alt={archivo.name}
                   className="w-full object-cover cursor-pointer h-36 max-w-full rounded-lg"

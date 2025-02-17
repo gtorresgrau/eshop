@@ -64,7 +64,7 @@ const NavBar = () => {
     <nav className="bg-white border-gray-200">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-2 py-1">
         <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse rounded-full my-3" title="Eshopdevices Logo">
-          <img src={Logo.src} width={60} height={60} alt="eshopDevicesLogo" title="eshopDevices Logo" loading='lazy' className='rounded-full w-8 md:w-10 lg:w-12'/>
+          <Image src={Logo.src} width={60} height={60} alt="eshopDevicesLogo" title="eshopDevices Logo" loading='lazy' className='rounded-full w-8 md:w-10 lg:w-12'/>
           <p className='uppercase text-xl text-transparent font-bold bg-clip-text bg-gradient-to-r from-primary via-secondary to-primary'>eshopDevices</p>
         </Link>
 

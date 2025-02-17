@@ -52,9 +52,9 @@ const NosotrosPage = () => {
             .map((prod, index) => (
               <div key={index} className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200">
                 <div className="flex flex-col items-center text-center">
-                  {/* Si el producto cuenta con imagen se renderiza la etiqueta <img> */}
+                  {/* Si el producto cuenta con imagen se renderiza la etiqueta <Image> */}
                   {prod.imagen && (
-                    <img
+                    <Image
                       src={prod.imagen}
                       alt={`Imagen de ${prod.nombre}`}
                       title={`Imagen de ${prod.nombre}`}

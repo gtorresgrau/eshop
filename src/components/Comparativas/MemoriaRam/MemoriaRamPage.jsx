@@ -9,7 +9,7 @@ const MemoriaRamPage = () => {
       <article className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         {ramOptions.map((option, index) => (
           <div key={index} className="border rounded-lg p-4 shadow-lg text-center hover:shadow-xl hover:scale-105 hover:shadow-blue-200 hover:transition-all">
-            <img 
+            <Image 
               src={option.img} 
               alt={option.alt} 
               className="w-full h-40 object-cover mb-4 rounded-md "
@@ -24,7 +24,7 @@ const MemoriaRamPage = () => {
       <article className="grid grid-cols-1 my-6">
         <h2 className="text-3xl font-bold text-center mb-2" title="Comparación DDR4 vs DDR5">Comparación DDR4 vs DDR5</h2>
         <div className="flex flex-col md:flex-row items-center rounded-lg p-4 text-center">
-            <img src="https://res.cloudinary.com/dnbrxpca3/image/upload/v1739381195/infografia-memoria-ram-ddr-ddr2-ddr3-ddr4-ddr5_iou9u0.webp" alt="Comparación de Memorias DDR4 y DDR5" className="w-1/2 mb-4 md:mb-0 md:mr-6 rounded-md" title="Comparación de Memorias DDR4 y DDR5" aria-label="Imagen de comparación de Memorias DDR4 y DDR5"/>
+            <Image src="https://res.cloudinary.com/dnbrxpca3/image/upload/v1739381195/infografia-memoria-ram-ddr-ddr2-ddr3-ddr4-ddr5_iou9u0.webp" alt="Comparación de Memorias DDR4 y DDR5" className="w-1/2 mb-4 md:mb-0 md:mr-6 rounded-md" title="Comparación de Memorias DDR4 y DDR5" aria-label="Imagen de comparación de Memorias DDR4 y DDR5"/>
             <p className="text-gray-600 text-left">
               Las memorias RAM DDR4 y DDR5 tienen diferencias clave en velocidad, consumo de energía y capacidad.  
               <br /><br />

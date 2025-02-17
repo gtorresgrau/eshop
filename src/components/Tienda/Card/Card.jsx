@@ -62,7 +62,7 @@ const Card = ({ product, handleProductSelect }) => {
               >
                 <IconShoopingCart {...iconProps} />
               </button>
-              <img
+              <Image
                 className="rounded-t-lg w-full h-full object-cover"
                 src={product.foto_1_1 || '/images/sinFoto.webp'}
                 alt={product.nombre}
@@ -72,7 +72,7 @@ const Card = ({ product, handleProductSelect }) => {
                 height={300}
                 loading="lazy"
               />
-              <img
+              <Image
                 className={`absolute bottom-1 right-1 rounded-md z-10 ${product.usado ? 'w-28' : 'w-16'}`}
                 src={product.usado ? '/images/USADO.webp' : '/images/NUEVO.webp'}
                 alt={product.usado ? 'producto usado' : 'producto nuevo'}

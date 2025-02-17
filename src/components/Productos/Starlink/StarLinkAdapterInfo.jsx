@@ -26,7 +26,7 @@ export default function StarLinkAdapterInfo() {
       </h1>
 
       <div className="mb-6">
-        <img
+        <Image
           src="https://res.cloudinary.com/dnbrxpca3/image/upload/v1739680021/banner_tyckv1.webp"
           alt="Cable Adaptador Starlink Mini Trifix SL1230"
           width={800}
