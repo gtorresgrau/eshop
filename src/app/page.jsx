@@ -2,7 +2,7 @@
 import React, { Suspense } from "react";
 import Banner from "../components/Banner/Banner";
 import BotonWsp from "../components/BotonWSP/BotonWsp";
-//import Destacados from "../components/Destacados/Destacados";
+import Destacados from "../components/Destacados/Destacados";
 import Contact from "../components/Contact/Contact";
 import Footer from "../components/Footer/Footer";
 import Sobre from "../components/SobreMi/Sobre";
@@ -32,7 +32,7 @@ export default function Home() {
           <Banner />
         <Suspense fallback={<Loading/>}>
           {/* <UnderConstruction /> */}
-          {/* <Destacados /> */}
+          <Destacados />
           <Tienda />
           <Comparativas />
           <CleanToolExplanation />
