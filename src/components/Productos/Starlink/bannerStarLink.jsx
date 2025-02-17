@@ -1,12 +1,20 @@
-import Link from "next/link"
+import Link from "next/link";
+import Image from "next/image";
 
 export default function StarlinkMiniBanner() {
   return (
-    <section className="flex bg-gradient-to-b from-blue-800 to-blue-400 p-6 shadow-lg my-8 items-center justify-center">
-      <article className="flex justify-between max-w-6xl">
+    <section
+      className="flex bg-gradient-to-b from-blue-800 to-blue-400 p-6 shadow-lg my-8 items-center justify-center"
+      aria-label="Banner de Fuente Adaptador para Antena Starlink Mini"
+    >
+      <article
+        className="flex justify-between max-w-6xl w-full"
+        role="region"
+        aria-labelledby="banner-heading"
+      >
         <div className="flex w-full flex-col md:flex-row items-center">
           <div className="mb-4 md:mb-0 md:mr-6 items-center text-center md:text-start">
-            <h2 className="text-2xl font-bold text-white mb-2">
+            <h2 id="banner-heading" className="text-2xl font-bold text-white mb-2">
               Fuente Adaptador para Antena Starlink Mini
             </h2>
             <p className="text-blue-100 mb-4">
@@ -22,9 +30,9 @@ export default function StarlinkMiniBanner() {
             </Link>
           </div>
           <div className="w-full md:w-1/3 mx-auto flex justify-center">
-            <img
+            <Image
               src="https://res.cloudinary.com/dnbrxpca3/image/upload/v1739669129/Products/c2f8qg6uaoqgsiiukhp0.webp"
-              alt="Fuente Adaptador para Antena Starlink Mini Trifix SL1230"
+              alt="Imagen de la Fuente Adaptador para Antena Starlink Mini Trifix SL1230"
               title="Imagen de la Fuente Adaptador para Antena Starlink Mini Trifix SL1230"
               aria-label="Imagen de la Fuente Adaptador para Antena Starlink Mini Trifix SL1230"
               width={300}
@@ -35,5 +43,5 @@ export default function StarlinkMiniBanner() {
         </div>
       </article>
     </section>
-  )
+  );
 }
