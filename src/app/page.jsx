@@ -32,7 +32,7 @@ export default function Home() {
           <Banner />
         <Suspense fallback={<Loading/>}>
           {/* <UnderConstruction /> */}
-          {/* <Destacados /> */}
+          <Destacados />
           <Tienda />
           <Comparativas />
           <CleanToolExplanation />
