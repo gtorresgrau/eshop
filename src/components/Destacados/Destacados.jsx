@@ -55,7 +55,7 @@ const DemoComponent = () => {
         <Modals closeModal={closeModal} selectedProduct={selectedProduct} />
       )}
       {isLoading ? (
-        <Loading />
+        <SkeletonDestacado />
       ) : allDestacados.length > 0 ? (
         <Flicking
           circular

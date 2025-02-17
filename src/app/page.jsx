@@ -39,7 +39,7 @@ export default function Home() {
         </Suspense>
           {/* <Carrusel /> */}
           <Sobre/>
-          <Ubicacion/>
+          {/* <Ubicacion/> */}
           <PreguntasFrecuentes />
           <Contact />
       </main>
