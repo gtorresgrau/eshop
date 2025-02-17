@@ -4,7 +4,7 @@ import Flicking, { ViewportSlot } from "@egjs/react-flicking"
 import { Arrow } from "@egjs/flicking-plugins"
 import "@egjs/react-flicking/dist/flicking.css"
 import "@egjs/flicking-plugins/dist/arrow.css"
-import useProducts from "@/hooks/useProducts"
+import useProducts from "../../Hooks/useProducts"
 import SkeletonDestacado from "../Tienda/Card/SkeletonDestacados"
 import CardDestacado from "../Tienda/Card/CardDestacado"
 
