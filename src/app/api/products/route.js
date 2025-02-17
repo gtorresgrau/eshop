@@ -2,30 +2,20 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '../../../lib/mongodb';
 import Producto from '../../../models/product';
 
-// Función para normalizar cadenas y eliminar acentos
+// Función para normalizar cadenas (sin cambios)
 function normalizeString(str) {
   return str?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
-// Función para filtrar productos basado en múltiples valores
+// Función para filtrar productos (sin cambios)
 function filterByField(products, field, values) {
   if (!values.length) return products;
   const normalizedValues = values.map(normalizeString);
-  return products.filter(product => 
+  return products.filter(product =>
     normalizedValues.includes(normalizeString(product[field] || ''))
   );
 }
 
-// Función para contar ocurrencias por campo
-function countByField(products, field) {
-  return products.reduce((counts, product) => {
-    const value = product[field];
-    if (value) {
-      counts[value] = (counts[value] || 0) + 1;
-    }
-    return counts;
-  }, {});
-}
 
 export async function GET(request) {
   await connectDB();
@@ -33,7 +23,6 @@ export async function GET(request) {
   const slug = searchParams.get('slug');
 
   if (slug) {
-    // Si hay un slug, buscar un solo producto
     const product = await Producto.findOne({ slug }).lean();
     if (!product) {
       return NextResponse.json({ error: 'Producto no encontrado' }, { status: 404 });
@@ -41,51 +30,60 @@ export async function GET(request) {
     return NextResponse.json(product);
   }
 
-  // Obtener todos los productos
-  const productsData = await Producto.find().lean();
-  let filteredProducts = productsData;
-
-  // Filtros y paginación
+  const page = parseInt(searchParams.get('page') || '1');
+  const pageSize = parseInt(searchParams.get('pageSize') || '9');
   const search = normalizeString(searchParams.get('search') || '');
   const categories = searchParams.getAll('category');
   const brands = searchParams.getAll('brand');
-  const page = parseInt(searchParams.get('page') || '1');
-  const pageSize = parseInt(searchParams.get('pageSize') || '9');
 
-  // Filtrar productos destacados
-  const allproductosDestacados = productsData.filter(prod => prod.destacados === true);
+  // Consulta a la base de datos con filtros (Optimización principal)
+  let query = {};
 
-  // Filtrar por búsqueda
   if (search) {
-    filteredProducts = filteredProducts.filter(product =>
-      ['nombre', 'marca', 'cod_producto', 'categoria'].some(field =>
-        normalizeString(product[field] || '').includes(search)
-      )
-    );
+    query.$or = [
+      { nombre: { $regex: search, $options: 'i' } }, // 'i' para insensibilidad a mayúsculas
+      { marca: { $regex: search, $options: 'i' } },
+      { cod_producto: { $regex: search, $options: 'i' } },
+      { categoria: { $regex: search, $options: 'i' } },
+    ];
   }
 
-  // Aplicar filtros específicos
-  filteredProducts = filterByField(filteredProducts, 'categoria', categories);
-  filteredProducts = filterByField(filteredProducts, 'marca', brands);
+  if (categories.length) {
+    query.categoria = { $in: categories };
+  }
 
-  // Conteo de categorías y marcas
-  const totalCategories = Object.entries(countByField(productsData, 'categoria')).sort();
-  const totalBrands = Object.entries(countByField(productsData, 'marca')).sort();
-  const filteredCategories = Object.entries(countByField(filteredProducts, 'categoria')).sort();
-  const filteredBrands = Object.entries(countByField(filteredProducts, 'marca')).sort();
+  if (brands.length) {
+    query.marca = { $in: brands };
+  }
 
-  // Paginar resultados
+  const productsData = await Producto.find(query).lean(); // Consulta con filtros aplicados
+
+  const totalProducts = productsData.length; // Obtener el total de productos *después* de aplicar los filtros
+
+  const allproductosDestacados = productsData.filter(prod => prod.destacados === true);
+
+  // Paginación (después de la consulta y los filtros)
   const startIndex = (page - 1) * pageSize;
-  const paginatedProducts = filteredProducts.slice(startIndex, startIndex + pageSize);
-  const totalPage = Math.ceil(filteredProducts.length / pageSize);
+  const paginatedProducts = productsData.slice(startIndex, startIndex + pageSize);
+  const totalPage = Math.ceil(totalProducts / pageSize); // Usar totalProducts
+
+
+  // Conteo de categorías y marcas (Optimizado)
+  const totalCategories = Array.from(new Set(productsData.map(p => p.categoria))).sort().map(cat => ({ category: cat, count: productsData.filter(p => p.categoria === cat).length }));
+  const totalBrands = Array.from(new Set(productsData.map(p => p.marca))).sort().map(brand => ({ brand: brand, count: productsData.filter(p => p.marca === brand).length }));
+
+  // Conteo de categorias y marcas filtradas
+  const filteredCategories = Array.from(new Set(paginatedProducts.map(p => p.categoria))).sort().map(cat => ({ category: cat, count: paginatedProducts.filter(p => p.categoria === cat).length }));
+  const filteredBrands = Array.from(new Set(paginatedProducts.map(p => p.marca))).sort().map(brand => ({ brand: brand, count: paginatedProducts.filter(p => p.marca === brand).length }));
+
 
   return NextResponse.json({
     products: paginatedProducts,
     totalPage,
     allproductosDestacados,
-    totalBrands: totalBrands.map(([brand, count]) => ({ brand, count })),
-    totalCategories: totalCategories.map(([category, count]) => ({ category, count })),
-    filteredBrands: filteredBrands.map(([brand, count]) => ({ brand, count })),
-    filteredCategories: filteredCategories.map(([category, count]) => ({ category, count })),
+    totalBrands,
+    totalCategories,
+    filteredBrands,
+    filteredCategories,
   });
 }

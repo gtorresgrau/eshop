@@ -62,7 +62,7 @@ const Card = ({ product, handleProductSelect }) => {
               loading="lazy"
             />
             <Image
-              className="absolute bottom-1 right-1 rounded-md z-10"
+              className="absolute bottom-1 right-1 shadow-md rounded z-10"
               src={product.usado ? '/images/USADO.webp' : '/images/NUEVO.webp'}
               alt={product.usado ? 'producto usado' : 'producto nuevo'}
               width={product.usado ? 112 : 64}
