@@ -3,6 +3,7 @@ import React from 'react';
 import { infoWeb, shippingOptions } from '@/app/constants/infoWeb';
 import PreguntasFrecuentes from '../PreguntasFrecuentas/PreguntasFrecuentas';
 import useProducts from '@/Hooks/useProducts';
+import Image from 'next/image';
 
 const NosotrosPage = () => {
   const { products } = useProducts();

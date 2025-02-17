@@ -1,6 +1,7 @@
 import React from 'react'
 import { FaUser } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 const UserMenu = ({user,toggleDropdown,isDropdownOpen,handleLogOut}) => {
     

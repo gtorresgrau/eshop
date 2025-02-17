@@ -7,6 +7,7 @@ import userData from '@/app/constants/userData';
 import addToCart from '@/Utils/addToCart';
 import { CartContext } from '@/components/Context/ShoopingCartContext';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const Card = ({ product, handleProductSelect }) => {
   const [cart, setCart] = useContext(CartContext);

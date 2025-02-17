@@ -7,6 +7,7 @@ import userData from '@/app/constants/userData';
 import EmptyCart from '../EmptyCart/EmptyCart';
 import { CartContext } from '@/components/Context/ShoopingCartContext';
 import Swal from 'sweetalert2';
+import Image from 'next/image';
 
 const ShopCart = () => {
   const [cart, setCart] = useContext(CartContext);

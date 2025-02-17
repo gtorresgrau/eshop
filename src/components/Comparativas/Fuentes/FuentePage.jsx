@@ -1,6 +1,7 @@
 import React from 'react';
 import { fuenteOptions } from '@/app/constants/infoWeb';
 import Comparativas from '../Comparativas';
+import Image from 'next/image';
 
 const FuentePage = () => {
   return (

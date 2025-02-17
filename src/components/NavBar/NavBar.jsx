@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import { logOut } from '../../lib/firebase';
 import useLinks from '@/app/constants/Links';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 
 const NavBar = () => {
   const [cart, setCart] = useContext(CartContext);

@@ -13,6 +13,7 @@ import { useRouter } from 'next/navigation';
 import { FaSpinner } from 'react-icons/fa';
 import { handleAuthError } from '@/Utils/handleErrorsFirebase';
 import { setInLocalStorage } from '@/Hooks/localStorage';
+import Image from 'next/image';
 
 const Login = () => {
   const router = useRouter();

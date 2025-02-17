@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import IconShoopingCart from '../ShoopingCart/IconShoopingCart';
 import userData from '@/app/constants/userData';
 import { CartContext } from '@/components/Context/ShoopingCartContext';
+import Image from 'next/image';
 
 const CardDestacado = ({ selectedProduct, handleProductSelect }) => {
   const [cart, setCart] = useContext(CartContext);

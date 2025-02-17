@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import heic2any from "heic2any";
 import Swal from 'sweetalert2';
 import processImage from "@/Utils/proccesImage";
+import Image from "next/image";
 
 export default function UploadImage({ imagenes, updateImages, handleRemoveImage }) {
 // Inicializar el estado con URLs y archivos

@@ -5,6 +5,7 @@ import { FaPlus } from "react-icons/fa";
 import UploadImage from '../UploadImage';
 import Swal from 'sweetalert2';
 import Loading from '@/components/Loading/Loading';
+import Image from 'next/image';
 
 
 export default function AddProduct({

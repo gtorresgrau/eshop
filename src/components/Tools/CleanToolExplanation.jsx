@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Download } from 'lucide-react';
 import { scriptCode } from '@/app/constants/infoWeb';
+import Image from 'next/image';
 
 const CleanToolExplanation = () => {
   const [isExpanded, setIsExpanded] = useState(false);

@@ -1,6 +1,7 @@
 import React from 'react';
 import { ramOptions } from '@/app/constants/infoWeb';
 import Comparativas from '../Comparativas';
+import Image from 'next/image';
 
 const MemoriaRamPage = () => {
   return (
