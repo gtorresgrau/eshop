@@ -1,68 +1,55 @@
 'use client';
 
-import React, { useContext } from 'react';
-
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import { MdStore } from 'react-icons/md';
-
 import { RiWhatsappLine } from 'react-icons/ri';
-
 import IconShoopingCart from '../ShoopingCart/IconShoopingCart';
-
 import userData from '@/app/constants/userData';
-
 import addToCart from '@/Utils/addToCart';
-
 import { CartContext } from '@/components/Context/ShoopingCartContext';
-
 import Link from 'next/link';
-
 import Image from 'next/image';
 
-
-
 const Card = ({ product, handleProductSelect }) => {
-
   const [cart, setCart] = useContext(CartContext);
-
-
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
+  const imageRef = useRef(null);
 
   const handleAddToCart = (e) => {
-
     e.preventDefault();
-
     e.stopPropagation();
-
     addToCart(product, cart, setCart);
-
   };
-
-
 
   const handleConsult = (e) => {
-
     e.preventDefault();
-
     e.stopPropagation();
-
     window.open(enviar, '_blank');
-
   };
 
-
-
   const iconProps = { ancho: 20, alto: 20, color: '#ffffff' };
-
-
-
   const consultMessage = `Hola, quería consultar por ${product.nombre} (${product.cod_producto})`;
-
   const enviar = `https://wa.me/+${userData.codigoPais}${userData.contact}?text=${encodeURIComponent(
-
     consultMessage || userData.textoPredefinido
 
   )}`;
 
 
+    const handleImageLoad = () => {
+        setImageLoaded(true);
+        if (imageRef.current) {
+            const img = imageRef.current.firstChild; // Accede al elemento <img> dentro de <Image>
+            if (img) {
+                setImageDimensions({ width: img.naturalWidth, height: img.naturalHeight });
+            }
+        }
+    };
+
+    const containerStyle = !imageLoaded ? { aspectRatio: '4/3' } : {
+      width: imageDimensions.width,      // Establece el ancho del contenedor
+      height: imageDimensions.height   // Establece el alto del contenedor
+  };
 
   return (
 
