@@ -13,17 +13,11 @@ export default function UpdateProduct({
   product,
   categoria,
   marca,
-  // vehiculo,
 }) {
   const [isDropdownMarcaOpen, setIsDropdownMarcaOpen] = useState(false);
   const [isDropdownCategoriaOpen, setIsDropdownCategoriaOpen] = useState(false);
-  // const [isDropdownVehiculoOpen, setIsDropdownVehiculoOpen] = useState(false);
   const [marcas, setMarcas] = useState(marca);
   const [categorias, setCategorias] = useState(categoria);
-  // const [vehiculos, setVehiculos] = useState(vehiculo);
-
-  //('productoSeleccionado:',product)
-  // Estado para mantener las imágenes originales
   const [originalImages, setOriginalImages] = useState({
     foto_1_1: product.foto_1_1 || "",
     foto_1_2: product.foto_1_2 || "",
@@ -36,13 +30,11 @@ export default function UpdateProduct({
     n_producto: product.n_producto,
     cod_producto: product.cod_producto,
     marca: product.marca,
-    // vehiculo: product.vehiculo,
     categoria: product.categoria,
     nombre: product.nombre,
     modelo: product.modelo,
     n_serie: product.n_serie || "",
     titulo_de_producto: product.titulo_de_producto,
-    // vehiculo: product.vehiculo,
     _id: product._id,
     destacados:product.destacados,
     descripcion: product.descripcion,
@@ -78,19 +70,17 @@ export default function UpdateProduct({
     if (categoriaDropdownRef.current && !categoriaDropdownRef.current.contains(event.target)) {
       setIsDropdownCategoriaOpen(false);
     }
-    // if ( vehiculoDropdownRef.current &&!vehiculoDropdownRef.current.contains(event.target)) {
-    //   setIsDropdownVehiculoOpen(false);
-    // }
+
   };
 
-  // Función para manejar cambios en los inputs del formulario del producto
-  const handleChangeInput = (e) => {
-    const { name, value, type, checked } = e.target;
-    setProducto((prevState) => ({
-      ...prevState,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  };
+// Función para manejar cambios en los inputs del formulario del producto
+const handleChangeInput = (e) => {
+  const { name, value } = e.target;
+  setProducto((prevState) => ({
+    ...prevState,
+    [name]: value, // Simplemente actualiza el estado con el nuevo valor
+  }));
+};
 
 
   // Función para alternar la visibilidad del dropdown de marca
@@ -105,24 +95,12 @@ export default function UpdateProduct({
     setIsDropdownCategoriaOpen(!isDropdownCategoriaOpen);
   };
   
-  // Función para alternar la visibilidad del dropdown de categoría
-  // const toggleVehiculo = (e) => {
-  //   e.preventDefault();
-  //   setIsDropdownVehiculoOpen(!isDropdownVehiculoOpen);
-  // };
-  
 
   // Función para agregar una nueva marca a la lista de marcas disponibles
   const handleAgregarNuevaMarca = (campo, valorNuevo) => {
     setMarcas([...marcas, { brand: valorNuevo }]);
     setIsDropdownMarcaOpen(false);
   };
-  
-  // Función para agregar una nueva marca a la lista de marcas disponibles
-  // const handleAgregarNuevoVehiculo = (campo, valorNuevo) => {
-  //   setVehiculos([...vehiculo, { vehiculo: valorNuevo }]);
-  //   setIsDropdownVehiculoOpen(false);
-  // };
 
   // Función para agregar una nueva categoría a la lista de categorías disponibles
   const handleAgregarNuevaCategoria = (campo, valorNuevo) => {
@@ -250,8 +228,6 @@ export default function UpdateProduct({
 
     toggleModal(); // Cerrar modal de edición
 
-    // Manejar la respuesta si es necesario
-    //console.log(data.descripcion, "dataaaaaa");
   } catch (error) {
     // Cerrar SweetAlert en caso de error
     Swal.fire({
@@ -416,7 +392,6 @@ export default function UpdateProduct({
                                   );
                               }}
                             />
-
                             <button
                             aria-label="agregar neuva categoria"
                               onClick={() =>
@@ -436,82 +411,6 @@ export default function UpdateProduct({
                     </div>
                   </div>
                 </div>
-
-                {/* Vehiculo */}
-                {/* <div>
-                  <label
-                    htmlFor="vehiculoUpdate"
-                    className="block mb-2 text-sm font-medium text-gray-900"
-                  >
-                    Vehiculo
-                  </label>
-
-                  <div className="flex gap-4">
-                    <select
-                      onChange={handleChangeInput}
-                      name="vehiculo"
-                      id="vehiculoUpdate"
-                      value={producto.vehiculo}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                    >
-                     {/* {console.log(vehiculos,'vehi')}
-                      {vehiculos.map((vehiculo, index) => (
-                        <option key={index} value={vehiculo.vehiculo}>
-                          {vehiculo.vehiculo}
-                        </option>
-                      ))}
-                    </select>
-
-                    <div className="relative" ref={vehiculoDropdownRef}>
-                      <button
-                      aria-label="seleccionar vehiculo"
-                        className="text-gray-800 bg-gray-50 hover:bg-gray-200 border border-gray-300 rounded-lg text-sm ml-auto inline-flex items-center w-auto h-full p-3"
-                        onClick={toggleVehiculo}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") toggleVehiculo(e);
-                        }}
-                        tabIndex="0"
-                      >
-                        <FaPlus />
-                      </button>
-
-                      {isDropdownVehiculoOpen && (
-                        <div className="absolute right-0 mt-2 w-52 bg-white border border-gray-200 rounded-lg shadow-lg z-40">
-                          <div className="block w-full px-2 py-2 text-left text-gray-700">
-                            <input
-                              type="text"
-                              name="vehiculoNuevo"
-                              id="vehiculoNuevo"
-                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 mb-1"
-                              placeholder="Ingrese un vehiculo"
-                              onKeyDown={(e) => {
-                                if (e.key === "Enter")
-                                  handleAgregarNuevoVehiculo(
-                                    "vehiculo",
-                                    e.target.value
-                                  );
-                              }}
-                            />
-
-                            <button
-                            aria-label="agregar nuevo vehiculo"
-                              onClick={() =>
-                                handleAgregarNuevoVehiculo(
-                                  "vehiculo",
-                                  document.getElementById("vehiculoNuevo")
-                                    .value
-                                )
-                              }
-                              className="w-full rounded-lg m-auto px-4 py-2 text-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-500 focus:outline-none focus:ring-4"
-                            >
-                              AGREGAR
-                            </button>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div> */}
 
                 {/* Modelo */}
                 <div>
@@ -560,14 +459,14 @@ export default function UpdateProduct({
                     Numero de electronica
                   </label>
                   <input
-                    onChange={handleChangeInput}
-                    type="text"
-                    name="n_electronica"
-                    id="n_electronicaUpdate"
-                    value={producto.n_electronica}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                    placeholder="Numero de electronica del producto"
-                  />
+                      onChange={handleChangeInput}
+                      type="text"
+                      name="n_electronica"
+                      id="n_electronicaUpdate"
+                      value={producto.n_electronica}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      placeholder="Numero de electronica del producto"
+                    />
                 </div>
 
                 {/* Medidas */}
