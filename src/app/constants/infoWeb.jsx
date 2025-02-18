@@ -43,7 +43,7 @@ export const faqData = [
   },
   {
     id: 4,
-    question: "¿Realizan envíos fuera de Wilde?",
+    question: "¿Realizan envíos?",
     answer:
       "Sí, realizamos envíos a todo el país. Aprovecha nuestras opciones de envío rápido y seguro para recibir tus productos directamente en tu hogar o negocio, sin importar dónde te encuentres.",
     linkText: "Consulta nuestras opciones de envío",
