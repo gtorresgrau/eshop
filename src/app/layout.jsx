@@ -33,7 +33,6 @@ export default function RootLayout({ children }) {
         <meta name="robots" content="index, follow" />
         <meta name="publisher" content={metadata.publisher} />
         <meta name="rating" content="General" />
-
         {/* Open Graph Meta Tags */}
         <meta property="og:title" content={metadata.openGraph.title} />
         <meta property="og:description" content={metadata.openGraph.description} />
@@ -56,6 +55,7 @@ export default function RootLayout({ children }) {
         <link rel="manifest" href={metadata.manifest} />
 
         {/* Fonts and External Resources */}
+        <link rel="preconnect" href="https://res.cloudinary.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
