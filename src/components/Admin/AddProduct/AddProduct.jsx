@@ -275,7 +275,7 @@ const hasImageChanges = () => {
         <div
           id="updateProductModal"
           tabIndex="-1"
-          aria-hidden="true"
+          aria-label="updateProductModal"
           className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-10 overflow-hidden ${
             isOpenModal ? "" : "hidden"
           }`}
@@ -294,7 +294,7 @@ const hasImageChanges = () => {
                   data-modal-toggle="updateProductModal"
                 >
                   <svg
-                    aria-hidden="true"
+                    aria-label="Agregar producto"
                     className="w-5 h-5"
                     width={20}
                     height={20}
