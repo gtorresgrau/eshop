@@ -46,50 +46,39 @@ export default function Admin() {
     fetchProducts
   } = useProducts();
   
- // Persistir el producto seleccionado en el estado local
- useEffect(() => {
-  const storedProduct = localStorage.getItem('selectedProduct');
-  if (storedProduct) {
-    setSelectedProduct(JSON.parse(storedProduct));  // Recupera el producto guardado
-  }
-}, []);
-
-const openModal = (type, product = null) => {
-  setSelectedProduct(product);  // Establece el producto en el estado
-  localStorage.setItem('selectedProduct', JSON.stringify(product));  // Guarda el producto en localStorage
-  setIsModalOpen(true);        // Abre el modal
-  setIsModalClose(false);
-  setModalType(type);         // Define el tipo de modal (add, update, etc.)
-  if (type === 'update') {
-    setSection('update');
-  }
-};
-
-const closeModal = () => {
-  setIsModalOpen(false);   // Cierra el modal
-  setIsModalClose(true);
-  localStorage.removeItem('selectedProduct'); // Limpiar el producto guardado en localStorage al cerrar
-};
-
-useEffect(() => {
-  // Asegúrate de que si el modal se cierra, se recarguen los productos
-  if (isModalClose) {
-    fetchProducts();  // Actualiza la lista de productos cuando el modal se cierra
-  }
-
-  const handlePopState = () => {
-    // Verifica si la URL ha cambiado y ajusta el estado del modal según corresponda
-    if (window.location.hash !== '#update' && isModalOpen) {
-      closeModal();  // Si el usuario navega hacia atrás, cierra el modal si está abierto
+  const openModal = (type, product = null) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+    setIsModalClose(false);
+    setModalType(type);
+    if (type === 'update') {
+      window.location.hash = 'update';
     }
   };
 
-  window.addEventListener('popstate', handlePopState);  // Escucha cambios en el historial de navegación
-
-  return () => {
-    window.removeEventListener('popstate', handlePopState);  // Limpia el eventListener al desmontar el componente
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setIsModalClose(true);
+    window.history.pushState(null, null, ' ');
   };
-}, [isModalClose, isModalOpen]);
+
+  useEffect(() => {
+    if (isModalClose) {
+      fetchProducts();
+    }
+
+    const handlePopState = () => {
+      if (window.location.hash !== '#update' && isModalOpen) {
+        closeModal();
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [isModalClose, isModalOpen]);
 
   const loadingElement = document.createElement('div');
   const root = ReactDOM.createRoot(loadingElement);
