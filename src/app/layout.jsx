@@ -55,16 +55,9 @@ export default function RootLayout({ children }) {
         <link rel="manifest" href={metadata.manifest} />
 
         {/* Fonts and External Resources */}
-        <link rel="preconnect" href="https://res.cloudinary.com" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
         <link rel="canonical" href={metadata.openGraph.url} />
-        <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" as="style" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" media="print" />
-        <noscript>
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" />
-        </noscript>
+        <link rel="preconnect" href="https://res.cloudinary.com" />
+
 
         {/* Structured Data */}
         <script

@@ -19,17 +19,14 @@ export default function MainContent() {
       <Suspense fallback={<Loading />}>
         <SearchBase />
       </Suspense>
-
       <Banner />
       <Header />
-
       {/* Middle part */}
-      <Suspense fallback={<Loading />}>
-        {/* Add or remove whichever components you want lazy-loaded */}
+      <Suspense fallback={<Loading />}>  {/* Add or remove whichever components you want lazy-loaded */}
         <Tienda />
-        <Comparativas />
-        <CleanToolExplanation />
       </Suspense>
+      <Comparativas />
+      <CleanToolExplanation />
 
       {/* Additional content */}
       <Sobre />
