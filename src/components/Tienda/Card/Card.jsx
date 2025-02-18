@@ -88,7 +88,7 @@ const Card = ({ product, handleProductSelect }) => {
           </div>
         </div>
         <div className="px-2 pb-1 flex  gap-2 justify-center">
-          {product.n_electronica ? (
+          {false ? ( //modifique para que solo se vea el whatsapp
             <>
               {/* Para pantallas md (menos de xl) */}
               <div className="hidden md:flex xl:hidden justify-around gap-2 text-xs xl:text-sm self-center">
