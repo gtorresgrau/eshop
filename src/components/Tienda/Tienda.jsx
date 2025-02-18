@@ -1,7 +1,6 @@
 // Tienda.js
 import React from 'react';
 import useProducts from "@/Hooks/useProducts";
-import Header from './Header';
 import Aside from './Aside';
 import Productos from './Productos';
 
@@ -32,7 +31,6 @@ export default function Tienda() {
 
   return (
     <main id="productos" className="bg-primary-background min-h-screen">
-      <Header />
       <section className="grid grid-cols-1 md:grid-cols-12 md:gap-4 max-w-7xl mx-auto md:p-5 font-sans">
         <Aside
           handleClearFilters={handleClearFilters}

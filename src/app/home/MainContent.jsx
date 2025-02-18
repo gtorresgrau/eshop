@@ -10,6 +10,7 @@ import SearchBase from '../../components/Search/SearchBase';
 import PreguntasFrecuentes from '../../components/PreguntasFrecuentas/PreguntasFrecuentas';
 import Comparativas from '../../components/Comparativas/Comparativas';
 import CleanToolExplanation from '../../components/Tools/CleanToolExplanation';
+import Header from '@/components/Banner/Header';
 
 export default function MainContent() {
   return (
@@ -20,6 +21,7 @@ export default function MainContent() {
       </Suspense>
 
       <Banner />
+      <Header />
 
       {/* Middle part */}
       <Suspense fallback={<Loading />}>
