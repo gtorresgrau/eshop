@@ -31,7 +31,7 @@ export default function StarlinkMiniBanner() {
           </div>
           <div className="w-full md:w-1/3 mx-auto flex justify-center aspect-square">
           <Image
-              src="https://res.cloudinary.com/dnbrxpca3/image/upload/v1739669129/Products/c2f8qg6uaoqgsiiukhp0.webp"
+              src="https://res.cloudinary.com/dnbrxpca3/image/upload/v1739838346/FuenteStarlink4_zodve5.webp"
               alt="Imagen de la Fuente Adaptador para Antena Starlink Mini Trifix SL1230"
               width={400}
               height={400}
