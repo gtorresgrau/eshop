@@ -20,10 +20,7 @@ export default function Productos({
     <article id="cardsTienda" className="col-span-1 md:col-start-4 md:col-span-9 flex justify-around" >
       <div>
         {/* Paginación superior */}
-        <nav
-          aria-label="Paginación de productos"
-          className="flex justify-center my-4"
-        >
+        <nav aria-label="Paginación de productos" className="flex justify-center my-4">
           <Pagination
             count={totalPages}
             page={currentPage}
@@ -45,10 +42,7 @@ export default function Productos({
         )}
 
         {/* Paginación inferior */}
-        <nav
-          aria-label="Paginación de productos"
-          className="flex justify-center py-6"
-        >
+        <nav aria-label="Paginación de productos" className="flex justify-center py-6" >
           <Pagination
             count={totalPages}
             page={currentPage}

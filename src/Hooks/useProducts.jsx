@@ -92,6 +92,12 @@ const useProducts = () => {
     window.history.pushState(null, '', window.location.pathname + window.location.search);
   }, []);
 
+  const handleProductSelect = (product) => {
+    console.log("Producto seleccionado:", product);
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
+
   useEffect(() => {
     const handlePopState = () => {
       if (window.location.hash !== '#update' && isModalOpen) {
@@ -178,6 +184,7 @@ const useProducts = () => {
     handleClearFilters,
     handleShowAllCategories,
     handleShowAllBrands,
+    handleProductSelect
   };
 };
 
