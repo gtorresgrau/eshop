@@ -43,8 +43,7 @@ export default function RootLayout({ children }) {
 
         {/* Fonts and External Resources */}
         <link rel="canonical" href={metadata.openGraph.url} />
-        <link rel="preconnect" href="https://res.cloudinary.com" />
-
+        <link rel="preconnect" href="https://res.cloudinary.com" crossorigin="anonymous" />
 
         {/* Structured Data */}
         <script
@@ -82,10 +81,7 @@ export default function RootLayout({ children }) {
         />
         {/* <!-- Google tag (gtag.js) --> */}
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-7LRLRDC81W" strategy="afterInteractive"/>
-        <Script
-          id="google-analytics"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
+        <Script id="google-analytics" strategy="afterInteractive" dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
