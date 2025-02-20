@@ -1,16 +1,19 @@
 'use client'
-import React, { Suspense } from "react";
-import AddProduct from "./AddProduct/AddProduct";
-import UpdateProduct from "./UpdateProduct/UpdateProduct";
+import React, { Suspense, useCallback } from "react";
 import useProducts from "@/Hooks/useProducts";
 import Dropdown from "../Tienda/Dropdown/Dropdown";
 import { Pagination } from "@mui/material";
 import Nav from "./Nav/Nav";
-import TablaDestacados from "./TablaDestacados/TablaDestacados";
-import DownloadCSVButton from "../DownloadCSVButton/DownloadCSVButton";
 import Swal from "sweetalert2";
 import Loading from "../Loading/Loading";
 import SearchBase from "../Search/SearchBase";
+
+import dynamic from 'next/dynamic';
+const AddProduct = dynamic(() => import('./AddProduct/AddProduct'));
+const UpdateProduct = dynamic(() => import('./UpdateProduct/UpdateProduct'));
+const TablaDestacados = dynamic(() => import("./TablaDestacados/TablaDestacados"));
+const DownloadCSVButton = dynamic(() => import("../DownloadCSVButton/DownloadCSVButton"));
+
 
 export default function Admin() {
   const [section, setSection] = React.useState('Productos');
@@ -106,9 +109,10 @@ export default function Admin() {
     }
   };
 
-  const handleSelectSection = (section) => {
+  const handleSelectSection = useCallback((section) => {
     setSection(section);
-  };
+  }, []);
+  
 
   return (
     <Suspense fallback={<Loading/>}>

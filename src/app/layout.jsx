@@ -43,10 +43,14 @@ export default function RootLayout({ children }) {
 
         {/* Fonts and External Resources */}
         <link rel="canonical" href={metadata.openGraph.url} />
-        <link rel="preconnect" href="https://res.cloudinary.com" />
-
-
+        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous"/>
+        <link rel="preconnect" href="https://eshop-34a07.firebaseapp.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://apis.google.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://www.google-analytics.com" crossOrigin="anonymous" />
+        
         {/* Structured Data */}
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
