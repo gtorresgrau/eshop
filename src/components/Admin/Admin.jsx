@@ -1,6 +1,5 @@
 'use client'
-import React, { useEffect, useState, Suspense } from "react";
-import ReactDOM from 'react-dom/client';
+import React, { Suspense } from "react";
 import AddProduct from "./AddProduct/AddProduct";
 import UpdateProduct from "./UpdateProduct/UpdateProduct";
 import useProducts from "@/Hooks/useProducts";
@@ -14,23 +13,16 @@ import Loading from "../Loading/Loading";
 import SearchBase from "../Search/SearchBase";
 
 export default function Admin() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isModalClose, setIsModalClose] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [modalType, setModalType] = useState(null);
-  const [section, setSection] = useState('Productos')
+  const [section, setSection] = React.useState('Productos');
 
   const {
     products,
     categories,
     brands,
-    // vehiculos,
     selectedCategories,
     selectedBrands,
-    // selectedVehiculos,
     showAllCategories,
     showAllBrands,
-    // showAllVehiculos,
     totalPages,
     currentPage,
     isLoading,
@@ -39,54 +31,13 @@ export default function Admin() {
     handleClearFilters,
     handleShowAllCategories,
     handleShowAllBrands,
-    // handleShowAllVehiculos,
-    setSelectedCategories,
-    setSelectedBrands,
-    // setSelectedVehiculos,
-    fetchProducts
+    fetchProducts,
+    openModal,
+    closeModal,
+    selectedProduct,
+    isModalOpen
   } = useProducts();
-  
-  const openModal = (type, product = null) => {
-    setSelectedProduct(product);
-    setIsModalOpen(true);
-    setIsModalClose(false);
-    setModalType(type);
-    if (type === 'update') {
-      window.location.hash = 'update';
-    }
-  };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setIsModalClose(true);
-    window.history.pushState(null, null, ' ');
-  };
-
-  useEffect(() => {
-    if (isModalClose) {
-      fetchProducts();
-    }
-
-    const handlePopState = () => {
-      if (window.location.hash !== '#update' && isModalOpen) {
-        closeModal();
-      }
-    };
-
-    window.addEventListener('popstate', handlePopState);
-
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-    };
-  }, [isModalClose, isModalOpen]);
-
-  const loadingElement = document.createElement('div');
-  const root = ReactDOM.createRoot(loadingElement);
-  const container = document.createElement('div');
-  root.render(<Loading />);
-  container.innerHTML = `<h2><strong>AGUARDE</strong></h2><br/><p> se está eliminando el producto</p>`;
-  container.appendChild(loadingElement);
-   
   const handleEliminarArchivos = async (producto) => {
     try {
       const result = await Swal.fire({
@@ -118,7 +69,7 @@ export default function Admin() {
             fotosAEliminar.push(imgAEliminar);
           }
         });
-
+  
         await Promise.all(
           fotosAEliminar.map(async (imgAEliminar) => {
             const res = await fetch('api/deleteImage', {
@@ -173,37 +124,36 @@ export default function Admin() {
                       <SearchBase />
                     </div>
                     <div className="md:flex md:justify-end gap-3 grid grid-cols-5 w-full">
-
-                        <div className="col-span-2">
+                      <div className="col-span-2">
                         <Dropdown
                           handleClearFilters={handleClearFilters} 
                           handleCheckboxChange={handleCheckboxChange}
                           categories={categories} 
                           showAllCategories={showAllCategories}
                           selectedCategories={selectedCategories}
-                          setSelectedCategories={setSelectedCategories}
+                          // Usamos las setters que vienen del hook si son necesarias
                           handleShowAllCategories={handleShowAllCategories}
                           brands={brands}
                           showAllBrands={showAllBrands}
                           selectedBrands={selectedBrands}
-                          setSelectedBrands={setSelectedBrands}
                           handleShowAllBrands={handleShowAllBrands}
                           isLoading={isLoading}
-                          // vehiculos={vehiculos}
-                          // // handleShowAllVehiculos={handleShowAllVehiculos}
-                          // showAllVehiculos={showAllVehiculos}
-                          // selectedVehiculos={selectedVehiculos}
-                          // setSelectedVehiculos={setSelectedVehiculos}
-                          />
-                          </div>
-                      <div className="col-span-3">
-
-                      <button type="button" aria-label="agregar producto" className="flex items-center text-white border bg-boton-primary hover:bg-boton-primary-hover active:bg-boton-primary-active font-medium w-full justify-center rounded-lg h-10 text-xs xs:text-sm px-5 py-2 text-center " onClick={() => openModal('add')}>+  Agregar producto</button>
-                      {isModalOpen && modalType === 'add' && (
-                        <AddProduct toggleModal={closeModal} isOpenModal={isModalOpen} marca={brands} categoria={categories} />
-                      )}
-                    </div>
+                        />
                       </div>
+                      <div className="col-span-3">
+                        <button
+                          type="button"
+                          aria-label="agregar producto"
+                          className="flex items-center text-white border bg-boton-primary hover:bg-boton-primary-hover active:bg-boton-primary-active font-medium w-full justify-center rounded-lg h-10 text-xs xs:text-sm px-5 py-2 text-center"
+                          onClick={() => openModal(null, '#add')}
+                        >
+                          + Agregar producto
+                        </button>
+                        {isModalOpen && !selectedProduct && (
+                          <AddProduct toggleModal={closeModal} isOpenModal={isModalOpen} marca={brands} categoria={categories} />
+                        )}
+                      </div>
+                    </div>
                   </div>
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm text-left text-gray-500" id="productosAdmin">
@@ -221,22 +171,34 @@ export default function Admin() {
                         <tbody>
                           {products.map((product, index) => (
                             <tr key={index} className={`border-b ${index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"}`}>
-                              <th scope="row" className="px-1 py-6 md:px-4 md:py-4 font-medium text-gray-900 whitespace-nowrap">{product.nombre}</th>
-                              <th scope="row" className="px-1 py-6 md:px-4 md:py-4 font-medium text-gray-900 whitespace-nowrap">{product.precio}{product.usd?'usd':'ar'}</th>
-                              <td scope="row" className="px-1 py-6 md:px-4 md:py-4 hidden md:table-cell">{product.categoria}</td>
-                              <td scope="row" className="px-1 py-6 md:px-4 md:py-4 hidden md:table-cell">{product.marca}</td>
-                              <td scope="row" title={product.descripcion} className="px-1 py-1 md:px-4 md:py-3 text-center text-ellipsis hidden lg:table-cell">{product.descripcion.length > 50 ? `${product.descripcion.slice(0, 50)}...` : product.descripcion}</td>
-                              <td scope="row" className="px-1 py-6 md:px-4 md:py-4">
+                              <th scope="row" className="px-1 py-6 md:px-4 md:py-4 font-medium text-gray-900 whitespace-nowrap">
+                                {product.nombre}
+                              </th>
+                              <th scope="row" className="px-1 py-6 md:px-4 md:py-4 font-medium text-gray-900 whitespace-nowrap">
+                                {product.precio}{product.usd ? 'usd' : 'ar'}
+                              </th>
+                              <td className="px-1 py-6 md:px-4 md:py-4 hidden md:table-cell">{product.categoria}</td>
+                              <td className="px-1 py-6 md:px-4 md:py-4 hidden md:table-cell">{product.marca}</td>
+                              <td title={product.descripcion} className="px-1 py-1 md:px-4 md:py-3 text-center text-ellipsis hidden lg:table-cell">
+                                {product.descripcion.length > 50 ? `${product.descripcion.slice(0, 50)}...` : product.descripcion}
+                              </td>
+                              <td className="px-1 py-6 md:px-4 md:py-4">
                                 <div className="flex justify-evenly items-center mx-1">
                                   <button
                                     aria-label="editar producto"
                                     id="updateProductButton"
-                                    data-modal-target="updateProductModal"
-                                    data-modal-toggle="updateProductModal"
-                                    className="px-3 py-2 text-xs items-center focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg me-2 "
+                                    className="px-3 py-2 text-xs items-center focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg me-2"
                                     type="button"
-                                    onClick={() => openModal('update', product)}>Editar</button>
-                                  <button aria-label="Eliminar Producto" onClick={() => handleEliminarArchivos(product)} type="button" className="px-3 py-2 text-xs focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg ">
+                                    onClick={() => openModal(product, '#update')}
+                                  >
+                                    Editar
+                                  </button>
+                                  <button
+                                    aria-label="Eliminar Producto"
+                                    onClick={() => handleEliminarArchivos(product)}
+                                    type="button"
+                                    className="px-3 py-2 text-xs focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg"
+                                  >
                                     Eliminar
                                   </button>
                                 </div>
@@ -268,7 +230,7 @@ export default function Admin() {
                 </div>
               </div>
             </section>
-            {isModalOpen && modalType === 'update' && selectedProduct && (
+            {isModalOpen && selectedProduct && (
               <UpdateProduct
                 toggleModal={closeModal}
                 isOpenModal={isModalOpen}
