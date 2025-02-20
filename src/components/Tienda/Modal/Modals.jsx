@@ -189,7 +189,7 @@ const Modal = ({ selectedProduct, closeModal }) => {
 
                 <div className="mt-1 md:mt-4 gap-2 items-center flex flex-col md:flex-row justify-center md:items-start">
                   {/* Enlace a MercadoShop (si la URL está definida) */}
-                  {selectedProduct.n_electronica && (
+                  {/* {selectedProduct.n_electronica && (
                     <Link
                       href={selectedProduct.n_electronica}
                       title="Ver en MercadoShop"
@@ -203,7 +203,7 @@ const Modal = ({ selectedProduct, closeModal }) => {
                       </>
                     }
                     </Link>
-                  )}
+                  )} */}
 
                   {/* Botón para agregar al carrito */}
                   {selectedProduct.vendido?'':
