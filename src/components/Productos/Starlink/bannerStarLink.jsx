@@ -19,6 +19,7 @@ export default function StarlinkMiniBanner() {
               alt="Imagen de la Fuente Adaptador para Antena Starlink Mini Trifix SL1230"
               width={400}
               height={400}
+              priority
               className="rounded"
               placeholder="blur"
               blurDataURL="/icons/icon-512x512.png"

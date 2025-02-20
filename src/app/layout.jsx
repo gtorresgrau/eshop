@@ -1,7 +1,12 @@
+"use client";
 import React from 'react';
 import "./globals.css";
 import { Toaster } from 'react-hot-toast';
 import { ShoppingCartProvider } from '@/components/Context/ShoopingCartContext';
+
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import Loading from "@/components/Loading";
 
 export const metadata = {
   title: 'Eshop Devices Wilde Insumos Informáticos profesionales y standard',
@@ -23,6 +28,15 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const pathname = usePathname();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    const timeout = setTimeout(() => setLoading(false), 500); // Simula una carga rápida
+    return () => clearTimeout(timeout);
+  }, [pathname]);
+
   return (
     <html lang="es">
       <head>
@@ -110,6 +124,7 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <ShoppingCartProvider>
+          {loading && <Loading />}
           {children}
           <Toaster />
         </ShoppingCartProvider>

@@ -10,9 +10,17 @@ import SearchBase from '../../components/Search/SearchBase';
 import PreguntasFrecuentes from '../../components/PreguntasFrecuentas/PreguntasFrecuentas';
 import Comparativas from '../../components/Comparativas/Comparativas';
 import CleanToolExplanation from '../../components/Tools/CleanToolExplanation';
-import Header from '@/components/Banner/Header';
+//import Header from '@/components/Banner/Header';
+import dynamic from "next/dynamic";
+
+
+const Header = dynamic(() => import("@/components/Banner/Header"), {
+  ssr: false,
+  loading: () => <Loading />,
+});
 
 export default function MainContent() {
+
   return (
     <main>
       {/* Top part */}
@@ -22,9 +30,7 @@ export default function MainContent() {
       <Banner />
       <Header />
       {/* Middle part */}
-      <Suspense fallback={<Loading />}>  {/* Add or remove whichever components you want lazy-loaded */}
-        <Tienda />
-      </Suspense>
+      <Tienda />
       <Comparativas />
       <CleanToolExplanation />
 
