@@ -1,23 +1,14 @@
-"use client";
+
 import React from 'react';
 import "./globals.css";
 import { Toaster } from 'react-hot-toast';
 import { ShoppingCartProvider } from '@/components/Context/ShoopingCartContext';
 import metadata from './metadata';
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
-import Loading from "@/components/Loading";
+import LoadingWrapper from '@/components/Loading/LoadingWrapper';
+import Script from 'next/script';
 
 
 export default function RootLayout({ children }) {
-  const pathname = usePathname();
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setLoading(true);
-    const timeout = setTimeout(() => setLoading(false), 500); // Simula una carga rápida
-    return () => clearTimeout(timeout);
-  }, [pathname]);
 
   return (
     <html lang="es">
@@ -90,24 +81,26 @@ export default function RootLayout({ children }) {
           }}
         />
         {/* <!-- Google tag (gtag.js) --> */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-7LRLRDC81W"></script>
-        <script dangerouslySetInnerHTML={{
-              __html: `
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                  gtag('config', 'G-7LRLRDC81W', {
-                    page_path: window.location.pathname,
-                  });
-              `,
-            }}
-          />
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-7LRLRDC81W" strategy="afterInteractive"/>
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-7LRLRDC81W', {
+                page_path: window.location.pathname,
+              });
+            `,
+          }}
+        />
 
       </head>
       <body>
         <ShoppingCartProvider>
-          {loading && <Loading />}
-          {children}
+        <LoadingWrapper>{children}</LoadingWrapper>
           <Toaster />
         </ShoppingCartProvider>
       </body>
