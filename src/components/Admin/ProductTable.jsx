@@ -6,8 +6,9 @@ import useProducts from "@/Hooks/useProducts";
 
 const UpdateProduct = dynamic(() => import('./UpdateProduct/UpdateProduct'));
 
-const ProductTable = ({ products, handleEliminarArchivos }) => {
+const ProductTable = ({ handleEliminarArchivos }) => {
     const {
+        products,
         categories,
         brands,
         openModal,
@@ -81,6 +82,7 @@ const ProductTable = ({ products, handleEliminarArchivos }) => {
         <UpdateProduct
           product={selectedProduct}
           onClose={closeModal}
+          isOpenModal={isModalOpen}
           marca={brands}
           categoria={categories}
           onUpdate={fetchProducts} 

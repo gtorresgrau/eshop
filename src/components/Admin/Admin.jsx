@@ -1,5 +1,5 @@
 'use client'
-import React, { Suspense, useCallback, useState } from "react";
+import React, { Suspense, useState } from "react";
 import dynamic from 'next/dynamic';
 import Swal from "sweetalert2";
 import useProducts from "@/Hooks/useProducts";
@@ -16,7 +16,6 @@ export default function Admin() {
   const [section, setSection] = useState("Productos");
 
   const {
-    products,
     categories,
     brands,
     selectedCategories,
@@ -28,14 +27,11 @@ export default function Admin() {
     handleClearFilters,
     handleShowAllCategories,
     handleShowAllBrands,
-    handlePageChange,
     fetchProducts,
     openModal,
     closeModal,
     selectedProduct,
     isModalOpen,
-    totalPages,
-    currentPage,
 
   } = useProducts();
 
@@ -145,13 +141,7 @@ export default function Admin() {
                       </div>
                     </div>
                   </div>
-                  <ProductTable 
-                    products={products} 
-                    handleEliminarArchivos={handleEliminarArchivos} 
-                    totalPages={totalPages} 
-                    page={currentPage} 
-                    onChange={handlePageChange}
-                    />
+                  <ProductTable handleEliminarArchivos={handleEliminarArchivos} />
                 </div>
               </div>
             </section>

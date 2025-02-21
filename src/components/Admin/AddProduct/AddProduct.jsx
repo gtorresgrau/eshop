@@ -13,7 +13,6 @@ export default function AddProduct({
     toggleModal,
     categoria,
     marca,
-    // vehiculo,
   }) {
     const [isDropdownMarcaOpen, setIsDropdownMarcaOpen] = useState(false);
     const [isDropdownCategoriaOpen, setIsDropdownCategoriaOpen] = useState(false);
