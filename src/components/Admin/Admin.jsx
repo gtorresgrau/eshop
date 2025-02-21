@@ -28,12 +28,15 @@ export default function Admin() {
     handleClearFilters,
     handleShowAllCategories,
     handleShowAllBrands,
+    handlePageChange,
     fetchProducts,
     openModal,
     closeModal,
     selectedProduct,
     isModalOpen,
     totalPages,
+    currentPage,
+
   } = useProducts();
 
   const handleEliminarArchivos = async (producto) => {
