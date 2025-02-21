@@ -6,7 +6,7 @@ const Footer = dynamic(() => import( '@/components/Footer/Footer'))
 const Loading = dynamic(() => import( '@/components/Loading/Loading'))
 const NavBar = dynamic(() => import( '@/components/NavBar/NavBar'))
 const VolverArriba = dynamic(() => import( '@/components/VolverArriba/VolverArriba'))
-const NosotrosPage = dynamic(() => import( '@/components/Comparativas/MemoriaRam/MemoriaRamPage'))
+const NosotrosPage = dynamic(() => import( '@/components/SobreMi/NosotrosPage'))
 
 const NosPage = () => {
   return (
