@@ -13,6 +13,7 @@ export default function UpdateProduct({
   product,
   categoria,
   marca,
+  onUpdate,
 }) {
   const [isDropdownMarcaOpen, setIsDropdownMarcaOpen] = useState(false);
   const [isDropdownCategoriaOpen, setIsDropdownCategoriaOpen] = useState(false);
@@ -218,14 +219,18 @@ const handleChangeInput = (e) => {
     });
     const data = await res.json();
 
-    // Cerrar SweetAlert al completar la solicitud
-    Swal.fire({
-      icon: 'success',
-      title: 'Cambios guardados',
-      showConfirmButton: false,
-      timer: 1500 // Tiempo en milisegundos para cerrar automáticamente
-    });
-
+    if (data.success) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Cambios guardados',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      // Si se pasó un callback para actualizar, lo invoca
+      if (onUpdate) onUpdate();
+    } else {
+      throw new Error(data.error);
+    }
     toggleModal(); // Cerrar modal de edición
 
   } catch (error) {

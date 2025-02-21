@@ -16,7 +16,8 @@ const ProductTable = ({ products, handleEliminarArchivos }) => {
         isModalOpen,
         totalPages,
         currentPage,
-        handlePageChange
+        handlePageChange,
+        fetchProducts
       } = useProducts();
 
   return (
@@ -82,6 +83,7 @@ const ProductTable = ({ products, handleEliminarArchivos }) => {
           onClose={closeModal}
           marca={brands}
           categoria={categories}
+          onUpdate={fetchProducts} 
         />
       )}
       {products.length > 0 && (
