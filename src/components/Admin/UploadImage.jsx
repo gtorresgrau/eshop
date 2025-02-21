@@ -155,18 +155,25 @@ export default function UploadImage({ imagenes, updateImages, handleRemoveImage 
   };
 
 
-  const submitUpdateImage = async(file) => {
-    const formData = new FormData()
+  const submitUpdateImage = async (file) => {
+    const formData = new FormData();
     formData.append('file', file);
-
-     const res = await fetch ( 'api/uploadImage', {
-       method:'POST',
-       body: formData
-     })
-      const data = await res.json()
-      //console.log(data,'data')
-      return data
+  
+    try {
+      const res = await fetch('/api/uploadImage', { // Asegúrate de que la ruta sea correcta
+        method: 'POST',
+        body: formData
+      });
+  
+      if (!res.ok) throw new Error('Error al subir imagen');
+  
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      console.error('Error en submitUpdateImage:', error);
+      return null;
     }
+  };
   
 
   return (
