@@ -80,14 +80,21 @@ const ProductTable = ({ products, handleEliminarArchivos }) => {
         <UpdateProduct
           product={selectedProduct}
           onClose={closeModal}
-          onUpdate={onUpdate}
           marca={brands}
           categoria={categories}
         />
       )}
       {products.length > 0 && (
         <div className="flex justify-center mt-4">
-          <Pagination count={totalPages} page={currentPage} onChange={handlePageChange} />
+          <Pagination 
+                count={totalPages}
+                page={currentPage}
+                onChange={handlePageChange}
+                siblingCount={1}
+                boundaryCount={1}
+                variant="outlined"
+                shape="rounded"
+                className="flex justify-center my-6 bg-white" />
         </div>
       )}
     </div>
