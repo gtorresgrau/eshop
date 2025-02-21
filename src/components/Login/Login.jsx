@@ -15,6 +15,7 @@ import { handleAuthError } from '@/Utils/handleErrorsFirebase';
 import { setInLocalStorage } from '@/Hooks/localStorage';
 import Image from 'next/image';
 
+
 const Login = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
@@ -33,29 +34,6 @@ const Login = () => {
       setLoading(false);
     }
   };
-
-  // const singnInWithGoogleHeander = async () =>{
-  //   setLoading(true);
-  //   try {
-  //     const userGoogle = await singnInWithGoogle() 
-  //     console.log('userGoogle:',userGoogle);
-      
-  //   } catch (error) {
-  //     console.log('error en login:', error);
-  //     toast.error(error.message);
-      
-  //   }finally {
-  //     setLoading(false);
-  //   }
-
-  // }
-
-  // const handleLogOut = async () =>{
-  //   console.log('salir')
-  //   const salir = await logOut();
-  //   removeFromLocalStorage('USER')
-  //   alert(salir.message)
-  // }
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -90,28 +68,10 @@ const Login = () => {
                       </div>
                       {errors.contraseña && <p className="text-sm text-red-600">Este campo es requerido</p>}
                     </div>
-                    {/* <div className="flex items-center justify-between">
-                      <div className="flex items-start">
-                        <div className="flex items-center h-5">
-                          <input id="remember" aria-describedby="remember" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary" />
-                        </div>
-                        <div className="ml-3 text-sm">
-                          <label htmlFor="remember" className="text-gray-500">Recuérdame</label>
-                        </div>
-                      </div>
-                      <Link href="/" className="text-sm font-medium text-primary hover:underline" title="CentralCam Logo">¿Olvidaste tu contraseña?</Link>
-                    </div> */}
+
                     <button type="submit" className=" flex justify-center w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2" disabled={loading} aria-label="iniciar sesion">
-                    {loading ? <FaSpinner className='animate-spin'/> : 'INICIAR SESION'}
+                       {loading ? <FaSpinner className='animate-spin'/> : 'INICIAR SESION'}
                     </button>
-                    {/* <div className="flex items-center justify-center mt-2">
-                      <div className="border-t w-full border-gray-300"></div>
-                      <span className="mx-2 text-gray-400">o</span>
-                      <div className="border-t w-full border-gray-300"></div>
-                    </div>
-                    <button type="submit" className="w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2" disabled={loading} onClick={singnInWithGoogleHeander} aria-label="iniciar sesion con google">
-                      {loading ? 'Cargando...' : 'Continuar con GOOGLE'}
-                    </button> */}
                   </form>
                 </div>
               </div>

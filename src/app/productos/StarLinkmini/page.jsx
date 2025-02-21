@@ -1,10 +1,12 @@
-import BotonWsp from '@/components/BotonWSP/BotonWsp'
-import Footer from '@/components/Footer/Footer'
-import Loading from '@/components/Loading/Loading'
-import NavBar from '@/components/NavBar/NavBar'
-import StarLinkAdapterInfo from '@/components/Productos/Starlink/StarLinkAdapterInfo'
-import VolverArriba from '@/components/VolverArriba/VolverArriba'
 import React, { Suspense } from 'react'
+import dynamic from 'next/dynamic';
+
+const BotonWsp = dynamic(() => import( '@/components/BotonWSP/BotonWsp'))
+const Footer = dynamic(() => import( '@/components/Footer/Footer'))
+const Loading = dynamic(() => import( '@/components/Loading/Loading'))
+const NavBar = dynamic(() => import( '@/components/NavBar/NavBar'))
+const VolverArriba = dynamic(() => import( '@/components/VolverArriba/VolverArriba'))
+const StarLinkAdapterInfo = dynamic(() => import('@/components/Productos/Starlink/StarLinkAdapterInfo'))
 
 const Envios = () => {
   return (
