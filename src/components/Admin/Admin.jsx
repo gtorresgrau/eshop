@@ -1,5 +1,5 @@
 'use client'
-import React, { Suspense, useCallback } from "react";
+import React, { Suspense, useCallback, useState } from "react";
 import dynamic from 'next/dynamic';
 import Swal from "sweetalert2";
 import useProducts from "@/Hooks/useProducts";
@@ -92,15 +92,15 @@ export default function Admin() {
     }
   };
 
-  const handleSelectSection = useCallback((section) => {
+  const handleSelectSection = (section) => {
     setSection(section);
-  }, []);
+  };
   
 
   return (
     <Suspense fallback={<Loading />}>
       <div className="flex flex-col min-h-screen">
-        <Nav handleSelectSection={setSection} />
+        <Nav handleSelectSection={handleSelectSection} />
         {section === "Productos" && (
           <div>
             <section id="tablaProductosAdmin" className="bg-primary-background p-2 sm:p-3 md:p-5">
