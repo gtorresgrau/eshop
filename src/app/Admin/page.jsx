@@ -1,4 +1,6 @@
-import Admin from '@/components/Admin/Admin';
+import React from 'react'
+import dynamic from 'next/dynamic';
+const Admin = dynamic(() => import( '@/components/Admin/Admin'))
 import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 
 const AdminPage = () => {

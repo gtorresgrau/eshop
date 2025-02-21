@@ -1,13 +1,18 @@
 'use client'
-import React, { Suspense, useState } from "react";
-import AddProduct from "./AddProduct/AddProduct";
+import React, { Suspense, useCallback } from "react";
 import useProducts from "@/Hooks/useProducts";
 import Dropdown from "../Tienda/Dropdown/Dropdown";
 import Nav from "./Nav/Nav";
 import Swal from "sweetalert2";
 import Loading from "../Loading/Loading";
 import SearchBase from "../Search/SearchBase";
-import ProductTable from "./ProductTable"; // Extraemos la tabla a un componente separado
+
+import dynamic from 'next/dynamic';
+const AddProduct = dynamic(() => import('./AddProduct/AddProduct'));
+const UpdateProduct = dynamic(() => import('./UpdateProduct/UpdateProduct'));
+const TablaDestacados = dynamic(() => import("./TablaDestacados/TablaDestacados"));
+const DownloadCSVButton = dynamic(() => import("../DownloadCSVButton/DownloadCSVButton"));
+
 
 export default function Admin() {
   const [section, setSection] = useState("Productos");
@@ -88,6 +93,11 @@ export default function Admin() {
       Swal.fire("Error", "Ha ocurrido un error al intentar eliminar el producto.", "error");
     }
   };
+
+  const handleSelectSection = useCallback((section) => {
+    setSection(section);
+  }, []);
+  
 
   return (
     <Suspense fallback={<Loading />}>

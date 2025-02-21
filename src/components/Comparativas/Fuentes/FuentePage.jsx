@@ -1,7 +1,9 @@
 import React from 'react';
-import { fuenteOptions } from '@/app/constants/infoWeb';
-import Comparativas from '../Comparativas';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
+const Comparativas = dynamic(() => import ( '../Comparativas'))
+import { fuenteOptions } from '@/app/constants/infoWeb';
+
 
 const FuentePage = () => {
   return (
@@ -13,9 +15,12 @@ const FuentePage = () => {
             <Image 
               src={option.img} 
               alt={option.alt} 
-              className="w-1/2 h-40 object-cover mb-4 rounded-md"
+              className="w-1/2 h-auto object-cover mb-4 rounded-md"
               title={option.alt} 
               aria-label={`Imagen de ${option.title}`}
+              loading='lazy'
+              width={400}
+              height={80}
             />
             <h2 className="text-xl font-semibold mb-2" title={option.title}>{option.title}</h2>
             <p className="text-gray-600">{option.description}</p>
@@ -25,8 +30,8 @@ const FuentePage = () => {
       <article className="grid grid-cols-1 my-6">
         <h2 className="text-3xl font-bold text-center mb-2" title="Diferencias entre Potencias y Certificaciones">Diferencias entre Potencias y Certificaciones</h2>
         <div className="flex flex-col md:flex-row items-center rounded-lg p-4 text-center">
-            <Image src="https://res.cloudinary.com/dnbrxpca3/image/upload/v1739456111/comparativa_de_fuentes_fnpewn.webp" alt="Comparación de Fuentes de Poder" className="w-1/2 mb-4 md:mb-0 md:mr-6 rounded-md" title="Comparación de Fuentes de Poder" aria-label="Imagen de comparación de fuentes de poder"/>
-            <p className="text-gray-600 text-left">
+            <Image src="https://res.cloudinary.com/dnbrxpca3/image/upload/v1739456111/comparativa_de_fuentes_fnpewn.webp" alt="Comparación de Fuentes de Poder" className="w-1/2 mb-4 md:mb-0 md:mr-6 rounded-md" title="Comparación de Fuentes de Poder" aria-label="Imagen de comparación de fuentes de poder" loading='lazy' width={600} height={400}/>
+            <p className="text-gray-600 text-left" >
               Las fuentes de poder se diferencian en calidad, eficiencia y protección según su certificación:  
               <br /><br />
               ✅ <strong>Fuente Estándar</strong>:  

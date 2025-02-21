@@ -1,10 +1,11 @@
-import BotonWsp from '@/components/BotonWSP/BotonWsp'
-import EnviosPage from '@/components/Envios/EnviosPage'
-import Footer from '@/components/Footer/Footer'
-import Loading from '@/components/Loading/Loading'
-import NavBar from '@/components/NavBar/NavBar'
-import VolverArriba from '@/components/VolverArriba/VolverArriba'
 import React, { Suspense } from 'react'
+import dynamic from 'next/dynamic';
+const BotonWsp = dynamic(() => import( '@/components/BotonWSP/BotonWsp'))
+const EnviosPage = dynamic(() => import( '@/components/Envios/EnviosPage'))
+const Footer = dynamic(() => import( '@/components/Footer/Footer'))
+const Loading = dynamic(() => import( '@/components/Loading/Loading'))
+const NavBar = dynamic(() => import( '@/components/NavBar/NavBar'))
+const VolverArriba = dynamic(() => import( '@/components/VolverArriba/VolverArriba'))
 
 const Envios = () => {
   return (
