@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import useProducts from "@/Hooks/useProducts";
 
 const AddProduct = dynamic(() => import('./AddProduct/AddProduct'));
-const ProductTable = dynamic(() => import(''));
+const ProductTable = dynamic(() => import('./ProductTable'));
 const SearchBase = dynamic(() => import('../Search/SearchBase'));
 const Loading = dynamic(() => import('../Loading/Loading'));
 const Nav = dynamic(() => import('./Nav/Nav'));
