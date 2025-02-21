@@ -33,6 +33,7 @@ export default function Admin() {
     closeModal,
     selectedProduct,
     isModalOpen,
+    totalPages,
   } = useProducts();
 
   const handleEliminarArchivos = async (producto) => {
@@ -141,7 +142,13 @@ export default function Admin() {
                       </div>
                     </div>
                   </div>
-                  <ProductTable products={products} handleEliminarArchivos={handleEliminarArchivos} />
+                  <ProductTable 
+                    products={products} 
+                    handleEliminarArchivos={handleEliminarArchivos} 
+                    totalPages={totalPages} 
+                    page={currentPage} 
+                    onChange={handlePageChange}
+                    />
                 </div>
               </div>
             </section>

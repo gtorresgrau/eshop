@@ -14,6 +14,9 @@ const ProductTable = ({ products, handleEliminarArchivos }) => {
         closeModal,
         selectedProduct,
         isModalOpen,
+        totalPages,
+        currentPage,
+        handlePageChange
       } = useProducts();
 
   return (
