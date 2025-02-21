@@ -1,10 +1,11 @@
 'use client'
 import React, { Suspense, useCallback } from "react";
-import useProducts from "@/Hooks/useProducts";
-import Swal from "sweetalert2";
-
 import dynamic from 'next/dynamic';
+import Swal from "sweetalert2";
+import useProducts from "@/Hooks/useProducts";
+
 const AddProduct = dynamic(() => import('./AddProduct/AddProduct'));
+const ProductTable = dynamic(() => import(''));
 const SearchBase = dynamic(() => import('../Search/SearchBase'));
 const Loading = dynamic(() => import('../Loading/Loading'));
 const Nav = dynamic(() => import('./Nav/Nav'));
