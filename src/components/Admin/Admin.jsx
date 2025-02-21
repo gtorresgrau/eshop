@@ -1,17 +1,14 @@
 'use client'
 import React, { Suspense, useCallback } from "react";
 import useProducts from "@/Hooks/useProducts";
-import Dropdown from "../Tienda/Dropdown/Dropdown";
-import Nav from "./Nav/Nav";
 import Swal from "sweetalert2";
-import Loading from "../Loading/Loading";
-import SearchBase from "../Search/SearchBase";
 
 import dynamic from 'next/dynamic';
 const AddProduct = dynamic(() => import('./AddProduct/AddProduct'));
-const UpdateProduct = dynamic(() => import('./UpdateProduct/UpdateProduct'));
-const TablaDestacados = dynamic(() => import("./TablaDestacados/TablaDestacados"));
-const DownloadCSVButton = dynamic(() => import("../DownloadCSVButton/DownloadCSVButton"));
+const SearchBase = dynamic(() => import('../Search/SearchBase'));
+const Loading = dynamic(() => import('../Loading/Loading'));
+const Nav = dynamic(() => import('./Nav/Nav'));
+const Dropdown = dynamic(() => import('../Tienda/Dropdown/Dropdown'));
 
 
 export default function Admin() {

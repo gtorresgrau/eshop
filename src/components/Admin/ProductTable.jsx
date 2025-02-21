@@ -1,12 +1,13 @@
 import React from "react";
 import Image from "next/image";
-import UpdateProduct from "./UpdateProduct/UpdateProduct";
+import dynamic from 'next/dynamic';
 import { Pagination } from "@mui/material";
 import useProducts from "@/Hooks/useProducts";
 
+const UpdateProduct = dynamic(() => import('./UpdateProduct/UpdateProduct'));
+
 const ProductTable = ({ products, handleEliminarArchivos }) => {
     const {
-        products,
         categories,
         brands,
         openModal,
