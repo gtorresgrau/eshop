@@ -5,8 +5,9 @@ import Link from 'next/link';
 import { CartContext } from '@/components/Context/ShoopingCartContext';
 import addToCart from '@/Utils/addToCart';
 import userData from '@/app/constants/userData';
-import { MdStore } from 'react-icons/md';
+//import { MdStore } from 'react-icons/md';
 //import { IoShareSocialSharp } from "react-icons/io5";
+
 
 const Modal = ({ selectedProduct, closeModal }) => {
   const [cart, setCart] = useContext(CartContext);

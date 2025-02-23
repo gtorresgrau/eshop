@@ -1,12 +1,15 @@
 'use client'
 import React, { useEffect, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import ReactDOM from 'react-dom/client';
 import { FaPlus } from "react-icons/fa";
-import UploadImage from '../UploadImage';
 import Swal from 'sweetalert2';
-import Loading from '@/components/Loading/Loading';
-import Image from 'next/image';
+//import UploadImage from '../UploadImage';
+//import Loading from '@/components/Loading/Loading';
 
+const UploadImage = dynamic(() => import('../UploadImage'))
+const Loading = dynamic(() => import('@/components/Loading/Loading'), { ssr: false });
 
 export default function AddProduct({
     isOpenModal,

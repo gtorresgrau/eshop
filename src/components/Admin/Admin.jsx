@@ -1,17 +1,28 @@
 'use client'
 import React, { useEffect, useState, Suspense } from "react";
+import dynamic from "next/dynamic";
 import ReactDOM from 'react-dom/client';
-import AddProduct from "./AddProduct/AddProduct";
-import UpdateProduct from "./UpdateProduct/UpdateProduct";
 import useProducts from "@/Hooks/useProducts";
-import Dropdown from "../Tienda/Dropdown/Dropdown";
 import { Pagination } from "@mui/material";
-import Nav from "./Nav/Nav";
-import TablaDestacados from "./TablaDestacados/TablaDestacados";
-import DownloadCSVButton from "../DownloadCSVButton/DownloadCSVButton";
 import Swal from "sweetalert2";
-import Loading from "../Loading/Loading";
-import SearchBase from "../Search/SearchBase";
+//import AddProduct from "./AddProduct/AddProduct";
+//port UpdateProduct from "./UpdateProduct/UpdateProduct";
+//import Dropdown from "../Tienda/Dropdown/Dropdown";
+//import Nav from "./Nav/Nav";
+//import TablaDestacados from "./TablaDestacados/TablaDestacados";
+//import DownloadCSVButton from "../DownloadCSVButton/DownloadCSVButton";
+//import Loading from "../Loading/Loading";
+//import SearchBase from "../Search/SearchBase";
+
+const AddProduct = dynamic(()=>from ("./AddProduct/AddProduct"));
+const UpdateProduct = dynamic(()=>from ("./UpdateProduct/UpdateProduct")); 
+const Dropdown = dynamic(()=>from ("../Tienda/Dropdown/Dropdown"));
+const Loading = dynamic(()=>from ("../Loading/Loading"), { ssr: false });
+const SearchBase = dynamic(()=>from ("../Search/SearchBase"));
+const Nav = dynamic(()=>from ("./Nav/Nav"));
+const TablaDestacados = dynamic(()=>from ("./TablaDestacados/TablaDestacados"));
+const DownloadCSVButton = dynamic(()=>from ("../DownloadCSVButton/DownloadCSVButton"));
+
 
 export default function Admin() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,13 +35,10 @@ export default function Admin() {
     products,
     categories,
     brands,
-    // vehiculos,
     selectedCategories,
     selectedBrands,
-    // selectedVehiculos,
     showAllCategories,
     showAllBrands,
-    // showAllVehiculos,
     totalPages,
     currentPage,
     isLoading,
@@ -39,10 +47,8 @@ export default function Admin() {
     handleClearFilters,
     handleShowAllCategories,
     handleShowAllBrands,
-    // handleShowAllVehiculos,
     setSelectedCategories,
     setSelectedBrands,
-    // setSelectedVehiculos,
     fetchProducts
   } = useProducts();
   
@@ -173,7 +179,6 @@ export default function Admin() {
                       <SearchBase />
                     </div>
                     <div className="md:flex md:justify-end gap-3 grid grid-cols-5 w-full">
-
                         <div className="col-span-2">
                         <Dropdown
                           handleClearFilters={handleClearFilters} 
@@ -189,11 +194,6 @@ export default function Admin() {
                           setSelectedBrands={setSelectedBrands}
                           handleShowAllBrands={handleShowAllBrands}
                           isLoading={isLoading}
-                          // vehiculos={vehiculos}
-                          // // handleShowAllVehiculos={handleShowAllVehiculos}
-                          // showAllVehiculos={showAllVehiculos}
-                          // selectedVehiculos={selectedVehiculos}
-                          // setSelectedVehiculos={setSelectedVehiculos}
                           />
                           </div>
                       <div className="col-span-3">
@@ -255,27 +255,12 @@ export default function Admin() {
                       )}
                     </table>
                   </div>
-                  <Pagination
-                    count={totalPages}
-                    page={currentPage}
-                    onChange={handlePageChange}
-                    siblingCount={1}
-                    boundaryCount={1}
-                    variant="outlined"
-                    shape="rounded"
-                    className="flex justify-center my-6 bg-white"
-                  />
+                  <Pagination count={totalPages} page={currentPage} onChange={handlePageChange} siblingCount={1} boundaryCount={1} variant="outlined" shape="rounded"   className="flex justify-center my-6 bg-white" />
                 </div>
               </div>
             </section>
             {isModalOpen && modalType === 'update' && selectedProduct && (
-              <UpdateProduct
-                toggleModal={closeModal}
-                isOpenModal={isModalOpen}
-                product={selectedProduct}
-                marca={brands}
-                categoria={categories}
-              />
+              <UpdateProduct toggleModal={closeModal} isOpenModal={isModalOpen} product={selectedProduct} marca={brands} categoria={categories} />
             )}
           </div>
         )}

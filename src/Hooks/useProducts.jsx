@@ -31,41 +31,36 @@ const useProducts = () => {
     router.push(url);
   }, [router, isAdminPage]);
 
-  const fetchData = useCallback(async (params) => {
+  const fetchData = useMemo(() => async (params) => {
     try {
       const res = await fetch(`/api/products?${params.toString()}`);
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData?.message || res.statusText);
-      }
-      const data = await res.json();
-      return data;
+      if (!res.ok) throw new Error('Failed to fetch products');
+      return await res.json();
     } catch (error) {
-      console.error('Error in fetchProducts:', error);
+      console.error('Error fetching products:', error);
       throw error;
     }
   }, []);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const params = new URLSearchParams(searchParams.toString());
-        const data = await fetchData(params);
+  const fetchProducts = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const params = new URLSearchParams(searchParams.toString());
+      const data = await fetchData(params);
+      setProducts(data.products || []);
+      setTotalPages(data.totalPage || 1);
+      setCategories(data.totalCategories || []);
+      setBrands(data.totalBrands || []);
+      setAllDestacados(data.allproductosDestacados || []);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-        setProducts(data.products || []);
-        setTotalPages(data.totalPage || 1);
-        // Direct assignment is enough here:
-        setCategories(data.totalCategories || []);
-        setBrands(data.totalBrands || []);
-        setAllDestacados(data.allproductosDestacados || []);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  useEffect(() => {
     fetchProducts();
   }, [fetchData, searchParams]);
 
@@ -85,11 +80,6 @@ const useProducts = () => {
     window.history.pushState(null, '', window.location.pathname + window.location.search);
   }, []);
 
-  const handleProductSelect = useCallback((product) => {
-    setSelectedProduct(product);
-    setIsModalOpen(true);
-    window.location.hash = 'producto';
-  }, []);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -103,53 +93,6 @@ const useProducts = () => {
     };
   }, [isModalOpen, closeModal]);
 
-  const handlePageChange = (event, value) => {
-    setCurrentPage(value);
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('page', value);
-    pushUpdatedParams(params, isAdminPage ? '' : '#productos');
-  };
-
-  const updateSearchParams = useCallback((key, values) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.delete(key);
-    params.set('page', 1);
-    if (values.length > 0) {
-      values.forEach((value) => params.append(key, value));
-    }
-    pushUpdatedParams(params, isAdminPage ? '' : '#productos');
-  }, [searchParams, pushUpdatedParams, isAdminPage]);
-
-  const handleCheckboxChange = (e, key, selectedValues, setSelectedValues) => {
-    const value = e.target.value;
-    const isChecked = e.target.checked;
-    setSelectedValues((prevSelected) => {
-      const newSelected = isChecked
-        ? [...prevSelected, value]
-        : prevSelected.filter((item) => item !== value);
-      updateSearchParams(key, newSelected);
-      return newSelected;
-    });
-  };
-
-  const handleClearFilters = () => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.delete('search');
-    params.delete('category');
-    params.delete('brand');
-    params.set('page', 1);
-    setSelectedCategories([]);
-    setSelectedBrands([]);
-    pushUpdatedParams(params, isAdminPage ? '' : '#productos');
-  };
-
-  const handleShowAllCategories = () => {
-    setShowAllCategories((prev) => !prev);
-  };
-
-  const handleShowAllBrands = () => {
-    setShowAllBrands((prev) => !prev);
-  };
 
   return {
     products,
@@ -168,8 +111,8 @@ const useProducts = () => {
     setIsModalOpen,
     setSelectedCategories,
     setSelectedBrands,
-    // functions
     pushUpdatedParams,
+    fetchProducts,
     handlePageChange: (event, value) => {
       setCurrentPage(value);
       const params = new URLSearchParams(searchParams.toString());

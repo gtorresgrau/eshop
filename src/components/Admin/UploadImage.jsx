@@ -36,7 +36,7 @@ export default function UploadImage({ imagenes, updateImages, handleRemoveImage 
   const isAspectRatioOneToOne = (image) => {
     const img2 = processImage(image)
     return new Promise((resolve, reject) => {
-      const img = new Image();
+      const img = document.createElement('img');
       img.onload = () => {
         const isOneToOne = img.width === img.height;
         resolve(isOneToOne);
@@ -216,6 +216,7 @@ export default function UploadImage({ imagenes, updateImages, handleRemoveImage 
                   loading='lazy'
                   title={archivo.name}
                   height={144}
+                  width={144}
                 />
 
                  <Button

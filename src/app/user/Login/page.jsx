@@ -6,8 +6,8 @@ const Login = dynamic(() => import('../../../components/Login/Login'));
 export default function loginPage() {
   
   return (
-    <>
+    <section>
         <Login />
-    </>
+    </section>
   )
 }

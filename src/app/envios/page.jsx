@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 const BotonWsp = dynamic(() => import( '@/components/BotonWSP/BotonWsp'))
 const EnviosPage = dynamic(() => import( '@/components/Envios/EnviosPage'))
 const Footer = dynamic(() => import( '@/components/Footer/Footer'))
-const Loading = dynamic(() => import( '@/components/Loading/Loading'))
+const Loading = dynamic(() => import( '@/components/Loading/Loading'), { ssr: false })
 const NavBar = dynamic(() => import( '@/components/NavBar/NavBar'))
 const VolverArriba = dynamic(() => import( '@/components/VolverArriba/VolverArriba'))
 

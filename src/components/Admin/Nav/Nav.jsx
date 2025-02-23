@@ -30,7 +30,6 @@ export default function Nav( {handleSelectSection} ) {
         if(result.isConfirmed){
           const salir = logOut();
           removeFromLocalStorage('USER');
-          // setUser(null);
           await Swal.fire(salir.message);
           router.push('/')
         }})
@@ -45,7 +44,7 @@ export default function Nav( {handleSelectSection} ) {
     <div className="border-gray-200 bg-[url('/bg/bg-banner.webp')]">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between flex-row-reverse mx-auto p-4">
         <a href="#" className="flex items-center space-x-3" title='volver al home'> 
-          <Image src="/logos/logoEshop.webp" className="h-16 rounded-full w-auto" alt="Logo eshop device" loading='lazy' title="Logo eshop device"/>
+          <Image src="/logos/logoEshop.webp" width={64} height={64} className="rounded-full" alt="Logo eshop device" loading='lazy' title="Logo eshop device"/>
         </a>
         <button
         aria-label="menu navbar"
