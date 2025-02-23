@@ -2,34 +2,25 @@ import React from "react"
 import Link from "next/link"
 import { HardDrive, MemoryStick, SquarePower } from "lucide-react"
 
+const comparisonData = [
+  { href: "/comparativas/almacenamiento", title: "Almacenamiento", description: "Conoce las comparativas de los distintos tipos de almacenamiento", icon: <HardDrive className="h-8 w-8" /> },
+  { href: "/comparativas/memoria", title: "Memoria RAM", description: "Explora las comparativas de los diferentes tipos de Memoria RAM", icon: <MemoryStick className="h-8 w-8" /> },
+  { href: "/comparativas/fuente", title: "Fuentes de Alimentación", description: "Explora las comparativas de las diferentes fuentes de alimentación", icon: <SquarePower className="h-8 w-8" /> },
+]
+
+
 const Comparativas = () => {
   return (
     <section id="comparaciones" className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
       <h2 className="mb-8 text-3xl md:text-4xl text-center font-extrabold text-primary uppercase">Comparativas</h2>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-        <ComparisonCard
-          href="/comparativa/almacenamiento"
-          title="Almacenamiento"
-          description="Conoce las comparativas de los distintos tipos de almacenamiento"
-          icon={<HardDrive className="h-8 w-8" />}
-        />
-        <ComparisonCard
-          href="/comparativa/memoria"
-          title="Memoria RAM"
-          description="Explora las comparativas de los diferentes tipos de Memoria RAM"
-          icon={<MemoryStick className="h-8 w-8" />}
-        />
-        <ComparisonCard
-          href="/comparativa/fuente"
-          title="Fuentes de Alimentacion"
-          description="Explora las comparativas de los diferentes tipos de Memoria RAM"
-          icon={<SquarePower className="h-8 w-8" />}
-        />
+        {comparisonData.map((item, index) => (
+          <ComparisonCard key={index} {...item} />
+        ))}
       </div>
     </section>
   )
 }
-
 
 const ComparisonCard = ({ href, title, description, icon }) => (
   <Link href={href} className="block">
@@ -44,4 +35,3 @@ const ComparisonCard = ({ href, title, description, icon }) => (
 )
 
 export default Comparativas
-

@@ -1,19 +1,18 @@
-'use client'
 import { useEffect, useState } from 'react';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../../pages/api/firebase'; // Asegúrate de la ruta correcta
 import { setInLocalStorage } from './localStorage';
 
 const useUser = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (usuarioFirebase) => {
       setUser(usuarioFirebase);
       if (usuarioFirebase) {
         setInLocalStorage('USER', usuarioFirebase);
       } else {
-        localStorage.removeItem('USER'); // Limpiar el almacenamiento local si el usuario no está autenticado
+        localStorage.removeItem('USER');
       }
     });
 

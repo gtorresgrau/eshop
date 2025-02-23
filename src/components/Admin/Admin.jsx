@@ -5,23 +5,16 @@ import ReactDOM from 'react-dom/client';
 import useProducts from "@/Hooks/useProducts";
 import { Pagination } from "@mui/material";
 import Swal from "sweetalert2";
-//import AddProduct from "./AddProduct/AddProduct";
-//port UpdateProduct from "./UpdateProduct/UpdateProduct";
-//import Dropdown from "../Tienda/Dropdown/Dropdown";
-//import Nav from "./Nav/Nav";
-//import TablaDestacados from "./TablaDestacados/TablaDestacados";
-//import DownloadCSVButton from "../DownloadCSVButton/DownloadCSVButton";
-//import Loading from "../Loading/Loading";
-//import SearchBase from "../Search/SearchBase";
 
-const AddProduct = dynamic(()=>from ("./AddProduct/AddProduct"));
-const UpdateProduct = dynamic(()=>from ("./UpdateProduct/UpdateProduct")); 
-const Dropdown = dynamic(()=>from ("../Tienda/Dropdown/Dropdown"));
-const Loading = dynamic(()=>from ("../Loading/Loading"), { ssr: false });
-const SearchBase = dynamic(()=>from ("../Search/SearchBase"));
-const Nav = dynamic(()=>from ("./Nav/Nav"));
-const TablaDestacados = dynamic(()=>from ("./TablaDestacados/TablaDestacados"));
-const DownloadCSVButton = dynamic(()=>from ("../DownloadCSVButton/DownloadCSVButton"));
+const AddProduct = dynamic(() => import("./AddProduct/AddProduct"));
+const UpdateProduct = dynamic(() => import("./UpdateProduct/UpdateProduct"));
+const Dropdown = dynamic(() => import("../Tienda/Dropdown/Dropdown"));
+const Loading = dynamic(() => import("../Loading/Loading"), { ssr: false });
+const SearchBase = dynamic(() => import("../Search/SearchBase"));
+const Nav = dynamic(() => import("./Nav/Nav"));
+const TablaDestacados = dynamic(() => import("./TablaDestacados/TablaDestacados"));
+const DownloadCSVButton = dynamic(() => import("../DownloadCSVButton/DownloadCSVButton"));
+
 
 
 export default function Admin() {
