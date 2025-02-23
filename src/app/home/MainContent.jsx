@@ -1,26 +1,25 @@
-'use client'; 
+'use client'
 import React, { Suspense } from 'react';
-import dynamic from "next/dynamic";
 import Banner from '../../components/Banner/Banner';
 import BotonWsp from '../../components/BotonWSP/BotonWsp';
 import Contact from '../../components/Contact/Contact';
 import Sobre from '../../components/SobreMi/Sobre';
-import Loading from '../../components/Loading/Loading';
 import SearchBase from '../../components/Search/SearchBase';
 import PreguntasFrecuentes from '../../components/PreguntasFrecuentas/PreguntasFrecuentas';
 import Comparativas from '../../components/Comparativas/Comparativas';
 import CleanToolExplanation from '../../components/Tools/CleanToolExplanation';
 import Productos from '@/components/Tienda/Productos';
 import Header from '@/components/Banner/Header';
+import Loading from '@/components/Loading/Loading';
 
 export default function MainContent() {
 
   return (
     <main>
       {/* Top part */}
-      <Suspense fallback={<Loading />}>
-        <SearchBase />
-      </Suspense>
+          <Suspense fallback={<Loading />}>
+            <SearchBase />
+          </Suspense>
       <Banner />
       <Header />
       

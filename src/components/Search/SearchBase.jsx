@@ -1,10 +1,9 @@
 'use client';
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useContext, useState, useEffect, Suspense } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { IoCartOutline } from 'react-icons/io5';
 import { CartContext } from '../Context/ShoopingCartContext';
 import Link from "next/link";
-import Loading from "../Loading/Loading";
 
 const SearchBase = ({ inputClassName = '', placeholder = 'Buscar...' }) => {
   const router = useRouter();
@@ -52,7 +51,6 @@ const SearchBase = ({ inputClassName = '', placeholder = 'Buscar...' }) => {
   }`;
 
   return (
-    <Suspense fallback={<Loading />}>
       <div id="searchSticky" className={containerClass}>
         <form id="formSearchBar" onSubmit={handleSearch} className={`relative flex-1 ${inputClassName}`}>
           <label htmlFor="default-search" className="sr-only">Buscar</label>
@@ -108,7 +106,6 @@ const SearchBase = ({ inputClassName = '', placeholder = 'Buscar...' }) => {
           </div>
         )}
       </div>
-    </Suspense>
   );
 };
 

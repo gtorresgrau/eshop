@@ -3,7 +3,7 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 
 import { Pagination } from "@mui/material";
-import useProducts from "@/Hooks/useProducts";
+import useProducts from "../../Hooks/useProducts";
 import Cards from './Cards/Cards';
 
 const Dropdown = dynamic(() => import('./Dropdown/Dropdown'));

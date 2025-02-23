@@ -1,3 +1,4 @@
+'use cliet'
 import { useState, useEffect } from 'react';
 
 const useProductFilters = (searchParams, router, isAdminPage) => {

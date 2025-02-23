@@ -1,3 +1,4 @@
+'us client'
 import { useState, useCallback, useEffect } from 'react';
 
 const useProductModal = () => {
