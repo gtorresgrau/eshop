@@ -73,7 +73,7 @@ const ShopCart = () => {
             {cart.length ? (
               cart.map((item) => (
                 <div key={item.cod_producto} className="relative flex items-center shadow-xl rounded-lg bg-white border border-gray-50 gap-2 m-2 p-2">
-                  <Image src={item.foto_1_1 || producto.src} alt={item.nombre} className="m-2 max-h-28 max-w-28 min-h-28 min-w-28" loading="lazy" />
+                  <Image src={item.foto_1_1 || producto.src} alt={item.nombre} title={item.nombre} className="m-2 max-h-28 max-w-28 min-h-28 min-w-28" loading="lazy" />
                   <div className="flex flex-col text-sm md:text-base p-2">
                     <p>{item.nombre}</p>
                     <p>{item.descripcion}</p>

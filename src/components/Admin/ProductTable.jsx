@@ -45,6 +45,8 @@ const ProductTable = ({ handleEliminarArchivos }) => {
                       width={50}
                       height={50}
                       className="rounded-lg"
+                      title={producto.nombre}
+                      loading="lazy"
                     />
                   ) : (
                     <span className="text-gray-400">Sin imagen</span>

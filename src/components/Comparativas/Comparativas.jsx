@@ -23,7 +23,7 @@ const Comparativas = () => {
 }
 
 const ComparisonCard = ({ href, title, description, icon }) => (
-  <Link href={href} className="block">
+  <Link href={href} className="block" title="Ver comparativa" aria-label="Ver comparativa">
     <div className="h-full p-6 bg-white rounded-lg shadow-md transition-transform hover:scale-105 hover:shadow-lg">
       <div className="flex items-center space-x-4 mb-4">
         {icon}

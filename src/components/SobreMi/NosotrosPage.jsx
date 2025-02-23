@@ -61,6 +61,8 @@ const NosotrosPage = () => {
                       title={`Imagen de ${prod.nombre}`}
                       aria-label={`Imagen de ${prod.nombre}`}
                       className="w-full h-auto mb-4 rounded"
+                      width={200}
+                      height={200}
                     />
                   )}
                   <h3 className="text-xl font-semibold text-gray-700 mb-2" title={prod.nombre}>{prod.nombre}</h3>

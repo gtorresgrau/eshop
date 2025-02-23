@@ -54,11 +54,14 @@ const CardDestacado = ({ selectedProduct, handleProductSelect }) => {
             loading="lazy" 
             title={selectedProduct.nombre} />
           <Image
-            className={`absolute bottom-1 right-1 inline-flex items-center justify-center bg-slate-200 hover:bg-boton-primary-hover active:bg-boton-primary-active rounded-md text-white z-10 ${selectedProduct.usado? 'w-28': 'w-16'}`}
+            className={`absolute bottom-1 right-1 inline-flex items-center justify-center bg-slate-200 hover:bg-boton-primary-hover active:bg-boton-primary-active rounded-md text-white z-10 `}
             src={selectedProduct.usado? '/images/USADO.webp': '/images/NUEVO.webp'}
             alt={selectedProduct.usado? 'producto usado': 'producto nuevo'}
             title={selectedProduct.usado? 'producto usado': 'producto nuevo'}
-            loading="lazy"/> 
+            loading="lazy"
+            width={selectedProduct.usado ? 112 : 64}
+            height={32}
+            />
         </div>      
       </div>
       <div className="px-5 pb-2">
