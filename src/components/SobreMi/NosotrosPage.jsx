@@ -14,7 +14,7 @@ const NosotrosPage = () => {
       <section id="acerca-de-nosotros" aria-labelledby="acerca-nosotros-heading" className="mb-12" >
         <header className="text-center">
           <h1 id="acerca-nosotros-heading" className="mb-8 text-xl md:text-3xl xl:text-4xl text-center font-extrabold text-primary uppercase" title={infoWeb.title}>{infoWeb.title}</h1>
-          <p className="text-xl mt-2" title={infoWeb.subtitle}>{infoWeb.subtitle}</p>
+          <p className="text-sm mt-2" title={infoWeb.subtitle}>{infoWeb.subtitle}</p>
         </header>
         <article className="mt-6 text-justify">
           <div title="Sobre Eshop Devices" aria-label="Sobre Eshop Devices">
