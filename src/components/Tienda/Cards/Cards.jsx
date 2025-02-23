@@ -87,8 +87,8 @@ const Cards = ({
                 ))}
             </>
         ) : products.length > 0 ? ( // Solo renderiza las tarjetas si hay productos
-            products.map((product) => (
-              <li>
+            products.map((product, i) => (
+              <li key={i}>
                 <Card key={product.cod_producto} product={product} handleProductSelect={handleProductSelect} />
               </li>
             ))
