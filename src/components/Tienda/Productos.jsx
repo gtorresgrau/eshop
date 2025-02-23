@@ -1,10 +1,13 @@
 // Productos.js
 import React from 'react';
+import dynamic from 'next/dynamic';
+
 import { Pagination } from "@mui/material";
 import useProducts from "@/Hooks/useProducts";
 import Cards from './Cards/Cards';
-import Modal from './Modal/Modals';
-import Dropdown from './Dropdown/Dropdown';
+
+const Dropdown = dynamic(() => import('./Dropdown/Dropdown'));
+const Modal = dynamic(() => import('./Modal/Modals'));
 
 
 export default function Productos() {
