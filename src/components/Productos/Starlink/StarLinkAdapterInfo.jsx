@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function StarLinkAdapterInfo() {
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg">
+    <section className="max-w-4xl mx-auto p-6 bg-white rounded-lg">
       <Head>
         <title> Fuente Adaptador para Antena Starlink Mini | Trifix SL1230 </title>
         <meta name="description" content="Optimiza y tu conexión Starlink Mini con nuestro cable adaptador. Entrada 12V, salida 35V 5A, protección avanzada y tensión estabilizada. Ideal para viajes y uso continuo."/>
@@ -220,6 +220,6 @@ export default function StarLinkAdapterInfo() {
           Consulta ahora y asegura tu conexión confiable
         </Link>
       </div>
-    </div>
+    </section>
   );
 }

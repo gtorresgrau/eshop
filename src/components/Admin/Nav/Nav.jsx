@@ -41,7 +41,7 @@ export default function Nav( {handleSelectSection} ) {
 
 
   return (
-    <div className="border-gray-200 bg-[url('/bg/bg-banner.webp')]">
+    <section className="border-gray-200 bg-[url('/bg/bg-banner.webp')]">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between flex-row-reverse mx-auto p-4">
         <a href="#" className="flex items-center space-x-3" title='volver al home'> 
           <Image src="/logos/logo.webp" width={64} height={64} className="rounded-full" alt="Logo eshop device" loading='lazy' title="Logo eshop device"/>
@@ -212,6 +212,6 @@ export default function Nav( {handleSelectSection} ) {
           </ul>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

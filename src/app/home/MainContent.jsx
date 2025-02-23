@@ -1,5 +1,5 @@
 'use client'
-import React, { Suspense } from 'react';
+import React from 'react';
 import Banner from '../../components/Banner/Banner';
 import BotonWsp from '../../components/BotonWSP/BotonWsp';
 import Contact from '../../components/Contact/Contact';
@@ -10,16 +10,13 @@ import Comparativas from '../../components/Comparativas/Comparativas';
 import CleanToolExplanation from '../../components/Tools/CleanToolExplanation';
 import Productos from '@/components/Tienda/Productos';
 import Header from '@/components/Banner/Header';
-import Loading from '@/components/Loading/Loading';
 
 export default function MainContent() {
 
   return (
     <main>
       {/* Top part */}
-          <Suspense fallback={<Loading />}>
-            <SearchBase />
-          </Suspense>
+      <SearchBase />
       <Banner />
       <Header />
       
