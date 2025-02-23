@@ -1,31 +1,20 @@
 import React, { Suspense } from 'react'
 import dynamic from 'next/dynamic';
 
-const BotonWsp = dynamic(() => import( '@/components/BotonWSP/BotonWsp'))
-const Footer = dynamic(() => import( '@/components/Footer/Footer'))
-const Loading = dynamic(() => import( '@/components/Loading/Loading'))
-const NavBar = dynamic(() => import( '@/components/NavBar/NavBar'))
-const VolverArriba = dynamic(() => import( '@/components/VolverArriba/VolverArriba'))
+const HeaderSection = dynamic(() => import( '@/app/home/HeaderSection'))
+const FooterSection = dynamic(() => import( '@/app/home/FooterSection'))
 const StarLinkAdapterInfo = dynamic(() => import('@/components/Productos/Starlink/StarLinkAdapterInfo'))
 
-const Envios = () => {
+const StarlinkPage = () => {
   return (
     <div className="flex flex-col h-screen">
-      <nav className="">
-        <Suspense fallback={<Loading/>}>
-            <NavBar />
-        </Suspense>
-      </nav>
+      <HeaderSection />
       <main className="flex-1 flex items-center justify-center bg-white">
         <StarLinkAdapterInfo />
       </main>
-      <footer className="bg-gray-200">
-        <Footer />
-        <VolverArriba />
-        <BotonWsp />
-      </footer>
+      <FooterSection />
     </div>
   )
 }
 
-export default Envios
+export default StarlinkPage

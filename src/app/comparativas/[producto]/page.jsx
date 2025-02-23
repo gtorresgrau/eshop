@@ -1,11 +1,10 @@
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import BotonWsp from "@/components/BotonWSP/BotonWsp";
-import Footer from "@/components/Footer/Footer";
-import Loading from "@/components/Loading/Loading";
-import NavBar from "@/components/NavBar/NavBar";
-import VolverArriba from "@/components/VolverArriba/VolverArriba";
+
+const HeaderSection = dynamic(()=>import ( "@/app/home/HeaderSection"))
+const FooterSection = dynamic(()=>import ( "@/app/home/FooterSection"))
+const Loading = dynamic(()=>import ( "@/components/Loading/Loading"))
 
 // Mapeo de los componentes según el producto
 const comparisonComponents = {
@@ -26,21 +25,13 @@ const ComparativaPage = ({ params }) => {
 
   return (
     <div className="flex flex-col h-screen">
-      <nav>
-        <Suspense fallback={<Loading />}>
-          <NavBar />
-        </Suspense>
-      </nav>
-      <main className="flex-1 flex items-center justify-center bg-white">
+      <HeaderSection />
+        <main className="flex-1 flex items-center justify-center bg-white">
         <Suspense fallback={<Loading />}>
           <SelectedComponent />
         </Suspense>
       </main>
-      <footer className="bg-gray-200">
-        <Footer />
-        <VolverArriba />
-        <BotonWsp />
-      </footer>
+      <FooterSection />
     </div>
   );
 };

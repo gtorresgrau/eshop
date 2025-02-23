@@ -5,9 +5,9 @@ const ShopCart = dynamic(() => import("../../components/Tienda/ShoopingCart/Shop
 
 const Shopcart = () => {
   return (
-    <>
+    <section>
         <ShopCart />
-    </>
+    </section>
   )
 }
 
