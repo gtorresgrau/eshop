@@ -13,7 +13,7 @@ const NosotrosPage = () => {
       {/* Sección: Acerca de Nosotros */}
       <section id="acerca-de-nosotros" aria-labelledby="acerca-nosotros-heading" className="mb-12" >
         <header className="text-center">
-          <h1 id="acerca-nosotros-heading" className="text-4xl font-bold" title={infoWeb.title}>{infoWeb.title}</h1>
+          <h1 id="acerca-nosotros-heading" className="mb-8 text-xl md:text-3xl xl:text-4xl text-center font-extrabold text-primary uppercase" title={infoWeb.title}>{infoWeb.title}</h1>
           <p className="text-xl mt-2" title={infoWeb.subtitle}>{infoWeb.subtitle}</p>
         </header>
         <article className="mt-6 text-justify">
@@ -29,7 +29,7 @@ const NosotrosPage = () => {
           </p>
         </article>
         <article id="forma-de-trabajar" className="mt-6 text-justify">
-          <h2 className="text-2xl font-semibold mb-4" title="Servicios Ofrecidos">Servicios ofrecidos</h2>
+          <h2 className="mb-8 text-2xl md:text-3xl xl:text-4xl text-center font-extrabold text-primary uppercase" title="Servicios Ofrecidos">Servicios ofrecidos</h2>
           <ul className="max-w-md space-y-1 text-gray-500 list-inside py-4">
               {infoWeb.ofrece.map((item, index) => (
                 <li key={index} className="flex items-center">
@@ -45,7 +45,7 @@ const NosotrosPage = () => {
 
       {/* Sección: Qué Ofrecemos */}
       <section id="que-ofrecemos" aria-labelledby="que-ofrecemos-heading" className="mb-12">
-        <h2 id="que-ofrecemos-heading" className="text-3xl font-semibold text-center" title="Qué Ofrecemos">¿Qué productos ofrecemos?</h2>
+        <h2 id="que-ofrecemos-heading" className="mb-8 text-xl md:text-3xl xl:text-4xl text-center font-extrabold text-primary uppercase" title="Qué Ofrecemos">¿Qué productos ofrecemos?</h2>
         <div className="mt-6 grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {products
             .sort(() => Math.random() - 0.5) // Mezcla aleatoriamente los productos
