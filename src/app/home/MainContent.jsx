@@ -16,9 +16,9 @@ export default function MainContent() {
   return (
     <main>
       {/* Top part */}
-      <SearchBase />
       <Banner />
       <Header />
+      <SearchBase />
       
       {/* Middle part */}
       <Productos />
