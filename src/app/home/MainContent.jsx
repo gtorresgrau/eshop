@@ -1,23 +1,17 @@
 'use client'; 
 import React, { Suspense } from 'react';
+import dynamic from "next/dynamic";
 import Banner from '../../components/Banner/Banner';
 import BotonWsp from '../../components/BotonWSP/BotonWsp';
 import Contact from '../../components/Contact/Contact';
 import Sobre from '../../components/SobreMi/Sobre';
-import Tienda from '../../components/Tienda/Tienda';
 import Loading from '../../components/Loading/Loading';
 import SearchBase from '../../components/Search/SearchBase';
 import PreguntasFrecuentes from '../../components/PreguntasFrecuentas/PreguntasFrecuentas';
 import Comparativas from '../../components/Comparativas/Comparativas';
 import CleanToolExplanation from '../../components/Tools/CleanToolExplanation';
-//import Header from '@/components/Banner/Header';
-import dynamic from "next/dynamic";
-
-
-const Header = dynamic(() => import("@/components/Banner/Header"), {
-  ssr: false,
-  loading: () => <Loading />,
-});
+import Productos from '@/components/Tienda/Productos';
+import Header from '@/components/Banner/Header';
 
 export default function MainContent() {
 
@@ -29,8 +23,9 @@ export default function MainContent() {
       </Suspense>
       <Banner />
       <Header />
+      
       {/* Middle part */}
-      <Tienda />
+      <Productos />
       <Comparativas />
       <CleanToolExplanation />
 
