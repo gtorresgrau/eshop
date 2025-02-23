@@ -70,14 +70,14 @@ const NosotrosPage = () => {
                       : prod.descripcion}
                   </p>
                   {/* Botón para ver detalles del producto */}
-                  <button type="button"
+                  {/* <button type="button"
                     alt={`Ver detalles de ${prod.nombre}`}
                     title={`Ver detalles de ${prod.nombre}`}
                     aria-label={`Ver detalles de ${prod.nombre}`}
                     className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors duration-300"
                   >
                     Ver detalles
-                  </button>
+                  </button> */}
                 </div>
               </div>
             ))}
