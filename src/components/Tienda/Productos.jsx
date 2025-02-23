@@ -1,26 +1,31 @@
 // Productos.js
 import React from 'react';
 import { Pagination } from "@mui/material";
+import useProducts from "@/Hooks/useProducts";
 import Cards from './Cards/Cards';
 import Modal from './Modal/Modals';
+import Dropdown from './Dropdown/Dropdown';
 
-export default function Productos({
-  products,
-  isModalOpen,
-  selectedProduct,
-  isLoading,
-  totalPages,
-  currentPage,
-  handlePageChange,
-  handleProductSelect,
-  closeModal,
-}) {
+
+export default function Productos() {
+
+  const {
+    products,
+    selectedProduct,
+    isModalOpen,
+    totalPages,
+    currentPage,
+    isLoading,
+    handlePageChange,
+    closeModal,
+    handleProductSelect,
+  } = useProducts();
 
   return (
-    <article id="cardsTienda" className="col-span-1 md:col-start-4 md:col-span-9 flex justify-around" >
-      <div>
+      <article id="cardsTienda" className="col-span-1 md:col-start-4 md:col-span-9 grid grid-rows-[auto_1fr_auto] min-h-screen">
         {/* Paginación superior */}
-        <nav aria-label="Paginación de productos" className="flex justify-center my-4">
+        <nav aria-label="Paginación de productos" className="flex flex-col md:flex-row justify-center my-4 gap-4 items-center">
+          <Dropdown />
           <Pagination
             count={totalPages}
             page={currentPage}
@@ -35,14 +40,17 @@ export default function Productos({
           />
         </nav>
 
-        <Cards handleProductSelect={handleProductSelect} products={products} isLoading={isLoading} />
+        {/* Cards (se mantienen en su lugar sin afectar la paginación) */}
+        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+          <Cards handleProductSelect={handleProductSelect} products={products} isLoading={isLoading} />
+        </div>
 
         {isModalOpen && selectedProduct && (
           <Modal closeModal={closeModal} selectedProduct={selectedProduct} />
         )}
 
-        {/* Paginación inferior */}
-        <nav aria-label="Paginación de productos" className="flex justify-center py-6" >
+        {/* Paginación inferior siempre abajo */}
+        <nav aria-label="Paginación de productos" className="flex justify-center py-6">
           <Pagination
             count={totalPages}
             page={currentPage}
@@ -55,7 +63,8 @@ export default function Productos({
             title="Paginación de productos"
           />
         </nav>
-      </div>
-    </article>
+      </article>
+
+
   );
 }

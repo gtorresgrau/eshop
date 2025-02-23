@@ -47,7 +47,7 @@ export default function StarLinkAdapterInfo() {
       <motion.h2 initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="text-2xl font-bold text-center text-gray-700 mb-6">Características destacadas</motion.h2>
       <ul className="list-none space-y-2 mb-6">
         <li className="flex items-center">
-          <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+          <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="tilde ok" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
           </svg>
           <p>
@@ -55,7 +55,7 @@ export default function StarLinkAdapterInfo() {
           </p>
         </li>
         <li className="flex items-center">
-          <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+          <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="tilde ok" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
           </svg>
           <p>
@@ -63,7 +63,7 @@ export default function StarLinkAdapterInfo() {
           </p>
         </li>
         <li className="flex items-center">
-          <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+          <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="tilde ok" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
           </svg>
           <p>
@@ -71,7 +71,7 @@ export default function StarLinkAdapterInfo() {
           </p>
         </li>
         <li className="flex items-center">
-          <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+          <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="tilde ok" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
           </svg>
           <p>
@@ -94,7 +94,7 @@ export default function StarLinkAdapterInfo() {
         <tbody>
           <tr className="border-b">
             <td className="flex items-center font-semibold py-2">
-              <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="tilde ok" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
               </svg>
               Marca
@@ -103,7 +103,7 @@ export default function StarLinkAdapterInfo() {
           </tr>
           <tr className="border-b">
             <td className="flex items-center font-semibold py-2">
-              <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="tilde ok" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
               </svg>
               Modelo
@@ -112,7 +112,7 @@ export default function StarLinkAdapterInfo() {
           </tr>
           <tr className="border-b">
             <td className="flex items-center font-semibold py-2">
-              <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="tilde ok" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
               </svg>
               Tipo
@@ -121,7 +121,7 @@ export default function StarLinkAdapterInfo() {
           </tr>
           <tr className="border-b">
             <td className="flex items-center font-semibold py-2">
-              <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="tilde ok" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
               </svg>
               Color
@@ -130,7 +130,7 @@ export default function StarLinkAdapterInfo() {
           </tr>
           <tr className="border-b">
             <td className="flex items-center font-semibold py-2">
-              <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="tilde ok" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
               </svg>
               Largo
@@ -139,7 +139,7 @@ export default function StarLinkAdapterInfo() {
           </tr>
           <tr className="border-b">
             <td className="flex items-center font-semibold py-2">
-              <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="tilde ok" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
               </svg>
               Material conductor
@@ -148,7 +148,7 @@ export default function StarLinkAdapterInfo() {
           </tr>
           <tr className="border-b">
             <td className="flex items-center font-semibold py-2">
-              <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="tilde ok" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
               </svg>
               Conector
@@ -157,7 +157,7 @@ export default function StarLinkAdapterInfo() {
           </tr>
           <tr className="border-b">
             <td className="flex items-center font-semibold py-2">
-              <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="tilde ok" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
               </svg>
               Ambiente
@@ -166,7 +166,7 @@ export default function StarLinkAdapterInfo() {
           </tr>
           <tr>
             <td className="flex items-center font-semibold py-2">
-              <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="tilde ok" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
               </svg>
               Incluye conectores
@@ -175,7 +175,7 @@ export default function StarLinkAdapterInfo() {
           </tr>
           <tr>
             <td className="flex items-center font-semibold py-2">
-              <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-3.5 h-3.5 mr-2 text-primary-whats flex-shrink-0" aria-hidden="tilde ok" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
               </svg>
               Garantia?

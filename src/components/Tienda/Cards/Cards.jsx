@@ -79,16 +79,18 @@ const Cards = ({
   return (
     <ul className="grid grid-cols-2 lg:grid-cols-3 gap-4 py-1">
       {isLoading ? (
-            <div className="flex gap-2 items-center justify-around">
+            <>
                 {[...Array(3)].map((_, i) => (
-                    <div key={i}>
+                    <li key={i} className="w-full">
                         <SkeletonCard />
-                    </div>
+                    </li>
                 ))}
-            </div>
+            </>
         ) : products.length > 0 ? ( // Solo renderiza las tarjetas si hay productos
             products.map((product) => (
+              <li>
                 <Card key={product.cod_producto} product={product} handleProductSelect={handleProductSelect} />
+              </li>
             ))
         ) : (
         <li className="w-full md:w-1/2 lg:w-1/3"> {/* Ocupa todo el ancho en pantallas pequeñas, la mitad en medianas y un tercio en grandes */}

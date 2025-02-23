@@ -1,35 +1,36 @@
 'use client'
 import React, { useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
+import useProducts from "@/Hooks/useProducts";
 
-const Dropdown = ({
-  handleCheckboxChange,
-  handleClearFilters,
-  categories,
-  handleShowAllCategories,
-  showAllCategories,
-  selectedCategories,
-  setSelectedCategories,
-  brands,
-  handleShowAllBrands,
-  showAllBrands,
-  selectedBrands,
-  setSelectedBrands,
-  vehiculos,
-  // handleShowAllVehiculos,
-  //showAllVehiculos,
-  //selectedVehiculos,
-  //setSelectedVehiculos,
-}) => {
+
+const Dropdown = () => {
+  const {
+    categories,
+    brands,
+    selectedCategories,
+    selectedBrands,
+    showAllCategories,
+    showAllBrands,
+    handleCheckboxChange,
+    handleClearFilters,
+    handleShowAllCategories,
+    handleShowAllBrands,
+    setSelectedCategories,
+    setSelectedBrands,
+  } = useProducts();
+
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(true);
   const [isBrandsOpen, setIsBrandsOpen] = useState(true);
-  // const [isVehiculosOpen, setIsVehiculosOpen] = useState(true);
+
+  const isMobile = useMediaQuery({ maxWidth: 768 });
+  const filterLimit = isMobile ? 5 : 15;
 
   // Función para cerrar todos los dropdowns
   const closeDropdowns = () => {
     setIsCategoriesOpen(true);
     setIsBrandsOpen(true);
-    // setIsVehiculosOpen(true);
   };
 
   // Función para toggle del drawer
@@ -38,6 +39,7 @@ const Dropdown = ({
     closeDropdowns();
   };
 
+  
   return (
     <div>
       <button
@@ -68,7 +70,7 @@ const Dropdown = ({
           >
             <svg
               className="w-3 h-3"
-              aria-hidden="true"
+              aria-hidden="flecha para cerrar"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 14 14"
@@ -101,76 +103,57 @@ const Dropdown = ({
               </button>
               {isCategoriesOpen && (
                 <div className="flex flex-col p-2">
-                  {categories
-                    .slice(0, showAllCategories ? categories.length : 5)
-                    .map(({ category, count }) => (
-                      <label key={category} className="flex gap-2">
-                        <input
-                          type="checkbox"
-                          value={category}
-                          checked={selectedCategories.includes(category)}
-                          onChange={(e) =>
-                            handleCheckboxChange(
-                              e,
-                              "category",
-                              selectedCategories,
-                              setSelectedCategories
-                            )
-                          }
-                        />
-                        {category} ({count})
-                      </label>
-                    ))}
-                  {categories.length > 5 && (
+                  {categories.slice(0, showAllCategories ? categories.length : filterLimit).map(({ category, count }) => (
+                    <label key={category} className="flex gap-2 items-center">
+                      <input
+                        type="checkbox"
+                        value={category}
+                        checked={selectedCategories.includes(category)}
+                        onChange={(e) => handleCheckboxChange(e, 'category', selectedCategories, setSelectedCategories)}
+                        aria-label={`Filtrar por ${category}`}
+                      />
+                      {category} ({count})
+                    </label>
+                  ))}
+                  {categories.length > filterLimit && (
                     <button
                       onClick={handleShowAllCategories}
                       className="px-4 text-blue-700 hover:text-white hover:bg-blue-400 rounded border cursor-pointer my-2 w-full"
-                      aria-label={
-                        showAllCategories ? "Ver menos..." : "Ver más..."
-                      }
+                      aria-label={showAllCategories ? 'Ver menos categorías' : 'Ver más categorías'}
+                      title={showAllCategories ? 'Ver menos categorías' : 'Ver más categorías'}
                     >
-                      {showAllCategories ? "Ver menos..." : "Ver más..."}
+                      {showAllCategories ? 'Ver menos...' : 'Ver más...'}
                     </button>
                   )}
                 </div>
               )}
             </li>
             <li>
-              <button
-                className="flex font-medium place-items-center w-full text-left px-4 py-2 hover:bg-gray-100 self-center"
-                aria-label="filtrar por marca"
-              >
+              <button className="flex font-medium place-items-center w-full text-left px-4 py-2 hover:bg-gray-100 self-center" aria-label="filtrar por marca">
                 Marcas
               </button>
               {isBrandsOpen && (
                 <div className="flex flex-col p-2">
-                  {brands
-                    .slice(0, showAllBrands ? brands.length : 5)
-                    .map(({ brand, count }) => (
-                      <label key={brand} className="flex gap-2">
-                        <input
-                          type="checkbox"
-                          value={brand}
-                          checked={selectedBrands.includes(brand)}
-                          onChange={(e) =>
-                            handleCheckboxChange(
-                              e,
-                              "brand",
-                              selectedBrands,
-                              setSelectedBrands
-                            )
-                          }
-                        />
-                        {brand} ({count})
-                      </label>
-                    ))}
-                  {brands.length > 5 && (
+                  {brands.slice(0, showAllBrands ? brands.length : filterLimit).map(({ brand, count }) => (
+                    <label key={brand} className="flex gap-2 items-center">
+                      <input
+                        type="checkbox"
+                        value={brand}
+                        checked={selectedBrands.includes(brand)}
+                        onChange={(e) => handleCheckboxChange(e, 'brand', selectedBrands, setSelectedBrands)}
+                        aria-label={`Filtrar por ${brand}`}
+                      />
+                      {brand} ({count})
+                    </label>
+                  ))}
+                  {brands.length > filterLimit && (
                     <button
                       onClick={handleShowAllBrands}
                       className="px-4 text-blue-700 hover:text-white hover:bg-blue-400 rounded border cursor-pointer my-2 w-full"
-                      aria-label={showAllBrands ? "Ver menos..." : "Ver más..."}
+                      aria-label={showAllBrands ? 'Ver menos marcas' : 'Ver más marcas'}
+                      title={showAllBrands ? 'Ver menos marcas' : 'Ver más marcas'}
                     >
-                      {showAllBrands ? "Ver menos..." : "Ver más..."}
+                      {showAllBrands ? 'Ver menos...' : 'Ver más...'}
                     </button>
                   )}
                 </div>
