@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import producto from '../../../../public/images/sinFoto.webp';
-import Logo from '../../../../public/logos/logoEshop.webp';
+import Logo from '../../../../public/logos/logo.webp';
 import Link from 'next/link';
 import userData from '@/app/constants/userData';
 import EmptyCart from '../EmptyCart/EmptyCart';

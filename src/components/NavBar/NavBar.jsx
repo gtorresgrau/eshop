@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { removeFromLocalStorage, getInLocalStorage } from '../../Hooks/localStorage';
 import Link from 'next/link';
-import Logo from '../../../public/logos/logoEshop.webp';
+import Logo from '../../../public/logos/logo.webp';
 import UserMenu from './UserMenu';
 import { IoCartOutline } from 'react-icons/io5';
 import { CartContext } from '../Context/ShoopingCartContext';
