@@ -80,7 +80,7 @@ const Cards = ({
     <ul className="grid grid-cols-2 lg:grid-cols-3 gap-4 py-1">
       {isLoading ? (
             <>
-                {[...Array(3)].map((_, i) => (
+                {[...Array(9)].map((_, i) => (
                     <li key={i} className="w-full">
                         <SkeletonCard />
                     </li>
