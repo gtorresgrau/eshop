@@ -80,7 +80,7 @@ const Card = ({ product, handleProductSelect }) => {
             </div>
           </div>
           <div className="px-4 py-1">
-            <h2 className="text-sm font-semibold text-gray-900 md:text-base md:font-bold text-center">{product.nombre}</h2>
+            <h2 className="text-sm font-semibold text-gray-900 md:text-base md:font-bold text-center h-10 md:h-5">{product.nombre}</h2>
             <p className="text-xs text-gray-700 md:text-base">
               <strong>Marca:</strong> {product.marca}
             </p>
