@@ -4,7 +4,6 @@ import Link from 'next/link';
 import 'react-toastify/dist/ReactToastify.css';
 import logo from '../../../public/logos/logoEshop.webp';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import { signIn } from '../../lib/firebase';
 import { ToastContainer } from 'react-toastify';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -25,9 +24,11 @@ const Login = () => {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      const res = await signIn(data); // Aquí usamos los datos del formulario (data) en lugar de usuario
-      setInLocalStorage('USER', res.user)
-      router.push('/Admin')
+      // Importa signIn de Firebase solo en el momento de la acción
+      const { signIn } = await import('../../lib/firebase');
+      const res = await signIn(data);
+      setInLocalStorage('USER', res.user);
+      router.push('/Admin');
     } catch (error) {
       handleAuthError(error.code);
     } finally {

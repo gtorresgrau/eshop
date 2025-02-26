@@ -43,6 +43,7 @@
     "sweetalert2": "^11.12.2"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^15.1.7",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "postcss": "^8",

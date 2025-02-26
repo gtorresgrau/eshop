@@ -8,7 +8,6 @@ import { IoCartOutline } from 'react-icons/io5';
 import { CartContext } from '../Context/ShoopingCartContext';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
-import { logOut } from '../../lib/firebase';
 import useLinks from '@/app/constants/Links';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
@@ -45,8 +44,9 @@ const NavBar = () => {
         title:'¿Esta seguro quiere salir?',
         showCancelButton:true,
         showConfirmButton:true
-      }).then((result) =>{
+      }).then(async(result) =>{
         if(result.isConfirmed){
+          const { logOut } = await import('../../lib/firebase');
           const salir = logOut();
           removeFromLocalStorage('USER');
           setUser(null);

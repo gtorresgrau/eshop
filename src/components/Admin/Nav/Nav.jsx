@@ -1,6 +1,5 @@
 'use client'
 import React, { useState } from 'react';
-import { logOut } from '../../../lib/firebase';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -28,6 +27,7 @@ export default function Nav( {handleSelectSection} ) {
         showConfirmButton:true
       }).then(async (result) =>{
         if(result.isConfirmed){
+          const { logOut } = await import('../../lib/firebase');
           const salir = logOut();
           removeFromLocalStorage('USER');
           await Swal.fire(salir.message);
