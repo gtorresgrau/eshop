@@ -31,14 +31,18 @@ export async function GET(request) {
   if (categories.length) query.categoria = { $in: categories };
   if (brands.length) query.marca = { $in: brands };
 
-  // Obtener productos paginados y total de productos
+  // Obtener productos paginados y contar documentos en una sola consulta agregada
   const [products, totalProducts] = await Promise.all([
-    Producto.find(query).select('nombre marca categoria destacados').skip(skip).limit(pageSize).lean(),
+    Producto.find(query)
+      .select('cod_producto nombre marca categoria modelo titulo_de_producto descripcion precio destacados usd usado vendido medidas foto_1_1 foto_1_2 foto_1_3 foto_1_4')
+      .skip(skip)
+      .limit(pageSize)
+      .lean(),
     Producto.countDocuments(query)
   ]);
 
-  // Productos destacados
-  const allproductosDestacados = await Producto.find({ destacados: true }).select('nombre marca categoria').lean();
+  // Filtrar productos destacados desde los productos ya obtenidos
+  const allproductosDestacados = products.filter((prod) => prod.destacados);
 
   return NextResponse.json({
     products,
