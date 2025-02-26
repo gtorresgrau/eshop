@@ -31,7 +31,7 @@ const Card = ({ product, handleProductSelect }) => {
   )}`;
 
   return (
-    <div className="relative xs:w-44 sm:w-48 md:w-64 lg:w-56 xl:w-72 lg:h-80 xl:h-96 md:min-h-[320px] lg:min-h-[360px] xl:min-h-[420px] list-none cursor-pointer">
+    <div className="relative sm:w-48 md:w-64 lg:w-56 xl:w-72 lg:h-80 xl:h-96 md:min-h-[320px] min-w-[150px] lg:min-h-[360px] xl:min-h-[420px] list-none cursor-pointer">
       <div
         className="relative flex flex-col justify-between w-full h-full bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition-shadow duration-300"
         onClick={() => handleProductSelect(product)}
@@ -84,7 +84,7 @@ const Card = ({ product, handleProductSelect }) => {
             <p className="text-xs text-gray-700 md:text-base">
               <strong>Marca:</strong> {product.marca}
             </p>
-            <p className="text-xs text-gray-700 md:text-base">
+            <p className="text-xs text-gray-700 md:text-base h-8">
               <strong>Categoría:</strong>  {product.categoria.length > 10 ? `${product.categoria.slice(0, 10)}...` : product.categoria}
             </p>
           </div>
