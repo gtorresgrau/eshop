@@ -30,23 +30,32 @@ const useFetchProducts = (searchParams) => {
     try {
       const params = new URLSearchParams(searchParams.toString());
       params.set('pageSize', pageSize);
-      
-      const res = await fetch(`/api/products?${params.toString()}`);
-      if (!res.ok) throw new Error('Failed to fetch products');
-      
-      const data = await res.json();
-
-      setProducts(data.products || []);
-      setTotalPages(data.totalPage || 1);
-      setCategories(data.totalCategories || []);
-      setBrands(data.totalBrands || []);
-      setAllDestacados(data.allproductosDestacados || []);
+  
+      // Llamadas a los nuevos endpoints
+      const [productsRes, metadataRes] = await Promise.all([
+        fetch(`/api/products?${params.toString()}`),
+        fetch(`/api/products/metadata`)
+      ]);
+  
+      if (!productsRes.ok || !metadataRes.ok) throw new Error('Error al cargar los datos');
+  
+      const productsData = await productsRes.json();
+      const metadataData = await metadataRes.json();
+  
+      // Actualizar estados
+      setProducts(productsData.products || []);
+      setTotalPages(productsData.totalPage || 1);
+      setAllDestacados(productsData.allproductosDestacados || []);
+      setCategories(metadataData.totalCategories || []);
+      setBrands(metadataData.totalBrands || []);
+  
     } catch (error) {
       setError(error.message);
     } finally {
       setIsLoading(false);
     }
   }, [searchParams, pageSize]);
+  
 
   return { products, allDestacados, categories, brands, totalPages, fetchProducts, isLoading, error };
 };
