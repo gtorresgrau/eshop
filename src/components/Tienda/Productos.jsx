@@ -44,7 +44,7 @@ export default function Productos() {
         </nav>
 
         {/* Cards (se mantienen en su lugar sin afectar la paginación) */}
-        <div className=' justify-self-center'>
+        <div className=' md:justify-self-center'>
           <Cards handleProductSelect={handleProductSelect} products={products} isLoading={isLoading} />
         </div>
 
