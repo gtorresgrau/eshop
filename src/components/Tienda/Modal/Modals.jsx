@@ -76,7 +76,7 @@ const Modal = ({ selectedProduct, closeModal }) => {
           >
             <svg
               className="w-4 h-4"
-              aria-hidden="flecha para cerrar"
+              aria-label="flecha para cerrar"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 14 14"
@@ -199,7 +199,7 @@ const Modal = ({ selectedProduct, closeModal }) => {
                       target="_blank"
                     >
                       {selectedProduct.vendido?'':<>
-                      <MdStore size={16} aria-hidden="boton para compartir" />
+                      <MdStore size={16} aria-label="boton para compartir" />
                       <span className="ms-1">MercadoShop</span>
                       </>
                     }
@@ -217,7 +217,7 @@ const Modal = ({ selectedProduct, closeModal }) => {
                     >
                       <svg
                         className="w-5 h-5 -ms-2 me-2"
-                        aria-hidden="agregar al carrito"
+                        aria-label="agregar al carrito"
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
                         height="24"

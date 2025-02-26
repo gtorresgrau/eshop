@@ -136,7 +136,7 @@ const ShopCart = () => {
                 CONTACTAR
                 <svg
                   className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-                  aria-hidden="contactar por todo el carrito"
+                  aria-label="contactar por todo el carrito"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 14 10"
