@@ -6,8 +6,6 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import 'react-toastify/dist/ReactToastify.css';
 import logo from '../../../public/logos/logoEshop.webp';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import { ToastContainer } from 'react-toastify';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useForm } from 'react-hook-form';
@@ -15,7 +13,8 @@ import { FaSpinner } from 'react-icons/fa';
 import { handleAuthError } from '@/Utils/handleErrorsFirebase';
 import { setInLocalStorage } from '@/Hooks/localStorage';
 
-const signIn = dynamic(()=> import( '../../lib/firebase'))
+const ToastContainer = dynamic(() => import('react-toastify').then((mod) => mod.ToastContainer), { ssr: false });
+// const signIn = dynamic(()=> import( '../../lib/firebase'))
 
 
 const Login = () => {
@@ -27,7 +26,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      // Importa signIn de Firebase solo en el momento de la acción
+      const { default: signIn } = await import('../../lib/firebase');
       const res = await signIn(data);
       setInLocalStorage('USER', res.user);
       router.push('/Admin');
@@ -43,7 +42,6 @@ const Login = () => {
   };
 
   return (
-      <ProtectedRoute>
         <section>
           <ToastContainer position="top-center" autoClose={3000} theme="colored" />
           <article className="bg-secondary-background h-[100vh]">
@@ -51,7 +49,7 @@ const Login = () => {
               <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                   <Link href="/" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 justify-center" title="Shop Logo">
-                      <Image src={logo.src} width={150} height={150} alt="eshop logo" title="eshop Logo" priority />
+                      <Image src={logo.src} width={150} height={150} alt="eshop logo" title="eshop Logo" priority={false} />
                   </Link>
                   <form id='formLogin' className="space-y-4 md:space-y-6" onSubmit={handleSubmit(onSubmit)}>
                     <div>
@@ -81,7 +79,6 @@ const Login = () => {
             </div>
           </article>
         </section>
-      </ProtectedRoute>
   );
 };
 

@@ -3,17 +3,19 @@ import React, { useEffect, useState, Suspense } from "react";
 import dynamic from "next/dynamic";
 import ReactDOM from 'react-dom/client';
 import useProducts from "@/Hooks/useProducts";
-import { Pagination } from "@mui/material";
-import Swal from "sweetalert2";
 
-const AddProduct = dynamic(() => import("./AddProduct/AddProduct"));
-const UpdateProduct = dynamic(() => import("./UpdateProduct/UpdateProduct"));
-const Dropdown = dynamic(() => import("../Tienda/Dropdown/Dropdown"));
+
+const Swal = dynamic(() => import("sweetalert2"), { ssr: false });
+const AddProduct = dynamic(() => import("./AddProduct/AddProduct"), { ssr: false });
+const UpdateProduct = dynamic(() => import("./UpdateProduct/UpdateProduct"), { ssr: false });
+const Dropdown = dynamic(() => import("../Tienda/Dropdown/Dropdown"), { ssr: false });
 const Loading = dynamic(() => import("../Loading/Loading"), { ssr: false });
-const SearchBase = dynamic(() => import("../Search/SearchBase"));
-const Nav = dynamic(() => import("./Nav/Nav"));
-const TablaDestacados = dynamic(() => import("./TablaDestacados/TablaDestacados"));
-const DownloadCSVButton = dynamic(() => import("../DownloadCSVButton/DownloadCSVButton"));
+const SearchBase = dynamic(() => import("../Search/SearchBase"), { ssr: false });
+const Nav = dynamic(() => import("./Nav/Nav"), { ssr: false });
+const TablaDestacados = dynamic(() => import("./TablaDestacados/TablaDestacados"), { ssr: false });
+const DownloadCSVButton = dynamic(() => import("../DownloadCSVButton/DownloadCSVButton"), { ssr: false });
+const Pagination = dynamic(() => import("@mui/material").then((mod) => mod.Pagination), { ssr: false });
+
 
 
 
