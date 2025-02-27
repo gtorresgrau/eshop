@@ -8,9 +8,9 @@ const Loading = dynamic(()=>import ( "@/components/Loading/Loading"))
 
 // Mapeo de los componentes según el producto
 const comparisonComponents = {
-  almacenamiento: dynamic(() => import("@/components/Comparativas/Almacenamiento/AlmacenamientoPage")),
-  memoria: dynamic(() => import("@/components/Comparativas/MemoriaRam/MemoriaRamPage")),
-  fuente: dynamic(() => import("@/components/Comparativas/Fuentes/FuentePage")),
+  almacenamiento: dynamic(() => import("@/components/Comparativas/Almacenamiento/AlmacenamientoPage"), { ssr: false }),
+  memoria: dynamic(() => import("@/components/Comparativas/MemoriaRam/MemoriaRamPage"), { ssr: false }),
+  fuente: dynamic(() => import("@/components/Comparativas/Fuentes/FuentePage"), { ssr: false }),
 };
 
 const ComparativaPage = ({ params }) => {

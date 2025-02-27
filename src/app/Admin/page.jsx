@@ -1,6 +1,6 @@
 import React from 'react'
 import dynamic from 'next/dynamic';
-const Admin = dynamic(() => import( '@/components/Admin/Admin'))
+const Admin = dynamic(() => import( '@/components/Admin/Admin'), { ssr: false })
 import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 
 const AdminPage = () => {

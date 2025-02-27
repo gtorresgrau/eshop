@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 
 const HeaderSection = dynamic(() => import( '@/app/home/HeaderSection'))
 const FooterSection = dynamic(() => import( '@/app/home/FooterSection'))
-const StarLinkAdapterInfo = dynamic(() => import('@/components/Productos/Starlink/StarLinkAdapterInfo'))
+const StarLinkAdapterInfo = dynamic(() => import('@/components/Productos/Starlink/StarLinkAdapterInfo'), { ssr: false })
 
 const StarlinkPage = () => {
   return (
