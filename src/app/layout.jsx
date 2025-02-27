@@ -18,6 +18,7 @@ export const metadata = {
   publisher: 'Eshop Devices Wilde Insumos Informáticos profesionales y standard',
   openGraph: {
     title: 'Eshop Devices Wilde Insumos Informáticos profesionales y standard',
+    site_name:'E-Shop Devices',
     description: "Eshop Devices es tu aliado tecnológico en Wilde, especializado en la venta de insumos informáticos y dispositivos electrónicos. Con atención personalizada y asesoramiento experto, la solución ideal para el hogar y negocio.Componentes, accesorios y gadgets de última generación como la fuente adaptador para Starlink Mini",
     type: 'website',
     url: 'https://eshopdevices.com/',
@@ -45,6 +46,7 @@ export default function RootLayout({ children }) {
         <meta property="og:url" content={metadata.openGraph.url} />
         <meta property="og:image" content={metadata.openGraph.image} />
         <meta property="og:locale" content="es_ES" />
+        <meta property="og:site_name" content={metadata.openGraph.site_name}></meta>
 
         {/* Twitter Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
