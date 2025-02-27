@@ -13,8 +13,10 @@ const comparisonComponents = {
   fuente: dynamic(() => import("@/components/Comparativas/Fuentes/FuentePage")),
 };
 
-const ComparativaPage = ({ producto }) => {
-  // Si el producto no existe en el mapeo, devuelve 404
+const ComparativaPage = ({ params }) => {
+  const { producto } = params;
+
+  // Si el producto no existe en el mapeo, devuelve un 404
   if (!comparisonComponents[producto]) {
     notFound();
   }
