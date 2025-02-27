@@ -1,11 +1,12 @@
 import React from "react"
 import Link from "next/link"
-import { HardDrive, MemoryStick, SquarePower } from "lucide-react"
+import { HardDrive, MemoryStick, SquarePower, CircuitBoard } from "lucide-react"
 
 const comparisonData = [
   { href: "/comparativas/almacenamiento", title: "Almacenamiento", description: "Conoce las comparativas de los distintos tipos de almacenamiento", icon: <HardDrive className="h-8 w-8" /> },
   { href: "/comparativas/memoria", title: "Memoria RAM", description: "Explora las comparativas de los diferentes tipos de Memoria RAM", icon: <MemoryStick className="h-8 w-8" /> },
   { href: "/comparativas/fuente", title: "Fuentes de Alimentación", description: "Explora las comparativas de las diferentes fuentes de alimentación", icon: <SquarePower className="h-8 w-8" /> },
+  { href: "/comparativas/mothers", title: "Motherboard", description: "Explora las comparativas de las mothers", icon: <CircuitBoard className="h-8 w-8" /> },
 ]
 
 

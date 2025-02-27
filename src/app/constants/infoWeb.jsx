@@ -197,6 +197,35 @@ export const fuenteOptions = [
   }
 ];
 
+export const motherOptions = [
+  {
+    title: 'Placa Base Intel LGA1366',
+    description: 'Placa base Micro ATX compatible con procesadores Intel. Soporta hasta 12 GB de RAM DDR3 y configuraciones Crossfire/SLI.',
+    img: 'https://res.cloudinary.com/dnbrxpca3/image/upload/v1740672092/Intel_LGA1366_z6hyeh.webp',
+    alt: 'Imagen de una placa base Intel LGA1366'
+  },
+  {
+    title: 'Placa Base MSI AMD X670',
+    description: 'Diseñada para la nueva plataforma AMD AM5, compatible con procesadores Ryzen 7000 y 8000. Ideal para gaming y alto rendimiento.',
+    img: 'https://res.cloudinary.com/dnbrxpca3/image/upload/v1740670972/MSI_AMD_X670_ofywsc.webp',
+    alt: 'Imagen de una placa base MSI AMD X670'
+  },
+  {
+    title: 'Placa Base Gigabyte mini ITX GA-C1007UN-D',
+    description: 'Placa compacta con chipset Intel NM70 Express, soporta hasta 16 GB de RAM DDR3. Ideal para sistemas pequeños.',
+    img: 'https://res.cloudinary.com/dnbrxpca3/image/upload/v1740670972/CP-GIGABYTE-GA-C1007UN-D-1_iprdzi.webp',
+    alt: 'Imagen de una placa base Gigabyte mini ITX GA-C1007UN-D'
+  },
+  {
+    title: 'Placa Base MSI MAG B550 TOMAHAWK',
+    description: 'Compatible con procesadores AMD Ryzen de tercera y cuarta generación. Soporta overclocking y múltiples opciones de expansión.',
+    img: 'https://res.cloudinary.com/dnbrxpca3/image/upload/v1740670972/MSI_MAG_B550_TOMAHAWK_x45j0y.webp',
+    alt: 'Imagen de una placa base MSI MAG B550 TOMAHAWK'
+  }
+];
+
+
+
 export   const scriptCode = `# =====================================================
 # SISTEMA DE LIMPIEZA DE PC
 # Creado por Gonzalo Torres Grau - https://gonzalotorresgrau.com/

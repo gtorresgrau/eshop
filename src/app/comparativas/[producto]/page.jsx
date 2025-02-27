@@ -11,6 +11,8 @@ const comparisonComponents = {
   almacenamiento: dynamic(() => import("@/components/Comparativas/Almacenamiento/AlmacenamientoPage"), { ssr: false }),
   memoria: dynamic(() => import("@/components/Comparativas/MemoriaRam/MemoriaRamPage"), { ssr: false }),
   fuente: dynamic(() => import("@/components/Comparativas/Fuentes/FuentePage"), { ssr: false }),
+  mothers: dynamic(() => import("@/components/Comparativas/Mother/MothersPage"), { ssr: false }),
+
 };
 
 const ComparativaPage = ({ params }) => {
@@ -45,6 +47,7 @@ export async function generateStaticParams() {
     { producto: "almacenamiento" },
     { producto: "memoria" },
     { producto: "fuente" },
+    { producto: "mothers" },
   ];
 }
 
