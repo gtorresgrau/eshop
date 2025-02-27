@@ -1,13 +1,13 @@
 'use client'
 import React, { useState } from 'react';
-import dinamyc from 'next/dinamyc';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import Image from 'next/image';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
 import DownloadCSVButton from '@/components/DownloadCSVButton/DownloadCSVButton';
 import { removeFromLocalStorage } from '@/Hooks/localStorage';
-const logOut = dinamyc(()=> import( '../../lib/firebase'))
+const logOut = dynamic(()=> import( '../../../lib/firebase'))
 
 export default function Nav({ handleSelectSection }) {
   const router = useRouter();

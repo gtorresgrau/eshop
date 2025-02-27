@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import Link from 'next/link';
-import dinamyc from 'next/dinamyc';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,7 +15,7 @@ import { FaSpinner } from 'react-icons/fa';
 import { handleAuthError } from '@/Utils/handleErrorsFirebase';
 import { setInLocalStorage } from '@/Hooks/localStorage';
 
-const signIn = dinamyc(()=> import( '../../lib/firebase'))
+const signIn = dynamic(()=> import( '../../lib/firebase'))
 
 
 const Login = () => {

@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { removeFromLocalStorage, getInLocalStorage } from '../../Hooks/localStorage';
 import Link from 'next/link';
-import dinamyc from 'next/dinamyc';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Logo from '../../../public/logos/logo.webp';
 import UserMenu from './UserMenu';
@@ -13,7 +13,7 @@ import { toast } from 'react-toastify';
 import useLinks from '@/app/constants/Links';
 import { usePathname } from 'next/navigation';
 
-const logOut = dinamyc(()=> import( '../../lib/firebase'))
+const logOut = dynamic(()=> import( '../../lib/firebase'))
 
 const NavBar = () => {
   const [cart, setCart] = useContext(CartContext);
