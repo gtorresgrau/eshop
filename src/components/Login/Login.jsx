@@ -1,6 +1,9 @@
 'use client'
 import React, { useState } from 'react';
 import Link from 'next/link';
+import dinamyc from 'next/dinamyc';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import 'react-toastify/dist/ReactToastify.css';
 import logo from '../../../public/logos/logoEshop.webp';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
@@ -8,11 +11,11 @@ import { ToastContainer } from 'react-toastify';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
 import { FaSpinner } from 'react-icons/fa';
 import { handleAuthError } from '@/Utils/handleErrorsFirebase';
 import { setInLocalStorage } from '@/Hooks/localStorage';
-import Image from 'next/image';
+
+const signIn = dinamyc(()=> import( '../../lib/firebase'))
 
 
 const Login = () => {
@@ -25,7 +28,6 @@ const Login = () => {
     setLoading(true);
     try {
       // Importa signIn de Firebase solo en el momento de la acción
-      const { signIn } = await import('../../lib/firebase');
       const res = await signIn(data);
       setInLocalStorage('USER', res.user);
       router.push('/Admin');

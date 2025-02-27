@@ -2,6 +2,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { removeFromLocalStorage, getInLocalStorage } from '../../Hooks/localStorage';
 import Link from 'next/link';
+import dinamyc from 'next/dinamyc';
+import Image from 'next/image';
 import Logo from '../../../public/logos/logo.webp';
 import UserMenu from './UserMenu';
 import { IoCartOutline } from 'react-icons/io5';
@@ -10,7 +12,8 @@ import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import useLinks from '@/app/constants/Links';
 import { usePathname } from 'next/navigation';
-import Image from 'next/image';
+
+const logOut = dinamyc(()=> import( '../../lib/firebase'))
 
 const NavBar = () => {
   const [cart, setCart] = useContext(CartContext);
@@ -46,7 +49,6 @@ const NavBar = () => {
         showConfirmButton:true
       }).then(async(result) =>{
         if(result.isConfirmed){
-          const { logOut } = await import('../../lib/firebase');
           const salir = logOut();
           removeFromLocalStorage('USER');
           setUser(null);
