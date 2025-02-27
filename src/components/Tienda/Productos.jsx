@@ -25,7 +25,7 @@ export default function Productos() {
   } = useProducts();
 
   return (
-      <article id="cardsTienda" className="col-span-1 md:col-start-4 md:col-span-9 grid grid-rows-[auto_1fr_auto] min-h-screen">
+      <article id="productos" className="col-span-1 md:col-start-4 md:col-span-9 grid grid-rows-[auto_1fr_auto] min-h-screen">
         {/* Paginación superior */}
         <nav aria-label="Paginación de productos" className="flex flex-col md:flex-row justify-center my-4 gap-4 items-center">
           <Dropdown />
