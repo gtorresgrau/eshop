@@ -10,6 +10,7 @@ import Comparativas from '../../components/Comparativas/Comparativas';
 import CleanToolExplanation from '../../components/Tools/CleanToolExplanation';
 import Productos from '@/components/Tienda/Productos';
 import Header from '@/components/Banner/Header';
+import ConsoleCleaningService from '@/components/Servicios/ServiciosLimpieza';
 
 export default function MainContent() {
 
@@ -19,7 +20,7 @@ export default function MainContent() {
       <SearchBase />
       <Banner />
       <Header />
-      
+      <ConsoleCleaningService />
       {/* Middle part */}
       <Productos />
       <Comparativas />

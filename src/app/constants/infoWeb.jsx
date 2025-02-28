@@ -322,3 +322,38 @@ function Empty-RecycleBin {
 
 # ... (resto del script)
 `;
+
+export const consoles = {
+  ps5: {
+    name: "PlayStation 5",
+    price: "$70.000",
+    time: "1 dia",
+    description:
+      "Mantenimiento profundo de Consola PlasyStation 5 (PS5) . Limpieza, cambio de pasta termica, cambio de thermal pads y de ser necesario cambio de metal liquido ( costo adicional).",
+  },
+  ps4: {
+    name: "PlayStation 4",
+    price: "$50.000",
+    time: "1 dia",
+    description:
+      "Mantenimiento profundo de PlayStation 4 (PS4). Limpieza, cambio de pasta termica, cambio de thermal pads.",
+  },
+  ps3: {
+    name: "PlayStation 3",
+    price: "$50.000",
+    time: "1 dia",
+    description: "Mantenimiento profundo de PlayStation 3 (PS3). Limpieza, cambio de pasta termica, cambio de thermal pads.",
+  },
+  xbox: {
+    name: "Xbox y otros",
+    price: "$50.000",
+    time: "1 dia",
+    description: "Limpieza profesional para tu Xbox, eliminando polvo y optimizando su sistema de refrigeración.",
+  },
+  PC: {
+    name: "Computadoras",
+    price: "Desde $35.000",
+    time: "1 dia",
+    description: "Servicio de limpieza para Notebook, Netbook, Chromebook, PC y Pc mini. Optimización y limpieza profunda (eliminación de archivos basura, virus y programas innecesarios).",
+  }
+}
