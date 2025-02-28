@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/Tabs";
 import { consoles } from "../../../app/constants/infoWeb";
 import { Button } from "../../ui/Buttons";
 import { Badge } from "../../ui/Badge";
+import userData from "@/app/constants/userData";
 
 export default function ConsoleCleaningService() {
   const [selectedConsole, setSelectedConsole] = useState("ps5");
@@ -21,12 +22,12 @@ export default function ConsoleCleaningService() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-8 items-center mb-16">
-        <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-8 rounded-2xl relative">
-          <Sparkles className="w-12 h-12 text-blue-500 animate-pulse absolute -top-4 -right-4" />
-          <div className="bg-white rounded-xl shadow-lg p-6 relative overflow-hidden">
+        <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-2 md:p-8 rounded-2xl relative">
+          <Sparkles className="w-12 h-12 text-blue-500 hidden md:flex animate-pulse absolute -top-4 -right-4" />
+          <div className="bg-white rounded-xl shadow-lg p-4 md:p-6 relative overflow-hidden">
             <Gamepad2 className="w-20 h-20 text-primary mb-4" alt="Icono de consola" />
-            <h3 className="text-2xl font-bold mb-2">¿Por qué limpiar tu consola?</h3>
-            <ul className="space-y-3 mt-4">
+            <h3 className=" text-xl md:text-2xl font-bold mb-2">¿Por qué limpiar tu consola?</h3>
+            <ul className="space-y-3 mt-4 text-sm md:text-base">
               {["Reduce el ruido del ventilador", "Previene sobrecalentamiento", "Mejora el rendimiento general", "Extiende la vida útil de tu consola"].map((reason, index) => (
                 <li key={index} className="flex items-start">
                   <CheckCircle className="w-5 h-5 text-green-500 mr-2 shrink-0 mt-0.5" />
@@ -53,7 +54,7 @@ export default function ConsoleCleaningService() {
               {consoleList.map(([key, console]) => (
                 <TabsContent key={key} value={key} className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-xl font-bold">{console.name}</h3>
+                    <h3 className="text-xl font-bold ">{console.name}</h3>
                     <Badge variant="secondary" className="text-lg font-semibold">{console.price}</Badge>
                   </div>
                   <p className="text-muted-foreground h-20">{console.description}</p>
@@ -72,9 +73,18 @@ export default function ConsoleCleaningService() {
             </Tabs>
           </CardContent>
           <CardFooter>
-            <Button className="w-full uppercase bg-green-500" title="Reservar servicio de limpieza" aria-label="Reservar servicio de limpieza">
+          <Button 
+              className="w-full uppercase bg-green-500" 
+              title="Reservar servicio de limpieza" 
+              onClick={() => {
+                const url = `https://wa.me/+${userData.codigoPais}${userData.contact}?text=${encodeURIComponent(userData.textoPredefinido)}`;
+                window.location.href = url;
+              }} 
+              aria-label="Reservar servicio de limpieza"
+            >
               Reservar Servicio x Whatsapp <ChevronRight className="ml-2 h-4 w-4" />
             </Button>
+
           </CardFooter>
         </Card>
       </div>
@@ -83,7 +93,7 @@ export default function ConsoleCleaningService() {
         {[{ icon: Sparkles, title: "Limpieza Profesional", desc: "Utilizamos herramientas especializadas y técnicas profesionales para una limpieza completa y segura." },
           { icon: Clock, title: "Servicio Rápido", desc: "La mayoría de nuestros servicios se completan en 1 dia, dependiendo del modelo y condición." },
           { icon: Star, title: "Resultados Garantizados", desc: "Ofrecemos garantía en todos nuestros servicios para tu tranquilidad y satisfacción." }].map((service, index) => (
-          <Card key={index}>
+          <Card key={index} className='hover:shadow-xl hover:scale-105 transform transition-transform'>
             <CardHeader className="text-center">
               <div className="mx-auto bg-primary/10 p-3 rounded-full w-fit mb-4">
                 <service.icon className="w-8 h-8 text-primary" />
