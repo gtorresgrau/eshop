@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 const Loading = dynamic(() => import( '@/components/Loading/Loading'))
 const HeaderSection = dynamic(() => import( '../home/HeaderSection'))
 const FooterSection = dynamic(() => import( '../home/FooterSection'))
-const NosotrosPage = dynamic(() => import( '@/components/SobreMi/NosotrosPage'), { ssr: false })
+const NosotrosPage = dynamic(() => import( '@/components/SobreMi/NosotrosPage'))
 
 const NosPage = () => {
   return (

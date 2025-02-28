@@ -1,9 +1,9 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import dynamic from 'next/dynamic';
 
 const HeaderSection = dynamic(() => import( '@/app/home/HeaderSection'))
 const FooterSection = dynamic(() => import( '@/app/home/FooterSection'))
-const StarLinkAdapterInfo = dynamic(() => import('@/components/Productos/Starlink/StarLinkAdapterInfo'), { ssr: false })
+const StarLinkAdapterInfo = dynamic(() => import('@/components/Productos/Starlink/StarLinkAdapterInfo'))
 
 const StarlinkPage = () => {
   return (
