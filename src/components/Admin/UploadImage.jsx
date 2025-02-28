@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Button, styled } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import heic2any from "heic2any";
 import Swal from 'sweetalert2';
 import processImage from "@/Utils/proccesImage";
 import Image from "next/image";
@@ -81,6 +80,7 @@ export default function UploadImage({ imagenes, updateImages, handleRemoveImage 
       const isHEIC = archivo.type === 'image/heic' || archivo.type === 'image/heif' || archivo.name.endsWith('.heic') || archivo.name.endsWith('.heif');
       if (isHEIC) {
         try {
+          const heic2any = (await import("heic2any")).default; 
           const convertedBlob = await heic2any({ blob: archivo, toType: "image/jpeg" });
           archivo = new File([convertedBlob], archivo.name.replace(/\.[^/.]+$/, ".jpg"), { type: "image/jpeg" });
         } catch (error) {
