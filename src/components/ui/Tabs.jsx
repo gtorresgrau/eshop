@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 
 const Tabs = TabsPrimitive.Root;
 
-// Componentes como funciones de flecha con destructuración y sin `forwardRef` explícito si no es necesario
 const TabsList = React.forwardRef(({ className, ...props }, ref) => (
   <TabsPrimitive.List
     ref={ref}
@@ -15,6 +14,8 @@ const TabsList = React.forwardRef(({ className, ...props }, ref) => (
     {...props}
   />
 ));
+
+TabsList.displayName = "TabsList"; 
 
 const TabsTrigger = React.forwardRef(({ className, ...props }, ref) => (
   <TabsPrimitive.Trigger
@@ -27,6 +28,8 @@ const TabsTrigger = React.forwardRef(({ className, ...props }, ref) => (
   />
 ));
 
+TabsTrigger.displayName = "TabsTrigger";
+
 const TabsContent = React.forwardRef(({ className, ...props }, ref) => (
   <TabsPrimitive.Content
     ref={ref}
@@ -37,5 +40,7 @@ const TabsContent = React.forwardRef(({ className, ...props }, ref) => (
     {...props}
   />
 ));
+
+TabsContent.displayName = "TabsContent";
 
 export { Tabs, TabsList, TabsTrigger, TabsContent };
