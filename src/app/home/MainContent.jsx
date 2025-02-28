@@ -8,9 +8,9 @@ import SearchBase from '../../components/Search/SearchBase';
 import PreguntasFrecuentes from '../../components/PreguntasFrecuentas/PreguntasFrecuentas';
 import Comparativas from '../../components/Comparativas/Comparativas';
 import CleanToolExplanation from '../../components/Tools/CleanToolExplanation';
-import Productos from '@/components/Tienda/Productos';
-import Header from '@/components/Banner/Header';
-import ConsoleCleaningService from '@/components/Servicios/ServiciosLimpieza';
+import Productos from '../../components/Tienda/Productos';
+import Header from '../../components/Banner/Header';
+import ConsoleCleaningService from '../../components/Productos/Servicios/ServiciosLimpieza';
 
 export default function MainContent() {
 
