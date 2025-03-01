@@ -15,8 +15,8 @@ export default function ConsoleCleaningService() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
       <div className="text-center mb-10">
-        <h2 className="mb-8 text-3xl md:text-4xl text-center font-extrabold text-primary uppercase ">Servicio Profesional de Limpieza de Consolas</h2>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+        <h2 className="mb-8 text-xl md:text-3xl lg:text-4xl text-center font-extrabold text-primary uppercase ">Servicio Profesional de Limpieza de Consolas</h2>
+        <p className="text-sm md:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto">
           Mejora el rendimiento y extiende la vida útil de tus consolas con nuestro servicio especializado de limpieza y mantenimiento.
         </p>
       </div>
@@ -40,7 +40,7 @@ export default function ConsoleCleaningService() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-2xl">Nuestros Servicios de Limpieza</CardTitle>
+            <CardTitle className="text-xl md:text-2xl">Nuestros Servicios de Limpieza</CardTitle>
             <CardDescription>Selecciona tu consola para ver detalles específicos</CardDescription>
           </CardHeader>
           <CardContent>
@@ -57,13 +57,13 @@ export default function ConsoleCleaningService() {
                     <h3 className="text-xl font-bold ">{console.name}</h3>
                     <Badge variant="secondary" className="text-lg font-semibold">{console.price}</Badge>
                   </div>
-                  <p className="text-muted-foreground h-20">{console.description}</p>
-                  <div className="grid grid-cols-2 gap-4 pt-4 mt-4">
-                    <div className="flex items-center gap-2 bg-muted p-3 rounded-lg">
+                  <p className="text-muted-foreground h-28">{console.description}</p>
+                  <div className="grid grid-cols-2 gap-4 py-4">
+                    <div className="flex items-center gap-2 bg-muted p-2 md:p-4 rounded-lg text-sm md:text-base">
                       <Clock className="w-5 h-5 text-muted-foreground" />
-                      <span>Tiempo: {console.time}</span>
+                      <span>Tiempo:{console.time}</span>
                     </div>
-                    <div className="flex items-center gap-2 bg-muted p-3 rounded-lg">
+                    <div className="flex items-center gap-2 bg-muted p-2 md:p-4 rounded-lg text-sm md:text-base">
                       <Shield className="w-5 h-5 text-muted-foreground"  />
                       <span>Garantía: 30 días</span>
                     </div>
@@ -94,13 +94,13 @@ export default function ConsoleCleaningService() {
           { icon: Clock, title: "Servicio Rápido", desc: "La mayoría de nuestros servicios se completan en 1 dia, dependiendo del modelo y condición." },
           { icon: Star, title: "Resultados Garantizados", desc: "Ofrecemos garantía en todos nuestros servicios para tu tranquilidad y satisfacción." }].map((service, index) => (
           <Card key={index} className='hover:shadow-xl hover:scale-105 transform transition-transform'>
-            <CardHeader className="text-center">
+            <CardHeader className="text-center text-base md:text-lg">
               <div className="mx-auto bg-primary/10 p-3 rounded-full w-fit mb-4">
-                <service.icon className="w-8 h-8 text-primary" />
+                <service.icon className="w-6 h-6 md:w-8 md:h-8 text-primary" />
               </div>
               <CardTitle>{service.title}</CardTitle>
             </CardHeader>
-            <CardContent className="text-center">
+            <CardContent className="text-center text-sm md:text-base">
               <p>{service.desc}</p>
             </CardContent>
           </Card>

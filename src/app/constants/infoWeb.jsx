@@ -352,7 +352,7 @@ export const consoles = {
   },
   PC: {
     name: "Computadoras",
-    price: "Desde $35.000",
+    price: "$35.000",
     time: "1 dia",
     description: "Servicio de limpieza para Notebook, Netbook, Chromebook, PC y Pc mini. Optimización y limpieza profunda (eliminación de archivos basura, virus y programas innecesarios).",
   }
