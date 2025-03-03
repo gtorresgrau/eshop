@@ -4,12 +4,11 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import ReactDOM from 'react-dom/client';
 import { FaPlus } from "react-icons/fa";
-import Swal from 'sweetalert2';
-//import UploadImage from '../UploadImage';
-//import Loading from '@/components/Loading/Loading';
 
+const Loading = dynamic(() => import('@/components/Loading/Loading'));
 const UploadImage = dynamic(() => import('../UploadImage'))
-const Loading = dynamic(() => import('@/components/Loading/Loading'), { ssr: false });
+const Swal = dynamic(() => import('sweetalert2'));
+
 
 export default function AddProduct({
     isOpenModal,
@@ -99,25 +98,12 @@ export default function AddProduct({
       setIsDropdownCategoriaOpen(!isDropdownCategoriaOpen);
     };
     
-    // Función para alternar la visibilidad del dropdown de categoría
-    // const toggleVehiculo = (e) => {
-    //     e.preventDefault();
-    //     setIsDropdownVehiculoOpen(!isDropdownVehiculoOpen);
-    // };
-    
-    
     // Función para agregar una nueva marca a la lista de marcas disponibles
     const handleAgregarNuevaMarca = (campo, valorNuevo) => {
         setMarcas([...marcas, { brand: valorNuevo }]);
         setIsDropdownMarcaOpen(false);
     };
-    
-    // Función para agregar una nueva marca a la lista de marcas disponibles
-    // const handleAgregarNuevoVehiculo = (campo, valorNuevo) => {
-    //     setVehiculos([...vehiculo, { vehiculo: valorNuevo }]);
-    //     setIsDropdownVehiculoOpen(false);
-    // };
-    
+
     // Función para agregar una nueva categoría a la lista de categorías disponibles
     const handleAgregarNuevaCategoria = (campo, valorNuevo) => {
         setCategorias([...categorias, { category: valorNuevo }]);
@@ -222,14 +208,16 @@ const hasImageChanges = () => {
       for (const [key, value] of Object.entries(filteredProducto)) {
         formData.append(key, value);
       }
-      //console.log('formData:', formData);
-      
-    
+
       try {
         Swal.fire({
           title: 'Agregando producto...',
+          html: '<div id="swal-loading"></div>',
+          didOpen: () => {
+            ReactDOM.createRoot(document.getElementById('swal-loading')).render(<Loading ancho="120px" alto="120px" />);
+            Swal.showLoading();
+          },
           allowOutsideClick: false,
-          didOpen: () => Swal.showLoading(),
         });
     
         const res = await fetch("api/addProduct", {

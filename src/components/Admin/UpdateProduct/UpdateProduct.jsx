@@ -1,11 +1,13 @@
 'use client'
 import React, { useState, useRef, useEffect } from "react";
-import ReactDOM from 'react-dom/client';
-import UploadImage from "../UploadImage";
-import { FaPlus } from "react-icons/fa";
-import Swal from "sweetalert2";
-import Loading from "@/components/Loading/Loading";
+import dynamic from 'next/dynamic';
 import Image from "next/image";
+import ReactDOM from 'react-dom/client';
+import { FaPlus } from "react-icons/fa";
+
+const Loading = dynamic(() => import('@/components/Loading/Loading'));
+const UploadImage = dynamic(() => import('../UploadImage'))
+const Swal = dynamic(() => import('sweetalert2'));
 
 export default function UpdateProduct({
   isOpenModal,
@@ -207,13 +209,16 @@ export default function UpdateProduct({
     
     try {
       // Mostrar SweetAlert con loading
-      Swal.fire({
-       title: 'Guardando cambios...',
-       allowOutsideClick: false,
-       didOpen: () => {
-         Swal.showLoading();
-       },
-     });
+        Swal.fire({
+          title: 'Guardando Cambios...',
+          html: '<div id="swal-loading"></div>',
+          didOpen: () => {
+            ReactDOM.createRoot(document.getElementById('swal-loading')).render(<Loading ancho="120px" alto="120px" />);
+            Swal.showLoading();
+          },
+          allowOutsideClick: false,
+        });
+
       const res = await fetch("api/updateProduct", {
       method: "PUT",
       body: formData,
