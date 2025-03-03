@@ -2,7 +2,7 @@
 
 import React, { useContext } from 'react';
 import { MdStore } from 'react-icons/md';
-import { RiWhatsappLine } from 'react-icons/ri';
+import { RiWhatsappLine, RiShareFill  } from 'react-icons/ri';
 import IconShoopingCart from '../ShoopingCart/IconShoopingCart';
 import userData from '@/app/constants/userData';
 import addToCart from '@/Utils/addToCart';
@@ -30,6 +30,33 @@ const Card = ({ product, handleProductSelect }) => {
     consultMessage || userData.textoPredefinido
   )}`;
 
+  const handleShare = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const productUrl = `${window.location.origin}/productos/${product.nombre.replace(/\s+/g, '_')}`; // Reemplaza espacios con guiones bajos
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `Detalles del Producto: ${product.nombre}`,
+          text: `Mira este producto: ${product.nombre} - ${product.marca} (${product.categoria}) - ${product.precio ? `Precio: ${product.precio}` : ''}`,
+          url: productUrl,
+        });
+      } catch (error) {
+        console.error('Error al compartir:', error);
+      }
+    } else {
+      // Fallback: Copiar al portapapeles
+      try {
+        await navigator.clipboard.writeText(productUrl);
+        alert('Enlace copiado al portapapeles');
+      } catch (error) {
+        console.error('Error al copiar el enlace:', error);
+      }
+    }
+  };
+  
+  
+
   return (
     <div className="relative sm:w-48 md:w-64 lg:w-56 xl:w-72 lg:h-80 xl:h-96 md:min-h-[320px] min-w-[150px] lg:min-h-[360px] xl:min-h-[420px] list-none cursor-pointer">
       <div
@@ -46,13 +73,14 @@ const Card = ({ product, handleProductSelect }) => {
                 VENDIDO
               </p>
             )}
-            <button
-              onClick={handleAddToCart}
-              className="absolute top-1 right-1 inline-flex items-center justify-center w-8 h-8 bg-boton-primary hover:bg-boton-primary-hover rounded-full text-white z-10"
-              disabled={!!product.vendido}
-            >
-              <IconShoopingCart ancho={20} alto={20} color="#ffffff" />
+            <button  onClick={handleAddToCart} className="absolute top-1 right-1 inline-flex items-center justify-center w-8 h-8 bg-boton-primary hover:bg-green-600 rounded-full text-white z-10" disabled={product.vendido} >
+                <IconShoopingCart ancho={20} alto={20} color="#ffffff" />
             </button>
+            <button onClick={handleShare} className="absolute top-10 right-1 inline-flex items-center justify-center w-8 h-8 bg-orange-400 hover:bg-boton-primary-hover rounded-full text-white z-10"
+              disabled={product.vendido} >
+                <RiShareFill />
+            </button>
+
             <Image
               className="rounded-t-lg object-cover "
               src={product.foto_1_1 || '/images/sinFoto.webp'}
@@ -81,9 +109,7 @@ const Card = ({ product, handleProductSelect }) => {
           </div>
           <div className="px-4 py-1">
             <h2 className="text-sm font-semibold text-gray-900 md:text-base md:font-bold text-center h-10 md:h-5">{product.nombre}</h2>
-            <p className="text-xs text-gray-700 md:text-base">
-              <strong>Marca:</strong> {product.marca}
-            </p>
+            <p className="text-xs text-gray-700 md:text-base"><strong>Marca:</strong> {product.marca}</p>
             <p className="text-xs text-gray-700 md:text-base h-8">
               <strong>Categoría:</strong>  {product.categoria.length > 10 ? `${product.categoria.slice(0, 10)}...` : product.categoria}
             </p>
@@ -167,12 +193,14 @@ const Card = ({ product, handleProductSelect }) => {
               aria-label="Consultar por WhatsApp"
               type="button"
               disabled={product.vendido?true:false}
-
-            >
+              
+              >
               <RiWhatsappLine size={16} /> <span>Consultar</span>
             </button>
+
               )}
         </div>
+
       </div>
     </div>
   );
