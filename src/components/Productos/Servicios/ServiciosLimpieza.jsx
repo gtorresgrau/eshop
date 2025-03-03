@@ -41,7 +41,7 @@ export default function ConsoleCleaningService() {
         <Card>
           <CardHeader>
             <CardTitle className="text-xl md:text-2xl">Nuestros Servicios de Limpieza</CardTitle>
-            <CardDescription>Selecciona tu consola para ver detalles específicos</CardDescription>
+            <CardDescription>Selecciona tu consola para ver detalles específicos 👇</CardDescription>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="ps5" value={selectedConsole} onValueChange={setSelectedConsole} className="w-full">
