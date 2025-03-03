@@ -31,17 +31,45 @@ export async function GET(request) {
   if (categories.length) query.categoria = { $in: categories };
   if (brands.length) query.marca = { $in: brands };
 
-  // Obtener productos paginados y contar documentos en una sola consulta agregada
-  const [products, totalProducts] = await Promise.all([
-    Producto.find(query)
-      .select('cod_producto nombre marca categoria modelo titulo_de_producto descripcion precio destacados usd usado vendido medidas foto_1_1 foto_1_2 foto_1_3 foto_1_4')
-      .skip(skip)
-      .limit(pageSize)
-      .lean(),
-    Producto.countDocuments(query)
+  // Usamos aggregate() para paginar y contar en una sola consulta
+  const [result] = await Producto.aggregate([
+    { $match: query }, // Filtramos los documentos que coinciden con la búsqueda
+    {
+      $facet: {
+        products: [
+          { $skip: skip },
+          { $limit: pageSize },
+          {
+            $project: {
+              cod_producto: 1,
+              nombre: 1,
+              marca: 1,
+              categoria: 1,
+              modelo: 1,
+              titulo_de_producto: 1,
+              descripcion: 1,
+              precio: 1,
+              destacados: 1,
+              usd: 1,
+              usado: 1,
+              vendido: 1,
+              medidas: 1,
+              foto_1_1: 1,
+              foto_1_2: 1,
+              foto_1_3: 1,
+              foto_1_4: 1,
+            },
+          },
+        ],
+        totalCount: [{ $count: "count" }], // Contamos el total de documentos
+      },
+    },
   ]);
 
-  // Filtrar productos destacados desde los productos ya obtenidos
+  const products = result.products || [];
+  const totalProducts = result.totalCount.length > 0 ? result.totalCount[0].count : 0;
+
+  // Filtramos los productos destacados ya obtenidos
   const allproductosDestacados = products.filter((prod) => prod.destacados);
 
   return NextResponse.json({
