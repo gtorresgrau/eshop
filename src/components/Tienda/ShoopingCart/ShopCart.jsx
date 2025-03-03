@@ -50,24 +50,15 @@ const ShopCart = () => {
 
   return (
     <section className="flex flex-col items-center md:items-start mb-6">
-      <div className="w-full shadow-3xl opacity-90 bg-[url('/bg/bg-banner.webp')]">
-        <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse rounded-full my-3" title="Eshopdevices Logo">
-          <Image src={Logo.src} width={60} height={60} alt="eshopDevicesLogo" title="eshopDevices Logo" loading='lazy' className='rounded-full w-8 md:w-10 lg:w-12'/>
-          <p className='uppercase text-xl text-transparent font-bold bg-clip-text bg-gradient-to-r from-primary via-secondary to-primary'>eshopDevices</p>
-        </Link>
-      </div>
-
-      <article className="flex flex-col max-w-[1200px] m-2 self-center">
-        <div className="flex items-end p-4">
-          <Link href="/" title="Volver a la tienda" aria-label="Volver a la tienda" className="text-gray-500 bg-transparent hover:bg-gray-200 rounded-lg w-10 h-10 flex justify-center items-center">
-            <svg className="w-5 h-5" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-            </svg>
-          </Link>
-        </div>
-
+        <article className="flex flex-col max-w-[1200px] m-2 self-center">
+          <div className="flex items-end p-4">
+            <Link href="/" title="Volver a la tienda" aria-label="Volver a la tienda" className="text-gray-500 bg-transparent hover:bg-gray-200 rounded-lg w-10 h-10 flex justify-center items-center">
+              <svg className="w-5 h-5" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+              </svg>
+            </Link>
+          </div>
         <h1 className="md:text-3xl text-xl font-bold text-primary text-center mb-6 md:mb-10">CARRITO DE CONSULTAS</h1>
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           <div className="flex flex-col">
             {cart.length ? (

@@ -1,19 +1,17 @@
 import React from 'react'
 import dynamic from 'next/dynamic';
 
-const HeaderSection = dynamic(() => import( '@/app/home/HeaderSection'))
-const FooterSection = dynamic(() => import( '@/app/home/FooterSection'))
 const StarLinkAdapterInfo = dynamic(() => import('@/components/Productos/Starlink/StarLinkAdapterInfo'))
+const ClientLayout = dynamic(() => import('@/app/ClientLayout'))
+
 
 const StarlinkPage = () => {
   return (
-    <div className="flex flex-col h-screen">
-      <HeaderSection />
+    <ClientLayout title='Fuente StarLink Mini' className="flex flex-col h-screen">
       <main className="flex-1 flex items-center justify-center bg-white">
         <StarLinkAdapterInfo />
       </main>
-      <FooterSection />
-    </div>
+    </ClientLayout>
   )
 }
 

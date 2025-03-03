@@ -1,22 +1,17 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import dynamic from 'next/dynamic';
 
-const Loading = dynamic(() => import( '@/components/Loading/Loading'))
-const HeaderSection = dynamic(() => import( '../home/HeaderSection'))
-const FooterSection = dynamic(() => import( '../home/FooterSection'))
 const NosotrosPage = dynamic(() => import( '@/components/SobreMi/NosotrosPage'))
+const ClientLayout = dynamic(() => import( '../ClientLayout'))
+
 
 const NosPage = () => {
   return (
-    <div className="flex flex-col h-screen">
-      <HeaderSection />
-      <main className="flex-1 flex items-center justify-center bg-white">
-        <Suspense fallback={<Loading/>}>
+    <ClientLayout title="Nosotros" className="flex flex-col h-screen">
+      <main className="flex-1 flex items-center justify-center bg-white" >
           <NosotrosPage />
-        </Suspense>
       </main>
-      <FooterSection />
-    </div>
+    </ClientLayout>
   )
 }
 

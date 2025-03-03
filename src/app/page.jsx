@@ -1,16 +1,13 @@
 "use client";
 import dynamic from 'next/dynamic';
+import ClientLayout from './ClientLayout';
 
-const HeaderSection = dynamic(() => import('./home/HeaderSection'));
 const MainContent = dynamic(() => import('./home/MainContent'));
-const FooterSection = dynamic(() => import('./home/FooterSection'));
 
-export default function HomePage() {
+export default function HomePage({children}) {
     return (
-      <>
-        <HeaderSection />
-        <MainContent />
-        <FooterSection />
-      </>
+        <ClientLayout>
+          <MainContent />
+        </ClientLayout>
     );
   }

@@ -1,7 +1,6 @@
 'use client'
 import React from 'react';
 import Banner from '../../components/Banner/Banner';
-import BotonWsp from '../../components/BotonWSP/BotonWsp';
 import Contact from '../../components/Contact/Contact';
 import Sobre from '../../components/SobreMi/Sobre';
 import SearchBase from '../../components/Search/SearchBase';
@@ -32,7 +31,6 @@ export default function MainContent() {
       <Contact />
 
       {/* Example: If you want the WhatsApp button in main */}
-      <BotonWsp />
     </main>
   );
 }

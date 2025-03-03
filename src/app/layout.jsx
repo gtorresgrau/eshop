@@ -120,7 +120,9 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <ShoppingCartProvider>
-        <LoadingWrapper>{children}</LoadingWrapper>
+          <LoadingWrapper>
+            {children}
+          </LoadingWrapper>
           <Toaster />
         </ShoppingCartProvider>
       </body>

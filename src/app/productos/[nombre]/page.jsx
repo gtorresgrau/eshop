@@ -6,10 +6,10 @@ import { useParams } from 'next/navigation';
 import useProducts from '@/Hooks/useProducts';
 
 
-const HeaderSection = dynamic(() => import('@/app/home/HeaderSection'));
-const FooterSection = dynamic(() => import('@/app/home/FooterSection'));
 const Modal = dynamic(() => import('@/components/Tienda/Modal/Modals'));
 const Loading = dynamic(() => import('@/components/Loading/Loading'));
+const ClientLayout = dynamic(() => import('@/app/ClientLayout'));
+
 
 
 const ProductoPage = () => {
@@ -41,13 +41,11 @@ const ProductoPage = () => {
   }
 
   return (
-    <div className="flex flex-col h-screen">
-      <HeaderSection />
+    <ClientLayout className="flex flex-col h-screen" title={selectedProduct.name}>
       <main className="flex-1 flex items-center justify-center bg-white">
         <Modal selectedProduct={selectedProduct} closeModal={() => closeModal} isDialog = {false}  />
       </main>
-      <FooterSection />
-    </div>
+    </ClientLayout>
   );
 };
 
