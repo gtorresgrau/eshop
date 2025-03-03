@@ -37,6 +37,7 @@ const Card = ({ product, handleProductSelect }) => {
     if (navigator.share) {
       try {
         await navigator.share({
+          image: `${product.foto_1_1}`,
           title: `${product.nombre}`,
           text: `Mira este producto: ${product.nombre} - ${product.marca} - ${product.precio ? `Precio: ${product.precio}${product.usd?'usd':'ar'}` : ''}`,
           url: productUrl,

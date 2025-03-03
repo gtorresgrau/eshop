@@ -35,28 +35,29 @@ const Modal = ({ selectedProduct, closeModal, isDialog = true }) => {
   )}`;
 
   
-  const handleShare = async () => {
-    // Convertir el nombre del producto en un slug amigable para URL
-    const slug = encodeURIComponent(
-      selectedProduct.nombre.trim().toLowerCase().replace(/\s+/g, '-')
-    );
-    // Construir la URL con la ruta deseada
-    const shareUrl = `${window.location.origin}/productos/${slug}`;
-  
+  const handleShare = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const productUrl = `${window.location.origin}/productos/${product.nombre.replace(/\s+/g, '_')}`; // Reemplaza espacios con guiones bajos
     if (navigator.share) {
       try {
         await navigator.share({
-          title: `Detalles del Producto: ${selectedProduct.nombre}`,
-          text: `No te lo podes perder: ${selectedProduct.nombre}`,
-          url: shareUrl,
+          image: `${product.foto_1_1}`,
+          title: `${product.nombre}`,
+          text: `Mira este producto: ${product.nombre} - ${product.marca} - ${product.precio ? `Precio: ${product.precio}${product.usd?'usd':'ar'}` : ''}`,
+          url: productUrl,
         });
-        // Puedes agregar una notificación de éxito o algún feedback si lo deseas.
       } catch (error) {
         console.error('Error al compartir:', error);
       }
     } else {
-      console.error('La API de compartir no está soportada en este navegador.');
-      // Aquí podrías implementar una alternativa, como copiar la URL al portapapeles.
+      // Fallback: Copiar al portapapeles
+      try {
+        await navigator.clipboard.writeText(productUrl);
+        alert('Enlace copiado al portapapeles');
+      } catch (error) {
+        console.error('Error al copiar el enlace:', error);
+      }
     }
   };
 
