@@ -37,8 +37,8 @@ const Card = ({ product, handleProductSelect }) => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: `Detalles del Producto: ${product.nombre}`,
-          text: `Mira este producto: ${product.nombre} - ${product.marca} (${product.categoria}) - ${product.precio ? `Precio: ${product.precio}` : ''}`,
+          title: `${product.nombre}`,
+          text: `Mira este producto: ${product.nombre} - ${product.marca} - ${product.precio ? `Precio: ${product.precio}${product.usd?'usd':'ar'}` : ''}`,
           url: productUrl,
         });
       } catch (error) {
