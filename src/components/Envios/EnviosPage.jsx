@@ -1,4 +1,4 @@
-import { shippingOptions } from '@/app/constants/infoWeb';
+import { shippingOptions } from '@/components/constants/infoWeb';
 import React from 'react';
 
 

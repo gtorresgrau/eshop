@@ -2,10 +2,10 @@ import React, { useState, useMemo } from "react";
 import { Gamepad2, Sparkles, CheckCircle, ChevronRight, Clock, Shield, Star } from "lucide-react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../ui/Card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/Tabs";
-import { consoles } from "../../../app/constants/infoWeb";
+import { consoles } from "../../constants/infoWeb";
 import { Button } from "../../ui/Buttons";
 import { Badge } from "../../ui/Badge";
-import userData from "@/app/constants/userData";
+import userData from "@/components/constants/userData";
 
 export default function ConsoleCleaningService() {
   const [selectedConsole, setSelectedConsole] = useState("ps5");

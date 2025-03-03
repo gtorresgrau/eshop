@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
-import { ramOptions } from '@/app/constants/infoWeb';
+import { ramOptions } from '@/components/constants/infoWeb';
 const Comparativas = dynamic(() => import ( '../Comparativas'))
 
 const MemoriaRamPage = () => {

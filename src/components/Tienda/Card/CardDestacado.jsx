@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
 import IconShoopingCart from '../ShoopingCart/IconShoopingCart';
-import userData from '@/app/constants/userData';
+import userData from '@/components/constants/userData';
 import { CartContext } from '@/components/Context/ShoopingCartContext';
 import Image from 'next/image';
 

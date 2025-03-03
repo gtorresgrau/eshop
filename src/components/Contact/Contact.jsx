@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { MapIcon, EnvelopeIcon, PhoneIcon } from '@heroicons/react/24/outline';
-import userData from '../../app/constants/userData';
+import userData from '../constants/userData';
 
 export default function Contact() {
   const { register, handleSubmit, reset, formState: { errors, isSubmitSuccessful, isSubmitting } } = useForm({ mode: 'onTouched' });

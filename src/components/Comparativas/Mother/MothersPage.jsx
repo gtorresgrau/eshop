@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
-import { motherOptions } from '@/app/constants/infoWeb';
+import { motherOptions } from '@/components/constants/infoWeb';
 const Comparativas = dynamic(() => import('../Comparativas'));
 
 const MothersPage = () => {

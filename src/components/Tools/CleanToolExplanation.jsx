@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { Download } from 'lucide-react';
-import { scriptCode } from '@/app/constants/infoWeb';
+import { scriptCode } from '@/components/constants/infoWeb';
 import Image from 'next/image';
 
 const CleanToolExplanation = () => {

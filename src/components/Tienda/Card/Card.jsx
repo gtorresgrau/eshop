@@ -4,7 +4,7 @@ import React, { useContext } from 'react';
 import { MdStore } from 'react-icons/md';
 import { RiWhatsappLine, RiShareFill  } from 'react-icons/ri';
 import IconShoopingCart from '../ShoopingCart/IconShoopingCart';
-import userData from '@/app/constants/userData';
+import userData from '@/components/constants/userData';
 import addToCart from '@/Utils/addToCart';
 import { CartContext } from '@/components/Context/ShoopingCartContext';
 import Link from 'next/link';

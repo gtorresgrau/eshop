@@ -2,7 +2,7 @@
 import React, { useContext, useState } from 'react';
 import { CartContext } from '@/components/Context/ShoopingCartContext';
 import addToCart from '@/Utils/addToCart';
-import userData from '@/app/constants/userData';
+import userData from '@/components/constants/userData';
 import ProductoDetalle from './ProductoDetalle';
 
 
