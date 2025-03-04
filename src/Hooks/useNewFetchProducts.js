@@ -1,4 +1,4 @@
-import { getInLocalStorage, setInLocalStorage } from "./localStorage";
+import { getInLocalStorage, setInLocalStorage } from "../Hooks/localStorage";
 
 const newFetchProductos = async () => {
     try {

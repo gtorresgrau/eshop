@@ -1,19 +1,20 @@
 'use client';
 import React, { useState, lazy, Suspense } from 'react';
 import Link from 'next/link';
-import { FaSpinner } from 'react-icons/fa';
+import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import { signIn } from '../../lib/firebase';
-import { handleAuthError } from '@/Utils/handleErrorsFirebase';
-import { setInLocalStorage } from '@/Hooks/localStorage';
-import Image from 'next/image';
 
 // Carga diferida de ProtectedRoute y React Toastify
-const ProtectedRoute = lazy(() => import('../ProtectedRoute/ProtectedRoute'));
-const { ToastContainer } = lazy(() => import('react-toastify'));
-const { FontAwesomeIcon } = lazy(() => import('@fortawesome/react-fontawesome'));
-const { faEye, faEyeSlash } = lazy(() => import('@fortawesome/free-solid-svg-icons'));
+const ProtectedRoute = dynamic(() => import('../ProtectedRoute/ProtectedRoute'));
+const handleAuthError = dynamic(() => import('@/Utils/handleErrorsFirebase'));
+const setInLocalStorage = dynamic(() => import('../../Hooks/localStorage'));
+const signIn = dynamic(() => import('../../lib/firebase'));
+const Loading = dynamic(() => import('../Loading/Loading'));
+const { ToastContainer } = dynamic(() => import('react-toastify'));
+const { FontAwesomeIcon } = dynamic(() => import('@fortawesome/react-fontawesome'));
+const { faEye, faEyeSlash } = dynamic(() => import('@fortawesome/free-solid-svg-icons'));
 
 const Login = () => {
   const router = useRouter();
@@ -99,7 +100,7 @@ const Login = () => {
                       disabled={loading} 
                       aria-label="iniciar sesion"
                     >
-                       {loading ? <FaSpinner className='animate-spin'/> : 'INICIAR SESION'}
+                       {loading ? <Loading /> : 'INICIAR SESION'}
                     </button>
                   </form>
                 </div>

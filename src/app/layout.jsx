@@ -3,7 +3,6 @@ import React from 'react';
 import "./globals.css";
 import { Toaster } from 'react-hot-toast';
 import { ShoppingCartProvider } from '@/components/Context/ShoopingCartContext';
-import LoadingWrapper from '@/components/Loading/LoadingWrapper';
 import Script from 'next/script';
 
 export const metadata = {
@@ -120,10 +119,8 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <ShoppingCartProvider>
-          <LoadingWrapper>
             {children}
-          </LoadingWrapper>
-          <Toaster />
+            <Toaster />
         </ShoppingCartProvider>
       </body>
     </html>

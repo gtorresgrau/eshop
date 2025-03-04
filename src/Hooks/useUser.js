@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../pages/api/firebase'; // Asegúrate de la ruta correcta
-import { setInLocalStorage } from './localStorage';
+import { setInLocalStorage } from '../Hooks/localStorage'; 
 
 const useUser = () => {
   const [user, setUser] = useState(null);
