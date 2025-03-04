@@ -1,8 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { RiShareFill } from "react-icons/ri";
 
 const ProductoDetalle = ({ selectedProduct, mainImage, handleThumbnailClick, thumbnails, handleShare, handleAddToCart, enviar  }) => {
+    const path = usePathname()
     return(
     <article className="py-0 bg-white md:py-4 antialiased">
         <div className="max-w-screen-xl px-2 mx-auto 2xl:px-0">
@@ -72,7 +74,10 @@ const ProductoDetalle = ({ selectedProduct, mainImage, handleThumbnailClick, thu
 
                 {/* Sección de detalles del producto */}
                 <div className="flex flex-col mt-2 md:mt-6 lg:mt-0">
+                    {path === '/productos/[nombre]'? 
                 <h2 id="modal-title" className="text-xl font-semibold text-gray-600 sm:text-2xl">{selectedProduct.titulo_de_producto?.toUpperCase()}</h2>
+                :
+                <h1 id="modal-title" className="text-xl font-semibold text-gray-600 sm:text-2xl">{selectedProduct.titulo_de_producto?.toUpperCase()}</h1>}
                 <hr className="my-6 md:my-8 border-gray-200" />
                 <p className="mb-1 md:mb-4 text-gray-500 text-start">
                     <strong>Nombre: </strong>

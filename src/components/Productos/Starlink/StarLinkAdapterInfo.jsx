@@ -1,19 +1,13 @@
 'use client'
-import Head from "next/head";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
+
+
 export default function StarLinkAdapterInfo() {
   return (
     <section className="max-w-4xl mx-auto p-6 bg-white rounded-lg">
-      <Head>
-        <title> Fuente Adaptador para Antena Starlink Mini | Trifix SL1230 </title>
-        <meta name="description" content="Optimiza y tu conexión Starlink Mini con nuestro cable adaptador. Entrada 12V, salida 35V 5A, protección avanzada y tensión estabilizada. Ideal para viajes y uso continuo."/>
-        <meta name="keywords"  content="Starlink Mini, cable adaptador, elevador de tension para Starlink Mini - Trifix SL1230, mejora conexión satelital, conexion en ruta, elevador de tension 12V a 35V, fuente para starlink mini, fuente adaptador para conexion satelital" />
-        <link rel="canonical" href="https://eshopdevices.com/productos/StarLinkmini" />
-      </Head>
-
       <h1 className="text-2xl md:text-3xl lg:text-4xl text-transparent font-bold mb-4 bg-clip-text bg-gradient-to-r from-primary via-secondary to-primary"> Fuente Adaptador para Antena Starlink Mini | Trifix SL1230 </h1>
 
       <div className="mb-6">

@@ -33,15 +33,17 @@ const Card = ({ product, handleProductSelect }) => {
   const handleShare = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    const productUrl = `${window.location.origin}/productos/${product.nombre.replace(/\s+/g, '_')}`; // Reemplaza espacios con guiones bajos
+    
+    const productUrl = `${window.location.origin}/productos/${product.nombre.replace(/\s+/g, '_')}`;
+    const shareData = {
+      title: product.nombre,
+      text: `Mira este producto: ${product.nombre} - ${product.marca} - ${product.precio ? `Precio: ${product.precio}${product.usd ? 'usd' : 'ar'}` : ''}`,
+      url: productUrl
+    };
+  
     if (navigator.share) {
       try {
-        await navigator.share({
-          image: `${product.foto_1_1}`,
-          title: `${product.nombre}`,
-          text: `Mira este producto: ${product.nombre} - ${product.marca} - ${product.precio ? `Precio: ${product.precio}${product.usd?'usd':'ar'}` : ''}`,
-          url: productUrl,
-        });
+        await navigator.share(shareData);
       } catch (error) {
         console.error('Error al compartir:', error);
       }
