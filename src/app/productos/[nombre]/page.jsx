@@ -24,7 +24,7 @@ const ProductoPage = () => {
   
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`/api/products/${slug}`);
+        const response = await fetch(`/api/productos/${slug}`);
         if (!response.ok) throw new Error('Producto no encontrado');
         const data = await response.json();
         setSelectedProduct(data);
