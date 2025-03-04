@@ -7,14 +7,21 @@ export const setInLocalStorage = (key,value)=>{
 
 // Función para pedir un elemento del localStorage
 export const getInLocalStorage = (key) => {
-  if (typeof window !== 'undefined') {
-    return JSON.parse(localStorage.getItem(key));
+  try {
+      const item = localStorage.getItem(key);
+      return item ? JSON.parse(item) : null; // Devuelve `null` si no existe
+  } catch (error) {
+      console.error(`Error al parsear ${key} desde localStorage:`, error);
+      return null; // Devuelve `null` en caso de error
   }
-  return null; // Devuelve null si se llama en el servidor
 };
 
 // Función para eliminar un elemento del localStorage
 export const removeFromLocalStorage = (key) => {
-  localStorage.removeItem(key);
+  try {
+    localStorage.removeItem(key);
+    console.log(`Clave "${key}" eliminada de localStorage.`);
+  } catch (error) {
+    console.error(`Error al eliminar "${key}" de localStorage:`, error);
+  }
 };
-

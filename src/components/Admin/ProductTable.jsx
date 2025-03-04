@@ -2,24 +2,86 @@ import React from "react";
 import Image from "next/image";
 import dynamic from 'next/dynamic';
 import { Pagination } from "@mui/material";
-import useProducts from "@/Hooks/useProducts";
+import newFetchProductos from '../../Hooks/useNewFetchProducts';
+import { useSearchParams } from "next/navigation";
 
 const UpdateProduct = dynamic(() => import('./UpdateProduct/UpdateProduct'));
 
 const ProductTable = ({ handleEliminarArchivos }) => {
-    const {
-        products,
-        categories,
-        brands,
-        openModal,
-        closeModal,
-        selectedProduct,
-        isModalOpen,
-        totalPages,
-        currentPage,
-        handlePageChange,
-        fetchProducts
-      } = useProducts();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalClose, setIsModalClose] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productos, setProductos] = useState([]);
+  
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get("search") || "";
+
+  const [marcas, setMarcas] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+
+  const { marcas: fetchedMarcas, categorias: fetchedCategorias } = useFetchFilters();
+
+  useEffect(() => {
+    if (fetchedMarcas && fetchedCategorias) {
+      setMarcas(fetchedMarcas);
+      setCategorias(fetchedCategorias);
+    }
+  }, [fetchedMarcas, fetchedCategorias]);
+
+
+  const fetchProductos = async () => {
+    const res = await newFetchProductos();
+    const filteredProducts = searchQuery? res.filter(producto => producto.nombre.toLowerCase().includes(searchQuery.toLowerCase())): res;
+    setProductos(filteredProducts);
+  };
+
+  
+  useEffect(() => {
+    fetchProductos();
+  }, [searchQuery]);
+  
+
+    const itemsPerPage = 20;
+  
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const paginatedProducts = productos.slice(startIndex, endIndex);
+
+  const openModal = (type, product = null) => {
+      setSelectedProduct(product);
+      setIsModalOpen(true);
+      setIsModalClose(false);
+      setModalType(type);
+      if (type === 'update') {
+        window.location.hash = 'update';
+      }
+    };
+  
+    const closeModal = () => {
+      setIsModalOpen(false);
+      setIsModalClose(true);
+      window.history.pushState(null, null, ' ');
+    };
+  
+    useEffect(() => {
+      if (isModalClose) {
+        fetchProductos();
+      }
+  
+      const handlePopState = () => {
+        if (window.location.hash !== '#update' && isModalOpen) {
+          closeModal();
+        }
+      };
+  
+      window.addEventListener('popstate', handlePopState);
+  
+      return () => {
+        window.removeEventListener('popstate', handlePopState);
+      };
+    }, [isModalClose, isModalOpen]);
 
   return (
     <div className="overflow-x-auto">
@@ -34,8 +96,8 @@ const ProductTable = ({ handleEliminarArchivos }) => {
           </tr>
         </thead>
         <tbody>
-          {products.length > 0 ? (
-            products.map((producto) => (
+          {paginatedProducts.length > 0 ? (
+            paginatedProducts.map((producto) => (
               <tr key={producto._id} className="bg-white border-b">
                 <td className="px-4 py-3">
                   {producto.foto_1 ? (
@@ -90,17 +152,20 @@ const ProductTable = ({ handleEliminarArchivos }) => {
           onUpdate={fetchProducts} 
         />
       )}
-      {products.length > 0 && (
+      {paginatedProducts.length > 0 && (
         <div className="flex justify-center mt-4">
-          <Pagination 
-                count={totalPages}
-                page={currentPage}
-                onChange={handlePageChange}
-                siblingCount={1}
-                boundaryCount={1}
-                variant="outlined"
-                shape="rounded"
-                className="flex justify-center my-6 bg-white" />
+                  <Pagination
+                      count={Math.ceil(productos.length / itemsPerPage)}
+                      page={currentPage}
+                      onChange={(_, value) => handlePageChange(value)}
+                      siblingCount={1}
+                      boundaryCount={1}
+                      size="medium"
+                      variant="outlined"
+                      shape="rounded"
+                      aria-label="Paginación de productos"
+                      title="Paginación de productos"
+                    />
         </div>
       )}
     </div>

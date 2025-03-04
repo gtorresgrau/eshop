@@ -1,21 +1,19 @@
-'use client'
-import React, { useState } from 'react';
+'use client';
+import React, { useState, lazy, Suspense } from 'react';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import 'react-toastify/dist/ReactToastify.css';
-import logo from '../../../public/logos/logoEshop.webp';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useForm } from 'react-hook-form';
 import { FaSpinner } from 'react-icons/fa';
+import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
+import { signIn } from '../../lib/firebase';
 import { handleAuthError } from '@/Utils/handleErrorsFirebase';
 import { setInLocalStorage } from '@/Hooks/localStorage';
+import Image from 'next/image';
 
-const ToastContainer = dynamic(() => import('react-toastify').then((mod) => mod.ToastContainer), { ssr: false });
-// const signIn = dynamic(()=> import( '../../lib/firebase'))
-
+// Carga diferida de ProtectedRoute y React Toastify
+const ProtectedRoute = lazy(() => import('../ProtectedRoute/ProtectedRoute'));
+const { ToastContainer } = lazy(() => import('react-toastify'));
+const { FontAwesomeIcon } = lazy(() => import('@fortawesome/react-fontawesome'));
+const { faEye, faEyeSlash } = lazy(() => import('@fortawesome/free-solid-svg-icons'));
 
 const Login = () => {
   const router = useRouter();
@@ -26,7 +24,6 @@ const Login = () => {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      const { default: signIn } = await import('../../lib/firebase');
       const res = await signIn(data);
       setInLocalStorage('USER', res.user);
       router.push('/Admin');
@@ -42,6 +39,8 @@ const Login = () => {
   };
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ProtectedRoute>
         <section>
           <ToastContainer position="top-center" autoClose={3000} theme="colored" />
           <article className="bg-secondary-background h-[100vh]">
@@ -49,28 +48,57 @@ const Login = () => {
               <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                   <Link href="/" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 justify-center" title="Shop Logo">
-                      <Image src={logo.src} width={150} height={150} alt="eshop logo" title="eshop Logo" priority={false} />
+                    <Image 
+                      className="mr-2 h-auto" 
+                      src="/logos/logoEshop.webp" 
+                      width={150} 
+                      height={150} 
+                      alt="eshop logo" 
+                      title="eshop Logo" 
+                      priority 
+                      loading="lazy" 
+                    />
                   </Link>
                   <form id='formLogin' className="space-y-4 md:space-y-6" onSubmit={handleSubmit(onSubmit)}>
                     <div>
                       <label htmlFor="emailLogin" className="block mb-2 text-sm font-medium text-gray-900">Email</label>
-                      <input type="email" id="emailLogin"className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-3 focus:ring-primary focus:border-primary block w-full p-2.5 placeholder-gray-400"
-                        placeholder="nombre@empresa.com" {...register('email', { required: true })} />
+                      <input 
+                        type="email" 
+                        id="emailLogin" 
+                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-3 focus:ring-primary focus:border-primary block w-full p-2.5 placeholder-gray-400"
+                        placeholder="nombre@empresa.com" 
+                        {...register('email', { required: true })} 
+                      />
                       {errors.email && <p className="text-sm text-red-600">Este campo es requerido</p>}
                     </div>
                     <div>
                       <label htmlFor="passwordLogin" className="block mb-2 text-sm font-medium text-gray-900">Contraseña</label>
                       <div className="relative">
-                        <input type={showPassword ? "text" : "password"} id="passwordLogin" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-3 focus:ring-primary focus:border-primary block w-full p-2.5 placeholder-gray-400"
-                          placeholder="••••••••" {...register('contraseña', { required: true })} />
-                        <button type="button" onClick={togglePasswordVisibility} className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5" aria-label="ver contraseña" >
+                        <input 
+                          type={showPassword ? "text" : "password"} 
+                          id="passwordLogin" 
+                          className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-3 focus:ring-primary focus:border-primary block w-full p-2.5 placeholder-gray-400"
+                          placeholder="••••••••" 
+                          {...register('contraseña', { required: true })} 
+                        />
+                        <button 
+                          type="button" 
+                          onClick={togglePasswordVisibility} 
+                          className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5" 
+                          aria-label="ver contraseña"
+                        >
                           <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                         </button>
                       </div>
                       {errors.contraseña && <p className="text-sm text-red-600">Este campo es requerido</p>}
                     </div>
 
-                    <button type="submit" className=" flex justify-center w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2" disabled={loading} aria-label="iniciar sesion">
+                    <button 
+                      type="submit" 
+                      className="flex justify-center w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2" 
+                      disabled={loading} 
+                      aria-label="iniciar sesion"
+                    >
                        {loading ? <FaSpinner className='animate-spin'/> : 'INICIAR SESION'}
                     </button>
                   </form>
@@ -79,6 +107,8 @@ const Login = () => {
             </div>
           </article>
         </section>
+      </ProtectedRoute>
+    </Suspense>
   );
 };
 

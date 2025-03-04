@@ -2,13 +2,13 @@
 import React, { useEffect, useState, Suspense } from "react";
 import dynamic from "next/dynamic";
 import ReactDOM from 'react-dom/client';
-import useProducts from "@/Hooks/useProducts";
-
+import newFetchProductos from '../../Hooks/useNewFetchProducts';
+import useFetchFilters from "@/Hooks/useBrandsCategories";
+import { useSearchParams } from "next/navigation";
 
 const Swal = dynamic(() => import("sweetalert2"), { ssr: false });
 const AddProduct = dynamic(() => import("./AddProduct/AddProduct"), { ssr: false });
 const UpdateProduct = dynamic(() => import("./UpdateProduct/UpdateProduct"), { ssr: false });
-const Dropdown = dynamic(() => import("../Tienda/Dropdown/Dropdown"), { ssr: false });
 const Loading = dynamic(() => import("../Loading/Loading"), { ssr: false });
 const SearchBase = dynamic(() => import("../Search/SearchBase"), { ssr: false });
 const Nav = dynamic(() => import("./Nav/Nav"), { ssr: false });
@@ -17,35 +17,48 @@ const DownloadCSVButton = dynamic(() => import("../DownloadCSVButton/DownloadCSV
 const Pagination = dynamic(() => import("@mui/material").then((mod) => mod.Pagination), { ssr: false });
 
 
-
-
 export default function Admin() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalClose, setIsModalClose] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [modalType, setModalType] = useState(null);
   const [section, setSection] = useState('Productos')
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productos, setProductos] = useState([]);
+  
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get("search") || "";
 
-  const {
-    products,
-    categories,
-    brands,
-    selectedCategories,
-    selectedBrands,
-    showAllCategories,
-    showAllBrands,
-    totalPages,
-    currentPage,
-    isLoading,
-    handlePageChange,
-    handleCheckboxChange,
-    handleClearFilters,
-    handleShowAllCategories,
-    handleShowAllBrands,
-    setSelectedCategories,
-    setSelectedBrands,
-    fetchProducts
-  } = useProducts();
+  const [marcas, setMarcas] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+
+  const { marcas: fetchedMarcas, categorias: fetchedCategorias } = useFetchFilters();
+
+  useEffect(() => {
+    if (fetchedMarcas && fetchedCategorias) {
+      setMarcas(fetchedMarcas);
+      setCategorias(fetchedCategorias);
+    }
+  }, [fetchedMarcas, fetchedCategorias]);
+
+
+  const fetchProductos = async () => {
+    const res = await newFetchProductos();
+    const filteredProducts = searchQuery? res.filter(producto => producto.nombre.toLowerCase().includes(searchQuery.toLowerCase())): res;
+    setProductos(filteredProducts);
+  };
+
+  
+  useEffect(() => {
+    fetchProductos();
+  }, [searchQuery]);
+  
+
+    const itemsPerPage = 20;
+  
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const paginatedProducts = productos.slice(startIndex, endIndex);
   
   const openModal = (type, product = null) => {
     setSelectedProduct(product);
@@ -65,7 +78,7 @@ export default function Admin() {
 
   useEffect(() => {
     if (isModalClose) {
-      fetchProducts();
+      fetchProductos();
     }
 
     const handlePopState = () => {
@@ -138,7 +151,7 @@ export default function Admin() {
         const dataBDD = await resBDD.json();
   
         if (dataBDD.success) {
-          fetchProducts();
+          fetchProductos();
           Swal.fire({
             icon: 'success',
             title: 'El producto ha sido eliminado correctamente.',
@@ -174,28 +187,10 @@ export default function Admin() {
                       <SearchBase />
                     </div>
                     <div className="md:flex md:justify-end gap-3 grid grid-cols-5 w-full">
-                        <div className="col-span-2">
-                        <Dropdown
-                          handleClearFilters={handleClearFilters} 
-                          handleCheckboxChange={handleCheckboxChange}
-                          categories={categories} 
-                          showAllCategories={showAllCategories}
-                          selectedCategories={selectedCategories}
-                          setSelectedCategories={setSelectedCategories}
-                          handleShowAllCategories={handleShowAllCategories}
-                          brands={brands}
-                          showAllBrands={showAllBrands}
-                          selectedBrands={selectedBrands}
-                          setSelectedBrands={setSelectedBrands}
-                          handleShowAllBrands={handleShowAllBrands}
-                          isLoading={isLoading}
-                          />
-                          </div>
                       <div className="col-span-3">
-
                       <button type="button" aria-label="agregar producto" className="flex items-center text-white border bg-boton-primary hover:bg-boton-primary-hover active:bg-boton-primary-active font-medium w-full justify-center rounded-lg h-10 text-xs xs:text-sm px-5 py-2 text-center " onClick={() => openModal('add')}>+  Agregar producto</button>
                       {isModalOpen && modalType === 'add' && (
-                        <AddProduct toggleModal={closeModal} isOpenModal={isModalOpen} marca={brands} categoria={categories} />
+                        <AddProduct toggleModal={closeModal} isOpenModal={isModalOpen} marca={marcas} categoria={categorias} />
                       )}
                     </div>
                       </div>
@@ -212,9 +207,9 @@ export default function Admin() {
                           <th scope="col" className="px-1 py-2 md:px-4 md:py-3 text-center">Acción</th>
                         </tr>
                       </thead>
-                      {products.length ? (
+                      {paginatedProducts.length ? (
                         <tbody>
-                          {products.map((product, index) => (
+                          {paginatedProducts.map((product, index) => (
                             <tr key={index} className={`border-b ${index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"}`}>
                               <th scope="row" className="px-1 py-6 md:px-4 md:py-4 font-medium text-gray-900 whitespace-nowrap">{product.nombre}</th>
                               <th scope="row" className="px-1 py-6 md:px-4 md:py-4 font-medium text-gray-900 whitespace-nowrap">{product.precio}{product.usd?'usd':'ar'}</th>
@@ -250,12 +245,23 @@ export default function Admin() {
                       )}
                     </table>
                   </div>
-                  <Pagination count={totalPages} page={currentPage} onChange={handlePageChange} siblingCount={1} boundaryCount={1} variant="outlined" shape="rounded"   className="flex justify-center my-6 bg-white" />
+                  <Pagination
+                      count={Math.ceil(productos.length / itemsPerPage)}
+                      page={currentPage}
+                      onChange={(_, value) => handlePageChange(value)}
+                      siblingCount={1}
+                      boundaryCount={1}
+                      size="medium"
+                      variant="outlined"
+                      shape="rounded"
+                      aria-label="Paginación de productos"
+                      title="Paginación de productos"
+                    />
                 </div>
               </div>
             </section>
             {isModalOpen && modalType === 'update' && selectedProduct && (
-              <UpdateProduct toggleModal={closeModal} isOpenModal={isModalOpen} product={selectedProduct} marca={brands} categoria={categories} />
+              <UpdateProduct toggleModal={closeModal} isOpenModal={isModalOpen} product={selectedProduct} marca={marcas} categoria={categorias} />
             )}
           </div>
         )}

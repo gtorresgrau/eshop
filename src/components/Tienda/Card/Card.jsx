@@ -9,6 +9,7 @@ import addToCart from '@/Utils/addToCart';
 import { CartContext } from '@/components/Context/ShoopingCartContext';
 import Link from 'next/link';
 import Image from 'next/image';
+import handleShare from '@/Utils/handleShare';
 
 const Card = ({ product, handleProductSelect }) => {
   const [cart, setCart] = useContext(CartContext);
@@ -29,35 +30,7 @@ const Card = ({ product, handleProductSelect }) => {
   const enviar = `https://wa.me/+${userData.codigoPais}${userData.contact}?text=${encodeURIComponent(
     consultMessage || userData.textoPredefinido
   )}`;
-
-  const handleShare = async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    const productUrl = `${window.location.origin}/productos/${product.nombre.replace(/\s+/g, '_')}`;
-    const shareData = {
-      title: product.nombre,
-      text: `Mira este producto: ${product.nombre} - ${product.marca} - ${product.precio ? `Precio: ${product.precio}${product.usd ? 'usd' : 'ar'}` : ''}`,
-      url: productUrl
-    };
-  
-    if (navigator.share) {
-      try {
-        await navigator.share(shareData);
-      } catch (error) {
-        console.error('Error al compartir:', error);
-      }
-    } else {
-      // Fallback: Copiar al portapapeles
-      try {
-        await navigator.clipboard.writeText(productUrl);
-        alert('Enlace copiado al portapapeles');
-      } catch (error) {
-        console.error('Error al copiar el enlace:', error);
-      }
-    }
-  };
-  
+ 
   
 
   return (
@@ -79,7 +52,7 @@ const Card = ({ product, handleProductSelect }) => {
             <button  onClick={handleAddToCart} className="absolute top-1 right-1 inline-flex items-center justify-center w-8 h-8 bg-boton-primary hover:bg-green-600 rounded-full text-white z-10" disabled={product.vendido} >
                 <IconShoopingCart ancho={20} alto={20} color="#ffffff" />
             </button>
-            <button onClick={handleShare} className="absolute top-10 right-1 inline-flex items-center justify-center w-8 h-8 bg-orange-400 hover:bg-boton-primary-hover rounded-full text-white z-10"
+            <button onClick={(e)=>handleShare(e,product)} className="absolute top-10 right-1 inline-flex items-center justify-center w-8 h-8 bg-orange-400 hover:bg-boton-primary-hover rounded-full text-white z-10"
               disabled={product.vendido} >
                 <RiShareFill />
             </button>

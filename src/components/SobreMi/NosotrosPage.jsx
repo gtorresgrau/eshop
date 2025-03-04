@@ -2,11 +2,9 @@
 import React from 'react';
 import { infoWeb, shippingOptions } from '@/components/constants/infoWeb';
 import PreguntasFrecuentes from '../PreguntasFrecuentas/PreguntasFrecuentas';
-import useProducts from '@/Hooks/useProducts';
 import Image from 'next/image';
 
 const NosotrosPage = () => {
-  const { products } = useProducts();
 
   return (
     <main className="container mx-auto px-4 py-8 max-w-6xl">
@@ -44,17 +42,17 @@ const NosotrosPage = () => {
       </section>
 
       {/* Sección: Qué Ofrecemos */}
-      <section id="que-ofrecemos" aria-labelledby="que-ofrecemos-heading" className="mb-12">
+      {/* <section id="que-ofrecemos" aria-labelledby="que-ofrecemos-heading" className="mb-12">
         <h2 id="que-ofrecemos-heading" className="mb-8 text-xl md:text-3xl xl:text-4xl text-center font-extrabold text-primary uppercase" title="Qué Ofrecemos">¿Qué productos ofrecemos?</h2>
         <div className="mt-6 grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {products
+          {productos
             .sort(() => Math.random() - 0.5) // Mezcla aleatoriamente los productos
             .slice(0, 6) // Toma los primeros 6 productos
             .map((prod, index) => (
               <div key={index} className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200">
                 <div className="flex flex-col items-center text-center">
                   {/* Si el producto cuenta con imagen se renderiza la etiqueta <Image> */}
-                  {prod.imagen && (
+                  {/* {prod.imagen && (
                     <Image
                       src={prod.imagen}
                       alt={`Imagen de ${prod.nombre}`}
@@ -70,8 +68,8 @@ const NosotrosPage = () => {
                     {prod.descripcion.length > 150
                       ? `${prod.descripcion.slice(0, 150)}...`
                       : prod.descripcion}
-                  </p>
-                  {/* Botón para ver detalles del producto */}
+                  </p> */}
+                  {/* Botón para ver detalles del producto  */}
                   {/* <button type="button"
                     alt={`Ver detalles de ${prod.nombre}`}
                     title={`Ver detalles de ${prod.nombre}`}
@@ -79,12 +77,12 @@ const NosotrosPage = () => {
                     className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors duration-300"
                   >
                     Ver detalles
-                  </button> */}
+                  </button> 
                 </div>
               </div>
             ))}
-        </div>
-      </section>
+        </div> */}
+      {/* </section>  */}
 
       {/* Sección: Opciones de Envío */}
       <section id="opciones-envio" aria-labelledby="envio-heading" className="mb-12">

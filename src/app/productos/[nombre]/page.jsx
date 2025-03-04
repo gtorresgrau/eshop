@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useParams } from 'next/navigation';
-import useProducts from '@/Hooks/useProducts';
+import useProductModal from '@/Hooks/useProductModal';
 
 
 const Modal = dynamic(() => import('@/components/Tienda/Modal/Modals'));
@@ -17,7 +17,7 @@ const ProductoPage = () => {
   const { nombre } = useParams();
   const slug = nombre; // Asigna el valor correcto
 
-  const { closeModal } = useProducts();
+  const { closeModal } =  useProductModal();
 
   useEffect(() => {
     if (!slug) return;
