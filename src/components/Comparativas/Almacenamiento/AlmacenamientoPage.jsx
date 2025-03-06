@@ -7,8 +7,8 @@ const Comparativas = dynamic(() => import('../Comparativas'))
 const AlmacenamientoPage = () => {
 
   return (
-    <section className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-6" title='Comparación de Dispositivos de Almacenamiento'>Comparación de discos almacenamiento HDD y SSD</h1>
+    <section className="container mx-auto px-2 md:px-4 py-8">
+      <h1 className="text-xl md:text-3xl font-bold text-center mb-6 uppercase text-primary" title='Comparación de Dispositivos de Almacenamiento'>Comparación de discos almacenamiento HDD y SSD</h1>
       <article className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         {storageOptions.map((option, index) => (
           <div key={index} className="border rounded-lg p-4 shadow-lg text-center hover:shadow-xl hover:scale-105 hover:shadow-blue-200 hover:transition-all">
@@ -28,7 +28,7 @@ const AlmacenamientoPage = () => {
         ))}
       </article>
       <article className="grid grid-cols-1 my-6">
-        <h2 className="text-3xl font-bold text-center mb-2" title="Comparación de Dispositivos de Almacenamiento">Comparación de discos SSD M.2 SATA y M.2 NVMe</h2>
+        <h2 className="text-xl md:text-3xl font-bold text-center mb-2 text-primary uppercase" title="Comparación de Dispositivos de Almacenamiento">Comparación de discos SSD M.2 SATA y M.2 NVMe</h2>
         <div className="flex flex-col md:flex-row items-center rounded-lg p-4 text-center">
             <Image src="https://res.cloudinary.com/dnbrxpca3/image/upload/v1739372328/Almacenamiento_M.2_comparativa_krya8x.webp" alt="Comparación de discos SSD M.2 SATA y M.2 NVMe" className="w-1/2 mb-4 md:mb-0 md:mr-6 rounded-md" title="Comparación de discos SSD M.2 SATA y M.2 NVMe" aria-label="Imagen de comparación de discos SSD M.2 SATA y M.2 NVMe" loading='lazy' width={400} height={100}/>
             <p className="text-gray-600 text-left">

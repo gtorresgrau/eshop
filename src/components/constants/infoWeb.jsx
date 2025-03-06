@@ -197,32 +197,34 @@ export const fuenteOptions = [
   }
 ];
 
-export const motherOptions = [
-  {
-    title: 'Placa Base Intel LGA1366',
-    description: 'Placa base Micro ATX compatible con procesadores Intel. Soporta hasta 12 GB de RAM DDR3 y configuraciones Crossfire/SLI.',
-    img: 'https://res.cloudinary.com/dnbrxpca3/image/upload/v1740672092/Intel_LGA1366_z6hyeh.webp',
-    alt: 'Imagen de una placa base Intel LGA1366'
+export const motherboardData = {
+  intel: {
+    sockets: ['LGA 1700', 'LGA 1200', 'LGA 1151'],
+    chipsets: ['Z790', 'B760', 'H610'],
+    compatibility: 'Compatibles con procesadores Intel Core de 12ª, 11ª y 10ª generación.',
   },
-  {
-    title: 'Placa Base MSI AMD X670',
-    description: 'Diseñada para la nueva plataforma AMD AM5, compatible con procesadores Ryzen 7000 y 8000. Ideal para gaming y alto rendimiento.',
-    img: 'https://res.cloudinary.com/dnbrxpca3/image/upload/v1740670972/MSI_AMD_X670_ofywsc.webp',
-    alt: 'Imagen de una placa base MSI AMD X670'
+  amd: {
+    sockets: ['AM5', 'AM4', 'AM4+'],
+    chipsets: ['X670', 'B650', 'A620'],
+    compatibility: 'Compatibles con procesadores Ryzen de la serie 7000, 5000 y 3000.',
   },
-  {
-    title: 'Placa Base Gigabyte mini ITX GA-C1007UN-D',
-    description: 'Placa compacta con chipset Intel NM70 Express, soporta hasta 16 GB de RAM DDR3. Ideal para sistemas pequeños.',
-    img: 'https://res.cloudinary.com/dnbrxpca3/image/upload/v1740670972/CP-GIGABYTE-GA-C1007UN-D-1_iprdzi.webp',
-    alt: 'Imagen de una placa base Gigabyte mini ITX GA-C1007UN-D'
+  chipsetExplanation: {
+    intel: 'Los chipsets de Intel incluyen una letra y un número. La letra indica la serie (Z para entusiastas, B para gama media, H para básica) y el número representa la generación y características.',
+    amd: 'Los chipsets de AMD siguen una lógica similar. La "X" es para entusiastas, "B" para gama media y "A" para básica. Los números indican la generación y capacidades.',
   },
-  {
-    title: 'Placa Base MSI MAG B550 TOMAHAWK',
-    description: 'Compatible con procesadores AMD Ryzen de tercera y cuarta generación. Soporta overclocking y múltiples opciones de expansión.',
-    img: 'https://res.cloudinary.com/dnbrxpca3/image/upload/v1740670972/MSI_MAG_B550_TOMAHAWK_x45j0y.webp',
-    alt: 'Imagen de una placa base MSI MAG B550 TOMAHAWK'
-  }
-];
+  formFactors: {
+    ATX: 'Tamaño estándar, más puertos y ranuras de expansión.',
+    MicroATX: 'Más compacto, menos ranuras de expansión.',
+    MiniITX: 'Muy pequeño, limitado en puertos y expansión.',
+  },
+  additionalFeatures: {
+    ramSupport: 'Verificar la cantidad máxima de memoria RAM soportada y la compatibilidad con DDR3, DDR4 o DDR5.',
+    connectivity: 'Ver puertos disponibles: USB, HDMI, DisplayPort, Ethernet, WiFi integrado.',
+    storage: 'Compatibilidad con SSD NVMe, cantidad de puertos SATA disponibles.',
+    expansion: 'Número de ranuras PCIe para tarjetas gráficas y otras expansiones.',
+  },
+};
+
 
 
 

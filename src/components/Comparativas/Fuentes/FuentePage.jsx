@@ -7,8 +7,8 @@ import { fuenteOptions } from '@/components/constants/infoWeb';
 
 const FuentePage = () => {
   return (
-    <section className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-6" title='Comparación de Fuentes de Poder'>Comparación de Fuentes de Poder</h1>
+    <section className="container mx-auto px-2 md:px-4 py-8">
+      <h1 className="text-xl md:text-3xl font-bold text-center mb-6 uppercase text-primary" title='Comparación de Fuentes de Poder'>Comparación de Fuentes de Poder</h1>
       <article className="grid md:grid-cols-3 gap-6">
         {fuenteOptions.map((option, index) => (
           <div key={index} className=" items-center justify-center flex flex-col border rounded-lg p-4 shadow-lg text-center hover:shadow-xl hover:scale-105 hover:shadow-blue-200 hover:transition-all">
@@ -28,7 +28,7 @@ const FuentePage = () => {
         ))}
       </article>
       <article className="grid grid-cols-1 my-6">
-        <h2 className="text-3xl font-bold text-center mb-2" title="Diferencias entre Potencias y Certificaciones">Diferencias entre Potencias y Certificaciones</h2>
+        <h2 className="text-xl md:text-3xl font-bold text-center mb-2 text-primary uppercase" title="Diferencias entre Potencias y Certificaciones">Diferencias entre Potencias y Certificaciones</h2>
         <div className="flex flex-col md:flex-row items-center rounded-lg p-4 text-center">
             <Image src="https://res.cloudinary.com/dnbrxpca3/image/upload/v1739456111/comparativa_de_fuentes_fnpewn.webp" alt="Comparación de Fuentes de Poder" className="w-1/2 mb-4 md:mb-0 md:mr-6 rounded-md" title="Comparación de Fuentes de Poder" aria-label="Imagen de comparación de fuentes de poder" loading='lazy' width={600} height={400}/>
             <p className="text-gray-600 text-left" >
