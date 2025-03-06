@@ -1,3 +1,4 @@
+//pages/api/productos/[slug].js
 import { connectDB } from '@/lib/mongodb';
 import Producto from '@/models/product';
 

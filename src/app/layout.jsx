@@ -22,7 +22,15 @@ export const metadata = {
     type: 'website',
     url: 'https://eshopdevices.com/',
     image: 'https://eshopdevices.com/logos/logoEshop.webp',
+  },    
+  twitter: {
+    card: 'summary_large_image',
+    site: '@eshopdevices',
+    title: 'Eshop Devices Wilde Insumos Informáticos profesionales y standard',
+    description: "Eshop Devices es tu aliado tecnológico en Wilde, especializado en la venta de insumos informáticos y dispositivos electrónicos.",
+    image: 'https://eshopdevices.com/logos/logoEshop.webp',
   },
+  canonical: 'https://eshopdevices.com/'
 };
 
 export default function RootLayout({ children }) {
