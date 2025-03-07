@@ -1,10 +1,14 @@
 'use client';
-import React, { useState, lazy, Suspense } from 'react';
+import React, { useState, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import { ToastContainer } from 'react-toastify';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+
 
 // Carga diferida de ProtectedRoute y React Toastify
 const ProtectedRoute = dynamic(() => import('../ProtectedRoute/ProtectedRoute'));
@@ -12,9 +16,6 @@ const handleAuthError = dynamic(() => import('@/Utils/handleErrorsFirebase'));
 const setInLocalStorage = dynamic(() => import('../../Hooks/localStorage'));
 const signIn = dynamic(() => import('../../lib/firebase'));
 const Loading = dynamic(() => import('../Loading/Loading'));
-const { ToastContainer } = dynamic(() => import('react-toastify'));
-const { FontAwesomeIcon } = dynamic(() => import('@fortawesome/react-fontawesome'));
-const { faEye, faEyeSlash } = dynamic(() => import('@fortawesome/free-solid-svg-icons'));
 
 const Login = () => {
   const router = useRouter();
@@ -55,8 +56,7 @@ const Login = () => {
                       width={150} 
                       height={150} 
                       alt="eshop logo" 
-                      title="eshop Logo" 
-                      priority 
+                      title="eshop Logo"  
                       loading="lazy" 
                     />
                   </Link>
