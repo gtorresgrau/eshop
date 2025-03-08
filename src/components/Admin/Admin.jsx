@@ -34,13 +34,14 @@ export default function Admin() {
 
   const [marcas, setMarcas] = useState([]);
   const [categorias, setCategorias] = useState([]);
-  
-  useEffect(() => {
-    async function fetchFilters() {
+
+    const fetchFilters = async()=> {
       const filters = await useFetchFilters();
       setMarcas(filters.marcas);
       setCategorias(filters.categorias);
     }
+
+  useEffect(() => {
     
     fetchFilters();
   }, []);
