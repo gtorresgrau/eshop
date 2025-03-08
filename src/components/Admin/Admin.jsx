@@ -35,17 +35,19 @@ export default function Admin() {
   const [marcas, setMarcas] = useState([]);
   const [categorias, setCategorias] = useState([]);
 
-    const fetchFilters = async()=> {
-      const filters = await useFetchFilters();
+  useEffect(() => {
+    const fetchFilters = async () => {
+      const filters = await fetchFiltersData(); // Llama a una función normal, no un hook
       setMarcas(filters.marcas);
       setCategorias(filters.categorias);
-    }
-
-  useEffect(() => {
-    
+    };
+  
     fetchFilters();
   }, []);
   
+  const fetchFiltersData = async () => {
+    return await useFetchFilters();
+  };
 
   const fetchProductos = async () => {
     const res = await newFetchProductos();
