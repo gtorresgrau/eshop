@@ -1,5 +1,5 @@
 //----------------LocalStorage------------///
-'use Client'
+'use client'
 // Función para guardar un elemento del localStorage
 export const setInLocalStorage = (key,value)=>{
   return localStorage.setItem(key,JSON.stringify(value))

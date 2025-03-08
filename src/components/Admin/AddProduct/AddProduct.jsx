@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import ReactDOM from 'react-dom/client';
 import { FaPlus } from "react-icons/fa";
+import { removeFromLocalStorage } from '@/Hooks/localStorage';
 
 const Loading = dynamic(() => import('@/components/Loading/Loading'));
 const UploadImage = dynamic(() => import('../UploadImage'))
@@ -238,6 +239,8 @@ const hasImageChanges = () => {
           timer: 1500,
         });
     
+        removeFromLocalStorage('productos');
+    
         toggleModal();
         //console.log("ADD data", data.descripcion);
       } catch (error) {
@@ -339,10 +342,10 @@ const hasImageChanges = () => {
                       <select onChange={handleChangeInput} name="marca" id="marcaAddProduct" value={producto.marca} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                         <option value="" hidden>Seleccione una marca</option>
                           {marcas.map((marca, index) => (
-                            <option key={index} value={marca.brand}>
-                              {marca.brand}
+                            <option key={index} value={marca}>
+                              {marca}
                             </option>
-                        ))}
+                          ))}
                       </select>
   
                       <div className="relative" ref={marcaDropdownRef}>
@@ -397,8 +400,8 @@ const hasImageChanges = () => {
                       >
                         <option value="" hidden>Seleccione una categoria</option>
                         {categorias.map((categoria, index) => (
-                          <option key={index} value={categoria.category}>
-                            {categoria.category}
+                          <option key={index} value={categoria}>
+                            {categoria}
                           </option>
                         ))}
                       </select>

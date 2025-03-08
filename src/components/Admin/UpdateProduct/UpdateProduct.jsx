@@ -4,10 +4,12 @@ import dynamic from 'next/dynamic';
 import Image from "next/image";
 import ReactDOM from 'react-dom/client';
 import { FaPlus } from "react-icons/fa";
+import Swal from "sweetalert2";
+import { removeFromLocalStorage } from "@/Hooks/localStorage";
 
 const Loading = dynamic(() => import('@/components/Loading/Loading'));
 const UploadImage = dynamic(() => import('../UploadImage'))
-const Swal = dynamic(() => import('sweetalert2'));
+// const Swal = dynamic(() => import('sweetalert2'));
 
 export default function UpdateProduct({
   isOpenModal,
@@ -232,7 +234,7 @@ export default function UpdateProduct({
       showConfirmButton: false,
       timer: 1500 // Tiempo en milisegundos para cerrar automáticamente
     });
-
+    removeFromLocalStorage('productos');
     toggleModal(); // Cerrar modal de edición
 
     // Manejar la respuesta si es necesario
@@ -254,7 +256,8 @@ export default function UpdateProduct({
     producto.foto_1_3,
     producto.foto_1_4,
   ].filter(Boolean);
-
+  
+  
   return (
     <div>
       <div id="updateProductModal" tabIndex="-1" aria-label="editar producto" className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-10 overflow-hidden ${
@@ -288,13 +291,13 @@ export default function UpdateProduct({
                 <div>
                   <label htmlFor="marcaUpdate" className="block mb-2 text-sm font-medium text-gray-900">Marca</label>
                   <div className="flex gap-4">
-                    <select onChange={handleChangeInput} name="marca" id="marcaUpdate" value={producto.marca} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" >
-                      {marcas.map((marca, index) => (
-                        <option key={index} value={marca.brand}>
-                          {marca.brand}
-                        </option>
-                      ))}
-                    </select>
+                  <select onChange={handleChangeInput} name="marca" id="marcaUpdate" value={producto.marca} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" >
+                    {marcas.map((marca, index) => (
+                      <option key={index} value={marca}>
+                        {marca}
+                      </option>
+                    ))}
+                  </select>
 
                     <div className="relative" ref={marcaDropdownRef}>
                       <button
@@ -356,19 +359,20 @@ export default function UpdateProduct({
                   </label>
 
                   <div className="flex gap-4">
-                    <select
-                      onChange={handleChangeInput}
-                      name="categoria"
-                      id="categoriaUpdate"
-                      value={producto.categoria}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                    >
-                      {categorias.map((categoria, index) => (
-                        <option key={index} value={categoria.category}>
-                          {categoria.category}
-                        </option>
-                      ))}
-                    </select>
+                  <select
+                        onChange={handleChangeInput}
+                        name="categoria"
+                        id="categoriaUpdate"
+                        value={producto.categoria}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      >
+                        {categorias.map((categoria, index) => (
+                          <option key={index} value={categoria}>
+                            {categoria}
+                          </option>
+                        ))}
+                      </select>
+
 
                     <div className="relative" ref={categoriaDropdownRef}>
                       <button

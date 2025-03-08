@@ -5,10 +5,13 @@ import ReactDOM from 'react-dom/client';
 import newFetchProductos from '../../Hooks/useNewFetchProducts';
 import useFetchFilters from "@/Hooks/useBrandsCategories";
 import { useSearchParams } from "next/navigation";
+import Swal from "sweetalert2";
+import UpdateProduct from "./UpdateProduct/UpdateProduct";
+import AddProduct from "./AddProduct/AddProduct";
 
-const Swal = dynamic(() => import("sweetalert2"), { ssr: false });
-const AddProduct = dynamic(() => import("./AddProduct/AddProduct"), { ssr: false });
-const UpdateProduct = dynamic(() => import("./UpdateProduct/UpdateProduct"), { ssr: false });
+// const Swal = dynamic(() => import("sweetalert2"), { ssr: false });
+// const AddProduct = dynamic(() => import("./AddProduct/AddProduct"), { ssr: false });
+// const UpdateProduct = dynamic(() => import("./UpdateProduct/UpdateProduct"), { ssr: false });
 const Loading = dynamic(() => import("../Loading/Loading"), { ssr: false });
 const SearchBase = dynamic(() => import("../Search/SearchBase"), { ssr: false });
 const Nav = dynamic(() => import("./Nav/Nav"), { ssr: false });
@@ -29,17 +32,18 @@ export default function Admin() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
 
-  const [marcas, setMarcas] = useState([]);
-  const [categorias, setCategorias] = useState([]);
+    const [marcas, setMarcas] = useState([]);
+    const [categorias, setCategorias] = useState([]);
 
-  const { marcas: fetchedMarcas, categorias: fetchedCategorias } = useFetchFilters();
-
-  useEffect(() => {
-    if (fetchedMarcas && fetchedCategorias) {
-      setMarcas(fetchedMarcas);
-      setCategorias(fetchedCategorias);
-    }
-  }, [fetchedMarcas, fetchedCategorias]);
+    useEffect(() => {
+      const fetchFilters = async () => {
+        const filters = await useFetchFilters();
+        setMarcas(filters.marcas);
+        setCategorias(filters.categorias);
+      };
+      
+      fetchFilters();
+    }, []);
 
 
   const fetchProductos = async () => {
@@ -78,21 +82,19 @@ export default function Admin() {
 
   useEffect(() => {
     if (isModalClose) {
-      fetchProductos();
+      fetchProductos(); // <-- Esto puede causar una actualización anidada
     }
-
     const handlePopState = () => {
       if (window.location.hash !== '#update' && isModalOpen) {
         closeModal();
       }
     };
-
     window.addEventListener('popstate', handlePopState);
-
     return () => {
       window.removeEventListener('popstate', handlePopState);
     };
   }, [isModalClose, isModalOpen]);
+  
 
   const loadingElement = document.createElement('div');
   const root = ReactDOM.createRoot(loadingElement);

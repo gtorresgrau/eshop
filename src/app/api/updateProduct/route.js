@@ -1,3 +1,4 @@
+//app/api/updateProduct/route.js
 import { NextResponse } from 'next/server';
 import { connectDB } from '../../../lib/mongodb';
 import Producto from '../../../models/product';
@@ -6,6 +7,8 @@ export async function PUT(request) {
   await connectDB();
 
   const data = await request.formData();
+  // console.log('back Data:', data);
+  
   const productData = {};
   data.forEach((value, key) => {
     productData[key] = key === 'destacados' ? (value === 'true') : value;

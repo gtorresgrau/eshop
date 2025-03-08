@@ -8,13 +8,13 @@ import { useRouter } from 'next/navigation';
 import { ToastContainer } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { setInLocalStorage } from '@/Hooks/localStorage';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import { signIn } from '@/lib/firebase';
 
 
 // Carga diferida de ProtectedRoute y React Toastify
-const ProtectedRoute = dynamic(() => import('../ProtectedRoute/ProtectedRoute'));
 const handleAuthError = dynamic(() => import('@/Utils/handleErrorsFirebase'));
-const setInLocalStorage = dynamic(() => import('../../Hooks/localStorage'));
-const signIn = dynamic(() => import('../../lib/firebase'));
 const Loading = dynamic(() => import('../Loading/Loading'));
 
 const Login = () => {

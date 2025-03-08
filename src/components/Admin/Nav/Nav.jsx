@@ -4,10 +4,10 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { removeFromLocalStorage } from '@/Hooks/localStorage';
+import { removeFromLocalStorage } from '../../../Hooks/localStorage';
+import Swal from 'sweetalert2';
 
 const logOut = dynamic(()=> import( '../../../lib/firebase'))
-const Swal = dynamic(()=> import( 'sweetalert2'))
 const DownloadCSVButton = dynamic(()=> import( '@/components/DownloadCSVButton/DownloadCSVButton'))
 
 export default function Nav({ handleSelectSection }) {

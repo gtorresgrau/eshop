@@ -1,3 +1,4 @@
+
 import { getInLocalStorage, setInLocalStorage } from "../Hooks/localStorage";
 
 const useFetchFilters = async () => {
@@ -8,12 +9,14 @@ const useFetchFilters = async () => {
     }
 
     const res = await fetch('/api/brandsCategories');
+
     if (!res.ok) {
       throw new Error('Error al cargar los filtros');
     }
 
     const data = await res.json();
     setInLocalStorage('filters', data);
+    console.log('data:', data);
 
     return data;
   } catch (error) {
@@ -22,4 +25,4 @@ const useFetchFilters = async () => {
   }
 };
 
-export default useFetchFilters;
+export default useFetchFilters
