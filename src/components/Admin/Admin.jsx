@@ -32,19 +32,19 @@ export default function Admin() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
 
-    const [marcas, setMarcas] = useState([]);
-    const [categorias, setCategorias] = useState([]);
-
-    useEffect(() => {
-      const fetchFilters = async () => {
-        const filters = await useFetchFilters();
-        setMarcas(filters.marcas);
-        setCategorias(filters.categorias);
-      };
-      
-      fetchFilters();
-    }, []);
-
+  const [marcas, setMarcas] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+  
+  useEffect(() => {
+    async function fetchFilters() {
+      const filters = await useFetchFilters();
+      setMarcas(filters.marcas);
+      setCategorias(filters.categorias);
+    }
+    
+    fetchFilters();
+  }, []);
+  
 
   const fetchProductos = async () => {
     const res = await newFetchProductos();
