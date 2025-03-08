@@ -213,12 +213,10 @@ const hasImageChanges = () => {
       try {
         Swal.fire({
           title: 'Agregando producto...',
-          html: '<div id="swal-loading"></div>',
+          allowOutsideClick: false,
           didOpen: () => {
-            ReactDOM.createRoot(document.getElementById('swal-loading')).render(<Loading ancho="120px" alto="120px" />);
             Swal.showLoading();
           },
-          allowOutsideClick: false,
         });
     
         const res = await fetch("api/addProduct", {
