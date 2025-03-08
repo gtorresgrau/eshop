@@ -17,11 +17,13 @@ export default function Productos() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
 
+  const UPDATE_INTERVAL = 3 * 60 * 1000; // Actualizar cada 3 minutos (ajusta el tiempo según necesidad)
+
   useEffect(() => {
     const fetchProductos = async () => {
       setIsLoading(true);
       const res = await newFetchProductos();
-      
+
       // Filtrar productos según la búsqueda
       const filteredProducts = searchQuery
         ? res.filter(producto =>
@@ -32,8 +34,18 @@ export default function Productos() {
       setProductos(filteredProducts);
       setIsLoading(false);
     };
-    fetchProductos();
-  }, [searchQuery]); // Se ejecuta cuando searchQuery cambia
+
+    fetchProductos(); // Llamada inicial
+
+    // Configurar el intervalo para actualizar localStorage periódicamente
+    const interval = setInterval(async () => {
+      console.log("Actualizando productos en localStorage...");
+      const updatedProductos = await newFetchProductos();
+      setInLocalStorage('productos', updatedProductos); // Actualiza el localStorage con los nuevos datos
+    }, UPDATE_INTERVAL);
+
+    return () => clearInterval(interval); // Limpiar el intervalo al desmontar el componente
+  }, [searchQuery]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
