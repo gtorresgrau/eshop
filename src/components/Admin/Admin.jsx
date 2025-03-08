@@ -31,10 +31,10 @@ export default function Admin() {
   
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
-
+  
   const [marcas, setMarcas] = useState([]);
   const [categorias, setCategorias] = useState([]);
-
+  
   useEffect(() => {
     const fetchFilters = async () => {
       const filters = await fetchFiltersData(); // Llama a una función normal, no un hook
@@ -46,8 +46,9 @@ export default function Admin() {
   }, []);
   
   const fetchFiltersData = async () => {
+    // Simula el hook pero sin serlo
     return await useFetchFilters();
-  };
+  }
 
   const fetchProductos = async () => {
     const res = await newFetchProductos();
