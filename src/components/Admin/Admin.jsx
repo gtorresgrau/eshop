@@ -3,11 +3,11 @@ import React, { useEffect, useState, Suspense } from "react";
 import dynamic from "next/dynamic";
 import ReactDOM from 'react-dom/client';
 import newFetchProductos from '../../Hooks/useNewFetchProducts';
-import useFetchFilters from "@/Hooks/useBrandsCategories";
 import { useSearchParams } from "next/navigation";
 import Swal from "sweetalert2";
 import UpdateProduct from "./UpdateProduct/UpdateProduct";
 import AddProduct from "./AddProduct/AddProduct";
+import fetchFiltersData from "@/Hooks/useBrandsCategories";
 
 // const Swal = dynamic(() => import("sweetalert2"), { ssr: false });
 // const AddProduct = dynamic(() => import("./AddProduct/AddProduct"), { ssr: false });
@@ -28,27 +28,22 @@ export default function Admin() {
   const [section, setSection] = useState('Productos')
   const [currentPage, setCurrentPage] = useState(1);
   const [productos, setProductos] = useState([]);
-  
+
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
-  
+
   const [marcas, setMarcas] = useState([]);
   const [categorias, setCategorias] = useState([]);
-  
+
   useEffect(() => {
     const fetchFilters = async () => {
-      const filters = await fetchFiltersData(); // Llama a una función normal, no un hook
+      const filters = await fetchFiltersData(); // ✅ Ahora sí es una función normal
       setMarcas(filters.marcas);
       setCategorias(filters.categorias);
     };
-  
+
     fetchFilters();
   }, []);
-  
-  const fetchFiltersData = async () => {
-    // Simula el hook pero sin serlo
-    return await useFetchFilters();
-  }
 
   const fetchProductos = async () => {
     const res = await newFetchProductos();
@@ -56,18 +51,18 @@ export default function Admin() {
     setProductos(filteredProducts);
   };
 
-  
+
   useEffect(() => {
     fetchProductos();
   }, [searchQuery]);
-  
+
 
     const itemsPerPage = 20;
-  
+
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const paginatedProducts = productos.slice(startIndex, endIndex);
-  
+
   const openModal = (type, product = null) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
@@ -98,7 +93,7 @@ export default function Admin() {
       window.removeEventListener('popstate', handlePopState);
     };
   }, [isModalClose, isModalOpen]);
-  
+
 
   const loadingElement = document.createElement('div');
   const root = ReactDOM.createRoot(loadingElement);
@@ -106,7 +101,7 @@ export default function Admin() {
   root.render(<Loading />);
   container.innerHTML = `<h2><strong>AGUARDE</strong></h2><br/><p> se está eliminando el producto</p>`;
   container.appendChild(loadingElement);
-   
+
   const handleEliminarArchivos = async (producto) => {
     try {
       const result = await Swal.fire({
@@ -119,10 +114,10 @@ export default function Admin() {
         confirmButtonText: 'Sí, eliminar',
         cancelButtonText: 'Cancelar'
       });
-  
+
       if (result.isConfirmed) {
         const fotosAEliminar = [];
-  
+
         Swal.fire({
           title: 'Eliminando producto...',
           allowOutsideClick: false,
@@ -130,7 +125,7 @@ export default function Admin() {
             Swal.showLoading();
           },
         });
-        
+
         Object.keys(producto).forEach((key) => {
           if (key.startsWith('foto_') && producto[key]) {
             const imgPrevAEliminar = producto[key].split('/').pop().split('.')[0];
@@ -149,13 +144,13 @@ export default function Admin() {
             return data;
           })
         );
-  
+
         const resBDD = await fetch('api/deleteProduct', {
           method: 'DELETE',
           body: JSON.stringify({ id: producto._id })
         });
         const dataBDD = await resBDD.json();
-  
+
         if (dataBDD.success) {
           fetchProductos();
           Swal.fire({

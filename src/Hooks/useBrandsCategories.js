@@ -1,28 +1,27 @@
-
 import { getInLocalStorage, setInLocalStorage } from "../Hooks/localStorage";
 
-const useFetchFilters = async () => {
+const fetchFiltersData = async () => { // 🔹 Ya no es un hook
   try {
-    const filtersGuardados = getInLocalStorage('filters');
+    const filtersGuardados = getInLocalStorage("filters");
     if (filtersGuardados) {
       return filtersGuardados;
     }
 
-    const res = await fetch('/api/brandsCategories');
+    const res = await fetch("/api/brandsCategories");
 
     if (!res.ok) {
-      throw new Error('Error al cargar los filtros');
+      throw new Error("Error al cargar los filtros");
     }
 
     const data = await res.json();
-    setInLocalStorage('filters', data);
-    console.log('data:', data);
+    setInLocalStorage("filters", data);
+    console.log("data:", data);
 
     return data;
   } catch (error) {
-    console.error("Error en useFetchFilters:", error);
+    console.error("Error en fetchFiltersData:", error);
     return { marcas: [], categorias: [] };
   }
 };
 
-export default useFetchFilters
+export default fetchFiltersData;
