@@ -42,7 +42,10 @@ export default function Admin() {
       setCategorias(filters.categorias);
     };
 
-    fetchFilters();
+    fetchFilters();    
+    const intervalId = setInterval(fetchFilters, 3 * 60 * 1000);
+
+    return () => clearInterval(intervalId); // Limpiar intervalo al desmontar el componente
   }, []);
 
   const fetchProductos = async () => {

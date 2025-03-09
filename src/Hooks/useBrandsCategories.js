@@ -1,10 +1,14 @@
 import { getInLocalStorage, setInLocalStorage } from "../Hooks/localStorage";
 
-const fetchFiltersData = async () => { // 🔹 Ya no es un hook
+const fetchFiltersData = async () => {
   try {
-    const filtersGuardados = getInLocalStorage("filters");
-    if (filtersGuardados) {
-      return filtersGuardados;
+    const lastUpdate = getInLocalStorage("filters_timestamp");
+    const now = Date.now();
+
+    // Si han pasado menos de 3 minutos, evita la petición innecesaria
+    if (lastUpdate && now - lastUpdate < 3 * 60 * 1000) {
+      console.log("Usando filtros almacenados en localStorage");
+      return getInLocalStorage("filters");
     }
 
     const res = await fetch("/api/brandsCategories");
@@ -15,13 +19,25 @@ const fetchFiltersData = async () => { // 🔹 Ya no es un hook
 
     const data = await res.json();
     setInLocalStorage("filters", data);
-    console.log("data:", data);
+    setInLocalStorage("filters_timestamp", now); // Guardamos el tiempo de actualización
+    console.log("Filtros actualizados:", data);
 
     return data;
   } catch (error) {
     console.error("Error en fetchFiltersData:", error);
     return { marcas: [], categorias: [] };
   }
+};
+
+// Función para iniciar la actualización automática
+export const startAutoUpdateFilters = () => {
+  fetchFiltersData(); // Carga inicial
+
+  const intervalId = setInterval(() => {
+    fetchFiltersData();
+  }, 3 * 60 * 1000); // Cada 3 minutos
+
+  return intervalId; // Devolvemos el ID del intervalo por si es necesario limpiarlo
 };
 
 export default fetchFiltersData;
