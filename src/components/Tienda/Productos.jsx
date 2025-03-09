@@ -39,7 +39,7 @@ export default function Productos() {
 
     // Configurar el intervalo para actualizar localStorage periódicamente
     const interval = setInterval(async () => {
-      console.log("Actualizando productos en localStorage...");
+      //console.log("Actualizando productos en localStorage...");
       const updatedProductos = await newFetchProductos();
       setInLocalStorage('productos', updatedProductos); // Actualiza el localStorage con los nuevos datos
     }, UPDATE_INTERVAL);

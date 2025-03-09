@@ -222,7 +222,7 @@ const hasImageChanges = () => {
             Swal.showLoading();
           },
         });
-        console.log('formData:',formData);
+       //console.log('formData:',formData);
         
         const res = await fetch("api/addProduct", {
           method: "POST",

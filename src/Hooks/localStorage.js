@@ -20,7 +20,7 @@ export const getInLocalStorage = (key) => {
 export const removeFromLocalStorage = (key) => {
   try {
     localStorage.removeItem(key);
-    console.log(`Clave "${key}" eliminada de localStorage.`);
+    //console.log(`Clave "${key}" eliminada de localStorage.`);
   } catch (error) {
     console.error(`Error al eliminar "${key}" de localStorage:`, error);
   }

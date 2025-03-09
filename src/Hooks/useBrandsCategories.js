@@ -7,7 +7,7 @@ const fetchFiltersData = async () => {
 
     // Si han pasado menos de 3 minutos, evita la petición innecesaria
     if (lastUpdate && now - lastUpdate < 3 * 60 * 1000) {
-      console.log("Usando filtros almacenados en localStorage");
+      //console.log("Usando filtros almacenados en localStorage");
       return getInLocalStorage("filters");
     }
 
@@ -20,7 +20,7 @@ const fetchFiltersData = async () => {
     const data = await res.json();
     setInLocalStorage("filters", data);
     setInLocalStorage("filters_timestamp", now); // Guardamos el tiempo de actualización
-    console.log("Filtros actualizados:", data);
+    //console.log("Filtros actualizados:", data);
 
     return data;
   } catch (error) {
