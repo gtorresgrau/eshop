@@ -7,7 +7,7 @@ import { useSearchParams } from "next/navigation";
 import Swal from "sweetalert2";
 import UpdateProduct from "./UpdateProduct/UpdateProduct";
 import AddProduct from "./AddProduct/AddProduct";
-import fetchFiltersData from "@/Hooks/useBrandsCategories";
+import fetchFiltersData, { startAutoUpdateFilters } from "@/Hooks/useBrandsCategories";
 
 // const Swal = dynamic(() => import("sweetalert2"), { ssr: false });
 // const AddProduct = dynamic(() => import("./AddProduct/AddProduct"), { ssr: false });
@@ -37,16 +37,18 @@ export default function Admin() {
 
   useEffect(() => {
     const fetchFilters = async () => {
-      const filters = await fetchFiltersData(); // ✅ Ahora sí es una función normal
+      const filters = await fetchFiltersData();
       setMarcas(filters.marcas);
       setCategorias(filters.categorias);
     };
-
-    fetchFilters();    
-    const intervalId = setInterval(fetchFilters, 3 * 60 * 1000);
-
-    return () => clearInterval(intervalId); // Limpiar intervalo al desmontar el componente
+  
+    fetchFilters(); // Carga inicial de datos
+  
+    const intervalId = startAutoUpdateFilters(); // Guardamos el ID del intervalo
+  
+    return () => clearInterval(intervalId); // Limpiamos el intervalo al desmontar el componente
   }, []);
+  
 
   const fetchProductos = async () => {
     const res = await newFetchProductos();
