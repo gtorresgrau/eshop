@@ -22,6 +22,9 @@ export default function UpdateProduct({
   const [isDropdownCategoriaOpen, setIsDropdownCategoriaOpen] = useState(false);
   const [marcas, setMarcas] = useState(marca);
   const [categorias, setCategorias] = useState(categoria);
+  
+  const [marcaNueva, setMarcaNueva] = useState('');
+  const [categoriaNueva, setCategoriaNueva] = useState('');
 
   // Estado para mantener las imágenes originales
   const [originalImages, setOriginalImages] = useState({
@@ -104,13 +107,13 @@ export default function UpdateProduct({
 
   // Función para agregar una nueva marca a la lista de marcas disponibles
   const handleAgregarNuevaMarca = (campo, valorNuevo) => {
-    setMarcas([...marcas, { brand: valorNuevo }]);
+    setMarcas([...marcas,valorNuevo ]);
     setIsDropdownMarcaOpen(false);
   };
   
   // Función para agregar una nueva categoría a la lista de categorías disponibles
   const handleAgregarNuevaCategoria = (campo, valorNuevo) => {
-    setCategorias([...categorias, { category: valorNuevo }]);
+    setCategorias([...categorias, valorNuevo ]);
     setIsDropdownCategoriaOpen(false);
   };
 
@@ -319,25 +322,17 @@ export default function UpdateProduct({
                               id="marcaNueva"
                               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 mb-1"
                               placeholder="Ingrese una marca nueva"
+                              onClick={(e) => e.stopPropagation()}
+                              onChange={(e) => setMarcaNueva(e.target.value)}
                               onKeyDown={(e) => {
-                                if (e.key === "Enter")
-                                  handleAgregarNuevaMarca(
-                                    "marca",
-                                    e.target.value
-                                  );
+                                if (e.key === "Enter") handleAgregarNuevaMarca("marca", marcaNueva);
                               }}
                             />
 
                             <button
                             aria-label="agregar nueva marca"
-                              onClick={() =>
-                                handleAgregarNuevaMarca(
-                                  "marca",
-                                  document.getElementById("marcaNueva").value
-                                )
-                              }
-                              className="w-full rounded-lg m-auto px-4 py-2 text-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-500 focus:outline-none focus:ring-4"
-                            >
+                            onClick={() => handleAgregarNuevaMarca("marca", marcaNueva)}
+                              className="w-full rounded-lg m-auto px-4 py-2 text-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-500 focus:outline-none focus:ring-4">
                               AGREGAR
                             </button>
                           </div>
@@ -349,21 +344,10 @@ export default function UpdateProduct({
 
                 {/* Categoría */}
                 <div>
-                  <label
-                    htmlFor="categoriaUpdate"
-                    className="block mb-2 text-sm font-medium text-gray-900"
-                  >
-                    Categoría
-                  </label>
+                  <label htmlFor="categoriaUpdate" className="block mb-2 text-sm font-medium text-gray-900">Categoría</label>
 
                   <div className="flex gap-4">
-                  <select
-                        onChange={handleChangeInput}
-                        name="categoria"
-                        id="categoriaUpdate"
-                        value={producto.categoria}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                      >
+                  <select onChange={handleChangeInput} name="categoria" id="categoriaUpdate" value={producto.categoria}className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" >
                         {categorias.map((categoria, index) => (
                           <option key={index} value={categoria}>
                             {categoria}
@@ -371,18 +355,8 @@ export default function UpdateProduct({
                         ))}
                       </select>
 
-
                     <div className="relative" ref={categoriaDropdownRef}>
-                      <button
-                      aria-label="seleccionar categoria"
-                        className="text-gray-800 bg-gray-50 hover:bg-gray-200 border border-gray-300 rounded-lg text-sm ml-auto inline-flex items-center w-auto h-full p-3"
-                        onClick={toggleCategoria}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") toggleCategoria(e);
-                        }}
-                        tabIndex="0"
-                      >
-                        <FaPlus />
+                      <button aria-label="seleccionar categoria" className="text-gray-800 bg-gray-50 hover:bg-gray-200 border border-gray-300 rounded-lg text-sm ml-auto inline-flex items-center w-auto h-full p-3" onClick={toggleCategoria} onKeyDown={(e) => { if (e.key === "Enter") toggleCategoria(e); }}tabIndex="0"><FaPlus />
                       </button>
 
                       {isDropdownCategoriaOpen && (
@@ -394,24 +368,16 @@ export default function UpdateProduct({
                               id="categoriaNueva"
                               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 mb-1"
                               placeholder="Ingrese una categoría"
-                              onKeyDown={(e) => {
-                                if (e.key === "Enter")
-                                  handleAgregarNuevaCategoria(
-                                    "categoria",
-                                    e.target.value
-                                  );
-                              }}
+                              onClick={(e) => e.stopPropagation()}
+                                onChange={(e) => setCategoriaNueva(e.target.value)}
+                                onKeyDown={(e) => {
+                                  if (e.key === "Enter")                           handleAgregarNuevaCategoria("categoria",categoriaNueva );
+                                }}
                             />
 
                             <button
                             aria-label="agregar neuva categoria"
-                              onClick={() =>
-                                handleAgregarNuevaCategoria(
-                                  "categoria",
-                                  document.getElementById("categoriaNueva")
-                                    .value
-                                )
-                              }
+                              onClick={() =>                               handleAgregarNuevaCategoria("categoria",categoriaNueva)}
                               className="w-full rounded-lg m-auto px-4 py-2 text-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-500 focus:outline-none focus:ring-4"
                             >
                               AGREGAR
