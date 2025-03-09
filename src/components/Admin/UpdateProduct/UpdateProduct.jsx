@@ -301,15 +301,7 @@ export default function UpdateProduct({
                   </select>
 
                     <div className="relative" ref={marcaDropdownRef}>
-                      <button
-                      aria-label="seleccionar marca"
-                        className="text-gray-800 bg-gray-50 hover:bg-gray-200 border border-gray-300 rounded-lg text-sm ml-auto inline-flex items-center w-auto h-full p-3"
-                        onClick={toggleMarca}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") toggleMarca(e);
-                        }}
-                        tabIndex="0"
-                      >
+                      <button aria-label="seleccionar marca" className="text-gray-800 bg-gray-50 hover:bg-gray-200 border border-gray-300 rounded-lg text-sm ml-auto inline-flex items-center w-auto h-full p-3" onClick={toggleMarca} onKeyDown={(e) => {if (e.key === "Enter") toggleMarca(e)}} tabIndex="0" >
                         <FaPlus />
                       </button>
 
@@ -371,15 +363,11 @@ export default function UpdateProduct({
                               onClick={(e) => e.stopPropagation()}
                                 onChange={(e) => setCategoriaNueva(e.target.value)}
                                 onKeyDown={(e) => {
-                                  if (e.key === "Enter")                           handleAgregarNuevaCategoria("categoria",categoriaNueva );
-                                }}
+                                  if (e.key === "Enter")handleAgregarNuevaCategoria("categoria",categoriaNueva );}}
                             />
 
-                            <button
-                            aria-label="agregar neuva categoria"
-                              onClick={() =>                               handleAgregarNuevaCategoria("categoria",categoriaNueva)}
-                              className="w-full rounded-lg m-auto px-4 py-2 text-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-500 focus:outline-none focus:ring-4"
-                            >
+                            <button aria-label="agregar neuva categoria" onClick={() =>handleAgregarNuevaCategoria("categoria",categoriaNueva)}
+                              className="w-full rounded-lg m-auto px-4 py-2 text-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-500 focus:outline-none focus:ring-4">
                               AGREGAR
                             </button>
                           </div>
