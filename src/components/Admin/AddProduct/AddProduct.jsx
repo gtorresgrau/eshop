@@ -5,11 +5,11 @@ import Image from 'next/image';
 import ReactDOM from 'react-dom/client';
 import { FaPlus } from "react-icons/fa";
 import { removeFromLocalStorage } from '@/Hooks/localStorage';
+//import UploadImage from '../UploadImage'
+import Swal from 'sweetalert2';
 
 const Loading = dynamic(() => import('@/components/Loading/Loading'));
-const UploadImage = dynamic(() => import('../UploadImage'))
-const Swal = dynamic(() => import('sweetalert2'));
-
+const UploadImage = dynamic(()=>import('../UploadImage'))
 
 export default function AddProduct({
     isOpenModal,
@@ -17,11 +17,14 @@ export default function AddProduct({
     categoria,
     marca,
   }) {
+    
     const [isDropdownMarcaOpen, setIsDropdownMarcaOpen] = useState(false);
     const [isDropdownCategoriaOpen, setIsDropdownCategoriaOpen] = useState(false);
     // const [isDropdownVehiculoOpen, setIsDropdownVehiculoOpen] = useState(false);
     const [marcas, setMarcas] = useState(marca);
     const [categorias, setCategorias] = useState(categoria);
+    const [marcaNueva, setMarcaNueva] = useState('');
+    const [categoriaNueva, setCategoriaNueva] = useState('');
     // const [vehiculos, setVehiculos] = useState(vehiculo);
 
   
@@ -88,10 +91,10 @@ export default function AddProduct({
     
     
     // Función para alternar la visibilidad del dropdown de marca
-    const toggleMarca = (e) => {
-        e.preventDefault();
-        setIsDropdownMarcaOpen(!isDropdownMarcaOpen);
-    };
+      const toggleMarca = (e) => {
+          e.preventDefault();
+          setIsDropdownMarcaOpen(!isDropdownMarcaOpen);
+      };
   
     // Función para alternar la visibilidad del dropdown de categoría
     const toggleCategoria = (e) => {
@@ -101,13 +104,14 @@ export default function AddProduct({
     
     // Función para agregar una nueva marca a la lista de marcas disponibles
     const handleAgregarNuevaMarca = (campo, valorNuevo) => {
-        setMarcas([...marcas, { brand: valorNuevo }]);
+        
+        setMarcas([...marcas, valorNuevo]);
         setIsDropdownMarcaOpen(false);
     };
 
     // Función para agregar una nueva categoría a la lista de categorías disponibles
     const handleAgregarNuevaCategoria = (campo, valorNuevo) => {
-        setCategorias([...categorias, { category: valorNuevo }]);
+        setCategorias([...categorias, valorNuevo ]);
         setIsDropdownCategoriaOpen(false);
     };
     
@@ -118,9 +122,9 @@ export default function AddProduct({
             foto_1_1: newImages[0]?.preview || "",
             foto_1_2: newImages[1]?.preview || "",
             foto_1_3: newImages[2]?.preview || "",
-        foto_1_4: newImages[3]?.preview || "",
-    }));
-};
+            foto_1_4: newImages[3]?.preview || "",
+          }));
+    };
 
 // Función para eliminar una imagen específica del producto
 const handleRemoveImage = (index) => {
@@ -218,7 +222,8 @@ const hasImageChanges = () => {
             Swal.showLoading();
           },
         });
-    
+        console.log('formData:',formData);
+        
         const res = await fetch("api/addProduct", {
           method: "POST",
           body: formData,
@@ -353,25 +358,22 @@ const hasImageChanges = () => {
                         {isDropdownMarcaOpen && (
                           <div className="absolute right-0 mt-2 w-52 bg-white border border-gray-200 rounded-lg shadow-lg z-40">
                             <div className="block w-full px-2 py-2 text-left text-gray-700">
-                              <input
-                                type="text"
-                                name="marcaNueva"
-                                id="marcaNueva"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 mb-1"
-                                placeholder="Ingrese una marca nueva"
-                                onClick={(e) => e.stopPropagation()}
-                                onKeyDown={(e) => {
-                                  if (e.key === "Enter")
-                                    handleAgregarNuevaMarca(
-                                      "marca",
-                                      e.target.value
-                                    );
-                                }}
-                              />
-  
-                              <button aria-label="agregar nueva marca" onClick={() =>handleAgregarNuevaMarca("marca", document.getElementById("marcaNueva").value)} className="w-full rounded-lg m-auto px-4 py-2 text-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-500 focus:outline-none focus:ring-4" >
-                                AGREGAR
-                              </button>
+                            <input
+                              type="text"
+                              name="marcaNueva"
+                              id="marcaNueva"
+                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 mb-1"
+                              placeholder="Ingrese una marca nueva"
+                              onClick={(e) => e.stopPropagation()}
+                              onChange={(e) => setMarcaNueva(e.target.value)}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") handleAgregarNuevaMarca("marca", marcaNueva);
+                              }}
+                            />
+
+                            <button aria-label="agregar nueva marca" onClick={() => handleAgregarNuevaMarca("marca", marcaNueva)} className="w-full rounded-lg m-auto px-4 py-2 text-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-500 focus:outline-none focus:ring-4" >
+                              AGREGAR
+                            </button>
                             </div>
                           </div>
                         )}

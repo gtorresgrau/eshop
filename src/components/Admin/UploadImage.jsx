@@ -1,14 +1,11 @@
 'use client'
 import React, { useState } from "react";
-import dynamic from 'next/dynamic';
-import Image from "next/image";
 import { Button, styled } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-
-const Swal = dynamic(() => import("sweetalert2"));
-const processImage = dynamic(() => import("@/Utils/proccesImage"));
-
+import Swal from 'sweetalert2';
+import processImage from "@/Utils/proccesImage";
+import Image from "next/image";
 
 export default function UploadImage({ imagenes, updateImages, handleRemoveImage }) {
 // Inicializar el estado con URLs y archivos
