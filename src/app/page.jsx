@@ -2,12 +2,12 @@
 import dynamic from 'next/dynamic';
 import ClientLayout from './ClientLayout';
 
-const MainContent = dynamic(() => import('./home/MainContent'));
+const MainContent = dynamic(() => import('./home/MainContent'), { ssr: false });
 
-export default function HomePage({children}) {
+export default function HomePage() {
     return (
         <ClientLayout>
           <MainContent />
         </ClientLayout>
     );
-  }
+}

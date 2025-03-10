@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Cards from './Cards/Cards';
 import newFetchProductos from '@/Hooks/useNewFetchProducts';
 import useProductModal from '@/Hooks/useProductModal';
+import { setInLocalStorage } from '@/Hooks/localStorage';
 
 const Modal = dynamic(() => import('./Modal/Modals'));
 

@@ -29,6 +29,7 @@ const Modal = ({ selectedProduct, closeModal, isDialog = true }) => {
     e.stopPropagation();
     addToCart(selectedProduct, cart, setCart);
   };
+  const handleClose = closeModal || (() => setIsOpen(false));
 
   const texto = `Hola, quería consultar por ${selectedProduct.nombre} (${selectedProduct.cod_producto}), `;
   const enviar = `https://wa.me/+${userData.codigoPais}${userData.contact}?text=${encodeURIComponent(
@@ -48,7 +49,7 @@ const Modal = ({ selectedProduct, closeModal, isDialog = true }) => {
             <article className="flex justify-end">
               <button
                 type="button"
-                onClick={closeModal}
+                onClick={handleClose}
                 className="text-gray-400 bg-gray-200 hover:bg-gray-300 hover:text-gray-500 rounded-lg text-sm w-10 h-10 ms-auto inline-flex justify-center items-center"
                 aria-label="Cerrar la ventana"
                 title="Cerrar ventana"

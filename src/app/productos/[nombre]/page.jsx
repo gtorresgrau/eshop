@@ -1,70 +1,71 @@
-'use client' // Necesario porque estamos usando hooks en Next.js 14 con App Router
-
-import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { useParams } from 'next/navigation';
-import useProductModal from '@/Hooks/useProductModal';
-//import { useMetadata, defaultMetadata } from '@/Hooks/useMetadata';
-//import Head from 'next/head';
+import { notFound } from 'next/navigation';
+import { defaultMetadata } from '@/lib/metadata';
 
 const Modal = dynamic(() => import('@/components/Tienda/Modal/Modals'));
-const Loading = dynamic(() => import('@/components/Loading/Loading'));
 const ClientLayout = dynamic(() => import('@/app/ClientLayout'));
 
-const ProductoPage = () => {
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const { nombre = "" } = useParams(); // Evita valores undefined
+async function fetchProduct(nombre) {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/productos/${nombre}`);
+    if (!response.ok) return null;
+    return await response.json();
+  } catch (error) {
+    console.error('Error al obtener el producto:', error);
+    return null;
+  }
+}
 
-  const { closeModal } = useProductModal();
-
-  useEffect(() => {
-    if (!nombre) return;
-
-    const fetchProduct = async () => {
-      try {
-        const response = await fetch(`/api/productos/${nombre}`);
-        if (!response.ok) throw new Error('Producto no encontrado');
-        const data = await response.json();
-        setSelectedProduct(data);
-      } catch (error) {
-        console.error(error.message);
-      }
+// ✅ `generateMetadata` usa valores dinámicos y valores por defecto
+export async function generateMetadata({ params }) {
+  const product = await fetchProduct(params.nombre);
+  //console.log('producto de meta:', product);
+  
+  if (!product) {
+    return {
+      ...defaultMetadata,
+      title: 'Producto no encontrado',
+      description: 'No se encontró el producto solicitado.',
+      robots: 'noindex, nofollow',
     };
-
-    fetchProduct();
-  }, [nombre]);
-
-  // Si el producto no se ha cargado, muestra un loader
-  if (!selectedProduct) {
-    return <Loading />;
   }
 
-// // Mueve la llamada a useMetadata fuera de la condición
-// const metadata = useMetadata({
-//   title: selectedProduct?.name || defaultMetadata.title,
-//   description: selectedProduct ? `${selectedProduct.marca} ${selectedProduct.categoria}` : defaultMetadata.description,
-//   keywords: selectedProduct?.titulo_de_producto || defaultMetadata.keywords,
-//   image: selectedProduct?.foto_1_1 || defaultMetadata.openGraph.image,
-// });
+  return {
+    ...defaultMetadata, // Usa los valores por defecto si no están definidos en el producto
+    title: `${product.nombre} - ${product.modelo} - ${product.categoria} - ${product.marca} - E-ShopDevices` || defaultMetadata.title,
+    description: product.nombre? `${product.nombre} - ${product.modelo} - ${product.categoria} - ${product.marca} - E-Shop Devices ${product.descripcion.slice(0, 200)}`: defaultMetadata.description,
+    keywords: `${product.titulo_de_producto} - E-Shop Devices ${product.descripcion.slice(0, 200)}` || defaultMetadata.keywords,
+    icons: [{ url: product.foto_1_1 || defaultMetadata.openGraph.images[0].url }],
+    openGraph: {
+      ...defaultMetadata.openGraph,
+      title: `${product.nombre} - ${product.modelo} - ${product.categoria} - ${product.marca} - E-ShopDevices` || defaultMetadata.openGraph.title,
+      description: product.nombre? `${product.nombre} - ${product.modelo} - ${product.categoria} - ${product.marca} - E-Shop Devices ${product.descripcion.slice(0, 200)}`: defaultMetadata.description,
+      images: [{ url: product.foto_1_1 || defaultMetadata.openGraph.images[0].url }],
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/productos/${params.nombre}`,
+      type: 'website',
+    },
+    twitter: {
+      ...defaultMetadata.twitter,
+      title: `${product.nombre} ` || defaultMetadata.twitter.title,
+      description: product.nombre? `${product.nombre} - ${product.modelo} - ${product.categoria} - ${product.marca} - E-Shop Devices ${product.descripcion.slice(0, 200)}`: defaultMetadata.description,
+      images: [{ url: product.foto_1_1 || defaultMetadata.twitter.images[0].url }],
+    },
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/productos/${params.nombre}`,
+    },
+  };
+}
+
+export default async function ProductoPage({ params }) {
+  const product = await fetchProduct(params.nombre);
+
+  if (!product) return notFound(); // Muestra la página 404 si el producto no existe
 
   return (
-    <ClientLayout className="flex flex-col h-screen" title={selectedProduct.name}>
-      {/* <Head>
-        <title>{metadata.title}</title>
-        <meta name="description" content={metadata.description} />
-        <meta name="keywords" content={metadata.keywords} />
-        <meta property="og:title" content={metadata.openGraph.title} />
-        <meta property="og:description" content={metadata.openGraph.description} />
-        <meta property="og:image" content={metadata.openGraph.images[0].url} />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href={metadata.canonical} />
-        {/* Otros metadatos que quieras agregar 
-       </Head> */} 
+    <ClientLayout className="flex flex-col h-screen" title={product.name}>
       <main className="flex-1 flex items-center justify-center bg-white">
-        <Modal selectedProduct={selectedProduct} closeModal={closeModal} isDialog={false} />
+        <Modal selectedProduct={product} isDialog={false} />
       </main>
     </ClientLayout>
   );
-};
-
-export default ProductoPage;
+}

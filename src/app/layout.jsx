@@ -15,6 +15,7 @@ export const metadata = {
   robots: '/robots.txt',
   authors: [{ name: 'Gonzalo Torres Grau', url: 'https://gonzalotorresgrau.com' }],
   publisher: 'Eshop Devices Wilde Insumos Informáticos profesionales y standard',
+  canonical: 'https://eshopdevices.com/',
   openGraph: {
     title: 'Eshop Devices Wilde Insumos Informáticos profesionales y standard',
     site_name:'E-Shop Devices',
@@ -30,7 +31,6 @@ export const metadata = {
     description: "Eshop Devices es tu aliado tecnológico en Wilde, especializado en la venta de insumos informáticos y dispositivos electrónicos.",
     image: 'https://eshopdevices.com/logos/logoEshop.webp',
   },
-  canonical: 'https://eshopdevices.com/'
 };
 
 export default function RootLayout({ children }) {
@@ -53,13 +53,13 @@ export default function RootLayout({ children }) {
         <meta property="og:url" content={metadata.openGraph.url} />
         <meta property="og:image" content={metadata.openGraph.image} />
         <meta property="og:locale" content="es_ES" />
-        <meta property="og:site_name" content={metadata.openGraph.site_name}></meta>
+        <meta property="og:site_name" content={metadata.openGraph.site_name} />
 
         {/* Twitter Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={metadata.openGraph.title} />
-        <meta name="twitter:description" content={metadata.openGraph.description} />
-        <meta name="twitter:image" content={metadata.openGraph.image} />
+        <meta name="twitter:title" content={metadata.twitter.title} />
+        <meta name="twitter:description" content={metadata.twitter.description} />
+        <meta name="twitter:image" content={metadata.twitter.image} />
 
         {/* Icons */}
         <link rel="icon" href={metadata.icons} sizes="any" type="image/x-icon" />
@@ -69,7 +69,7 @@ export default function RootLayout({ children }) {
         <link rel="manifest" href={metadata.manifest} />
 
         {/* Fonts and External Resources */}
-        <link rel="canonical" href={metadata.openGraph.url} />
+        <link rel="canonical" href={metadata.canonical} />
         <link rel="preconnect" href="https://eshop-34a07.firebaseapp.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://apis.google.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -111,18 +111,18 @@ export default function RootLayout({ children }) {
           }}
         />
         {/* <!-- Google tag (gtag.js) --> */}
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-7LRLRDC81W" strategy="afterInteractive"/>
         <Script id="google-analytics" strategy="afterInteractive" dangerouslySetInnerHTML={{
-            __html: `
+          __html: `
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
               gtag('config', 'G-7LRLRDC81W', {
                 page_path: window.location.pathname,
-              });
-            `,
-          }}
+                });
+                `,
+              }}
         />
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-7LRLRDC81W" strategy="afterInteractive"/>
 
       </head>
       <body>
