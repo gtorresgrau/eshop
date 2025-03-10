@@ -3,9 +3,8 @@ import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useSearchParams } from "next/navigation";
 import Cards from './Cards/Cards';
-import newFetchProductos from '@/Hooks/useNewFetchProducts';
+import newFetchProductos, { startAutoUpdateProductos } from '@/Hooks/useNewFetchProducts';
 import useProductModal from '@/Hooks/useProductModal';
-import { setInLocalStorage } from '@/Hooks/localStorage';
 
 const Modal = dynamic(() => import('./Modal/Modals'));
 
@@ -18,35 +17,28 @@ export default function Productos() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
 
-  const UPDATE_INTERVAL = 3 * 60 * 1000; // Actualizar cada 3 minutos (ajusta el tiempo según necesidad)
-
   useEffect(() => {
     const fetchProductos = async () => {
       setIsLoading(true);
       const res = await newFetchProductos();
-
-      // Filtrar productos según la búsqueda
-      const filteredProducts = searchQuery
-        ? res.filter(producto =>
-            producto.nombre.toLowerCase().includes(searchQuery.toLowerCase())
-          )
-        : res;
-
-      setProductos(filteredProducts);
+      setProductos(res);
       setIsLoading(false);
     };
 
-    fetchProductos(); // Llamada inicial
+    fetchProductos(); // Cargar productos al inicio
 
-    // Configurar el intervalo para actualizar localStorage periódicamente
-    const interval = setInterval(async () => {
-      //console.log("Actualizando productos en localStorage...");
-      const updatedProductos = await newFetchProductos();
-      setInLocalStorage('productos', updatedProductos); // Actualiza el localStorage con los nuevos datos
-    }, UPDATE_INTERVAL);
+    // Iniciar actualización automática de productos
+    const intervalId = startAutoUpdateProductos();
 
-    return () => clearInterval(interval); // Limpiar el intervalo al desmontar el componente
-  }, [searchQuery]);
+    return () => clearInterval(intervalId); // Limpiar intervalo al desmontar el componente
+  }, []); // Solo se ejecuta una vez al montar
+
+  // Filtrar productos en tiempo real cuando cambia searchQuery
+  const filteredProducts = searchQuery
+    ? productos.filter((producto) =>
+        producto.nombre.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : productos;
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -54,10 +46,9 @@ export default function Productos() {
 
   return (
     <article id="productos" className="col-span-1 md:col-start-4 md:col-span-9 grid grid-rows-[auto_1fr_auto] min-h-screen">
-
       {/* Cards con productos paginados */}
       <div className='md:justify-self-center'>
-        <Cards productos={productos} isLoading={isLoading} currentPage={currentPage} handlePageChange={handlePageChange} handleProductSelect={handleProductSelect}/>
+        <Cards productos={filteredProducts} isLoading={isLoading} currentPage={currentPage} handlePageChange={handlePageChange} handleProductSelect={handleProductSelect} />
       </div>
 
       {isModalOpen && selectedProduct && (
