@@ -2,8 +2,8 @@ import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 
-const Loading = dynamic(()=>import ( "@/components/Loading/Loading"))
-const ClientLayout = dynamic(()=>import ( "@/app/ClientLayout"))
+const Loading = dynamic(()=>import ( "../../components/Loading/Loading"))
+const ClientLayout = dynamic(()=>import ( '../ClientLayout'))
 
 
 // Mapeo de los componentes según el producto

@@ -1,7 +1,7 @@
 import React from 'react'
 import dynamic from 'next/dynamic';
 
-const EnviosPage = dynamic(() => import( '@/components/Envios/EnviosPage'))
+const EnviosPage = dynamic(() => import( '../../components/Envios/EnviosPage'))
 const ClientLayout = dynamic(() => import( '../ClientLayout'))
 
 const Envios = () => {
