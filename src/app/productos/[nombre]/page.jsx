@@ -1,16 +1,15 @@
 import dynamic from 'next/dynamic';
 import { notFound } from 'next/navigation';
 import { defaultMetadata } from '@/lib/metadata';
-import fetchProduct from './fetchProduct';
+import  fetchProduct  from '../../../Utils/fetchProduct';
 
 const Modal = dynamic(() => import('@/components/Tienda/Modal/Modals'));
 const ClientLayout = dynamic(() => import('@/app/ClientLayout'));
 
-
 // ✅ `generateMetadata` usa valores dinámicos y valores por defecto
 export async function generateMetadata({ params }) {
   const product = await fetchProduct(params.nombre);
-  console.log('producto de meta:', product);
+  //console.log('producto de meta:', product);
   
   if (!product) {
     return {
@@ -26,12 +25,12 @@ export async function generateMetadata({ params }) {
     title: `${product.nombre} - ${product.modelo} - ${product.categoria} - ${product.marca} - E-ShopDevices` || defaultMetadata.title,
     description: product.nombre? `${product.nombre} - ${product.modelo} - ${product.categoria} - ${product.marca} - E-Shop Devices ${product.descripcion.slice(0, 200)}`: defaultMetadata.description,
     keywords: `${product.titulo_de_producto} - E-Shop Devices ${product.descripcion.slice(0, 200)}` || defaultMetadata.keywords,
-    icons: [{ url:  `${product.foto_1_1}?format=jpg` || defaultMetadata.openGraph.images[0].url }],
+    icons: [{ url: product.foto_1_1 || defaultMetadata.openGraph.images[0].url }],
     openGraph: {
       ...defaultMetadata.openGraph,
       title: `${product.nombre} - ${product.modelo} - ${product.categoria} - ${product.marca} - E-ShopDevices` || defaultMetadata.openGraph.title,
       description: product.nombre? `${product.nombre} - ${product.modelo} - ${product.categoria} - ${product.marca} - E-Shop Devices ${product.descripcion.slice(0, 200)}`: defaultMetadata.description,
-      images: [{ url:  `${product.foto_1_1}?format=jpg` || defaultMetadata.openGraph.images[0].url }],
+      images: [{ url: product.foto_1_1 || defaultMetadata.openGraph.images[0].url }],
       url: `${process.env.NEXT_PUBLIC_SITE_URL}/productos/${params.nombre}`,
       type: 'website',
     },
@@ -39,7 +38,7 @@ export async function generateMetadata({ params }) {
       ...defaultMetadata.twitter,
       title: `${product.nombre} ` || defaultMetadata.twitter.title,
       description: product.nombre? `${product.nombre} - ${product.modelo} - ${product.categoria} - ${product.marca} - E-Shop Devices ${product.descripcion.slice(0, 200)}`: defaultMetadata.description,
-      images: [{ url:  `${product.foto_1_1}?format=jpg` || defaultMetadata.twitter.images[0].url }],
+      images: [{ url: product.foto_1_1 || defaultMetadata.twitter.images[0].url }],
     },
     alternates: {
       canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/productos/${params.nombre}`,
