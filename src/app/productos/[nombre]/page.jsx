@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 import { notFound } from 'next/navigation';
-import { defaultMetadata } from '@/lib/metadata';
+import { defaultMetadata } from '../../../lib/metadata';
 import  fetchProduct  from '../../../Utils/fetchProduct';
 
 const Modal = dynamic(() => import('@/components/Tienda/Modal/Modals'));

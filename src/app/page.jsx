@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 import ClientLayout from './ClientLayout';
-import { defaultMetadata } from '@/lib/metadata';
+import { defaultMetadata } from '../lib/metadata';
 import fetchProduct from '../Utils/fetchProduct';
 
 const MainContent = dynamic(() => import('./home/MainContent'), { ssr: false });
