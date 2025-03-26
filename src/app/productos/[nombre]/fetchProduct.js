@@ -1,4 +1,4 @@
-export default async function fetchProduct(nombre) {
+const fetchProduct= async(nombre) => {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/productos/${nombre}`, {
       cache: "no-store", // Evita caché y asegura datos frescos
@@ -11,3 +11,4 @@ export default async function fetchProduct(nombre) {
   }
 }
 
+export default fetchProduct;

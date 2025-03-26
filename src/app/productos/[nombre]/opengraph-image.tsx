@@ -3,7 +3,7 @@ import fetchProduct from './fetchProduct';
 
 export const runtime = 'edge'; // Recomendado para mejor rendimiento
 
-export async function GET(req: Request, { params }: { params: { nombre: string } }) {
+export default async function GET(req: Request, { params }: { params: { nombre: string } }) {
   const product = await fetchProduct(params.nombre);
 
   if (!product) {
