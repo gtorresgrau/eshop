@@ -1,24 +1,13 @@
 import dynamic from 'next/dynamic';
 import { notFound } from 'next/navigation';
 import { defaultMetadata } from '@/lib/metadata';
+import fetchProduct from './fetchProduct';
 
+// Componentes dinámicos
 const Modal = dynamic(() => import('@/components/Tienda/Modal/Modals'));
 const ClientLayout = dynamic(() => import('@/app/ClientLayout'));
 
-async function fetchProduct(nombre) {
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/productos/${nombre}`, {
-      cache: "no-store", // Evita caché y asegura datos frescos
-    });
-    if (!response.ok) return null;
-    return await response.json();
-  } catch (error) {
-    console.error('Error al obtener el producto:', error);
-    return null;
-  }
-}
-
-// ✅ `generateMetadata` con mejor compatibilidad
+// ✅ `generateMetadata` optimizado
 export async function generateMetadata({ params }) {
   const product = await fetchProduct(params.nombre);
 
@@ -31,67 +20,59 @@ export async function generateMetadata({ params }) {
     };
   }
 
-  // 📌 Forzar imagen en JPG para Facebook y Twitter
+  // ✅ Generar imagen de Open Graph en JPG
   const imagenUrlJPG = product.foto_1_1
     ? product.foto_1_1.replace('.webp', '.jpg')
     : defaultMetadata.openGraph.images[0].url.replace('.webp', '.jpg');
 
+  const productTitle = `${product.nombre} - ${product.modelo} - ${product.categoria} - ${product.marca} - E-ShopDevices`;
+  const productDescription = `${product.nombre} - ${product.modelo} - ${product.categoria} - ${product.marca} - E-Shop Devices ${product.descripcion?.slice(0, 200) || ''}`;
+  const productUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/productos/${params.nombre}`;
+
   return {
     ...defaultMetadata,
-    title: product.nombre
-      ? `${product.nombre} - ${product.modelo} - ${product.categoria} - ${product.marca} - E-ShopDevices`
-      : defaultMetadata.title,
-    description: product.descripcion
-      ? `${product.nombre} - ${product.modelo} - ${product.categoria} - ${product.marca} - E-Shop Devices ${product.descripcion.slice(0, 200)}`
-      : defaultMetadata.description,
-    keywords: product.titulo_de_producto
-      ? `${product.titulo_de_producto} - E-Shop Devices ${product.descripcion.slice(0, 200)}`
-      : defaultMetadata.keywords,
+    title: productTitle,
+    description: productDescription,
+    keywords: `${product.titulo_de_producto} - E-Shop Devices ${product.descripcion?.slice(0, 200) || ''}`,
     icons: [{ url: imagenUrlJPG }],
 
     openGraph: {
       ...defaultMetadata.openGraph,
-      title: product.nombre
-        ? `${product.nombre} - ${product.modelo} - ${product.categoria} - ${product.marca} - E-ShopDevices`
-        : defaultMetadata.openGraph.title,
-      description: product.descripcion
-        ? `${product.nombre} - ${product.modelo} - ${product.categoria} - ${product.marca} - E-Shop Devices ${product.descripcion.slice(0, 200)}`
-        : defaultMetadata.description,
+      title: productTitle,
+      description: productDescription,
       images: [
         {
           url: imagenUrlJPG,
           width: 1200,
           height: 630,
-          type: "image/jpeg", // Asegura compatibilidad con Open Graph
+          type: 'image/jpeg',
         },
       ],
-      url: `${process.env.NEXT_PUBLIC_SITE_URL}/productos/${params.nombre}`,
-      type: 'website',
+      url: productUrl,
+      type: 'product',
     },
 
     twitter: {
       ...defaultMetadata.twitter,
-      title: product.nombre || defaultMetadata.twitter.title,
-      description: product.descripcion
-        ? `${product.nombre} - ${product.modelo} - ${product.categoria} - ${product.marca} - E-Shop Devices ${product.descripcion.slice(0, 200)}`
-        : defaultMetadata.description,
+      title: productTitle,
+      description: productDescription,
       images: [
         {
           url: imagenUrlJPG,
           width: 1200,
           height: 630,
-          type: "image/jpeg",
+          type: 'image/jpeg',
         },
       ],
     },
 
     alternates: {
-      canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/productos/${params.nombre}`,
+      canonical: productUrl,
     },
   };
 }
 
-// ✅ `ProductoPage` con mejor control de errores
+// ✅ `ProductoPage` optimizado
 export default async function ProductoPage({ params }) {
   const product = await fetchProduct(params.nombre);
 
