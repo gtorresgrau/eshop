@@ -2,8 +2,8 @@ import dynamic from 'next/dynamic';
 import { defaultMetadata } from '../../../lib/metadata';
 import fetchProduct from '../../../Utils/fetchProduct';
 
-const StarLinkAdapterInfo = dynamic(() => import('@/components/Productos/Starlink/StarLinkAdapterInfo'))
-const ClientLayout = dynamic(() => import('@/app/ClientLayout'))
+const StarLinkAdapterInfo = dynamic(() => import('../../../components/Productos/Starlink/StarLinkAdapterInfo'))
+const ClientLayout = dynamic(() => import('../../ClientLayout'))
 
 export async function generateMetadata({ params }) {
   const product = await fetchProduct(params.nombre);

@@ -3,8 +3,8 @@ import { notFound } from 'next/navigation';
 import { defaultMetadata } from '../../../lib/metadata';
 import  fetchProduct  from '../../../Utils/fetchProduct';
 
-const Modal = dynamic(() => import('@/components/Tienda/Modal/Modals'));
-const ClientLayout = dynamic(() => import('@/app/ClientLayout'));
+const Modal = dynamic(() => import('../../../components/Tienda/Modal/Modals'));
+const ClientLayout = dynamic(() => import('../../ClientLayout'));
 
 // ✅ `generateMetadata` usa valores dinámicos y valores por defecto
 export async function generateMetadata({ params }) {
