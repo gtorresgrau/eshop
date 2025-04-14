@@ -1,5 +1,5 @@
 import userData from "../components/constants/userData"
-import logoEmpresa from '../../public/icons/icon-152x152.png'
+import logoEmpresa from '../../public/icons/icon-96x96.png'
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import getImageBase64 from "./getImageBase64"
