@@ -8,7 +8,9 @@ import generarPDF from '../../../Utils/generarPDF'
 import SearchInPresupuesto from './SearchAdmin'
 
 const Presupuestos = () => {    
-    const [productos, setProductos] = useState([]);
+  const [productos, setProductos] = useState([]);
+  const [dolar, setDolar] = useState(0)
+  const [showModal, setShowModal] = useState(false)
   
 
   const [items, setItems] = useState([])
@@ -19,7 +21,6 @@ const Presupuestos = () => {
     telefono: '',
     cuil: ''
   })
-  const [showModal, setShowModal] = useState(false)
 
   const fetchProductos = async () => {
     const res = await newFetchProductos()
@@ -150,6 +151,13 @@ const Presupuestos = () => {
             className="border p-2 rounded"
           />
         ))}
+         <input
+            type="number"
+            placeholder={'$ Dolar'}
+            value={dolar}
+            onChange={e => setDolar(e.target.value )}
+            className="border p-2 rounded"
+          />
       </div>
 
       {/* Productos */}
@@ -235,7 +243,7 @@ const Presupuestos = () => {
                 className="hidden sm:block border p-1 rounded w-full"
             />
             <div className="hidden sm:flex items-center justify-end p-2 text-sm">
-                {(item.cantidad * item.precio).toLocaleString('es-AR', {
+                {(item.dolar? item.cantidad * item.precio * dolar:item.cantidad * item.precio  ).toLocaleString('es-AR', {
                 style: 'currency',
                 currency: 'ARS',
                 minimumFractionDigits: 2
