@@ -4,11 +4,11 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import ReactDOM from 'react-dom/client';
 import { FaPlus } from "react-icons/fa";
-import { removeFromLocalStorage } from '@/Hooks/localStorage';
+import { removeFromLocalStorage } from '../../../Hooks/localStorage';
 //import UploadImage from '../UploadImage'
 import Swal from 'sweetalert2';
 
-const Loading = dynamic(() => import('@/components/Loading/Loading'));
+const Loading = dynamic(() => import('../../Loading/Loading'));
 const UploadImage = dynamic(()=>import('../UploadImage'))
 
 export default function AddProduct({

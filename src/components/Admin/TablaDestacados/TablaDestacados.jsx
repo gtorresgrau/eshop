@@ -3,7 +3,7 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Checkbox from '../CheckboxDestacados/CheckboxDestacados';
-import Loading from '@/components/Loading/Loading';
+import Loading from '../../Loading/Loading';
 
 
 

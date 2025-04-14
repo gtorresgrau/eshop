@@ -4,7 +4,7 @@ import { Button, styled } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2';
-import processImage from "@/Utils/proccesImage";
+import processImage from "../../Utils/proccesImage";
 import Image from "next/image";
 
 export default function UploadImage({ imagenes, updateImages, handleRemoveImage }) {

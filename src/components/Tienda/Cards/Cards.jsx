@@ -1,4 +1,3 @@
-import React from 'react';
 import Card from '../Card/Card';
 import SkeletonCard from '../Card/SkeletonCard';
 import { useMediaQuery, Pagination } from "@mui/material";

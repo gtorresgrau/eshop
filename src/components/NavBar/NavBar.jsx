@@ -10,7 +10,7 @@ import { IoCartOutline } from 'react-icons/io5';
 import { CartContext } from '../Context/ShoopingCartContext';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
-import useLinks from '@/components/constants/Links';
+import useLinks from '../../components/constants/Links';
 import { usePathname } from 'next/navigation';
 
 const logOut = dynamic(()=> import( '../../lib/firebase'))

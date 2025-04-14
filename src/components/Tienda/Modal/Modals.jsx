@@ -1,10 +1,10 @@
 'use client'
-import React, { useContext, useState } from 'react';
-import { CartContext } from '@/components/Context/ShoopingCartContext';
-import addToCart from '@/Utils/addToCart';
-import userData from '@/components/constants/userData';
+import { useContext, useState } from 'react';
+import { CartContext } from '../../../components/Context/ShoopingCartContext';
+import addToCart from '../../../Utils/addToCart';
+import userData from '../../../components/constants/userData';
 import ProductoDetalle from './ProductoDetalle';
-import handleShare from '@/Utils/handleShare';
+import handleShare from '../../../Utils/handleShare';
 
 
 const Modal = ({ selectedProduct, closeModal, isDialog = true }) => {

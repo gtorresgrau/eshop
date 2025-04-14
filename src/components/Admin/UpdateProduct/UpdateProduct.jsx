@@ -5,9 +5,9 @@ import Image from "next/image";
 import ReactDOM from 'react-dom/client';
 import { FaPlus } from "react-icons/fa";
 import Swal from "sweetalert2";
-import { removeFromLocalStorage } from "@/Hooks/localStorage";
+import { removeFromLocalStorage } from "../../../Hooks/localStorage";
 
-const Loading = dynamic(() => import('@/components/Loading/Loading'));
+const Loading = dynamic(() => import('../../Loading/Loading'));
 const UploadImage = dynamic(() => import('../UploadImage'))
 // const Swal = dynamic(() => import('sweetalert2'));
 

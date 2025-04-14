@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/Tabs";
 import { consoles } from "../../constants/infoWeb";
 import { Button } from "../../ui/Buttons";
 import { Badge } from "../../ui/Badge";
-import userData from "@/components/constants/userData";
+import userData from "../../constants/userData";
 
 export default function ConsoleCleaningService() {
   const [selectedConsole, setSelectedConsole] = useState("ps5");

@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 
 // Crear una función generadora de componentes reutilizables con `forwardRef`
 const createCardComponent = (Component, defaultClasses, componentName) => {

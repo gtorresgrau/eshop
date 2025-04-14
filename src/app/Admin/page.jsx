@@ -1,8 +1,8 @@
 import React from 'react'
 import dynamic from 'next/dynamic';
-import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
+import ProtectedRoute from '../../components/ProtectedRoute/ProtectedRoute';
 
-const Admin = dynamic(() => import('@/components/Admin/Admin'));
+const Admin = dynamic(() => import('../../components/Admin/Admin'));
 
 const AdminPage = () => {
   return (

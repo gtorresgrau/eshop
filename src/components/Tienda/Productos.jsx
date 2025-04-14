@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useSearchParams } from "next/navigation";
 import Cards from './Cards/Cards';
-import newFetchProductos, { startAutoUpdateProductos } from '@/Hooks/useNewFetchProducts';
-import useProductModal from '@/Hooks/useProductModal';
+import newFetchProductos, { startAutoUpdateProductos } from '../../Hooks/useNewFetchProducts';
+import useProductModal from '../../Hooks/useProductModal';
 
 const Modal = dynamic(() => import('./Modal/Modals'));
 

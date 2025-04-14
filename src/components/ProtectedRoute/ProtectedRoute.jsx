@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import useUser from '../../Hooks/useUser';
 import { getInLocalStorage } from '../../Hooks/localStorage';
-import NotFoundPage from '@/app/not-found';
+import NotFoundPage from '../../app/not-found';
 import Loading from '../Loading/Loading';
 
 

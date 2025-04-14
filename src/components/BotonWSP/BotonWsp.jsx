@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import { FaWhatsapp } from "react-icons/fa";
-import userData from "@/components/constants/userData";
+import userData from "../../components/constants/userData";
 
 // crear userData en /constants
 // const userData = {

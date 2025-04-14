@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from "react";
-import { faqData } from "@/components/constants/infoWeb";
+import { faqData } from "../../components/constants/infoWeb";
 import Link from "next/link";
 
 const PreguntasFrecuentes = () => {

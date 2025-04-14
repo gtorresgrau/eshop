@@ -1,6 +1,5 @@
 import Link from "next/link";
-import React from "react";
-import {infoWeb} from "@/components/constants/infoWeb";
+import {infoWeb} from "../../components/constants/infoWeb";
 
 const SobreMi = () => {
 

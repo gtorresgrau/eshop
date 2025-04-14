@@ -6,8 +6,9 @@ import newFetchProductos from '../../Hooks/useNewFetchProducts';
 import { useSearchParams } from "next/navigation";
 import Swal from "sweetalert2";
 import UpdateProduct from "./UpdateProduct/UpdateProduct";
+import Presupuestos from "./Presupuestos/Presupuestos";
 import AddProduct from "./AddProduct/AddProduct";
-import fetchFiltersData, { startAutoUpdateFilters } from "@/Hooks/useBrandsCategories";
+import fetchFiltersData, { startAutoUpdateFilters } from "../../Hooks/useBrandsCategories";
 
 // const Swal = dynamic(() => import("sweetalert2"), { ssr: false });
 // const AddProduct = dynamic(() => import("./AddProduct/AddProduct"), { ssr: false });
@@ -282,6 +283,11 @@ export default function Admin() {
           {section === 'DescargarCSV' && (
             <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
               <DownloadCSVButton />
+            </div>
+          )}
+          {section === 'Presupuestos' && (
+            <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
+              <Presupuestos />
             </div>
           )}
         </div>
