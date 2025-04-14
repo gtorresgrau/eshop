@@ -160,7 +160,7 @@ const Presupuestos = () => {
             type="number"
             placeholder={'$ Dolar'}
             value={dolar}
-            onChange={e => setDolar(e.target.value )}
+            onChange={e => setDolar(Number(e.target.value) )}
             className="border p-2 rounded"
           />
       </div>
@@ -217,7 +217,7 @@ const Presupuestos = () => {
 
             <div className="sm:hidden mb-2 text-right text-sm">
                 <span className="font-semibold">Total: </span>
-                {(item.usd? item.cantidad * item.precio * dolar:item.cantidad * item.precio ).toLocaleString('es-AR', {
+                {(item.usd? item.cantidad * item.precio * dolar :item.cantidad * item.precio ).toLocaleString('es-AR', {
                 style: 'currency',
                 currency: 'ARS',
                 minimumFractionDigits: 2
