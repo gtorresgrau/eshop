@@ -10,7 +10,16 @@ const generarPDF = async (empresa, items) => {
     const doc = new jsPDF()
     const clienteX = 120 
 
-    doc.addImage(imageData, 'PNG', 160, 10, 35, 15)
+    const img = new Image()
+    img.src = imageData
+    await new Promise(resolve => {
+      img.onload = () => {
+        const width = 35
+        const height = width * (img.height / img.width)
+        doc.addImage(imageData, 'PNG', 160, 10, width, height)
+        resolve()
+      }
+    })
     doc.setFontSize(16)
     doc.text('PRESUPUESTO', 15, 15)
     
@@ -47,6 +56,10 @@ const generarPDF = async (empresa, items) => {
     const total = items.reduce((acc, item) => acc + item.cantidad * item.precio, 0)
   
     doc.text(`Total: ${total.toLocaleString('es-AR', { style: 'currency', currency: 'ARS'})}`, 150, finalY + 20 )
+
+    doc.setFontSize(10)
+    doc.setTextColor(0, 0, 0)
+    doc.text(`Observaciones: ${empresa.observaciones}`, 15, 275)
 
     doc.setFillColor(28, 58, 109) // azul (tu color institucional)
     doc.rect(0, 280, 210, 17, 'F') // x, y, width, height, 'F' = filled

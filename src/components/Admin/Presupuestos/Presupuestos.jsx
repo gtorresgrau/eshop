@@ -72,7 +72,8 @@ const Presupuestos = () => {
             direccion: '',
             mail: '',
             telefono: '',
-            cuil: ''
+            cuil: '',
+            observaciones:''
           })
           setItems([])
   
@@ -97,7 +98,9 @@ const Presupuestos = () => {
               direccion: '',
               mail: '',
               telefono: '',
-              cuil: ''
+              cuil: '',
+              observaciones:''
+
             })
             setItems([])
             Swal.fire({
@@ -147,14 +150,16 @@ const Presupuestos = () => {
       {/* Empresa */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         {Object.keys(empresa).map((field) => (
-          <input
+          field !== 'observaciones'?
+            <input
             key={field}
             type="text"
             placeholder={field[0].toUpperCase() + field.slice(1)}
             value={empresa[field]}
             onChange={e => setEmpresa({ ...empresa, [field]: e.target.value })}
             className="border p-2 rounded"
-          />
+            />
+          :null          
         ))}
          <input
             type="number"
@@ -274,6 +279,7 @@ const Presupuestos = () => {
        <button onClick={handleAddItem} className="bg-blue-600 text-white px-4 py-2 rounded mt-2">ADD Manualmente</button>
        <button onClick={() => setShowModal(true)} className="bg-blue-600 text-white px-4 py-2 rounded mt-2">ADD Producto</button>
     </div>
+    {/* <-- observaciones --> */}
     <div className="flex gap-4 mt-4">
       <label htmlFor="observaciones">Observaciones</label>
       <input 
