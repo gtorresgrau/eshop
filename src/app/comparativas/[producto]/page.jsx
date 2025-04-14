@@ -8,10 +8,10 @@ const ClientLayout = dynamic(()=>import ( '../../ClientLayout'))
 
 // Mapeo de los componentes según el producto
 const comparisonComponents = {
-  almacenamiento: dynamic(() => import("@/components/Comparativas/Almacenamiento/AlmacenamientoPage")),
-  memoria: dynamic(() => import("@/components/Comparativas/MemoriaRam/MemoriaRamPage")),
-  fuente: dynamic(() => import("@/components/Comparativas/Fuentes/FuentePage")),
-  mothers: dynamic(() => import("@/components/Comparativas/Mother/MothersPage")),
+  almacenamiento: dynamic(() => import("../../../components/Comparativas/Almacenamiento/AlmacenamientoPage")),
+  memoria: dynamic(() => import("../../../components/Comparativas/MemoriaRam/MemoriaRamPage")),
+  fuente: dynamic(() => import("../../../components/Comparativas/Fuentes/FuentePage")),
+  mothers: dynamic(() => import("../../../components/Comparativas/Mother/MothersPage")),
 
 };
 

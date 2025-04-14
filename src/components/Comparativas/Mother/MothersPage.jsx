@@ -1,6 +1,6 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
-import { motherboardData } from '@/components/constants/infoWeb';
+import { motherboardData } from '../../constants/infoWeb';
 const Comparativas = dynamic(() => import('../Comparativas'));
 
 

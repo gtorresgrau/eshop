@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 const Comparativas = dynamic(() => import ( '../Comparativas'))
-import { fuenteOptions } from '@/components/constants/infoWeb';
+import { fuenteOptions } from '../../constants/infoWeb';
 
 
 const FuentePage = () => {

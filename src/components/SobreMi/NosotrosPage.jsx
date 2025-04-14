@@ -1,8 +1,6 @@
 'use client'
-import React from 'react';
-import { infoWeb, shippingOptions } from '@/components/constants/infoWeb';
+import { infoWeb, shippingOptions } from '../constants/infoWeb';
 import PreguntasFrecuentes from '../PreguntasFrecuentas/PreguntasFrecuentas';
-import Image from 'next/image';
 
 const NosotrosPage = () => {
 

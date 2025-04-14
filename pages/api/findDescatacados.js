@@ -1,5 +1,5 @@
-import { connectDB } from '@/lib/mongodb';
-import Producto from '@/models/product';
+import { connectDB } from '../../src/lib/mongodb';
+import Producto from '../../src/models/product';
 
 export default async function GET(req, res) {
   await connectDB();

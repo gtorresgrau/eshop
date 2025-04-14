@@ -1,7 +1,7 @@
 import React from 'react'
 import dynamic from 'next/dynamic';
 
-const NosotrosPage = dynamic(() => import( '@/components/SobreMi/NosotrosPage'))
+const NosotrosPage = dynamic(() => import( '../../components/SobreMi/NosotrosPage'))
 const ClientLayout = dynamic(() => import( '../ClientLayout'))
 
 
