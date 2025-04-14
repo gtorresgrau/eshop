@@ -19,7 +19,8 @@ const Presupuestos = () => {
     direccion: '',
     mail: '',
     telefono: '',
-    cuil: ''
+    cuil: '',
+    observaciones:''
   })
 
   const fetchProductos = async () => {
@@ -112,7 +113,10 @@ const Presupuestos = () => {
   }
   
   const calcularTotal = () => {
-    return items.reduce((acc, item) => acc + item.cantidad * item.precio, 0)
+    return items.reduce((acc, item) => {
+      const precio = item.usd ? item.precio * dolar : item.precio;
+      return acc + item.cantidad * precio;
+    }, 0)
   }
 
   const handleRemoveItem = (index) => {
@@ -127,7 +131,8 @@ const Presupuestos = () => {
         cantidad: 1,
         producto: producto.nombre || '',
         codigo: producto.cod_producto || '',
-        precio: producto.precio || 0
+        precio: producto.precio || 0,
+        usd: producto.usd,
       }
     ])
     setShowModal(false)
@@ -172,6 +177,7 @@ const Presupuestos = () => {
                 <label className="text-xs block mb-1">Cantidad</label>
                 <input
                 type="number"
+                min="0"
                 value={item.cantidad}
                 onChange={e => handleItemChange(index, 'cantidad', e.target.value)}
                 className="border p-1 rounded w-full"
@@ -202,6 +208,7 @@ const Presupuestos = () => {
                 <label className="text-xs block mb-1">Precio</label>
                 <input
                 type="number"
+                min="0"
                 value={item.precio}
                 onChange={e => handleItemChange(index, 'precio', e.target.value)}
                 className="border p-1 rounded w-full"
@@ -210,7 +217,7 @@ const Presupuestos = () => {
 
             <div className="sm:hidden mb-2 text-right text-sm">
                 <span className="font-semibold">Total: </span>
-                {(item.cantidad * item.precio).toLocaleString('es-AR', {
+                {(item.usd? item.cantidad * item.precio * dolar:item.cantidad * item.precio ).toLocaleString('es-AR', {
                 style: 'currency',
                 currency: 'ARS',
                 minimumFractionDigits: 2
@@ -220,6 +227,7 @@ const Presupuestos = () => {
             {/* Vista para pantallas sm en adelante */}
             <input
                 type="number"
+                min="0"
                 value={item.cantidad}
                 onChange={e => handleItemChange(index, 'cantidad', e.target.value)}
                 className="hidden sm:block border p-1 rounded w-full"
@@ -238,12 +246,13 @@ const Presupuestos = () => {
             />
             <input
                 type="number"
+                min="0"
                 value={item.precio}
                 onChange={e => handleItemChange(index, 'precio', e.target.value)}
                 className="hidden sm:block border p-1 rounded w-full"
             />
             <div className="hidden sm:flex items-center justify-end p-2 text-sm">
-                {(item.dolar? item.cantidad * item.precio * dolar:item.cantidad * item.precio  ).toLocaleString('es-AR', {
+                {(item.usd? item.cantidad * item.precio * dolar:item.cantidad * item.precio  ).toLocaleString('es-AR', {
                 style: 'currency',
                 currency: 'ARS',
                 minimumFractionDigits: 2
@@ -265,7 +274,17 @@ const Presupuestos = () => {
        <button onClick={handleAddItem} className="bg-blue-600 text-white px-4 py-2 rounded mt-2">ADD Manualmente</button>
        <button onClick={() => setShowModal(true)} className="bg-blue-600 text-white px-4 py-2 rounded mt-2">ADD Producto</button>
     </div>
-
+    <div className="flex gap-4 mt-4">
+      <label htmlFor="observaciones">Observaciones</label>
+      <input 
+          id='observaciones' 
+          name='observaciones' 
+          type="text" 
+          value={empresa.observaciones} 
+          onChange={e => setEmpresa({ ...empresa, observaciones: e.target.value })} 
+          className="hidden sm:block border p-1 rounded w-full"
+        />
+    </div>
 
       {/* Total y acciones */}
       <div className="mt-6 text-right">
