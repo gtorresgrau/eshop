@@ -1,5 +1,5 @@
-import { shippingOptions } from '../../constants/infoWeb';
 import React from 'react';
+import { shippingOptions } from '../constants/infoWeb';
 
 
 const EnviosPage = () => {
