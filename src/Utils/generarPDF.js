@@ -37,38 +37,48 @@ const generarPDF = async (empresa, items) => {
     doc.text(`Teléfono: ${empresa.telefono}`, clienteX, 66)
     doc.text(`CUIL: ${empresa.cuil}`, clienteX, 73)
 
-    const dolarValue = items.find(i => i.dolar)?.dolar ?? 1
+    const dolarValue = Number(items.find(i => i?.usd && i?.dolar)?.dolar) || 1
     doc.text(`Dólar: ${dolarValue}`, 30, 78)
     
     doc.setFontSize(12)
     autoTable(doc, {
-        head: [['Cantidad', 'Producto', 'Código', 'Precio', 'Total']],
-        body: items.map(item => {
-          const precioUnitario = item.usd
-            ? item.precio.toLocaleString('es-AR', { style: 'currency', currency: 'USD' })
-            : item.precio.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })
-        
-          const precioTotal = item.usd
-            ? (item.cantidad * item.precio * (item.dolar ?? dolarValue)).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })
-            : (item.cantidad * item.precio).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })
-        
-          return [
-            item.cantidad,
-            item.producto,
-            item.codigo,
-            precioUnitario,
-            precioTotal
-          ]
-        }),
-        startY: 83,
-        margin: { bottom: 20 } // ✅ así está bien
+      head: [['Cantidad', 'Producto', 'Código', 'Precio', 'Total']],
+      body: items.map(item => {
+        const cantidad = Number(item.cantidad) || 0
+        const precio = Number(item.precio) || 0
+        const dolar = Number(item.dolar) || dolarValue
+    
+        const precioUnitario = item.usd
+          ? precio.toLocaleString('es-AR', { style: 'currency', currency: 'USD' })
+          : precio.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })
+    
+        const precioTotal = item.usd
+          ? (cantidad * precio * dolar).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })
+          : (cantidad * precio).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })
+    
+        return [
+          cantidad,
+          item.producto,
+          item.codigo,
+          precioUnitario,
+          precioTotal
+        ]
+      }),
+      startY: 83,
+      margin: { bottom: 20 }
     })
 
     const finalY = doc.lastAutoTable?.finalY || 100
     const total = items.reduce((acc, item) => {
-      const precioFinal = item.usd ? item.precio * (item.dolar ?? dolarValue) : item.precio
-      return acc + item.cantidad * precioFinal
+      const cantidad = Number(item.cantidad) || 0
+      const precio = Number(item.precio) || 0
+      const dolar = Number(item.dolar) || dolarValue
+      const precioFinal = item.usd ? precio * dolar : precio
+      return acc + cantidad * precioFinal
     }, 0)
+    
+    doc.text(`Total: ${total.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}`, 150, finalY + 20)
+    
   
     doc.text(`Total: ${total.toLocaleString('es-AR', { style: 'currency', currency: 'ARS'})}`, 150, finalY + 20 )
 
