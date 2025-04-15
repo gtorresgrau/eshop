@@ -37,26 +37,36 @@ const generarPDF = async (empresa, items) => {
     doc.text(`Teléfono: ${empresa.telefono}`, clienteX, 66)
     doc.text(`CUIL: ${empresa.cuil}`, clienteX, 73)
 
-    doc.text(`Dolar: ${items[0].dolar}`, 30, 78)
-
+    const dolarValue = items.find(i => i.dolar)?.dolar ?? 1
+    doc.text(`Dólar: ${dolarValue}`, 30, 78)
     
     doc.setFontSize(12)
     autoTable(doc, {
         head: [['Cantidad', 'Producto', 'Código', 'Precio', 'Total']],
-        body: items.map(item => [
-          item.cantidad,
-          item.producto,
-          item.codigo,
-          !item.usd? item.precio.toLocaleString('es-AR', { style: 'currency', currency: 'ARS'}):`${item.precio.toLocaleString('es-AR', { style: 'currency', currency: 'USD'})}`,
-          !item.usd?(item.cantidad * item.precio).toLocaleString('es-AR', { style: 'currency', currency: 'ARS'}):(item.cantidad * item.precio*item.dolar).toLocaleString('es-AR', { style: 'currency', currency: 'ARS'})
-        ]),
+        body: items.map(item => {
+          const precioUnitario = item.usd
+            ? item.precio.toLocaleString('es-AR', { style: 'currency', currency: 'USD' })
+            : item.precio.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })
+        
+          const precioTotal = item.usd
+            ? (item.cantidad * item.precio * (item.dolar ?? dolarValue)).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })
+            : (item.cantidad * item.precio).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })
+        
+          return [
+            item.cantidad,
+            item.producto,
+            item.codigo,
+            precioUnitario,
+            precioTotal
+          ]
+        }),
         startY: 83,
         margin: { bottom: 20 } // ✅ así está bien
     })
 
     const finalY = doc.lastAutoTable?.finalY || 100
     const total = items.reduce((acc, item) => {
-      const precioFinal = item.usd ? item.precio * item.dolar : item.precio
+      const precioFinal = item.usd ? item.precio * (item.dolar ?? dolarValue) : item.precio
       return acc + item.cantidad * precioFinal
     }, 0)
   
