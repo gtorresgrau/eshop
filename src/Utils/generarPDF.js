@@ -14,7 +14,7 @@ const generarPDF = async (empresa, items) => {
     img.src = imageData
     await new Promise(resolve => {
       img.onload = () => {
-        const width = 35
+        const width = 20
         const height = width * (img.height / img.width)
         doc.addImage(imageData, 'PNG', 160, 10, width, height)
         resolve()
@@ -36,7 +36,9 @@ const generarPDF = async (empresa, items) => {
     doc.text(`Email: ${empresa.mail}`, clienteX, 59)
     doc.text(`Teléfono: ${empresa.telefono}`, clienteX, 66)
     doc.text(`CUIL: ${empresa.cuil}`, clienteX, 73)
-  
+
+    doc.text(`Dolar: ${items[0].dolar}`, 30, 78)
+
     
     doc.setFontSize(12)
     autoTable(doc, {
@@ -45,15 +47,18 @@ const generarPDF = async (empresa, items) => {
           item.cantidad,
           item.producto,
           item.codigo,
-          item.precio.toLocaleString('es-AR', { style: 'currency', currency: 'ARS'}),
-          (item.cantidad * item.precio).toLocaleString('es-AR', { style: 'currency', currency: 'ARS'})
+          !item.usd? item.precio.toLocaleString('es-AR', { style: 'currency', currency: 'ARS'}):`${item.precio.toLocaleString('es-AR', { style: 'currency', currency: 'USD'})}`,
+          !item.usd?(item.cantidad * item.precio).toLocaleString('es-AR', { style: 'currency', currency: 'ARS'}):(item.cantidad * item.precio*item.dolar).toLocaleString('es-AR', { style: 'currency', currency: 'ARS'})
         ]),
         startY: 83,
         margin: { bottom: 20 } // ✅ así está bien
     })
 
     const finalY = doc.lastAutoTable?.finalY || 100
-    const total = items.reduce((acc, item) => acc + item.cantidad * item.precio, 0)
+    const total = items.reduce((acc, item) => {
+      const precioFinal = item.usd ? item.precio * item.dolar : item.precio
+      return acc + item.cantidad * precioFinal
+    }, 0)
   
     doc.text(`Total: ${total.toLocaleString('es-AR', { style: 'currency', currency: 'ARS'})}`, 150, finalY + 20 )
 

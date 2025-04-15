@@ -33,7 +33,7 @@ const Presupuestos = () => {
   }, []);
 
   const handleAddItem = () => {
-    setItems([...items, { cantidad: 1, producto: '', codigo: '', precio: 0 }])
+    setItems([...items, { cantidad: 1, producto: '', codigo: '', precio: 0, usd: false, dolar:dolar }])
   }
 
   const handleItemChange = (index, field, value) => {
@@ -43,6 +43,10 @@ const Presupuestos = () => {
   }
 
  const confirmarYGenerar = () => {
+  if (!empresa.nombre || items.length === 0) {
+    Swal.fire('Error', 'Completa los datos de la empresa y agrega al menos un producto.', 'error')
+    return
+  }
     Swal.fire({
       title: '¿El presupuesto está correcto?',
       text: 'Podrás editarlo si lo necesitas',
@@ -218,8 +222,13 @@ const Presupuestos = () => {
                 onChange={e => handleItemChange(index, 'precio', e.target.value)}
                 className="border p-1 rounded w-full"
                 />
+                <label className="text-sm">USD</label>
+              <input type="checkbox"
+                checked={item.usd}
+                onChange={e => handleItemChange(index, 'usd', e.target.checked)}
+                className="sm:col-span-1"
+              />
             </div>
-
             <div className="sm:hidden mb-2 text-right text-sm">
                 <span className="font-semibold">Total: </span>
                 {(item.usd? item.cantidad * item.precio * dolar :item.cantidad * item.precio ).toLocaleString('es-AR', {
@@ -249,13 +258,23 @@ const Presupuestos = () => {
                 onChange={e => handleItemChange(index, 'codigo', e.target.value)}
                 className="hidden sm:block border p-1 rounded w-full"
             />
-            <input
-                type="number"
-                min="0"
-                value={item.precio}
-                onChange={e => handleItemChange(index, 'precio', e.target.value)}
-                className="hidden sm:block border p-1 rounded w-full"
-            />
+            <div className="flex">
+              <input
+                  type="number"
+                  min="0"
+                  value={item.precio}
+                  onChange={e => handleItemChange(index, 'precio', e.target.value)}
+                  className="hidden sm:block border p-1 rounded w-full"
+              />
+              <div className="flex flex-col">
+                <label className="text-sm">USD</label>
+                <input type="checkbox"
+                  checked={item.usd}
+                  onChange={e => handleItemChange(index, 'usd', e.target.checked)}
+                  className="sm:col-span-1"
+                  />
+              </div>
+            </div>
             <div className="hidden sm:flex items-center justify-end p-2 text-sm">
                 {(item.usd? item.cantidad * item.precio * dolar:item.cantidad * item.precio  ).toLocaleString('es-AR', {
                 style: 'currency',
