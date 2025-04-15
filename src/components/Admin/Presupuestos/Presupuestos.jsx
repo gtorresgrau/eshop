@@ -140,6 +140,7 @@ const Presupuestos = () => {
         codigo: producto.cod_producto || '',
         precio: producto.precio || 0,
         usd: producto.usd,
+        dolar: dolar
       }
     ])
     setShowModal(false)
