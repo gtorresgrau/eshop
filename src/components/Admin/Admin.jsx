@@ -7,6 +7,7 @@ import { useSearchParams } from "next/navigation";
 import Swal from "sweetalert2";
 import UpdateProduct from "./UpdateProduct/UpdateProduct";
 import Presupuestos from "./Presupuestos/Presupuestos";
+import ImportarProductos from './importarProductos/ImportarProductos'
 import AddProduct from "./AddProduct/AddProduct";
 import fetchFiltersData, { startAutoUpdateFilters } from "../../Hooks/useBrandsCategories";
 
@@ -288,6 +289,11 @@ export default function Admin() {
           {section === 'Presupuestos' && (
             <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
               <Presupuestos />
+            </div>
+          )}
+          {section === 'SubirProductos' && (
+            <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
+              <ImportarProductos  />
             </div>
           )}
         </div>

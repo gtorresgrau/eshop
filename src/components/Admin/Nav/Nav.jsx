@@ -114,12 +114,18 @@ export default function Nav({ handleSelectSection }) {
           <li>
             <DownloadCSVButton toggleMenu={toggleMenu} />
           </li>
-              {/* Presupuestos */}
+            {/* Presupuestos */}
           <li>
               <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-primary-hover group" onClick={() => { handleSelectSection("Presupuestos"); toggleMenu()}} title='Presupuestos '>
                 <span className="ml-3 text-gray-200">Presupuestos</span>
               </a>
-            </li>
+          </li>
+          {/* Importar Productos */}
+          <li>
+              <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-primary-hover group" onClick={() => { handleSelectSection("SubirProductos"); toggleMenu()}} title='SubirProductos '>
+                <span className="ml-3 text-gray-200">Subir Productos</span>
+              </a>
+          </li>
 
           <li>
             <Link
