@@ -8,11 +8,6 @@ import { promisify } from 'util';
 import producto from '@/models/producto';
 import connectDB from '@/lib/db'; // Asegurate de tener esta conexión a MongoDB
 
-export const config = {
-  api: {
-    bodyParser: false, // necesario para subir archivos
-  },
-};
 
 const readFile = promisify(fs.readFile);
 
@@ -46,7 +41,11 @@ export async function POST(req) {
     titulo_de_producto: String(item['DESCRIPCIóN'] || '').trim(),
     descripcion: String(item['DESC_ADIC'] || '').trim(),
     n_electronica: '',
-    precio: String(item['FINAL'] || '').trim(),
+    precio: (
+      Math.round(
+        (parseFloat(item['FINAL']) * 1.15 + Number.EPSILON) * 100
+      ) / 100
+    ).toFixed(2),
     destacados: false,
     usd: true,
     usado: false,
@@ -57,6 +56,7 @@ export async function POST(req) {
     foto_1_3: '',
     foto_1_4: '',
   }));
+  
 
   try {
     await producto.insertMany(productosFormateados, { ordered: false });

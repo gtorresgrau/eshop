@@ -1,6 +1,6 @@
 'use client';
 
-import Loading from '@/components/Loading/Loading';
+import Loading from '../../Loading/Loading';
 import { useState } from 'react';
 
 export default function ImportarProductos() {
