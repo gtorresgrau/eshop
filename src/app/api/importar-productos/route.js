@@ -2,11 +2,10 @@
 import { NextResponse } from 'next/server';
 import * as XLSX from 'xlsx';
 import fs from 'fs';
-import path from 'path';
 import { IncomingForm } from 'formidable';
 import { promisify } from 'util';
-import producto from '@/models/producto';
-import connectDB from '@/lib/db'; // Asegurate de tener esta conexión a MongoDB
+import producto from '../../../models/product';
+import connectDB from '../../../lib/mongodb'; // Asegurate de tener esta conexión a MongoDB
 
 
 const readFile = promisify(fs.readFile);
