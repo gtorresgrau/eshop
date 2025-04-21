@@ -180,6 +180,11 @@ export default function Admin() {
     setSection(section);
   };
 
+  const handlePageChange = (value) => {
+    setCurrentPage(value);
+  };
+
+
   return (
     <Suspense fallback={<Loading/>}>
       <div className="flex flex-col min-h-screen">
