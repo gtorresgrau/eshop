@@ -116,10 +116,20 @@ export default function Nav({ handleSelectSection }) {
           </li>
               {/* Presupuestos */}
           <li>
-              <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-primary-hover group" onClick={() => { handleSelectSection("Presupuestos"); toggleMenu()}} title='Presupuestos '>
-                <span className="ml-3 text-gray-200">Presupuestos</span>
+              <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-primary-hover group" onClick={() => { handleSelectSection("Comprobantes"); toggleMenu()}} title='Presupuestos '>
+                <span className="ml-3 text-gray-200">Comprobantes</span>
               </a>
             </li>
+          <li>
+              <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-primary-hover group" onClick={() => { handleSelectSection("Etiquetas"); toggleMenu()}} title='Presupuestos '>
+                <span className="ml-3 text-gray-200">Etiquetas</span>
+              </a>
+          </li>
+          <li>
+              <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-primary-hover group" onClick={() => { handleSelectSection("Empresas"); toggleMenu()}} title='Presupuestos '>
+                <span className="ml-3 text-gray-200">Empresas</span>
+              </a>
+          </li>
 
           <li>
             <Link

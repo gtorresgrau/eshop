@@ -6,8 +6,10 @@ import newFetchProductos from '../../Hooks/useNewFetchProducts';
 import { useSearchParams } from "next/navigation";
 import Swal from "sweetalert2";
 import UpdateProduct from "./UpdateProduct/UpdateProduct";
-import Presupuestos from "./Presupuestos/Presupuestos";
 import AddProduct from "./AddProduct/AddProduct";
+import Etiquetas from "./Etiquetas/Etiquetas";
+import EmpresaForm from "./Empresas/Empresas";
+import Comprobantes from "./Comprobantes/Comprobantes";
 import fetchFiltersData, { startAutoUpdateFilters } from "../../Hooks/useBrandsCategories";
 
 // const Swal = dynamic(() => import("sweetalert2"), { ssr: false });
@@ -290,9 +292,19 @@ export default function Admin() {
               <DownloadCSVButton />
             </div>
           )}
-          {section === 'Presupuestos' && (
+          {section === 'Comprobantes' && (
             <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
-              <Presupuestos />
+              <Comprobantes />
+            </div>
+          )}
+          {section === 'Etiquetas' && (
+            <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
+              <Etiquetas />
+            </div>
+          )}
+          {section === 'Empresas' && (
+            <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
+              <EmpresaForm />
             </div>
           )}
         </div>

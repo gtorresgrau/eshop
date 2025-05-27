@@ -18,7 +18,7 @@ const Card = createCardComponent("div", "rounded-lg border bg-card text-card-for
 const CardHeader = createCardComponent("div", "flex flex-col space-y-1.5 p-6", "CardHeader");
 const CardTitle = createCardComponent("h3", "text-2xl font-semibold leading-none tracking-tight text-primary", "CardTitle");
 const CardDescription = createCardComponent("p", "text-sm md:text-base text-muted-foreground", "CardDescription");
-const CardContent = createCardComponent("div", "p-2 md:p-6 pt-0", "CardContent");
+const CardContent = createCardComponent("div", "p-2 pt-0", "CardContent");
 const CardFooter = createCardComponent("div", "flex items-center p-2 md:p-6 pt-0", "CardFooter");
 
 export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter };
