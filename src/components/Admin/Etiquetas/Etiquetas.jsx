@@ -5,8 +5,7 @@ import userData from '../../constants/userData';
 import CargarEmpresaModal from '../Comprobantes/CargarEmpresa';
 import useEmpresas from '../../../Hooks/useEmpresas'
 import {Button} from '../../ui/Buttons';
-import { FaWhatsapp } from "react-icons/fa";
-
+import { FaWhatsapp } from 'react-icons/fa';
 
 
 function Etiquetas({ data }) {
@@ -24,13 +23,13 @@ function Etiquetas({ data }) {
         <div className="space-y-1 col-span-2">
           <p><strong>Para:</strong> {data.para}</p>
           <p><strong>Dirección:</strong> {data.direccion}</p>
-          <p><strong><FaWhatsapp className='w-6 h-6'/></strong> {data.telefono}</p>
+          <p><strong>Cel: </strong> {data.telefono}</p>
         </div>
 
         {/* Columna derecha */}
         <div className="space-y-1">
           <p><strong>De:</strong> {data.de}</p>
-          <p><strong>Cel:</strong> {data.cel}</p>
+          <p className='flex items-center'><FaWhatsapp className='w-6 h-6'/> {data.cel}</p>
         </div>
       </div>
 
