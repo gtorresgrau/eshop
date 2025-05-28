@@ -140,29 +140,30 @@ export default function EmpresaForm() {
       </form>
 
 
-      {/* Lista paginada */}
-      <div className="flex flex-wrap gap-2">
-        {empresasPaginadas.map((empresa) => (
-          <Card key={empresa._id} className="p-2 w-full md:w-1/3 bg-slate-200"> 
-            <CardContent className="space-y-2">
-              <p className="text-lg font-semibold">{empresa.nombre}</p>
-              <p>{empresa.direccion}</p>
-              <p>{empresa.mail}</p>
-              <p>{empresa.telefono}</p>
-              <p>{empresa.cuil}</p>
-              <p>{empresa.tipo}</p>
-              <div className="flex gap-2 mt-2">
-                <Button size="sm" onClick={() => handleEdit(empresa)}>
-                  Editar
-                </Button>
-                <Button size="sm" variant="destructive" onClick={() => handleDelete(empresa._id)}>
-                  Eliminar
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+    {/* Lista paginada */}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {empresasPaginadas.map((empresa) => (
+        <Card key={empresa._id} className="p-2 bg-slate-200">
+          <CardContent className="space-y-2">
+            <p className="text-lg font-semibold">{empresa.nombre}</p>
+            <p>{empresa.direccion}</p>
+            <p>{empresa.mail}</p>
+            <p>{empresa.telefono}</p>
+            <p>{empresa.cuil}</p>
+            <p>{empresa.tipo}</p>
+            <div className="flex gap-2 mt-2">
+              <Button size="sm" onClick={() => handleEdit(empresa)}>
+                Editar
+              </Button>
+              <Button size="sm" variant="destructive" onClick={() => handleDelete(empresa._id)}>
+                Eliminar
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+
 
       {/* Paginador */}
       {totalPaginas > 1 && (
