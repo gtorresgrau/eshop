@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '../../../lib/mongodb';
 import Usuario from '../../../models/User';
 import jwt from 'jsonwebtoken';
-import { auth } from '../../../lib/firebaseAdminConfig';
+import { auth } from '../../../../pages/api/firebaseAdminConfig';
 
 export async function POST(req: Request) {
     try {
