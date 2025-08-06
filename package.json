@@ -29,6 +29,7 @@
     "firebase": "^10.12.3",
     "firebase-admin": "^13.4.0",
     "framer-motion": "^12.4.3",
+    "git-filter-repo": "^0.0.30",
     "heic2any": "^0.0.4",
     "html2pdf.js": "^0.10.3",
     "jose": "^6.0.12",
