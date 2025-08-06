@@ -11,6 +11,7 @@ import Etiquetas from "./Etiquetas/Etiquetas";
 import EmpresaForm from "./Empresas/Empresas";
 import Comprobantes from "./Comprobantes/Comprobantes";
 import fetchFiltersData, { startAutoUpdateFilters } from "../../Hooks/useBrandsCategories";
+import AdminConfigPage from "./Configuracion/configuracion";
 
 // const Swal = dynamic(() => import("sweetalert2"), { ssr: false });
 // const AddProduct = dynamic(() => import("./AddProduct/AddProduct"), { ssr: false });
@@ -305,6 +306,11 @@ export default function Admin() {
           {section === 'Empresas' && (
             <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
               <EmpresaForm />
+            </div>
+          )}
+          {section === 'Configuracion' && (
+            <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
+              <AdminConfigPage />
             </div>
           )}
         </div>
