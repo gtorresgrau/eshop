@@ -29,6 +29,7 @@ yarn-error.log*
 .env
 .env*.local
 .env.local
+eshop-34a07-firebase-adminsdk-v8tjl-6e9c8532f5.json
 
 # vercel
 .vercel
