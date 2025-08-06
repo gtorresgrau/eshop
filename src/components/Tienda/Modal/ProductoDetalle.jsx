@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { MdStore } from "react-icons/md";
 import { RiShareFill } from "react-icons/ri";
 
 const ProductoDetalle = ({ selectedProduct, mainImage, handleThumbnailClick, thumbnails, handleShare, handleAddToCart, handleConsult  }) => {
