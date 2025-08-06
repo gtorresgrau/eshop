@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { RiShareFill } from "react-icons/ri";
 
-const ProductoDetalle = ({ selectedProduct, mainImage, handleThumbnailClick, thumbnails, handleShare, handleAddToCart, enviar  }) => {
+const ProductoDetalle = ({ selectedProduct, mainImage, handleThumbnailClick, thumbnails, handleShare, handleAddToCart, handleConsult  }) => {
     const path = usePathname()
     return(
     <article className="py-0 bg-white md:py-4 antialiased">
@@ -104,39 +104,33 @@ const ProductoDetalle = ({ selectedProduct, mainImage, handleThumbnailClick, thu
                     {selectedProduct.descripcion}
                 </p>
 
-                <div className="mt-1 md:mt-4 gap-2 items-center flex flex-col md:flex-row justify-center md:items-start">
-                    {/* Enlace a MercadoShop (si la URL está definida) */}
-                    {/* {selectedProduct.n_electronica && (
-                    <Link
-                        href={selectedProduct.n_electronica}
-                        title="Ver en MercadoShop"
-                        aria-label="Ver producto en MercadoShop"
-                        className="w-full text-gray-500 mt-2 md:mt-4 py-2 hover:bg-boton-primary-hover font-medium rounded-lg text-sm px-4 flex items-center justify-center"
-                        target="_blank"
+                <div className="mt-4 flex flex-col md:flex-row md:items-start md:justify-center gap-2 flex-wrap">
+                    {/* Botón Comprar */}
+                    <button
+                        onClick={handleComprar}
+                        className={`flex items-center justify-center w-full md:w-1/2 px-4 py-2 gap-2 text-white rounded-md shadow transition duration-300 bg-primary hover:bg-primary-hover ${selectedProduct.vendido ? 'bg-gray-400 cursor-not-allowed' : ''}`}
+                        title="Comprar ahora"
+                        aria-label="Comprar ahora"
+                        type="button"
+                        disabled={selectedProduct.vendido}
                     >
-                        {selectedProduct.vendido?'':<>
-                        <MdStore size={16} aria-label="boton para compartir" />
-                        <span className="ms-1">MercadoShop</span>
-                        </>
-                    }
-                    </Link>
-                    )} */}
+                        <MdStore size={18} color="#ffffff" aria-label="botón para comprar" />
+                        <span className="text-base">Comprar</span>
+                    </button>
 
-                    {/* Botón para agregar al carrito */}
-                    {selectedProduct.vendido?'':
+                    {/* Botón Agregar al Carrito */}
                     <button
                         onClick={handleAddToCart}
+                        disabled={selectedProduct.vendido}
                         type="button"
                         title="Agregar al carrito"
                         aria-label="Agregar producto al carrito"
-                        className="text-gray-500 mt-2 md:mt-4 py-2 hover:bg-boton-secondary-hover font-medium rounded-lg text-sm px-4 flex items-center justify-center"
+                        className={`flex items-center justify-center w-full md:w-auto px-4 py-2 gap-2 text-gray-700 bg-white border border-gray-300 hover:bg-boton-secondary-hover rounded-lg text-sm font-medium transition ${selectedProduct.vendido ? 'bg-gray-400 cursor-not-allowed' : ''}`}
                     >
                         <svg
-                        className="w-5 h-5 -ms-2 me-2"
+                        className="w-5 h-5"
                         aria-label="agregar al carrito"
                         xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
                         fill="none"
                         viewBox="0 0 24 24"
                         >
@@ -148,27 +142,22 @@ const ProductoDetalle = ({ selectedProduct, mainImage, handleThumbnailClick, thu
                             d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"
                         />
                         </svg>
-                        <span>AGREGAR</span>
+                        <span>Agregar</span>
                     </button>
-                    }
-                    {selectedProduct.vendido?'':
-                    <div className='flex items-center justify-items-center'>
-                        {/* Enlace para consultar vía WhatsApp */}
-                        <Link
-                        href={enviar}
+
+                    {/* Botón Consultar por WhatsApp */}
+                    <button
+                        onClick={handleConsult}
+                        disabled={selectedProduct.vendido}
+                        type="button"
                         title="Consultar producto por WhatsApp"
                         aria-label="Consultar producto por WhatsApp"
-                        className="text-gray-500 mt-2 md:mt-4 py-2 hover:bg-boton-secondary-hover active:bg-boton-secondary-active font-medium rounded-lg text-sm px-4 flex items-center justify-center"
+                        className={`flex items-center justify-center w-full md:w-auto px-4 py-2 gap-2 text-gray-700 bg-white border border-gray-300 hover:bg-boton-secondary-hover active:bg-boton-secondary-active rounded-lg text-sm font-medium transition ${selectedProduct.vendido ? 'bg-gray-400 cursor-not-allowed' : ''}`}
                         target="_blank"
-                        >
-                        <span>CONSULTAR</span>
-                        </Link>
-                        {/* <button className="text-gray-500 mt-2 md:mt-4 py-2 hover:bg-boton-secondary-hover active:bg-boton-secondary-active font-medium rounded-lg px-4 flex items-center justify-center text-base" onClick={handleShare}>
-                            <IoShareSocialSharp />
-                            </button> */}
+                    >
+                        CONSULTAR
+                    </button>
                     </div>
-                    }
-                </div>
                 </div>
             </div>
         </div>

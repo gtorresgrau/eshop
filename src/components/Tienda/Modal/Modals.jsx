@@ -31,9 +31,22 @@ const Modal = ({ selectedProduct, closeModal, isDialog = true }) => {
   };
   const handleClose = closeModal || (() => setIsOpen(false));
 
-  const texto = `Hola, quería consultar por ${selectedProduct.nombre} (${selectedProduct.cod_producto}), `;
+  const handleConsult = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    window.open(enviar, '_blank');
+  };
+
+  const getProductLink = (product) => {
+    const nombreURL = product.nombre.replace(/\s+/g, '_');
+    return `${typeof window !== 'undefined' ? window.location.origin : ''}/productos/${nombreURL}`;
+  };
+
+  const linkProducto =  getProductLink(product);
+  
+  const consultMessage = `Hola, quería consultar por ${product.nombre} (${product.cod_producto}). Link: ${linkProducto}`;
   const enviar = `https://wa.me/+${userData.codigoPais}${userData.contact}?text=${encodeURIComponent(
-    texto || userData.textoPredefinido
+    consultMessage || userData.textoPredefinido
   )}`;
 
   return (
@@ -78,7 +91,7 @@ const Modal = ({ selectedProduct, closeModal, isDialog = true }) => {
               thumbnails={thumbnails}
               handleShare={(e)=>handleShare(e,selectedProduct)}
               handleAddToCart={handleAddToCart}
-              enviar={enviar}
+              enviar={handleConsult}
           />
           </div>
         </section>
@@ -91,7 +104,7 @@ const Modal = ({ selectedProduct, closeModal, isDialog = true }) => {
               thumbnails={thumbnails}
               handleShare={(e)=>handleShare(e,selectedProduct)}
               handleAddToCart={handleAddToCart}
-              enviar={enviar}
+              enviar={handleConsult}
           />
         </div>
       )}
