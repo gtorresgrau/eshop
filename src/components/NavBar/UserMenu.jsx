@@ -6,10 +6,20 @@ import Image from 'next/image';
 const UserMenu = ({user,toggleDropdown,isDropdownOpen,handleLogOut}) => {
     
     const router = useRouter();
+
     const handleAdminRedirect = () => {
-        router.push('/Admin');
-        toggleDropdown()
+        router.push('/Dashboard?perfil=perfil');
+        toggleDropdown();
     };
+
+    const handleGoToLogin = () => {
+        router.push('/user/Login');
+    };
+
+    const handleGoToRegister = () => {
+        router.push('/user/Register');
+    };
+
 
   return (
     <>
@@ -33,7 +43,26 @@ const UserMenu = ({user,toggleDropdown,isDropdownOpen,handleLogOut}) => {
                   </div>
                 )}
               </div>
-            ) : null}
+            ) :  (             
+              <div className="relative z-50 gap-2">
+                    <button 
+                        className="hidden items-center justify-center text-normal uppercase md:inline-flex text-primary hover:text-primary-hover md:text-base px-2" 
+                        onClick={handleGoToLogin} 
+                        title="Login usuario" 
+                        aria-label="Login usuario"
+                    >
+                        Ingresar
+                    </button>
+                    <button 
+                        className="hidden items-center justify-center text-normal uppercase text-primary hover:text-primary-hover md:inline-flex md:text-base px-2" 
+                        onClick={handleGoToRegister} 
+                        title="registrar usuario" 
+                        aria-label="registrar usuario"
+                    >
+                        Registrate
+                    </button>
+                </div>
+            )}
     </>
   )
 }
