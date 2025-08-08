@@ -24,14 +24,16 @@ const UserMenu = ({ user, isAdmin, toggleDropdown, isDropdownOpen, handleLogOut 
         title="Menú usuario"
         aria-label="menu usuario"
       >
-        {user?.photoURL ? (
-          <Image
-            src={user.photoURL}
-            alt={user.nombreCompleto || 'Usuario'}
-            className="rounded-full w-8 h-8"
-            width={32}
-            height={32}
-          />
+        {user.photoURL ? (
+                            <Image 
+                                src={user.photoURL} 
+                                alt={user.displayName} 
+                                className="rounded-full w-8 h-8" 
+                                width={32} 
+                                height={32} 
+                                title={user.displayName} 
+                                loading='lazy'
+                            />
         ) : (
           <FaUser />
         )}

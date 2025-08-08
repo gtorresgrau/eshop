@@ -1,9 +1,7 @@
 
-import dynamic from 'next/dynamic';
 import ProtectedRoute from '../../components/ProtectedRoute/ProtectedRoute';
 import ClientLayout from '../ClientLayout';
-
-const Dashboard = dynamic(() => import('../../components/DashboardCliente/Dashboard'));
+import Dashboard from '../../components/DashboardCliente/Dashboard.tsx';
 
 const AdminPage = () => {
   return (
