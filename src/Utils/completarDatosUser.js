@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import { FormularioEnvio } from '../components/Perfil/FormularioEnvio';
+import { FormularioEnvio } from '../components/DashboardCliente/Perfil/FormularioEnvio';
 import Swal from 'sweetalert2';
 
 const completarDatosUser = async (user, setUser) => {

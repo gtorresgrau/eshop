@@ -1,11 +1,13 @@
+//src/componentes/Admin/Nav/NAv.jsx
 'use client'
-import React, { useState } from 'react';
+import React, {useEffect , useState } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { removeFromLocalStorage } from '../../../Hooks/localStorage';
 import Swal from 'sweetalert2';
+import { useAuth } from '../../../Hooks/useAuth';
+import { logOutBack } from '../../../lib/firebase';
 
 const logOut = dynamic(()=> import( '../../../lib/firebase'))
 const DownloadCSVButton = dynamic(()=> import( '../../../components/DownloadCSVButton/DownloadCSVButton'))
@@ -13,6 +15,13 @@ const DownloadCSVButton = dynamic(()=> import( '../../../components/DownloadCSVB
 export default function Nav({ handleSelectSection }) {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isAdmin, isAuthenticated, loading } = useAuth();
+
+  useEffect(() => {
+  if (!loading && (!isAuthenticated || !isAdmin)) {
+    router.push('/user/Login');
+  }
+}, [isAuthenticated, isAdmin, loading]);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -27,8 +36,8 @@ export default function Nav({ handleSelectSection }) {
       });
 
       if (result.isConfirmed) {
-        await logOut();
-        removeFromLocalStorage('USER');
+        await logOutBack();
+        router.refresh();
         await Swal.fire('Sesión cerrada con éxito', '', 'success');
         router.push('/');
       }

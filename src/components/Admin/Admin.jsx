@@ -1,3 +1,4 @@
+//src/componentes/Admin/Admin.jsx
 'use client'
 import React, { useEffect, useState, Suspense } from "react";
 import dynamic from "next/dynamic";
@@ -12,6 +13,8 @@ import EmpresaForm from "./Empresas/Empresas";
 import Comprobantes from "./Comprobantes/Comprobantes";
 import fetchFiltersData, { startAutoUpdateFilters } from "../../Hooks/useBrandsCategories";
 import AdminConfigPage from "./Configuracion/configuracion";
+import { useAuth } from '../../Hooks/useAuth';
+import { useRouter } from 'next/navigation';
 
 // const Swal = dynamic(() => import("sweetalert2"), { ssr: false });
 // const AddProduct = dynamic(() => import("./AddProduct/AddProduct"), { ssr: false });
@@ -25,6 +28,8 @@ const Pagination = dynamic(() => import("@mui/material").then((mod) => mod.Pagin
 
 
 export default function Admin() {
+  const { isAuthenticated, isAdmin, loading } = useAuth();
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalClose, setIsModalClose] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -187,6 +192,15 @@ export default function Admin() {
     setCurrentPage(value);
   };
 
+  useEffect(() => {
+    if (!loading && (!isAuthenticated || !isAdmin)) {
+      router.push('/user/Login');
+    }
+  }, [isAuthenticated, isAdmin, loading]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Suspense fallback={<Loading/>}>

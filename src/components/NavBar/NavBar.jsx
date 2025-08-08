@@ -1,9 +1,10 @@
+//src/componentes/NavBar/NavBar.jsx
 'use client'
 import React, { useContext, useEffect, useState } from 'react';
-import { removeFromLocalStorage, getInLocalStorage } from '../../Hooks/localStorage';
+import { useAuth } from '../../Hooks/useAuth';
 import Link from 'next/link';
 import Image from 'next/image';
-import Logo from '../../../public/logos/logoSLS120.webp';
+import Logo from '../../../public/logos/logo.webp';
 import UserMenu from './UserMenu';
 import { IoCartOutline } from 'react-icons/io5';
 import { CartContext } from '../Context/ShoopingCartContext';
@@ -13,6 +14,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { logOutBack } from '../../lib/firebase';
 
 const NavBar = () => {
+  const { user, isAuthenticated, isAdmin } = useAuth();
   const [cart, setCart] = useContext(CartContext);
   const Links = useLinks(); 
   const path =usePathname()
@@ -23,12 +25,7 @@ const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [currentLink, setCurrentLink] = useState('/');
-  const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    const userData = getInLocalStorage('USER');
-    setUser(userData);
-  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -39,26 +36,25 @@ const NavBar = () => {
   };
 
   const handleLogOut = async () => {
-    try {
-      const result = await Swal.fire({
-        icon: 'info',
-        title: '¿Está seguro que quiere salir?',
-        showCancelButton: true,
-        confirmButtonText: 'Sí, salir',
-        cancelButtonText: 'Cancelar',
-      });
+  try {
+    const result = await Swal.fire({
+      icon: 'info',
+      title: '¿Está seguro que quiere salir?',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, salir',
+      cancelButtonText: 'Cancelar',
+    });
 
-      if (result.isConfirmed) {
-        await logOutBack();
-        removeFromLocalStorage('USER');
-        setUser(null);
-        await Swal.fire('Sesión cerrada con éxito', '', 'success');
-        router.push('/');
-      }
-    } catch (error) {
-      Swal.fire('Error', error.message || 'Ocurrió un problema', 'error');
+    if (result.isConfirmed) {
+      await logOutBack();
+      router.refresh(); // Actualiza estado global
+      await Swal.fire('Sesión cerrada con éxito', '', 'success');
+      router.push('/');
     }
-  };
+  } catch (error) {
+    Swal.fire('Error', error.message || 'Ocurrió un problema', 'error');
+  }
+};
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -79,8 +75,14 @@ const NavBar = () => {
         <div className="flex items-center gap-4 justify-between align-middle m-2">
           {/* User menu for mobile */}
           <div className="block md:hidden align-middle items-center">
-            {user ? (
-              <UserMenu user={user} toggleDropdown={toggleDropdown} isDropdownOpen={isDropdownOpen} handleLogOut={handleLogOut} />
+            {isAuthenticated ? (
+                <UserMenu
+                  user={user}
+                  isAdmin={isAdmin}
+                  toggleDropdown={toggleDropdown}
+                  isDropdownOpen={isDropdownOpen}
+                  handleLogOut={handleLogOut}
+                />
             ) : (
               <button
                 className="hidden text-primary font-semibold uppercase text-sm px-2"

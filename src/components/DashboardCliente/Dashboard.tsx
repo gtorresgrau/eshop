@@ -1,13 +1,14 @@
+  //src/componentes/DashboardCliente/Dashboard.tsx
   'use client'
 
   import React, { useEffect, useState, useCallback } from 'react'
   import axios from 'axios'
   import { useSearchParams , useRouter } from 'next/navigation'
-  import { getInLocalStorage } from '../../Hooks/localStorage'
+  import { useAuth  } from '../../Hooks/useAuth'
   import Loading from '../Loading/Loading'
   import PedidoCard from './PedidoCard'
-  import PerfilPage from '../Perfil/Perfil'
-  import FormularioFactura from '../Perfil/FormularioFactura'
+  import PerfilPage from './Perfil/Perfil'
+  import FormularioFactura from './Perfil/FormularioFactura'
   import Swal from 'sweetalert2'
 
   // Constantes para estados
@@ -48,30 +49,30 @@
   const Dashboard = () => {
     const searchParams = useSearchParams();
     const perfil = searchParams?.get('perfil');  
-    //console.log('perfil:',perfil)
 
     const router = useRouter()
+    const { user, loading: authLoading, isAuthenticated, isClient } = useAuth();
+    
     const [usuarioUid, setUsuarioUid] = useState<string | null>(null)
     const [pedidos, setPedidos] = useState<Pedido[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
     const [activeTab, setActiveTab] = useState<'pedidos' | 'perfil' | 'facturacion'>(perfil ==='perfil'?'perfil':'pedidos')
     const [datosFactura, setDatosFactura] = useState(null)
-
-
+    
+    if (authLoading || loading) return <Loading />;
+    
     // Obtener datos del usuario
-    useEffect(() => {
-      try {
-        const userData = getInLocalStorage('USER')
-        if (userData?.uid) {
-          setUsuarioUid(userData.uid)
-        } else {
-          router.push('/user/Login')
-        }
-      } catch (err) {
-        setError('Error al cargar datos de usuario')
+
+  useEffect(() => {
+    if (!authLoading) {
+      if (!isAuthenticated || !isClient || !user?.uid) {
+        router.push('/user/Login');
+      } else {
+        setUsuarioUid(user.uid);
       }
-    }, [router])
+    }
+  }, [authLoading, isAuthenticated, isClient, user, router]);
 
     // Obtener pedidos del usuario
     const fetchPedidos = useCallback(async (uid: string) => {
@@ -126,7 +127,6 @@
     }, [pedidos])
 
     // Estados de carga y error
-    if (loading) return <Loading />
     if (error) return <ErrorPage message={error} />
 
     return (

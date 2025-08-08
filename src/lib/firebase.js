@@ -1,3 +1,4 @@
+//src/lib/firebase.js
 import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
@@ -9,38 +10,39 @@ import { auth } from '../../pages/api/firebase';
 //------------------ Auth --------------------///
 
 // Iniciar sesión con usuario y contraseña
-export const signIn = async (data) => {
-  const { email, password } = data;
+export const signIn = async ({ email, password }) => {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    return userCredential;  // Retorna el objeto completo con el usuario autenticado
+    const idToken = await userCredential.user.getIdToken();
+    return { user: userCredential.user, idToken };
   } catch (error) {
-    throw new Error(error.message);  // Maneja y lanza el error para capturarlo en el frontend
+    throw new Error(error.message);
   }
-}
+};
 
 // Crear un nuevo usuario con email y contraseña
-export const signUp = async (data) => {
-  const { email, password } = data;
+export const signUp = async ({ email, password }) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    return userCredential;  // Retorna el objeto completo con el nuevo usuario
+    const idToken = await userCredential.user.getIdToken();
+    return { user: userCredential.user, idToken };
   } catch (error) {
-    throw new Error(error.message);  // Maneja y lanza el error para capturarlo en el frontend
+    throw new Error(error.message);
   }
-}
+};
 
 // Iniciar sesión con Google
 export const signInWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
-  provider.setCustomParameters({prompt: 'select_account'});
+  provider.setCustomParameters({ prompt: 'select_account' });
   try {
     const result = await signInWithPopup(auth, provider);
-    return result;  // Retorna el resultado de la autenticación con Google
+    const idToken = await result.user.getIdToken();
+    return { user: result.user, idToken };
   } catch (error) {
-    throw new Error(error.message);  // Maneja y lanza el error para capturarlo en el frontend
+    throw new Error(error.message);
   }
-}
+};
 
 // Cerrar sesión
 export const logOutBack = async () => {

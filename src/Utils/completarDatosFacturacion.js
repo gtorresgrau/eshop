@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import Swal from 'sweetalert2';
-import FormularioFactura from '../components/Perfil/FormularioFactura';
+import FormularioFactura from '../components/DashboardCliente/Perfil/FormularioFactura';
 
 const completarDatosFacturacion = async (user, setUser) => {
   try {

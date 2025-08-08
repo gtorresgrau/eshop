@@ -1,3 +1,4 @@
+  //src/componentes/DashboardCliente/PedidoCard.tsx
 import React, { useState, useRef } from 'react'
 import { Pedido } from './Dashboard' // Asegúrate que la interfaz Pedido defina 'estado' correctamente (ej. estado?: string)
 import { toast } from 'react-toastify';

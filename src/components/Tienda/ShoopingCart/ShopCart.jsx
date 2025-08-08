@@ -10,13 +10,12 @@ import userBank from '../../constants/userBank';
 import producto from '../../../../public/images/sinFoto.webp';
 import EmptyCart from '../EmptyCart/EmptyCart';
 import { CartContext } from '../../Context/ShoopingCartContext';
-import { getInLocalStorage } from '../../../Hooks/localStorage';
-import handleGuardarPedido  from '../../../Utils/handleGuardarPedido';
+import handleGuardarPedido from '../../../Utils/handleGuardarPedido';
 import handleComprarMercadoPago from '../../../Utils/handleCompraMercadoPago';
 import handleGuardarPedidoMercado from '../../../Utils/handleGuardarPedidoMercado';
-import FormularioFactura from '../../Perfil/FormularioFactura';
-import { solicitarNuevaDireccion } from '../../Perfil/solicitarNuevaDireccion';
-import notificador from '../../..//Utils/notificador';
+import FormularioFactura from '../../DashboardCliente/Perfil/FormularioFactura';
+import { solicitarNuevaDireccion } from '../../DashboardCliente/Perfil/solicitarNuevaDireccion';
+import notificador from '../../../Utils/notificador';
 
 const ShopCart = () => {
   const router = useRouter();
@@ -27,13 +26,20 @@ const ShopCart = () => {
   const preguntarRef = useRef(null);
   const totalRef = useRef(null)
 
-useEffect(() => {
-  if (typeof window !== "undefined") {
-    const userFromStorage = getInLocalStorage('USER');
-    //console.log('user:', userFromStorage);
-    setUser(userFromStorage);
-  }
-}, []);
+  useEffect(() => {
+    const getUserFromToken = async () => {
+      try {
+        const res = await fetch('/api/usuarios/me', { credentials: 'include' });
+        if (!res.ok) throw new Error('Usuario no autenticado');
+        const data = await res.json();
+        setUser(data.usuario);
+      } catch (err) {
+        console.error('Error al obtener usuario:', err.message);
+        setUser(null);
+      }
+    };
+    getUserFromToken();
+  }, []);
   
   const transferInfo = `
             <h2 class="text-lg font-bold mb-2">Información de Transferencia</h2>
@@ -58,69 +64,44 @@ useEffect(() => {
             <p class="mt-4">Una vez realizada la transferencia, por favor envíanos el comprobante a nuestro correo electrónico.</p>
           `;
 
-const handleComprar = async (nuevoDescuento) => {
-  // Validaciones iniciales
-  if (cart.length === 0) {
-    await Swal.fire({
-      icon: 'warning',
-      title: 'El carrito está vacío',
-      text: 'Agrega productos al carrito antes de continuar.',
-    });
-    return;
-  }
-
-  if (!user) {
-    await Swal.fire({
-      icon: 'warning',
-      title: 'Inicia sesión para continuar',
-      text: 'Debes iniciar sesión para realizar la compra.',
-    });
-    return;
-  }
-
-  try {
-    setLoading(true);
-    
-    // 1. Facturación - Extraído a función helper
-    const { tipoFactura, datosFactura } = await obtenerDatosFacturacion();
-    if (!datosFactura) throw new Error('Debes completar los datos de facturación');
-
-    // 2. Dirección - Extraído a función helper
-    const nuevaDireccion = await solicitarNuevaDireccion();
-    if (!nuevaDireccion) throw new Error('Debes ingresar una dirección de envío');
-
-    // 3. Construcción de userCompleto optimizada
-    const userCompleto = construirUserCompleto(user, datosFactura, tipoFactura, nuevaDireccion);
-
-    // 4. Cálculo de precios más robusto
-    const { transferenciaPrecio, mercadoPagoPrecio } = calcularPrecios(totalRef, nuevoDescuento);
-
-    // 5. Selección de método de pago - Extraído a función helper
-    const metodoPago = await seleccionarMetodoPago(transferenciaPrecio, mercadoPagoPrecio, nuevoDescuento);
-    
-    if (metodoPago === 'mercadoPago') {
-      // 6. Proceso de MercadoPago - Extraído a función helper
-      await procesarPagoMercadoPago(cart, userCompleto);
-    } else {
-      // 7. Proceso de Transferencia - Extraído a función helper
-      await procesarPagoTransferencia(cart, userCompleto, nuevoDescuento);
+  const handleComprar = async (nuevoDescuento) => {
+    if (cart.length === 0) {
+      await Swal.fire({ icon: 'warning', title: 'El carrito está vacío' });
+      return;
+    }
+    if (!user) {
+      await Swal.fire({ icon: 'warning', title: 'Inicia sesión para continuar' });
+      return;
     }
 
-    // Limpiar carrito solo si todo fue exitoso
-    setCart([]);
-    
-  } catch (error) {
-    console.error("Error en el proceso de compra:", error);
-    await Swal.fire({
-      icon: 'error',
-      title: 'Error en la compra',
-      text: error.message || 'Ocurrió un error al procesar tu compra',
-    });
-  } finally {
-    setLoading(false);
-    router.push('/Dashboard');
-  }
-};
+    try {
+      setLoading(true);
+      const { tipoFactura, datosFactura } = await obtenerDatosFacturacion();
+      if (!datosFactura) throw new Error('Debes completar los datos de facturación');
+
+      const nuevaDireccion = await solicitarNuevaDireccion();
+      if (!nuevaDireccion) throw new Error('Debes ingresar una dirección de envío');
+
+      const userCompleto = construirUserCompleto(user, datosFactura, tipoFactura, nuevaDireccion);
+      const { transferenciaPrecio, mercadoPagoPrecio } = calcularPrecios(totalRef, nuevoDescuento);
+
+      const metodoPago = await seleccionarMetodoPago(transferenciaPrecio, mercadoPagoPrecio, nuevoDescuento);
+
+      if (metodoPago === 'mercadoPago') {
+        await procesarPagoMercadoPago(cart, userCompleto);
+      } else {
+        await procesarPagoTransferencia(cart, userCompleto, nuevoDescuento);
+      }
+
+      setCart([]);
+    } catch (error) {
+      console.error("Error en el proceso de compra:", error);
+      await Swal.fire({ icon: 'error', title: 'Error en la compra', text: error.message });
+    } finally {
+      setLoading(false);
+      router.push('/Dashboard');
+    }
+  };
 
 // Funciones auxiliares --------------------------------------------------------
 
@@ -338,14 +319,12 @@ const subirComprobante = async (pedidoId) => {
 };
 
 const handleFinalizarCompra = async () => {
-  const nuevoDescuento = await cart[0]?.descuento ?? 0;
-  setDescuento(nuevoDescuento);
-  handleComprar(nuevoDescuento); 
+    const nuevoDescuento = await cart[0]?.descuento ?? 0;
+    setDescuento(nuevoDescuento);
+    handleComprar(nuevoDescuento);
 };
 
-  //console.log('cart:',cart)
-
-  const handleDelete = (producto) => {
+const handleDelete = (producto) => {
     setCart((currItems) =>
       currItems.find((item) => item.cod_producto === producto.cod_producto)?.quantity === 1
         ? currItems.filter((item) => item.cod_producto !== producto.cod_producto)
@@ -355,9 +334,9 @@ const handleFinalizarCompra = async () => {
               : item
           )
     );
-  };
+};
 
-  const handleAdd = (producto) => {
+const handleAdd = (producto) => {
     setCart((currItems) =>
       currItems.map((item) =>
         item.cod_producto === producto.cod_producto
@@ -365,10 +344,10 @@ const handleFinalizarCompra = async () => {
           : item
       )
     );
-  };
+};
   
   
-  const handleDeleteAll = (e) => {
+const handleDeleteAll = (e) => {
     e.preventDefault();
     Swal.fire({
       icon: 'warning',
@@ -378,9 +357,9 @@ const handleFinalizarCompra = async () => {
     }).then((result) => {
       if (result.isConfirmed) setCart([]);
     });
-  };
-  const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
-  //console.log('totalRef:',totalRef.current?.textContent?.replace('Subtotal: ', '') || '');
+};
+
+const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
   
   return (
     <section className="flex flex-col items-center md:items-start mb-6">
