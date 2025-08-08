@@ -46,23 +46,19 @@
     trackingCode?: string
   }
 
-  const Dashboard = () => {
-    const searchParams = useSearchParams();
-    const perfil = searchParams?.get('perfil');  
+const Dashboard = () => {
+  const searchParams = useSearchParams();
+  const perfil = searchParams?.get('perfil');
 
-    const router = useRouter()
-    const { user, loading: authLoading, isAuthenticated, isClient } = useAuth();
-    
-    const [usuarioUid, setUsuarioUid] = useState<string | null>(null)
-    const [pedidos, setPedidos] = useState<Pedido[]>([])
-    const [loading, setLoading] = useState<boolean>(true)
-    const [error, setError] = useState<string | null>(null)
-    const [activeTab, setActiveTab] = useState<'pedidos' | 'perfil' | 'facturacion'>(perfil ==='perfil'?'perfil':'pedidos')
-    const [datosFactura, setDatosFactura] = useState(null)
-    
-    if (authLoading || loading) return <Loading />;
-    
-    // Obtener datos del usuario
+  const router = useRouter();
+  const { user, loading: authLoading, isAuthenticated, isClient } = useAuth();
+
+  const [usuarioUid, setUsuarioUid] = useState<string | null>(null);
+  const [pedidos, setPedidos] = useState<Pedido[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<'pedidos' | 'perfil' | 'facturacion'>(perfil === 'perfil' ? 'perfil' : 'pedidos');
+  const [datosFactura, setDatosFactura] = useState(null);
 
   useEffect(() => {
     if (!authLoading) {
@@ -74,60 +70,60 @@
     }
   }, [authLoading, isAuthenticated, isClient, user, router]);
 
-    // Obtener pedidos del usuario
-    const fetchPedidos = useCallback(async (uid: string) => {
+  const fetchPedidos = useCallback(async (uid: string) => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get<{ pedidos: Pedido[] }>(
+        `/api/pedidos/obtener-pedidos?usuarioUid=${uid}`
+      );
+      setPedidos(data.pedidos);
+    } catch (err) {
+      console.error('Error fetching orders:', err);
+      setError('No se pudieron cargar los pedidos. Intente nuevamente más tarde.');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchDatosFactura = async () => {
       try {
-        setLoading(true)
-        const { data } = await axios.get<{ pedidos: Pedido[] }>(
-          `/api/pedidos/obtener-pedidos?usuarioUid=${uid}`
-        )
-        //console.log('Pedidos obtenidos:', data)
-        setPedidos(data.pedidos)
-      } catch (err) {
-        console.error('Error fetching orders:', err)
-        setError('No se pudieron cargar los pedidos. Intente nuevamente más tarde.')
-      } finally {
-        setLoading(false)
-      }
-    }, [])
-      useEffect(() => {
-        const fetchDatosFactura = async () => {
-          try {
-            const { data } = await axios.get('/api/facturacion/obtener-datos', {
-              params: { usuarioUid }
-            })
-            if (data?.factura) {
-              setDatosFactura(data.factura)
-            }
-          } catch (error) {
-            console.error('Error al cargar datos de facturación:', error)
-          }
+        const { data } = await axios.get('/api/facturacion/obtener-datos', {
+          params: { usuarioUid }
+        });
+        if (data?.factura) {
+          setDatosFactura(data.factura);
         }
-    
-        if (usuarioUid) {
-          fetchDatosFactura()
-        }
-      }, [usuarioUid])
-
-    useEffect(() => {
-      if (usuarioUid) {
-        fetchPedidos(usuarioUid)
+      } catch (error) {
+        console.error('Error al cargar datos de facturación:', error);
       }
-    }, [usuarioUid, fetchPedidos])
+    };
 
-    const [pedidosActivos, pedidosCompletados] = React.useMemo(() => {
-      const isEstadoActivo = (estado: EstadoPedido): estado is EstadoActivo => {
-        return ESTADOS_ACTIVOS.includes(estado as EstadoActivo)
-      }
+    if (usuarioUid) {
+      fetchDatosFactura();
+    }
+  }, [usuarioUid]);
 
-      return [
-        pedidos.filter(p => p.estado !== undefined && isEstadoActivo(p.estado as EstadoPedido)),
-        pedidos.filter(p => p.estado !== undefined && !isEstadoActivo(p.estado as EstadoPedido))
-      ]
-    }, [pedidos])
+  useEffect(() => {
+    if (usuarioUid) {
+      fetchPedidos(usuarioUid);
+    }
+  }, [usuarioUid, fetchPedidos]);
 
-    // Estados de carga y error
-    if (error) return <ErrorPage message={error} />
+  const [pedidosActivos, pedidosCompletados] = React.useMemo(() => {
+    const isEstadoActivo = (estado: EstadoPedido): estado is EstadoActivo => {
+      return ESTADOS_ACTIVOS.includes(estado as EstadoActivo);
+    };
+
+    return [
+      pedidos.filter(p => p.estado !== undefined && isEstadoActivo(p.estado as EstadoPedido)),
+      pedidos.filter(p => p.estado !== undefined && !isEstadoActivo(p.estado as EstadoPedido))
+    ];
+  }, [pedidos]);
+
+
+  if (authLoading || loading) return <Loading />;
+  if (error) return <ErrorPage message={error} />;
 
     return (
       <div className="p-4 md:p-6 max-w-6xl mx-auto">
