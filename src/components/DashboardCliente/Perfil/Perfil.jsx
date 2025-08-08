@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { profileSchema } from '@/Validations/perfilSchema'; // ✅ Usa el esquema externo
+import { profileSchema } from './perfilSchema'; 
 import { Input } from '../../ui/input';
 
 const PerfilPage = ({ usuarioUid }) => {
