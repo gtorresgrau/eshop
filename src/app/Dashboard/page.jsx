@@ -1,7 +1,7 @@
 
 import ProtectedRoute from '../../components/ProtectedRoute/ProtectedRoute';
 import ClientLayout from '../ClientLayout';
-import Dashboard from '../../components/DashboardCliente/Dashboard.tsx';
+import Dashboard from '../../components/DashboardCliente/Dashboard';
 
 const AdminPage = () => {
   return (

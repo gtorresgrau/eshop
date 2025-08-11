@@ -9,6 +9,24 @@ const nextConfig = {
     unoptimized: true,
   },
   compress: true,
+  async headers() {
+    return [
+      {
+        source: '/user/Login',
+        headers: [
+          { key: 'Cross-Origin-Opener-Policy', value: 'unsafe-none' },
+          { key: 'Cross-Origin-Embedder-Policy', value: 'unsafe-none' },
+        ],
+      },
+      {
+        source: '/user/Register',
+        headers: [
+          { key: 'Cross-Origin-Opener-Policy', value: 'unsafe-none' },
+          { key: 'Cross-Origin-Embedder-Policy', value: 'unsafe-none' },
+        ],
+      },
+    ];
+  },
 };
 
 export default withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' })(nextConfig);
