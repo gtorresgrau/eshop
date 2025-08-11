@@ -1,6 +1,6 @@
 //src/componentes/NavBar/NavBar.jsx
 'use client'
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useAuth } from '../../Hooks/useAuth';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -14,7 +14,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { logOutBack } from '../../lib/firebase';
 
 const NavBar = () => {
-  const { user, isAuthenticated, isAdmin } = useAuth();
+  const { user, isAuthenticated, isAdmin, isClient } = useAuth();
   const [cart, setCart] = useContext(CartContext);
   const Links = useLinks(); 
   const path =usePathname()

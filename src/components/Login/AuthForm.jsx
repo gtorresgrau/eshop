@@ -50,66 +50,84 @@ const AuthForm = ({ mode = 'login' }) => {
     });
   };
 
-  useEffect(() => {
-    if (isAuthenticated && !authLoading) {
-      if (isAdmin) {
-        router.push('/Admin');
-      } else if (isClient) {
-        router.push('/Dashboard');
-      } else {
-        router.push('/');
-      }
-    }
-  }, [isAuthenticated, isAdmin, isClient, authLoading, router]);
+// Nueva función reutilizable para redirigir según rol
+const redirectByRole = (router, rol) => {
+  if (rol === 'admin') {
+    router.push('/Admin');
+  } else if (rol === 'cliente') {
+    router.push('/Dashboard');
+  } else {
+    router.push('/');
+  }
+};
 
-  const onSubmit = async (data) => {
-    setLoading(true);
-    try {
-      if (mode === 'login') {
-        const res = await signIn(data);
-        await res.user.getIdToken();
-        await createUserInMongoDB(res.user);
-      } else {
-        const res = await signUp(data);
-        await createUserInMongoDB(res.user, {
-          nombreCompleto: data.nombreCompleto,
-          dniOCuit: data.dniOCuit,
-        });
-      }
-    } catch (error) {
-      handleAuthError(error.code);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const loginWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
-    setLoading(true);
-    try {
-      const res = await signInWithPopup(auth, provider);
-      const token = await res.user.getIdToken();
-
-      await fetch('/api/usuarios', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          uid: res.user.uid,
-          nombreCompleto: res.user.displayName,
-          correo: res.user.email,
-          rol: 'cliente',
-        }),
+const onSubmit = async (data) => {
+  setLoading(true);
+  try {
+    let res;
+    if (mode === 'login') {
+      res = await signIn(data);
+      await createUserInMongoDB(res.user);
+    } else {
+      res = await signUp(data);
+      await createUserInMongoDB(res.user, {
+        nombreCompleto: data.nombreCompleto,
+        dniOCuit: data.dniOCuit,
       });
-    } catch (error) {
-      console.error(error);
-      handleAuthError(error.code);
-    } finally {
-      setLoading(false);
     }
+
+    // Después de crear el usuario en Mongo, consultamos el rol real
+    const meRes = await fetch('/api/me', { credentials: 'include' });
+    if (meRes.ok) {
+      const { user } = await meRes.json();
+      redirectByRole(router, user?.rol);
+    } else {
+      router.push('/');
+    }
+  } catch (error) {
+    handleAuthError(error.code);
+  } finally {
+    setLoading(false);
+  }
+};
+
+const loginWithGoogle = async () => {
+  const provider = new GoogleAuthProvider();
+  setLoading(true);
+  try {
+    const res = await signInWithPopup(auth, provider);
+    const token = await res.user.getIdToken();
+
+    await fetch('/api/usuarios', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        uid: res.user.uid,
+        nombreCompleto: res.user.displayName,
+        correo: res.user.email,
+        rol: 'cliente',
+      }),
+    });
+
+    // Igual que en onSubmit, consultamos el rol y redirigimos
+    const meRes = await fetch('/api/me', { credentials: 'include' });
+    if (meRes.ok) {
+            const { user } = await meRes.json();
+            redirectByRole(router, user?.rol);
+          } else {
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+          handleAuthError(error.code);
+        } finally {
+          setLoading(false);
+        }
   };
+
 
   if (authLoading || isAuthenticated) {
     return <Loading />;
