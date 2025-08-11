@@ -44,19 +44,21 @@ export default function UpdateProduct({
     modelo: product.modelo,
     n_serie: product.n_serie || "",
     titulo_de_producto: product.titulo_de_producto,
-    _id: product._id,
     destacados:product.destacados,
     descripcion: product.descripcion,
     n_electronica:product.n_electronica || '',
     usd:product.usd,
     usado:product.usado,
     vendido:product.vendido,
+    stock: product.stock || false,
     precio:product.precio||'',
     medidas:product.medidas || '',
     foto_1_1: product.foto_1_1 || "",
     foto_1_2: product.foto_1_2 || "",
     foto_1_3: product.foto_1_3 || "",
     foto_1_4: product.foto_1_4 || "",
+    descuento: product.descuento || '',
+    hide: product.hide || false,
   });
 
   const marcaDropdownRef = useRef(null);
@@ -279,7 +281,7 @@ export default function UpdateProduct({
                <div className="grid gap-4 mb-4 sm:grid-cols-2">       
               {/* Nombre */}
                 <div>
-                  <label htmlFor="nombreUpdate" className="block mb-2 text-sm font-medium text-gray-900" >Nombre</label>
+                  <label htmlFor="nombreUpdate" className="block mb-2 text-sm font-medium text-gray-900" >Nombre<spam className='text-xs text-red-500'>*</spam></label>
                   <div className="flex">
                     <input onChange={handleChangeInput} type="text" name="nombre" id="nombreUpdate" value={producto.nombre} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Nombre del producto"/>
                     {producto.destacados
@@ -290,18 +292,27 @@ export default function UpdateProduct({
 
                 {/* Marca */}
                 <div>
-                  <label htmlFor="marcaUpdate" className="block mb-2 text-sm font-medium text-gray-900">Marca</label>
+                  <label htmlFor="marcaUpdate" className="block mb-2 text-sm font-medium text-gray-900">Marca<span className='text-red-500'>*</span></label>
+
                   <div className="flex gap-4">
-                  <select onChange={handleChangeInput} name="marca" id="marcaUpdate" value={producto.marca} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" >
-                    {marcas.map((marca, index) => (
-                      <option key={index} value={marca}>
-                        {marca}
-                      </option>
-                    ))}
-                  </select>
+                    <select onChange={handleChangeInput} name="marca" id="marcaUpdate" value={producto.marca} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" >
+                      {marcas.map((marca, index) => (
+                        <option key={index} value={marca}>
+                          {marca}
+                        </option>
+                      ))}
+                    </select>
 
                     <div className="relative" ref={marcaDropdownRef}>
-                      <button aria-label="seleccionar marca" className="text-gray-800 bg-gray-50 hover:bg-gray-200 border border-gray-300 rounded-lg text-sm ml-auto inline-flex items-center w-auto h-full p-3" onClick={toggleMarca} onKeyDown={(e) => {if (e.key === "Enter") toggleMarca(e)}} tabIndex="0" >
+                      <button
+                      aria-label="seleccionar marca"
+                        className="text-gray-800 bg-gray-50 hover:bg-gray-200 border border-gray-300 rounded-lg text-sm ml-auto inline-flex items-center w-auto h-full p-3"
+                        onClick={toggleMarca}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") toggleMarca(e);
+                        }}
+                        tabIndex="0"
+                      >
                         <FaPlus />
                       </button>
 
@@ -315,16 +326,25 @@ export default function UpdateProduct({
                               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 mb-1"
                               placeholder="Ingrese una marca nueva"
                               onClick={(e) => e.stopPropagation()}
-                              onChange={(e) => setMarcaNueva(e.target.value)}
                               onKeyDown={(e) => {
-                                if (e.key === "Enter") handleAgregarNuevaMarca("marca", marcaNueva);
+                                if (e.key === "Enter")
+                                  handleAgregarNuevaMarca(
+                                    "marca",
+                                    e.target.value
+                                  );
                               }}
                             />
 
                             <button
                             aria-label="agregar nueva marca"
-                            onClick={() => handleAgregarNuevaMarca("marca", marcaNueva)}
-                              className="w-full rounded-lg m-auto px-4 py-2 text-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-500 focus:outline-none focus:ring-4">
+                              onClick={() =>
+                                handleAgregarNuevaMarca(
+                                  "marca",
+                                  document.getElementById("marcaNueva").value
+                                )
+                              }
+                              className="w-full rounded-lg m-auto px-4 py-2 text-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-500 focus:outline-none focus:ring-4"
+                            >
                               AGREGAR
                             </button>
                           </div>
@@ -336,19 +356,39 @@ export default function UpdateProduct({
 
                 {/* Categoría */}
                 <div>
-                  <label htmlFor="categoriaUpdate" className="block mb-2 text-sm font-medium text-gray-900">Categoría</label>
+                  <label
+                    htmlFor="categoriaUpdate"
+                    className="block mb-2 text-sm font-medium text-gray-900"
+                  >
+                    Categoría<span className='text-red-500'>*</span>
+                  </label>
 
                   <div className="flex gap-4">
-                  <select onChange={handleChangeInput} name="categoria" id="categoriaUpdate" value={producto.categoria}className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" >
-                        {categorias.map((categoria, index) => (
-                          <option key={index} value={categoria}>
-                            {categoria}
-                          </option>
-                        ))}
-                      </select>
+                    <select
+                      onChange={handleChangeInput}
+                      name="categoria"
+                      id="categoriaUpdate"
+                      value={producto.categoria}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                    >
+                      {categorias.map((categoria, index) => (
+                        <option key={index} value={categoria}>
+                          {categoria}
+                        </option>
+                      ))}
+                    </select>
 
                     <div className="relative" ref={categoriaDropdownRef}>
-                      <button aria-label="seleccionar categoria" className="text-gray-800 bg-gray-50 hover:bg-gray-200 border border-gray-300 rounded-lg text-sm ml-auto inline-flex items-center w-auto h-full p-3" onClick={toggleCategoria} onKeyDown={(e) => { if (e.key === "Enter") toggleCategoria(e); }}tabIndex="0"><FaPlus />
+                      <button
+                      aria-label="seleccionar categoria"
+                        className="text-gray-800 bg-gray-50 hover:bg-gray-200 border border-gray-300 rounded-lg text-sm ml-auto inline-flex items-center w-auto h-full p-3"
+                        onClick={toggleCategoria}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") toggleCategoria(e);
+                        }}
+                        tabIndex="0"
+                      >
+                        <FaPlus />
                       </button>
 
                       {isDropdownCategoriaOpen && (
@@ -360,14 +400,26 @@ export default function UpdateProduct({
                               id="categoriaNueva"
                               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 mb-1"
                               placeholder="Ingrese una categoría"
-                              onClick={(e) => e.stopPropagation()}
-                                onChange={(e) => setCategoriaNueva(e.target.value)}
-                                onKeyDown={(e) => {
-                                  if (e.key === "Enter")handleAgregarNuevaCategoria("categoria",categoriaNueva );}}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter")
+                                  handleAgregarNuevaCategoria(
+                                    "categoria",
+                                    e.target.value
+                                  );
+                              }}
                             />
 
-                            <button aria-label="agregar neuva categoria" onClick={() =>handleAgregarNuevaCategoria("categoria",categoriaNueva)}
-                              className="w-full rounded-lg m-auto px-4 py-2 text-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-500 focus:outline-none focus:ring-4">
+                            <button
+                            aria-label="agregar neuva categoria"
+                              onClick={() =>
+                                handleAgregarNuevaCategoria(
+                                  "categoria",
+                                  document.getElementById("categoriaNueva")
+                                    .value
+                                )
+                              }
+                              className="w-full rounded-lg m-auto px-4 py-2 text-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-500 focus:outline-none focus:ring-4"
+                            >
                               AGREGAR
                             </button>
                           </div>
@@ -377,13 +429,14 @@ export default function UpdateProduct({
                   </div>
                 </div>
 
+
                 {/* Modelo */}
                 <div>
                   <label
                     htmlFor="modeloUpdate"
                     className="block mb-2 text-sm font-medium text-gray-900"
                   >
-                    Modelo
+                    Modelo<spam className='text-xs text-red-500'>*</spam>
                   </label>
                   <input
                     onChange={handleChangeInput}
@@ -450,7 +503,7 @@ export default function UpdateProduct({
                 {/* Precio */}
                 <div>
                     <label htmlFor="precioUpdate" className="block mb-2 text-sm font-medium text-gray-900">
-                      Precio
+                      Precio<spam className='text-xs text-red-500'>*</spam>
                     </label>
                     <input
                       onChange={handleChangeInput}
@@ -461,15 +514,15 @@ export default function UpdateProduct({
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                       placeholder="$100.000"
                     />
-                    <div className='flex gap-2 mb-2'>
+                    {/* <div className='flex gap-2 mb-2'>
                       <input onChange={handleChangeInput} type="checkbox" name="usd" id="usdUpdate" checked={producto.usd}/>
                       <label htmlFor="usdUpdate" className="block  text-sm font-medium text-gray-900" >usd?</label>
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* Descripción */}
                 <div className="sm:col-span-2">
-                  <label htmlFor="descripcionUpdate" className="block mb-2 text-sm font-medium text-gray-900" >Descripción</label>
+                  <label htmlFor="descripcionUpdate" className="block mb-2 text-sm font-medium text-gray-900" >Descripción<spam className='text-xs text-red-500'>*</spam></label>
                   <textarea
                     onChange={handleChangeInput}
                     id="descripcionUpdate"
@@ -486,10 +539,18 @@ export default function UpdateProduct({
               <div className='flex gap-2 mb-4'>
                 <input onChange={handleChangeInput} type="checkbox" name="destacados" id="destacadosUpdate" checked={producto.destacados}/>
                 <label htmlFor="destacadosUpdate" className="block text-sm font-medium text-gray-900" >Destacado?</label>
+
                 <input onChange={handleChangeInput} type="checkbox" name="usado" id="usadoUpdate" checked={producto.usado}/>
                 <label htmlFor="usadoUpdate" className="block  text-sm font-medium text-gray-900" >Usado?</label>
-                <input onChange={handleChangeInput} type="checkbox" name="vendido" id="vendidoUpdate" checked={producto.vendido}/>
-                <label htmlFor="vendidoUpdate" className="block  text-sm font-medium text-gray-900" >vendido?</label>
+
+                <input onChange={handleChangeInput} type="checkbox" name="vendido" id="vendidoUpdate" checked={producto.vendido}/> 
+                <label htmlFor="vendidoUpdate" className="block  text-sm font-medium text-gray-900" >vendido</label>
+
+                <input onChange={handleChangeInput} type="checkbox" name="hide" id="hideUpdate" checked={producto.hide}/>
+                <label htmlFor="hideUpdate" className="block  text-sm font-medium text-gray-900" >Ocultar</label>
+                
+                <input onChange={handleChangeInput} type="checkbox" name="stock" id="stockUpdate" checked={producto.stock}/>
+                <label htmlFor="stockUpdate" className="block  text-sm font-medium text-gray-900" >Sin Stock</label>
               </div>
                 
               {/* Subir Archivo */}
