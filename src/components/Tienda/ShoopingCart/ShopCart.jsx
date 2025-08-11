@@ -2,7 +2,7 @@
 import { useState, useRef, useContext } from 'react';
 import { createRoot } from 'react-dom/client';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '../../Hooks/useAuth';
+import { useAuth } from '../../../Hooks/useAuth';
 import Image from 'next/image';
 import Link from 'next/link';
 import Swal from 'sweetalert2';
@@ -11,12 +11,11 @@ import userBank from '../../constants/userBank';
 import producto from '../../../../public/images/sinFoto.webp';
 import EmptyCart from '../EmptyCart/EmptyCart';
 import { CartContext } from '../../Context/ShoopingCartContext';
-// import { getInLocalStorage } from '../../../Hooks/localStorage'; // ❌ ya no se usa
 import handleGuardarPedido  from '../../../Utils/handleGuardarPedido';
 import handleComprarMercadoPago from '../../../Utils/handleCompraMercadoPago';
 import handleGuardarPedidoMercado from '../../../Utils/handleGuardarPedidoMercado';
-import FormularioFactura from '../../Perfil/FormularioFactura';
-import { solicitarNuevaDireccion } from '../../Perfil/solicitarNuevaDireccion';
+import FormularioFactura from '../../DashboardCliente/Perfil/FormularioFactura';
+import { solicitarNuevaDireccion } from '../../DashboardCliente/Perfil/solicitarNuevaDireccion';
 import notificador from '../../../Utils/notificador';
 
 const ShopCart = () => {
