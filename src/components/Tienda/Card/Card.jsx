@@ -52,7 +52,7 @@ const Card = ({ product, handleProductSelect }) => {
     }
   };
 
-  const agotado = product.vendido || !product.stock;
+  const agotado = product.vendido || product.stock;
 
   return (
     <div className={`${product.hide ? 'hidden' : ''} relative sm:w-48 md:w-64 lg:w-56 xl:w-72 lg:h-80 xl:h-96 md:min-h-[320px] min-w-[150px] lg:min-h-[360px] xl:min-h-[420px] list-none cursor-pointer`}>
