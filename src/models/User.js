@@ -1,42 +1,38 @@
-// src/models/User.js
 import mongoose from 'mongoose';
 
 const addressSchema = new mongoose.Schema({
-  pais: String,
-  provincia: String,
-  ciudad: String,
-  calle: String,
-  numero: String,
-  casaOTorre: String,
-  depto: String,
-  codigoPostal: String
+  pais: { type: String },
+  provincia: { type: String },
+  ciudad: { type: String },
+  calle: { type: String },
+  numero: { type: String },
+  casaOTorre: { type: String },
+  depto: { type: String },
+  codigoPostal: { type: String }
 }, { _id: false });
 
 const facturaSchema = new mongoose.Schema({
   tipo: { type: String, enum: ['A', 'B', 'C'], default: 'B' },
-  razonSocial: String,
-  cuit: String,
-  domicilio: String,
-  codigoPostal: String,
-  condicionIva: {
-    type: String,
-    enum: ['responsableInscripto', 'monotributista', 'exento', 'consumidorFinal'],
-    default: 'consumidorFinal'
-  }
+  razonSocial: { type: String},
+  cuit: { type: String },
+  domicilio: { type: String },
+  codigoPostal: { type: String },
+  condicionIva: { type: String, enum: ['responsableInscripto', 'monotributista', 'exento', 'consumidorFinal'], default: 'consumidorFinal' }
 }, { _id: false });
 
 const userSchema = new mongoose.Schema({
-  uid: { type: String, required: true, unique: true },
-  correo: { type: String, required: true, unique: true, lowercase: true, trim: true },
-  nombreCompleto: { type: String, trim: true },
-  telefono: { type: String, trim: true },
-  dniOCuit: { type: String, unique: true, sparse: true, trim: true },
+  uid: { type: String, required: true, unique: true }, // Firebase UID
+  nombreCompleto: { type: String },
+  correo: { type: String, required: true, unique: true },
+  dniOCuit: { type: String, unique: true, sparse: true },
+  telefono: { type: String },
   rol: { type: String, enum: ['cliente', 'admin'], default: 'cliente' },
-
-  direcciones: [addressSchema],           // Múltiples direcciones disponibles
-  datosFacturacion: facturaSchema,        // Facturación habitual
-
+  direccion: addressSchema,
+  factura: facturaSchema, // <-- Aquí se agregan los datos de facturación
   fechaRegistro: { type: Date, default: Date.now },
-}, { timestamps: true });
+  orders: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order' }]
+});
 
-export default mongoose.models.User || mongoose.model('User', userSchema);
+const usuario = mongoose.models.User || mongoose.model('User', userSchema);
+
+export default usuario;
