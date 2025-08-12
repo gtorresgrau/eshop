@@ -70,7 +70,7 @@ const Card = ({ product, handleProductSelect }) => {
                 VENDIDO
               </p>
             )}
-            {!product.stock && (
+            {product.stock && (
               <p className="absolute inset-0 flex items-center justify-center text-white text-3xl font-bold bg-red-400 bg-opacity-80 rounded-t-lg grayscale">
                 Sin Stock
               </p>
