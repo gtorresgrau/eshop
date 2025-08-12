@@ -2,6 +2,7 @@ import dynamic from 'next/dynamic';
 import { notFound } from 'next/navigation';
 import { defaultMetadata } from '../../../lib/metadata';
 import  fetchProduct  from '../../../Utils/fetchProduct';
+import Productos from '../../../components/Tienda/Productos';
 
 const Modal = dynamic(() => import('../../../components/Tienda/Modal/Modals'));
 const ClientLayout = dynamic(() => import('../../ClientLayout'));
@@ -55,6 +56,7 @@ export default async function ProductoPage({ params }) {
     <ClientLayout className="flex flex-col h-screen" title={product.name}>
       <main className="flex-1 flex items-center justify-center bg-white">
         <Modal selectedProduct={product} isDialog={false} />
+        <Productos />
       </main>
     </ClientLayout>
   );
