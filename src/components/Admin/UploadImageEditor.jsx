@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Modal, Box, Button } from '@mui/material';
+import Image from 'next/image';
 
 const modalStyle = {
   position: 'absolute',
@@ -95,7 +96,10 @@ export default function UploadImageEditor({ imageFile, open, onClose, onImagePro
       <Box sx={modalStyle} display="flex" flexDirection="column" alignItems="center">
         <h2 className='text-primary font-bold my-2'>¿Cómo querés ajustar esta imagen?</h2>
         {preview && (
-          <img
+          <Image 
+            unoptimized={true}
+            width={400}
+            height={400}
             src={preview}
             alt="Previsualización"
             style={{ maxWidth: '100%', maxHeight: 300, marginBottom: 16 }}

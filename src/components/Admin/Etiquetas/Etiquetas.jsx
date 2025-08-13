@@ -6,6 +6,7 @@ import CargarEmpresaModal from '../Comprobantes/CargarEmpresa';
 import useEmpresas from '../../../Hooks/useEmpresas'
 import {Button} from '../../ui/Buttons';
 import { FaWhatsapp } from 'react-icons/fa';
+import Image from 'next/image';
 
 
 function Etiquetas({ data }) {
@@ -14,7 +15,14 @@ function Etiquetas({ data }) {
       {/* Encabezado */}
       <div className="bg-primary text-white text-2xl font-bold p-2 flex justify-around items-center rounded-md uppercase text-center">
         <span>ENVÍO</span>
-        <img src="/logos/logo.webp" className="h-12 rounded-lg" />
+        <Image 
+          unoptimized={true} 
+          src="/logos/logo.webp" 
+          className="h-12 rounded-lg"
+          alt="Logo"
+          width={48}
+          height={48}
+         />
       </div>
 
       {/* Cuerpo en dos columnas */}

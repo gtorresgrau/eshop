@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react";
 import { Fade } from "react-awesome-reveal";
+import Image from "next/image";
 
 const images = [
   "/images/Gallery/1.webp",
@@ -43,19 +44,35 @@ const Gallery = () => {
 
         <div className='grid grid-cols-1 md:grid-cols-12 mt-16 mb-6 sm:space-x-6 space-y-6 md:space-y-0 px-6'>
           <div className='col-span-6 flex justify-center overflow-hidden rounded-3xl cursor-pointer' onClick={() => openModal(0)}>
-            <img src={images[0]} alt="Galería" loading="lazy" width={1000} height={805} className="inner-img" />
+            <Image 
+              unoptimized={true}
+              src={images[0]} 
+              alt="Galería" 
+              loading="lazy" 
+              width={1000} 
+              height={805} 
+              className="inner-img"
+             />
           </div>
           <div className='col-span-6 flex justify-center'>
             <div className="grid grid-rows-1 grid-flow-row gap-4">
               <div className="row-span-1 overflow-hidden rounded-3xl cursor-pointer" onClick={() => openModal(1)}>
-                <img src={images[1]} alt="Galería" loading="lazy" width={700} height={405} className="inner-img" />
+                <Image
+                  unoptimized={true} 
+                  src={images[1]} 
+                  alt="Galería" 
+                  loading="lazy" 
+                  width={700} 
+                  height={405} 
+                  className="inner-img"
+                 />
               </div>
               <div className='grid grid-cols-2 gap-2'>
                 <div className='overflow-hidden rounded-3xl cursor-pointer' onClick={() => openModal(2)}>
-                  <img src={images[2]} alt="Galería" loading="lazy" width={500} height={405} className="inner-img" />
+                  <Image unoptimized={true} src={images[2]} alt="Galería" loading="lazy" width={500} height={405} className="inner-img" />
                 </div>
                 <div className='overflow-hidden rounded-3xl cursor-pointer' onClick={() => openModal(3)}>
-                  <img src={images[3]} alt="Galería" loading="lazy" width={500} height={405} className="inner-img" />
+                  <Image unoptimized={true} src={images[3]} alt="Galería" loading="lazy" width={500} height={405} className="inner-img" />
                 </div>
               </div>
             </div>
@@ -67,19 +84,19 @@ const Gallery = () => {
             <div className="grid grid-rows-1 grid-flow-row gap-4">
               <div className='grid grid-cols-2 gap-2'>
                 <div className='overflow-hidden rounded-3xl cursor-pointer' onClick={() => openModal(4)}>
-                  <img src={images[4]} alt="Galería" loading="lazy" width={500} height={405} className="inner-img" />
+                  <Image unoptimized={true} src={images[4]} alt="Galería" loading="lazy" width={500} height={405} className="inner-img" />
                 </div>
                 <div className='overflow-hidden rounded-3xl cursor-pointer' onClick={() => openModal(5)}>
-                  <img src={images[5]} alt="Galería" loading="lazy" width={500} height={405} className="inner-img" />
+                  <Image unoptimized={true} src={images[5]} alt="Galería" loading="lazy" width={500} height={405} className="inner-img" />
                 </div>
               </div>
               <div className="row-span-1 overflow-hidden rounded-3xl cursor-pointer" onClick={() => openModal(2)}>
-                <img src={images[2]} alt="Galería" loading="lazy" width={700} height={405} className="inner-img" />
+                <Image unoptimized={true} src={images[2]} alt="Galería" loading="lazy" width={700} height={405} className="inner-img" />
               </div>
             </div>
           </div>
           <div className='col-span-6 flex justify-center overflow-hidden rounded-3xl cursor-pointer' onClick={() => openModal(6)}>
-            <img src={images[6]} alt="Galería" loading="lazy" width={1000} height={705} className="inner-img" />
+            <Image unoptimized={true} src={images[6]} alt="Galería" loading="lazy" width={1000} height={705} className="inner-img" />
           </div>
         </div>
       </div>
@@ -97,7 +114,7 @@ const Gallery = () => {
 
           <div className="relative max-w-3xl w-full px-4 flex flex-col items-center">
             <div key={currentIndex} className="transition-transform duration-500 ease-in-out transform opacity-100">
-              <img
+              <Image unoptimized={true}
                 src={images[currentIndex]}
                 alt={`Galería ${currentIndex + 1}`}
                 className="rounded-xl max-h-[80vh] object-contain"
