@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { toast } from 'react-toastify';
 import userData from '../../constants/userData';
 import Image from 'next/image';
+import GenerarFacturaArcaModal from '../../Facturacion/GenerarFacturaArcaModal';
 
 
 const Todos = ({search, filtroEstado, setSearch, setFiltroEstado, estados, pedidosPaginados, actualizandoId, setActualizandoId, paginaActual, totalPaginas, handleStados, cambiarPagina, setPedidosProcesando }) => {
@@ -622,6 +623,7 @@ const generarEtiquetas = async (pedidoUnico = null) => {
                                     <li><strong>Condición IVA:</strong> {pedidoSeleccionado.tipoFactura?.condicionIva}</li>
                                     <li><strong>Fecha:</strong> {new Date(pedidoSeleccionado.tipoFactura?.fecha).toLocaleDateString('es-AR')}</li>
                                   </ul>
+                                  <GenerarFacturaArcaModal pedido={pedidoSeleccionado} onClose={() => { setMostrarFacturaModal(false); setPedidoSeleccionado(null); }}/>
                                   <button onClick={cerrarModalFactura} className="mt-4 bg-gray-300 hover:bg-gray-400 text-black px-4 py-1 rounded" >Cerrar</button>
                                 </div>
                               </div>
