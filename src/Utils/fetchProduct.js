@@ -1,8 +1,9 @@
 const fetchProduct= async(nombre) => {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/productos/${nombre}`, {
-      cache: "no-store", // Evita caché y asegura datos frescos
-    });
+    if (!nombre) return null;
+    const base = (process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_SITE_URL || '').replace(/\/$/, '');
+    const url = `${base}/api/productos/${encodeURIComponent(String(nombre))}`;
+    const response = await fetch(url, { next: { revalidate: 60 } });
     if (!response.ok) return null;
     return await response.json();
   } catch (error) {

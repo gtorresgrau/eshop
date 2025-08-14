@@ -1,13 +1,15 @@
-import dynamic from 'next/dynamic';
+import NextDynamic  from 'next/dynamic';
 import { notFound } from 'next/navigation';
 import { defaultMetadata } from '../../../lib/metadata';
 import  fetchProduct  from '../../../Utils/fetchProduct';
 import Productos from '../../../components/Tienda/Productos';
+export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
-const Modal = dynamic(() => import('../../../components/Tienda/Modal/Modals'));
-const ClientLayout = dynamic(() => import('../../ClientLayout'));
+const Modal = NextDynamic (() => import('../../../components/Tienda/Modal/Modals'));
+const ClientLayout = NextDynamic (() => import('../../ClientLayout'));
 
-// ✅ `generateMetadata` usa valores dinámicos y valores por defecto
+
 export async function generateMetadata({ params }) {
   const product = await fetchProduct(params.nombre);
   //console.log('producto de meta:', product);
@@ -48,7 +50,9 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function ProductoPage({ params }) {
-  const product = await fetchProduct(params.nombre);
+  const prod = params?.nombre;
+  if (!prod) return notFound();
+  const product = await fetchProduct(prod);
 
   if (!product) return notFound(); // Muestra la página 404 si el producto no existe
 

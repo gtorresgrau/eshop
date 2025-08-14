@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import User from '../../../../models/User';
 import {connectDB} from '../../../../lib/mongodb';
 
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 export async function GET(request) {
     await connectDB();
   
