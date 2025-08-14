@@ -2,7 +2,6 @@
 'use client'
 import React, { useEffect, useState, Suspense } from "react";
 import dynamic from "next/dynamic";
-import ReactDOM from 'react-dom/client';
 import newFetchProductos from '../../Hooks/useNewFetchProducts';
 import { useSearchParams } from "next/navigation";
 import Swal from "sweetalert2";
@@ -109,12 +108,8 @@ export default function Admin() {
   }, [isModalClose, isModalOpen]);
 
 
-  const loadingElement = document.createElement('div');
-  const root = ReactDOM.createRoot(loadingElement);
-  const container = document.createElement('div');
-  root.render(<Loading />);
-  container.innerHTML = `<h2><strong>AGUARDE</strong></h2><br/><p> se está eliminando el producto</p>`;
-  container.appendChild(loadingElement);
+  // NOTE: avoid manipulating DOM or creating React roots inside components.
+  // Use the Loading component via JSX or the SweetAlert loading state instead.
 
   const handleEliminarArchivos = async (producto) => {
     try {
