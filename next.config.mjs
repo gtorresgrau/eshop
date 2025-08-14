@@ -3,22 +3,24 @@ import withBundleAnalyzer from '@next/bundle-analyzer';
 
 const isProd = process.env.NODE_ENV === 'production';
 
-const csp = `
-default-src 'self';
-base-uri 'self';
-form-action 'self';
-object-src 'none';
-manifest-src 'self';
-${isProd ? 'upgrade-insecure-requests;' : ''} 
-script-src 'self' ${isProd ? '' : "'unsafe-eval'"} 'unsafe-inline' https://www.googletagmanager.com https://sdk.mercadopago.com;
-style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-img-src 'self' data: blob: https://res.cloudinary.com https://*.mercadopago.com https://www.google-analytics.com;
-font-src 'self' https://fonts.gstatic.com;
-connect-src 'self' https://api.mercadopago.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://www.google-analytics.com https://stats.g.doubleclick.net;
-frame-src https://www.youtube.com https://drive.google.com https://*.mercadopago.com;
-frame-ancestors 'self';
-worker-src 'self' blob:;
-`.replace(/\s{2,}/g, ' ').trim();
+const directives = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "object-src 'none'",
+  "manifest-src 'self'",
+  isProd ? "upgrade-insecure-requests" : null,
+  `script-src 'self'${isProd ? '' : " 'unsafe-eval'"} 'unsafe-inline' https://www.googletagmanager.com https://sdk.mercadopago.com`,
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "img-src 'self' data: blob: https://res.cloudinary.com https://*.mercadopago.com https://www.google-analytics.com",
+  "font-src 'self' https://fonts.gstatic.com",
+  "connect-src 'self' https://api.mercadopago.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://www.google-analytics.com https://stats.g.doubleclick.net",
+  "frame-src https://www.youtube.com https://drive.google.com https://*.mercadopago.com",
+  "frame-ancestors 'self'",
+  "worker-src 'self' blob:",
+].filter(Boolean);
+
+const csp = directives.join('; ');
 
 const nextConfig = {
   images: {

@@ -1,7 +1,7 @@
 //src/componentes/AuthForm.jsx
 
 'use client';
-import React, { useState, Suspense, useEffect } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../Hooks/useAuth';
@@ -9,7 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons/faGoogle'
 import Image from 'next/image';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
@@ -228,7 +228,7 @@ const loginWithGoogle = async () => {
                   </button>
 
                   <button type="button" onClick={loginWithGoogle} className="mt-2 w-full flex justify-center items-center gap-2 text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" disabled={loading}>
-                    <FontAwesomeIcon icon={faGoogle} />
+                    <FontAwesomeIcon icon={faGoogle} fixedWidth className="w-4 h-4 align-[-0.125em]" aria-label='Google'/>
                     {loading ? <Loading /> : mode === 'login' ? 'Iniciar sesión con Google' : 'Crear cuenta con Google'}
                   </button>
 

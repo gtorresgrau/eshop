@@ -65,7 +65,7 @@ const CleanToolExplanation = () => {
       <div className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8">
         <div className="flex flex-row gap-1">
           <a
-            href="/docs/CleanTool_v2.0.exe"
+            href="/docs/CleanTool_v2.1.exe"
             download
             className="bg-green-500 flex flex-row text-white px-6 py-3 rounded-lg hover:bg-green-600 transition duration-300"
             title="Descargar CleanTool v2.0"
