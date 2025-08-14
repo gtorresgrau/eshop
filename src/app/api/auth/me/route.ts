@@ -3,6 +3,8 @@ import { cookies } from 'next/headers';
 import { verify } from 'jsonwebtoken';
 import { NextResponse } from 'next/server';
 
+export const runtime = "nodejs";
+
 export async function GET() {
   const token = cookies().get('token')?.value;
 

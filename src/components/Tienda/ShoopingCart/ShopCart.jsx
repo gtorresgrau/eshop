@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef, useContext } from 'react';
+import { useState, useRef, useContext, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../../Hooks/useAuth';
@@ -31,6 +31,14 @@ const ShopCart = () => {
 
   const formatCurrency = (num) =>
     num.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
+
+  useEffect(() => {
+  (async () => {
+    const r = await fetch("/api/auth/me", { cache: "no-store" });
+    const data = r.ok ? await r.json() : { user: null };
+    setUser(data.user);
+  })();
+}, []);
 
   const handleComprar = async (descuento = 0) => {
     if (cart.length === 0) {

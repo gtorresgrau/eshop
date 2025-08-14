@@ -2,9 +2,10 @@
 
 import { NextResponse } from 'next/server';
 
+export const runtime = "nodejs";
+
 export async function POST() {
-  const response = NextResponse.json({ message: 'Sesión cerrada' });
-  //console.log('estoy cerrando la sesión en logout.ts'); 
+  const response = NextResponse.json({ok: true, message: 'Sesión cerrada' });
   response.cookies.delete('token'); // Eliminar la cookie 'token'
   response.cookies.delete('refreshToken'); // Eliminar la cookie 'refreshToken'
   // Eliminar la cookie asegurándote que los valores coincidan con la creación
@@ -14,6 +15,7 @@ export async function POST() {
     httpOnly: true,              // Debe coincidir también si la cookie original era httpOnly
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
+    maxAge: 0,
   }); 
 
   return response;
