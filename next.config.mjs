@@ -17,7 +17,7 @@ const directives = [
   "img-src 'self' data: blob: https://res.cloudinary.com https://*.mercadopago.com https://www.google-analytics.com",
   "font-src 'self' https://fonts.gstatic.com",
   "connect-src 'self' https://api.mercadopago.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.google-analytics.com https://stats.g.doubleclick.net https://www.googleapis.com",
-  "frame-src https://www.youtube.com https://drive.google.com https://*.mercadopago.com",
+  "frame-src https://www.youtube.com https://drive.google.com https://*.mercadopago.com https://eshop-34a07.firebaseapp.com https://*.firebaseapp.com https://*.web.app",
   "frame-ancestors 'self'",
   "worker-src 'self' blob:",
 ].filter(Boolean);
@@ -37,6 +37,7 @@ const nextConfig = {
       {
         source: "/:path*",
         headers: [
+          { key: "Cross-Origin-Opener-Policy", value: "same-origin-allow-popups" },
           { key: "Content-Security-Policy", value: csp.replace(/\s{2,}/g, " ").trim() },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
