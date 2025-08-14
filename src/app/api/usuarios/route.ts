@@ -1,9 +1,10 @@
 //app/api/usuarios/route.ts
+export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
 import { connectDB } from '../../../lib/mongodb';
 import Usuario from '../../../models/User';
 import jwt from 'jsonwebtoken';
-import { auth } from '../../../../pages/api/firebaseAdminConfig';
+import { auth } from '../../../lib/firebaseAdmin';
 
 export async function POST(req: Request) {
     try {

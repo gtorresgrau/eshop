@@ -15,7 +15,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import handleAuthError from '../../Utils/handleErrorsFirebase';
 import { signIn, signUp } from '../../lib/firebase';
-import { auth } from '../../../pages/api/firebase';
+import { auth } from '../../lib/firebaseClient';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 
 const Loading = dynamic(() => import('../Loading/Loading'));

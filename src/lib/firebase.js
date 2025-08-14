@@ -5,7 +5,7 @@ import {
     signInWithPopup,
     GoogleAuthProvider,
 } from 'firebase/auth';
-import { auth } from '../../pages/api/firebase'; 
+import { auth } from './firebaseClient'; 
 
 //------------------ Auth --------------------///
 

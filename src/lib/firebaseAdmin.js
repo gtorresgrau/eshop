@@ -1,7 +1,6 @@
-//pages/api/firebaseAdminConfig.js
 import admin from 'firebase-admin';
 
-if (!admin.apps.length) {
+if (!admin.apps || admin.apps.length === 0) {
   try {
     admin.initializeApp({
       credential: admin.credential.cert({
@@ -11,7 +10,7 @@ if (!admin.apps.length) {
       }),
     });
   } catch (error) {
-    console.error("Error al inicializar Firebase Admin:", error);
+    console.error('Error initializing Firebase Admin:', error);
   }
 }
 
