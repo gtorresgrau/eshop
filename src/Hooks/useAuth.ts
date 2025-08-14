@@ -15,7 +15,7 @@ export function useAuth() {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await fetch('/api/me');
+        const res = await fetch('/api/auth/me');
         if (!res.ok) throw new Error('No autorizado');
 
         const data = await res.json();

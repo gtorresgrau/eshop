@@ -14,7 +14,7 @@ const directives = [
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "img-src 'self' data: blob: https://res.cloudinary.com https://*.mercadopago.com https://www.google-analytics.com",
   "font-src 'self' https://fonts.gstatic.com",
-  "connect-src 'self' https://api.mercadopago.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://www.google-analytics.com https://stats.g.doubleclick.net",
+  "connect-src 'self' https://api.mercadopago.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.google-analytics.com https://stats.g.doubleclick.net",
   "frame-src https://www.youtube.com https://drive.google.com https://*.mercadopago.com",
   "frame-ancestors 'self'",
   "worker-src 'self' blob:",

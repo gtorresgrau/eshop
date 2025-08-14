@@ -77,7 +77,7 @@ const onSubmit = async (data) => {
     }
 
     // Después de crear el usuario en Mongo, consultamos el rol real
-    const meRes = await fetch('/api/me', { credentials: 'include' });
+    const meRes = await fetch('/api/auth/me', { credentials: 'include' });
     if (meRes.ok) {
       const { user } = await meRes.json();
       redirectByRole(router, user?.rol);
@@ -113,7 +113,7 @@ const loginWithGoogle = async () => {
     });
 
     // Igual que en onSubmit, consultamos el rol y redirigimos
-    const meRes = await fetch('/api/me', { credentials: 'include' });
+    const meRes = await fetch('/api/auth/me', { credentials: 'include' });
     if (meRes.ok) {
             const { user } = await meRes.json();
             redirectByRole(router, user?.rol);
