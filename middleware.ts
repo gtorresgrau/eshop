@@ -30,8 +30,8 @@ export async function middleware(request: NextRequest) {
     if (token && (pathname.startsWith('/user/Login') || pathname.startsWith('/user/Register'))) {
       try {
         const { payload } = await verifyToken(token);
-        // IMPORTANTE: unificar claim. Usa "role" o cambia login para emitir "rol".
-        const role = (payload as any).role as string | undefined; 
+          // IMPORTANTE: soportar ambos claims ('role' en inglés o 'rol' en español)
+          const role = ((payload as any).role ?? (payload as any).rol) as string | undefined;
         const redirectPath = role === 'admin' ? '/Admin' : '/Dashboard';
         return NextResponse.redirect(new URL(redirectPath, origin));
       } catch {
@@ -49,8 +49,9 @@ export async function middleware(request: NextRequest) {
 
   // 3) Validar token
   try {
-    const { payload } = await verifyToken(token);
-    const role = (payload as any).role as string | undefined;
+  const { payload } = await verifyToken(token);
+  // Soportar ambos nombres de claim: 'role' ó 'rol'
+  const role = ((payload as any).role ?? (payload as any).rol) as string | undefined;
 
     // 3.a) Guardas de rol por segmento
     if (pathname.startsWith(ADMIN_PREFIX) && role !== 'admin') {
