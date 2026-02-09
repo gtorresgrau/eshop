@@ -39,7 +39,7 @@ export default function UploadImageEditor({ imageFile, open, onClose, onImagePro
     const targetSize = 400;
 
     return new Promise((resolve, reject) => {
-      const img = new Image();
+      const img = new window.Image();
       img.onload = () => {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');

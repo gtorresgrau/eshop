@@ -94,7 +94,7 @@ const generarPDF = async (empresa, items) => {
     doc.text('Este documento no es válido como factura, es un presupuesto con impuestos incluidos.', 30, 285)
 
     // 🌐 URL clickeable debajo
-    doc.textWithLink('Para ver más productos puede ingresar en www.centralcamshop.com', 30, 291, { url: 'https://www.centralcamshop.com' })
+    doc.textWithLink('Para ver más productos puede ingresar en www.eshopdevice.com', 30, 291, { url: 'https://www.eshopdevice.com' })
 
     const pdfBlob = doc.output('blob')
     const file = new File([pdfBlob], `presupuesto_${empresa.nombre}.pdf`, {

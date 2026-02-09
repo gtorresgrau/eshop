@@ -149,9 +149,48 @@ const Comprobantes = () => {
         // ✅ Generar PDF
         const pdf = await generarPDF(empresa, items, tipoDocumento, fecha, pagos)
   
+        // 💾 Guardar comprobante en base de datos
+        try {
+          const comprobanteData = {
+            tipo: tipoDocumento,
+            fecha: fecha,
+            empresa: {
+              nombre: empresa.nombre,
+              direccion: empresa.direccion,
+              mail: empresa.mail,
+              telefono: empresa.telefono,
+              cuil: empresa.cuil,
+              tipo: empresa.tipo,
+              observaciones: empresa.observaciones
+            },
+            items: items.map(item => ({
+              cantidad: item.cantidad,
+              producto: item.producto,
+              codigo: item.codigo,
+              precio: item.precio,
+              usd: item.usd || false,
+              dolar: item.dolar || 1
+            })),
+            pagos: tipoDocumento === 'recibo' ? pagos : [],
+            total: calcularTotal()
+          };
+
+          const resComprobante = await fetch('/api/comprobantes', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(comprobanteData)
+          });
+
+          if (!resComprobante.ok) {
+            console.error('Error al guardar comprobante');
+          }
+        } catch (error) {
+          console.error('Error al guardar comprobante:', error);
+        }
+  
         Swal.fire({
           title: 'PDF generado',
-          text: 'El PDF ha sido generado',
+          text: 'El PDF ha sido generado y guardado en el historial',
           icon: 'success',
           showCancelButton: true,
           confirmButtonText: 'Sí, compartir',
