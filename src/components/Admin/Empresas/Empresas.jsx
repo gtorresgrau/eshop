@@ -7,6 +7,7 @@ import { Button } from '../../../components/ui/Buttons';
 import { Card, CardContent } from '../../../components/ui/Card';
 import Pagination from '@mui/material/Pagination';
 import TextField from '@mui/material/TextField';
+import HistorialEmpresaModal from './HistorialEmpresa';
 
 export default function EmpresaForm() {
   const { empresas, fetchEmpresas } = useEmpresas();
@@ -158,6 +159,7 @@ export default function EmpresaForm() {
               <Button size="sm" variant="destructive" onClick={() => handleDelete(empresa._id)}>
                 Eliminar
               </Button>
+              <HistorialEmpresaModal empresa={empresa} />
             </div>
           </CardContent>
         </Card>
