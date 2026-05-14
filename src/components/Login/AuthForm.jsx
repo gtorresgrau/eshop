@@ -176,7 +176,7 @@ const loginWithGoogle = async () => {
                       </button>
                     </div>
                     {errors.password
-                      ? <p className="text-sm text-red-600">{errors.password.message as string}</p>
+                      ? <p className="text-sm text-red-600">{errors.password.message}</p>
                       : mode === 'register' && <p className="text-xs text-gray-400 mt-1">Mínimo 6 caracteres</p>
                     }
                   </div>
