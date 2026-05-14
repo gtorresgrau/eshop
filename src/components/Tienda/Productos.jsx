@@ -20,7 +20,9 @@ export default function Productos() {
   useEffect(() => {
     const fetchProductos = async () => {
       setIsLoading(true);
+      console.log('[Productos.jsx] Iniciando fetch...');
       const res = await newFetchProductos();
+      console.log('[Productos.jsx] Resultado:', Array.isArray(res) ? `${res.length} productos` : res);
       setProductos(res);
       setIsLoading(false);
     };

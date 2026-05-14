@@ -31,7 +31,7 @@ export async function POST(req: Request) {
         const cleanDniOCuit = dniOCuit?.trim() || undefined;
         //  Validación de dniOCuit
         if (cleanDniOCuit) {
-            const usuarioConMismoDni = await Usuario.findOne({ dniOCuit: cleanDniOCuit });
+            const usuarioConMismoDni = await Usuario.findOne({ dniOCuit: cleanDniOCuit, uid: { $ne: uid } });
             if (usuarioConMismoDni) {
                 return NextResponse.json(
                     { error: 'DNI/CUIT ya está en uso' },

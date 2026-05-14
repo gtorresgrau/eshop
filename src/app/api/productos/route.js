@@ -10,7 +10,9 @@ export async function GET(req) {
     const { searchParams } = new URL(req.url);
     const q = searchParams.get('q');
     const query = q ? { $text: { $search: q } } : {};
+    console.log('[API/productos] Query:', JSON.stringify(query));
     const productos = await Producto.find(query).limit(50).lean();
+    console.log('[API/productos] Productos encontrados:', productos.length);
     return NextResponse.json({ productos });
   } catch (error) {
     console.error('Error fetching productos:', error);

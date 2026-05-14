@@ -10,7 +10,7 @@ const PUBLIC_PATHS = new Set<string>([
 ]);
 
 const ADMIN_PREFIX = '/Admin';
-const CLIENT_PREFIXES = ['/Dashboard', '/perfil']; // rutas sólo para clientes
+const CLIENT_PREFIXES = ['/Dashboard', '/perfil', '/Ordenes']; // rutas sólo para clientes
 
 // Verificación de JWT con algoritmo explícito
 async function verifyToken(token: string) {

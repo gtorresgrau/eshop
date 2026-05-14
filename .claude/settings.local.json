@@ -4,7 +4,11 @@
       "Bash(Get-ChildItem -Path \"d:\\\\WEBS\\\\eshop\" -Recurse -Directory)",
       "Bash(Select-Object -ExpandProperty FullName)",
       "Bash(Get-ChildItem -Path \"d:\\\\WEBS\\\\eshop\" -Force)",
-      "Bash(Select-Object Name, FullName)"
+      "Bash(Select-Object Name, FullName)",
+      "Bash(Get-ChildItem -Path \"d:\\\\WEBS\\\\eshop\" -Recurse -Depth 2 -ErrorAction SilentlyContinue)",
+      "Bash(Select-Object FullName)",
+      "Bash(xargs grep -l \"rateLimit\\\\|RateLimit\\\\|csrf\\\\|CSRF\")",
+      "Bash(xargs grep -l \"password\\\\|hash\\\\|bcrypt\")"
     ]
   }
 }

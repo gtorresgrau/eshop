@@ -166,13 +166,19 @@ const loginWithGoogle = async () => {
                         type={showPassword ? 'text' : 'password'}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-3 focus:ring-primary focus:border-primary block w-full p-2.5 placeholder-gray-400"
                         placeholder="••••••••"
-                        {...register('password', { required: true })}
+                        {...register('password', {
+                          required: 'La contraseña es requerida',
+                          minLength: mode === 'register' ? { value: 6, message: 'La contraseña debe tener al menos 6 caracteres' } : undefined,
+                        })}
                       />
                       <button type="button" onClick={togglePasswordVisibility} className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5" aria-label="ver password">
                         <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                       </button>
                     </div>
-                    {errors.password && <p className="text-sm text-red-600">Este campo es requerido</p>}
+                    {errors.password
+                      ? <p className="text-sm text-red-600">{errors.password.message as string}</p>
+                      : mode === 'register' && <p className="text-xs text-gray-400 mt-1">Mínimo 6 caracteres</p>
+                    }
                   </div>
 
                   {mode === 'register' && (
