@@ -29,10 +29,8 @@ const showToast = (message, type = 'success') => {
  */
 export const getProductUrl = (product) => {
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
-  const slug = product.nombre
-    .trim()
-    .replace(/\s+/g, '_');
-  return `${origin}/productos/${slug}`;
+  const slug = product.nombre.trim().replace(/\s+/g, '_');
+  return `${origin}/productos/${encodeURIComponent(slug)}`;
 };
 
 const handleShare = async (arg1, arg2) => {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { FaBackward, FaForward } from 'react-icons/fa';
+import SearchInput from '../../Search/SearchInput';
 import Swal from 'sweetalert2';
 import Loading from '../../Loading/Loading';
 // import handleGenerarAndreani from '../../../Utils/handleGenerarAndreani'
@@ -351,7 +352,13 @@ const generarEtiquetas = async (pedidoUnico = null) => {
           <section>
           {/* Filtros */}
           <div className="mb-4 flex flex-col sm:flex-row flex-wrap gap-4">
-            <input type="text" placeholder="Buscar por nombre o correo..." value={search} onChange={(e) => {setSearch(e.target.value); cambiarPagina(1);;}} className="border px-3 py-2 rounded w-full sm:w-60" />
+            <SearchInput
+              value={search}
+              onChange={(e) => { setSearch(e.target.value); cambiarPagina(1); }}
+              onClear={() => { setSearch(''); cambiarPagina(1); }}
+              placeholder="Buscar por nombre o correo..."
+              className="w-full sm:w-60"
+            />
             <select value={filtroEstado} onChange={(e) => {setFiltroEstado(e.target.value); cambiarPagina(1);; }} className="border px-3 py-2 rounded w-full sm:w-auto">
               <option value="todos">Todos los estados</option>
               {estados.map((estado) => (

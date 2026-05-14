@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"d:\\\\WEBS\\\\eshop\" -Recurse -Directory)",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(Get-ChildItem -Path \"d:\\\\WEBS\\\\eshop\" -Force)",
+      "Bash(Select-Object Name, FullName)"
+    ]
+  }
+}

@@ -58,7 +58,7 @@ export default async function ProductoPage({ params }) {
 
   return (
     <ClientLayout className="flex flex-col h-screen" title={product.name}>
-      <main className="flex-1 flex items-center justify-center bg-white">
+      <main className="flex-1 flex-col items-center justify-center bg-white">
         <Modal selectedProduct={product} isDialog={false} />
         <Productos />
       </main>
