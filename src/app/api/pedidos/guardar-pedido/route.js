@@ -69,21 +69,24 @@ export async function POST(req) {
     const usuario = await User.findOne({ uid });
     const direccionEnvio = body.direccionEnvio;
     const tipoFactura = body.tipoFactura || null;
+    const tipoEntrega = body.tipoEntrega || 'envio';
     const metadata = { uid: uid, cart: cart}
     const nuevaOrdenData = {
       paymentId: paymentId,
       usuarioUid: uid,
       usuarioInfo: {
-        nombreCompleto: usuario?.nombreCompleto || "",
+        nombreCompleto: body.user?.nombreCompleto || usuario?.nombreCompleto || "",
         correo:
+          body.user?.correo ||
           usuario?.correo ||
           (paymentMethod === "mercadopago" && payment?.payer?.email) ||
           body.emailUsuario ||
           "",
-        telefono:usuario?.telefono,
+        telefono: body.user?.telefono || usuario?.telefono || '',
       },
       metadata: metadata,
       tipoFactura,
+      tipoEntrega,
       direccionEnvio,
       pref_id:pref_id,
       init_point,

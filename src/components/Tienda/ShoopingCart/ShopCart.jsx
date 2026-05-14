@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef, useContext, useEffect } from 'react';
+import { useState, useRef, useContext } from 'react';
 import { createRoot } from 'react-dom/client';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../../Hooks/useAuth';
@@ -15,7 +15,7 @@ import handleGuardarPedido  from '../../../Utils/handleGuardarPedido';
 import handleComprarMercadoPago from '../../../Utils/handleCompraMercadoPago';
 import handleGuardarPedidoMercado from '../../../Utils/handleGuardarPedidoMercado';
 import FormularioFactura from '../../DashboardCliente/Perfil/FormularioFactura';
-import { solicitarNuevaDireccion } from '../../DashboardCliente/Perfil/solicitarNuevaDireccion';
+import { solicitarEntrega } from '../../../Utils/solicitarEntrega';
 import notificador from '../../../Utils/notificador';
 
 const ShopCart = () => {
@@ -31,14 +31,6 @@ const ShopCart = () => {
 
   const formatCurrency = (num) =>
     num.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
-
-  useEffect(() => {
-  (async () => {
-    const r = await fetch("/api/auth/me", { cache: "no-store" });
-    const data = r.ok ? await r.json() : { user: null };
-    setUser(data.user);
-  })();
-}, []);
 
   const handleComprar = async (descuento = 0) => {
     if (cart.length === 0) {
@@ -116,18 +108,22 @@ const ShopCart = () => {
         },
       };
 
-      const nuevaDireccion = await solicitarNuevaDireccion();
-      if (!nuevaDireccion) throw new Error('Debes ingresar una dirección de envío');
+      // Selección de tipo de entrega (retiro en local o envío) + teléfono
+      const entrega = await solicitarEntrega(datosFactura.telefono || '');
+      if (!entrega) throw new Error('Debes seleccionar cómo recibís tu pedido');
 
-      userCompleto.direccionEnvio = nuevaDireccion;
+      userCompleto.tipoEntrega = entrega.tipoEntrega;
       userCompleto.nombreCompleto =
         userCompleto.nombreCompleto || userCompleto.displayName || userCompleto.factura?.razonSocial || '';
       userCompleto.dniOCuit =
         userCompleto.dniOCuit || userCompleto.factura?.cuit || userCompleto.documento || '';
-      userCompleto.telefono =
-        userCompleto.telefono || userCompleto.direccionEnvio?.telefono || '';
-      userCompleto.correo =
-        userCompleto.correo || userCompleto.email || '';
+      userCompleto.telefono = entrega.telefono || datosFactura.telefono || userCompleto.telefono || '';
+      userCompleto.correo = userCompleto.correo || userCompleto.email || '';
+      userCompleto.direccionEnvio = {
+        tipoEntrega: entrega.tipoEntrega,
+        telefono: entrega.telefono,
+        referencia: entrega.tipoEntrega === 'retiro' ? 'Retiro en local' : 'Envío a coordinar',
+      };
       userCompleto.direccion = userCompleto.direccionEnvio;
 
       // Precios por método de pago

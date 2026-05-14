@@ -11,7 +11,7 @@ const handleGuardarPedidoMercado = async (user, cart, compraData) => {
   }
 
   // Validar campos obligatorios del usuario
-  const camposRequeridos = ['nombreCompleto', 'telefono', 'direccion', 'correo'];
+  const camposRequeridos = ['nombreCompleto', 'telefono', 'correo'];
   const camposFaltantes = camposRequeridos.filter(campo => !user[campo]);
 
   if (camposFaltantes.length > 0) {
@@ -61,6 +61,7 @@ const handleGuardarPedidoMercado = async (user, cart, compraData) => {
           direccion: user.direccion,
         },
         direccionEnvio: user.direccionEnvio,
+        tipoEntrega: user.tipoEntrega || 'envio',
         tipoFactura: {
           tipo: user.factura.tipo,
           razonSocial: user.factura.razonSocial,

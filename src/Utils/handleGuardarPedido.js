@@ -9,7 +9,7 @@ const handleGuardarPedido = async (user, cart,nuevoDescuento) => {
   }
 
   // Validar campos obligatorios del usuario
-  const camposRequeridos = ['nombreCompleto', 'telefono', 'direccion', 'correo'];
+  const camposRequeridos = ['nombreCompleto', 'telefono', 'correo'];
   const camposFaltantes = camposRequeridos.filter(campo => !user[campo]);
 
   if (camposFaltantes.length > 0) {
@@ -55,7 +55,8 @@ const handleGuardarPedido = async (user, cart,nuevoDescuento) => {
           telefono: user.telefono,
           direccion: user.direccion,
         },
-        direccionEnvio: user.direccionEnvio,
+        direccionEnvio: user.direccionEnvio || user.direccion,
+        tipoEntrega: user.tipoEntrega || 'envio',
         tipoFactura:  {
           tipo: user.factura.tipo,
           razonSocial: user.factura.razonSocial,
@@ -67,7 +68,6 @@ const handleGuardarPedido = async (user, cart,nuevoDescuento) => {
         },
         etiquetaEnvio: user.etiquetaEnvio || '',
         external_reference: `order_${user.uid}_${new Date().getTime()}`,
-        direccionEnvio: user.direccionEnvio || user.direccion,
         pref_id: '',
         paymentId: `transf_intent_${new Date().getTime()}`,
         paymentMethod: 'transferencia',

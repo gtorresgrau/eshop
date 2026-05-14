@@ -4,7 +4,7 @@ import { CartContext } from '../../../components/Context/ShoopingCartContext';
 import addToCart from '../../../Utils/addToCart';
 import userData from '../../../components/constants/userData';
 import ProductoDetalle from './ProductoDetalle';
-import handleShare from '../../../Utils/handleShare';
+import handleShare, { getProductUrl } from '../../../Utils/handleShare';
 
 const Modal = ({ selectedProduct, closeModal, isDialog = true }) => {
   const [cart, setCart] = useContext(CartContext);
@@ -27,10 +27,8 @@ const Modal = ({ selectedProduct, closeModal, isDialog = true }) => {
 
   const handleClose = closeModal || (() => {});
 
-  const getProductLink = (p) => {
-    const nombreURL = p.nombre.replace(/\s+/g, '_');
-    return `${typeof window !== 'undefined' ? window.location.origin : ''}/productos/${nombreURL}`;
-  };
+  // Usa la misma función centralizada que handleShare para evitar inconsistencias
+  const getProductLink = (p) => getProductUrl(p);
 
   const linkProducto = getProductLink(selectedProduct);
   const consultMessage = `Hola, quería consultar por ${selectedProduct.nombre} (${selectedProduct.cod_producto}). Link: ${linkProducto}`;
