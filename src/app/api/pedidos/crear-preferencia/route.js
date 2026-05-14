@@ -15,10 +15,17 @@ export async function POST(req) {
     //console.log("cart:", cart);
     //console.log("uid:", uid);
 
+    const parsePrecio = (valor) => {
+      const raw = String(valor ?? '0').replace(/[^\d,.-]/g, '');
+      // Elimina el separador de miles (punto antes de 3 dígitos) y convierte coma decimal
+      const normalized = raw.replace(/\.(?=\d{3}(?:[,.]|$))/g, '').replace(',', '.');
+      return parseFloat(normalized) || 0;
+    };
+
     const items = cart.map(item => ({
       id: item.cod_producto,
       title: item.nombre,
-      unit_price: Number(item.precio),
+      unit_price: parsePrecio(item.precio),
       quantity: Number(item.quantity),
       currency_id: "ARS",
     }));
@@ -34,10 +41,9 @@ export async function POST(req) {
         notification_url: `${userData.urlHttps}/api/pedidos/webhook`,
         external_reference: external_reference,
         back_urls: {
-          // success: `http://localhost:3000/mp/success`,
-          // failure: `http://localhost:3000/mp/failure`,
           success: `${userData.urlHttps}/mp/success`,
           failure: `${userData.urlHttps}/mp/failure`,
+          pending: `${userData.urlHttps}/mp/pending`,
         },
         auto_return: "approved",
       }

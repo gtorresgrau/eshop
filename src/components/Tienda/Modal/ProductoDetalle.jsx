@@ -19,7 +19,7 @@ const ProductoDetalle = ({
   const path = usePathname();
   const router = useRouter();
   const { user, isAuthenticated, isAdmin, isClient } = useAuth();
-  const agotado = selectedProduct.vendido || !selectedProduct.stock;
+  const agotado = selectedProduct.vendido === true || selectedProduct.stock === false;
   const precioNum = Number(
     typeof selectedProduct.precio === "string"
       ? selectedProduct.precio.replace(/[^\d.,-]/g, "").replace(".", "").replace(",", ".")

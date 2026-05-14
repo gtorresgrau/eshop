@@ -22,10 +22,10 @@ const handleGuardarPedidoMercado = async (user, cart, compraData) => {
   }
 
   // Validar estructura del carrito
-  const carritoValido = cart.every(item => 
-    item.cod_producto && 
-    item.quantity > 0 && 
-    item.precio > 0 &&
+  const carritoValido = cart.every(item =>
+    item.cod_producto &&
+    item.quantity > 0 &&
+    Number(item.precio) > 0 &&
     item.nombre
   );
 
@@ -52,6 +52,7 @@ const handleGuardarPedidoMercado = async (user, cart, compraData) => {
           precio: item.precio,
           quantity: item.quantity,
           titulo_de_producto: item.titulo_de_producto || '',
+          foto_1_1: item.foto_1_1 || '',
         })),
         user: {
           uid: user.uid,
@@ -77,7 +78,7 @@ const handleGuardarPedidoMercado = async (user, cart, compraData) => {
         paymentId: prefId,
         paymentMethod: 'mercadopago',
         estado: 'pendiente',
-        total: cart.reduce((acc, item) => acc + (item.precio * item.quantity), 0),
+        total: cart.reduce((acc, item) => acc + (Number(item.precio) * item.quantity), 0),
       }),
     });
 

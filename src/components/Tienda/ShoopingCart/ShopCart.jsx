@@ -49,7 +49,7 @@ const ShopCart = () => {
         text: 'Debes iniciar sesión para realizar la compra.',
         confirmButtonText: 'Ir a Iniciar sesión'
       });
-      router.push('/Login');
+      router.push('/user/Login');
       return;
     }
 
