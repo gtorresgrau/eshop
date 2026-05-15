@@ -71,6 +71,12 @@ const productoSchema = new mongoose.Schema({
         default: true,
         required: false
     },
+    cantidad: {
+        type: Number,
+        default: 1,
+        min: 0,
+        required: false
+    },
     medidas: { 
         type: String, 
         required: false 

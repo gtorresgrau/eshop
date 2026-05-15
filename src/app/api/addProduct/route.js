@@ -7,8 +7,11 @@ export async function POST(request) {
 
   const data = await request.formData();
   const productData = {};
+  const booleanKeys = ['destacados', 'stock', 'vendido', 'hide', 'usado', 'usd'];
   data.forEach((value, key) => {
-    productData[key] = value;
+    if (booleanKeys.includes(key)) productData[key] = value === 'true';
+    else if (key === 'cantidad') productData[key] = Number(value) || 0;
+    else productData[key] = value;
   });
 
   try {

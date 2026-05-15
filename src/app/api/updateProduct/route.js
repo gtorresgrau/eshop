@@ -10,8 +10,11 @@ export async function PUT(request) {
   // console.log('back Data:', data);
   
   const productData = {};
+  const booleanKeys = ['destacados', 'stock', 'vendido', 'hide', 'usado', 'usd'];
   data.forEach((value, key) => {
-    productData[key] = key === 'destacados' ? (value === 'true') : value;
+    if (booleanKeys.includes(key)) productData[key] = value === 'true';
+    else if (key === 'cantidad') productData[key] = Number(value) || 0;
+    else productData[key] = value;
   });
 
   const { _id, ...updateData } = productData;

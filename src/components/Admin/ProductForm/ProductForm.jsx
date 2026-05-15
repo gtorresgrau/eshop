@@ -179,8 +179,8 @@ export default function ProductForm({
           <input onChange={onChange} type="checkbox" name="hide" id="hide" checked={!!producto.hide} />
           <label htmlFor="hide" className="block text-sm font-medium text-gray-900">Ocultar</label>
 
-          <input onChange={onChange} type="checkbox" name="stock" id="stock" checked={!!producto.stock} />
-          <label htmlFor="stock" className="block text-sm font-medium text-gray-900">Sin Stock</label>
+          <label htmlFor="cantidad" className="block text-sm font-medium text-gray-900">Cantidad</label>
+          <input onChange={onChange} type="number" name="cantidad" id="cantidad" min="0" value={producto.cantidad ?? 1} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-16 p-1.5" />
         </div>
       </div>
 

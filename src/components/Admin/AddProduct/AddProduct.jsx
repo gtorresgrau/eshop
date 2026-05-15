@@ -32,6 +32,7 @@ export default function AddProduct({ isOpenModal, toggleModal, categoria, marca 
     foto_1_4: '',
     hide: false,
     stock: false,
+    cantidad: 1,
     vendido: false,
     destacados: false,
     usd: false,

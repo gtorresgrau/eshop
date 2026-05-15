@@ -35,6 +35,7 @@ export default function UpdateProduct({ isOpenModal, toggleModal, product, categ
     usado: product?.usado,
     vendido: product?.vendido,
     stock: product?.stock || false,
+    cantidad: product?.cantidad ?? 1,
     precio: product?.precio || '',
     medidas: product?.medidas || '',
     foto_1_1: product?.foto_1_1 || '',
