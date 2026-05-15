@@ -3,6 +3,7 @@
 import React, { useEffect, useState, Suspense } from "react";
 import dynamic from "next/dynamic";
 import newFetchProductos from '../../Hooks/useNewFetchProducts';
+import { removeFromLocalStorage } from '../../Hooks/localStorage';
 import { useSearchParams } from "next/navigation";
 import Swal from "sweetalert2";
 import UpdateProduct from "./UpdateProduct/UpdateProduct";
@@ -36,6 +37,7 @@ export default function Admin() {
   const [section, setSection] = useState('Productos')
   const [currentPage, setCurrentPage] = useState(1);
   const [productos, setProductos] = useState([]);
+  const [inlineEdits, setInlineEdits] = useState({});
 
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
@@ -60,7 +62,16 @@ export default function Admin() {
 
   const fetchProductos = async () => {
     const res = await newFetchProductos();
-    const filteredProducts = searchQuery? res.filter(producto => producto.nombre.toLowerCase().includes(searchQuery.toLowerCase())): res;
+    const q = searchQuery.toLowerCase();
+    const filteredProducts = searchQuery
+      ? res.filter(producto =>
+          producto.nombre?.toLowerCase().includes(q) ||
+          producto.categoria?.toLowerCase().includes(q) ||
+          producto.marca?.toLowerCase().includes(q) ||
+          producto.cod_producto?.toLowerCase().includes(q) ||
+          producto.descripcion?.toLowerCase().includes(q)
+        )
+      : res;
     setProductos(filteredProducts);
   };
 
@@ -187,6 +198,51 @@ export default function Admin() {
     setCurrentPage(value);
   };
 
+  const getInline = (product, field) =>
+    inlineEdits[product._id]?.[field] !== undefined
+      ? inlineEdits[product._id][field]
+      : product[field];
+
+  const saveProductFields = async (productId, fields) => {
+    try {
+      await fetch('api/updateProduct', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ _id: productId, ...fields }),
+      });
+      setProductos(prev => prev.map(p => p._id === productId ? { ...p, ...fields } : p));
+      setInlineEdits(prev => { const n = { ...prev }; delete n[productId]; return n; });
+      removeFromLocalStorage('productos');
+    } catch (err) {
+      console.error('Error guardando campo:', err);
+    }
+  };
+
+  const handleCantidadChange = (productId, value) => {
+    setInlineEdits(prev => ({
+      ...prev,
+      [productId]: { ...prev[productId], cantidad: value === '' ? '' : Number(value) },
+    }));
+  };
+
+  const handleCantidadBlur = (product) => {
+    const raw = inlineEdits[product._id]?.cantidad;
+    if (raw === undefined) return;
+    const cantidad = raw === '' ? 0 : Number(raw);
+    saveProductFields(product._id, { cantidad, stock: cantidad > 0 });
+  };
+
+  const handleHideChange = (product, checked) => {
+    setInlineEdits(prev => ({ ...prev, [product._id]: { ...prev[product._id], hide: checked } }));
+    saveProductFields(product._id, { hide: checked });
+  };
+
+  const handleSinStockChange = (product, checked) => {
+    const cantidad = checked ? 0 : 1;
+    setInlineEdits(prev => ({ ...prev, [product._id]: { ...prev[product._id], cantidad, stock: !checked } }));
+    saveProductFields(product._id, { cantidad, stock: !checked });
+  };
+
   useEffect(() => {
     if (!loading && (!isAuthenticated || !isAdmin)) {
       router.push('/user/Login');
@@ -228,6 +284,7 @@ export default function Admin() {
                           <th scope="col" className="px-1 py-2 md:px-4 md:py-3 text-center hidden md:table-cell">Categoría</th>
                           <th scope="col" className="px-1 py-2 md:px-4 md:py-3 text-center hidden md:table-cell">Marca</th>
                           <th scope="col" className="px-1 py-2 md:px-4 md:py-3 text-center hidden lg:table-cell">Descripción</th>
+                          <th scope="col" className="px-1 py-2 md:px-4 md:py-3 text-center hidden md:table-cell">Stock</th>
                           <th scope="col" className="px-1 py-2 md:px-4 md:py-3 text-center">Acción</th>
                         </tr>
                       </thead>
@@ -240,6 +297,39 @@ export default function Admin() {
                               <td scope="row" className="px-1 py-6 md:px-4 md:py-4 hidden md:table-cell">{product.categoria}</td>
                               <td scope="row" className="px-1 py-6 md:px-4 md:py-4 hidden md:table-cell">{product.marca}</td>
                               <td scope="row" title={product.descripcion} className="px-1 py-1 md:px-4 md:py-3 text-center text-ellipsis hidden lg:table-cell">{product.descripcion.length > 50 ? `${product.descripcion.slice(0, 50)}...` : product.descripcion}</td>
+                              <td scope="row" className="px-2 py-2 md:px-3 md:py-3 hidden md:table-cell">
+                                <div className="flex flex-col gap-1.5 min-w-[90px]">
+                                  <div className="flex items-center gap-1">
+                                    <span className="text-xs text-gray-500 w-10">Cant.</span>
+                                    <input
+                                      type="number"
+                                      min="0"
+                                      value={inlineEdits[product._id]?.cantidad !== undefined ? inlineEdits[product._id].cantidad : (product.cantidad ?? 1)}
+                                      onChange={e => handleCantidadChange(product._id, e.target.value)}
+                                      onBlur={() => handleCantidadBlur(product)}
+                                      className="w-14 border border-gray-300 rounded px-1 py-0.5 text-sm text-center focus:ring-1 focus:ring-blue-400 focus:outline-none"
+                                    />
+                                  </div>
+                                  <label className="flex items-center gap-1 cursor-pointer select-none">
+                                    <input
+                                      type="checkbox"
+                                      checked={!!getInline(product, 'hide')}
+                                      onChange={e => handleHideChange(product, e.target.checked)}
+                                      className="w-3.5 h-3.5 accent-blue-600"
+                                    />
+                                    <span className="text-xs text-gray-600">Ocultar</span>
+                                  </label>
+                                  <label className="flex items-center gap-1 cursor-pointer select-none">
+                                    <input
+                                      type="checkbox"
+                                      checked={(inlineEdits[product._id]?.cantidad !== undefined ? inlineEdits[product._id].cantidad : (product.cantidad ?? 1)) <= 0}
+                                      onChange={e => handleSinStockChange(product, e.target.checked)}
+                                      className="w-3.5 h-3.5 accent-red-500"
+                                    />
+                                    <span className="text-xs text-gray-600">Sin stock</span>
+                                  </label>
+                                </div>
+                              </td>
                               <td scope="row" className="px-1 py-6 md:px-4 md:py-4">
                                 <div className="flex justify-evenly items-center mx-1">
                                   <button
@@ -261,7 +351,7 @@ export default function Admin() {
                       ) : (
                         <tbody>
                           <tr className="text-center">
-                            <td colSpan="5" className="py-10">
+                            <td colSpan="7" className="py-10">
                               <span className="text-gray-500 font-semibold">No se encontraron productos.</span>
                             </td>
                           </tr>

@@ -3,6 +3,30 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '../../../lib/mongodb';
 import Producto from '../../../models/product';
 
+export async function PATCH(request) {
+  await connectDB();
+  try {
+    const { _id, ...fields } = await request.json();
+    if (!_id) return NextResponse.json({ error: 'Missing _id' }, { status: 400 });
+
+    const allowed = ['cantidad', 'hide', 'stock', 'vendido', 'destacados', 'usd', 'usado'];
+    const update = {};
+    for (const key of allowed) {
+      if (key in fields) {
+        if (key === 'cantidad') update[key] = Number(fields[key]) || 0;
+        else update[key] = Boolean(fields[key]);
+      }
+    }
+
+    const updated = await Producto.findByIdAndUpdate(_id, { $set: update }, { new: true });
+    if (!updated) return NextResponse.json({ error: 'Product not found' }, { status: 404 });
+    return NextResponse.json(updated);
+  } catch (error) {
+    console.error('Error en PATCH updateProduct:', error);
+    return NextResponse.json({ error: 'Error updating product' }, { status: 500 });
+  }
+}
+
 export async function PUT(request) {
   await connectDB();
 
