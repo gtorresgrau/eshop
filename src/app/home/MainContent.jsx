@@ -4,6 +4,7 @@ import Banner from '../../components/Banner/Banner';
 import Contact from '../../components/Contact/Contact';
 import Sobre from '../../components/SobreMi/Sobre';
 import SearchBase from '../../components/Search/SearchBase';
+import FiltrosTienda from '../../components/Search/FiltrosTienda';
 import PreguntasFrecuentes from '../../components/PreguntasFrecuentas/PreguntasFrecuentas';
 import Comparativas from '../../components/Comparativas/Comparativas';
 import CleanToolExplanation from '../../components/Tools/CleanToolExplanation';
@@ -17,6 +18,8 @@ export default function MainContent() {
     <main>
       {/* Top part */}
       <SearchBase />
+      {/* Filtros de categorías, marcas, condición y orden */}
+      <FiltrosTienda />
       <Banner />
       <Header />
       <ConsoleCleaningService />

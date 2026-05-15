@@ -54,12 +54,21 @@ const Card = ({ product, handleProductSelect }) => {
   return (
     <div className={`${product.hide ? 'hidden' : ''} relative sm:w-48 md:w-64 lg:w-56 xl:w-72 lg:h-80 xl:h-96 md:min-h-[320px] min-w-[150px] lg:min-h-[360px] xl:min-h-[420px] list-none cursor-pointer`}>
       <div
-        className="relative flex flex-col justify-between w-full h-full bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition-shadow duration-300"
+        className={`relative flex flex-col justify-between w-full h-full bg-white rounded-lg shadow hover:shadow-lg transition-shadow duration-300 ${
+          product.destacados ? 'border-2 border-orange-400' : 'border border-gray-200'
+        }`}
         onClick={() => handleProductSelect(product)}
         role="button"
         tabIndex={0}
         onKeyDown={(e) => e.key === 'Enter' && handleProductSelect(product)}
       >
+        {/* Badge Destacado */}
+        {product.destacados && !product.vendido && !product.stock && (
+          <span className="absolute -top-2 left-2 z-20 bg-gradient-to-r from-orange-500 to-yellow-400 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm tracking-wide uppercase">
+            🔥 Destacado
+          </span>
+        )}
+
         <div>
           <div className="relative aspect-square">
             {product.vendido && (
