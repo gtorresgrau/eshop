@@ -1,9 +1,9 @@
 // app/utils/cookiesStorage.ts (server-side version)
 
-import { cookies, type UnsafeUnwrappedCookies } from 'next/headers';
+import { cookies } from 'next/headers';
 
-export const setInLocalStorage = (key: string, value: any) => {
-  const cookieStore = (cookies() as unknown as UnsafeUnwrappedCookies);
+export const setInLocalStorage = async (key: string, value: any) => {
+  const cookieStore = await cookies();
   cookieStore.set(key, JSON.stringify(value), {
     httpOnly: false, // cambia a true si no lo necesitas en el cliente
     sameSite: 'lax',
@@ -13,8 +13,8 @@ export const setInLocalStorage = (key: string, value: any) => {
   });
 };
 
-export const getInLocalStorage = (key: string) => {
-  const cookieStore = (cookies() as unknown as UnsafeUnwrappedCookies);
+export const getInLocalStorage = async (key: string) => {
+  const cookieStore = await cookies();
   const value = cookieStore.get(key)?.value;
   try {
     return value ? JSON.parse(value) : null;
@@ -24,8 +24,8 @@ export const getInLocalStorage = (key: string) => {
   }
 };
 
-export const removeFromLocalStorage = (key: string) => {
-  const cookieStore = (cookies() as unknown as UnsafeUnwrappedCookies);
+export const removeFromLocalStorage = async (key: string) => {
+  const cookieStore = await cookies();
   cookieStore.set(key, '', {
     maxAge: 0,
     path: '/',
