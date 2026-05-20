@@ -14,6 +14,9 @@ export async function POST(req: Request) {
 
   try {
     const idToken = authHeader.split(" ")[1];
+    if (!auth) {
+      return NextResponse.json({ error: "Firebase Admin not initialized" }, { status: 500 });
+    }
     const decoded = await auth.verifyIdToken(idToken);
 
     await connectDB();

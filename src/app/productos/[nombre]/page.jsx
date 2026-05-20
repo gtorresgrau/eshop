@@ -10,10 +10,11 @@ const Modal = NextDynamic (() => import('../../../components/Tienda/Modal/Modals
 const ClientLayout = NextDynamic (() => import('../../ClientLayout'));
 
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata(props) {
+  const params = await props.params;
   const product = await fetchProduct(params.nombre);
   //console.log('producto de meta:', product);
-  
+
   if (!product) {
     return {
       ...defaultMetadata,
@@ -49,7 +50,8 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function ProductoPage({ params }) {
+export default async function ProductoPage(props) {
+  const params = await props.params;
   const prod = params?.nombre;
   if (!prod) return notFound();
   const product = await fetchProduct(prod);

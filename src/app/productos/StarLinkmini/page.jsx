@@ -5,7 +5,8 @@ import fetchProduct from '../../../Utils/fetchProduct';
 const StarLinkAdapterInfo = dynamic(() => import('../../../components/Productos/Starlink/StarLinkAdapterInfo'))
 const ClientLayout = dynamic(() => import('../../ClientLayout'))
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata(props) {
+  const params = await props.params;
   const product = await fetchProduct(params.nombre);
   if (!params || !params.nombre) return defaultMetadata;
   console.log('producto de meta:', product);
@@ -34,7 +35,6 @@ export async function generateMetadata({ params }) {
       canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/productos/starlink-adapter-trifix-sl1230`,
     },
   };
-  
 }
 
 const StarlinkPage = async () => {

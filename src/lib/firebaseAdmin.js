@@ -14,5 +14,5 @@ if (!admin.apps || admin.apps.length === 0) {
   }
 }
 
-export const auth = admin.auth();
+export const auth = admin.apps.length > 0 ? admin.auth() : null;
 export default admin;

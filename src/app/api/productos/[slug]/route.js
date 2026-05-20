@@ -3,7 +3,8 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '../../../../lib/mongodb';
 import Producto from '../../../../models/product';
 
-export async function GET(req, { params }) {
+export async function GET(req, props) {
+  const params = await props.params;
   try {
     await connectDB();
     const slug = params?.slug || '';

@@ -4,7 +4,8 @@ import { connectDB } from '../../../../../lib/mongodb';
 import Order from '../../../../../models/Order';
 // import { verifyUserOrAdminToken } from '@/lib/auth'; // Implementa tu lógica de autenticación
 
-export async function GET(req, { params }) {
+export async function GET(req, props) {
+  const params = await props.params;
   try {
     // const isAuthenticated = await verifyUserOrAdminToken(req);
     // if (!isAuthenticated) {

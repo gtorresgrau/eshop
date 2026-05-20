@@ -7,7 +7,7 @@ import Usuario from '../../../../models/User';
 
 // Función para validar el token y el acceso
 async function verificarAutenticacion(uid: string) {
-    const token = cookies().get('token')?.value;
+    const token = (await cookies()).get('token')?.value;
     //console.log('Token en verificarAutenticacion:', token);
     
     if (!token) {
@@ -38,8 +38,8 @@ async function verificarAutenticacion(uid: string) {
     }
 }
 
-export async function GET(req: Request, context: { params: { uid: string } }) {
-    const { uid } = context.params;
+export async function GET(req: Request, context: { params: Promise<{ uid: string }> }) {
+    const { uid } = (await context.params);
     //console.log(`Solicitud GET para usuario ${uid}`);
 
     const auth = await verificarAutenticacion(uid);
@@ -73,8 +73,8 @@ export async function GET(req: Request, context: { params: { uid: string } }) {
 }
 
 // Los métodos PUT y DELETE pueden permanecer iguales, pero con los mismos ajustes en verificarAutenticacion
-export async function PUT(req: Request, context: { params: { uid: string } }) {
-    const { uid } = context.params;
+export async function PUT(req: Request, context: { params: Promise<{ uid: string }> }) {
+    const { uid } = (await context.params);
 
     const auth = await verificarAutenticacion(uid);
     if (!auth.autorizado) {
@@ -102,8 +102,8 @@ export async function PUT(req: Request, context: { params: { uid: string } }) {
     }
 }
 
-export async function DELETE(req: Request, context: { params: { uid: string } }) {
-    const { uid } = context.params;
+export async function DELETE(req: Request, context: { params: Promise<{ uid: string }> }) {
+    const { uid } = (await context.params);
 
     const auth = await verificarAutenticacion(uid);
     if (!auth.autorizado) {

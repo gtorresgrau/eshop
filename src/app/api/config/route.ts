@@ -2,16 +2,14 @@ import { NextResponse } from 'next/server';
 import mongoose from 'mongoose';
 import UserConfig from '../../../models/UserConfig';
 
-const MONGODB_URI = process.env.MONGODB_URI;
-
-if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable');
-}
-
 // Conexión a MongoDB
 async function connectDB() {
+  const MONGODB_URI = process.env.MONGODB_URI;
+  if (!MONGODB_URI) {
+    throw new Error('Please define the MONGODB_URI environment variable');
+  }
   if (mongoose.connection.readyState >= 1) return;
-  return mongoose.connect(MONGODB_URI as string);
+  return mongoose.connect(MONGODB_URI);
 }
 
 export async function GET() {

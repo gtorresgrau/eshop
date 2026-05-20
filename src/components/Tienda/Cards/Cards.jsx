@@ -1,6 +1,7 @@
 import Card from '../Card/Card';
 import SkeletonCard from '../Card/SkeletonCard';
 import { useMediaQuery, Pagination } from '@mui/material';
+import Link from 'next/link';
 
 const Cards = ({
   productos,
@@ -99,12 +100,12 @@ const Cards = ({
                 </p>
               </div>
               <div className="flex gap-2 flex-wrap justify-center mt-2">
-                <a
+                <Link
                   href="/#productos"
                   className="px-4 py-2 bg-orange-500 text-white text-sm font-medium rounded-lg hover:bg-orange-600 transition"
                 >
                   Ver todos los productos
-                </a>
+                </Link>
               </div>
             </div>
           </li>

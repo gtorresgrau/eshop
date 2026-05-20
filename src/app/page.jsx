@@ -1,11 +1,13 @@
 import dynamic from 'next/dynamic';
+import { Suspense } from 'react';
 import ClientLayout from './ClientLayout';
 import { defaultMetadata } from '../lib/metadata';
 import fetchProduct from '../Utils/fetchProduct';
 
-const MainContent = dynamic(() => import('./home/MainContent'), { ssr: false });
+const MainContent = dynamic(() => import('./home/MainContent'));
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata(props) {
+  const params = await props.params;
   const product = await fetchProduct(params.nombre);
   if (!params || !params.nombre) return defaultMetadata;
   //console.log('producto de meta:', product);
@@ -39,7 +41,9 @@ export async function generateMetadata({ params }) {
 export default function HomePage() {
     return (
         <ClientLayout>
-          <MainContent />
+          <Suspense>
+            <MainContent />
+          </Suspense>
         </ClientLayout>
     );
 }

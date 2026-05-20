@@ -1,4 +1,4 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -11,11 +11,12 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID,
 };
 
-let app;
-try {
-  app = initializeApp(firebaseConfig);
-} catch (e) {
-  // ignore if already initialized
-}
+// Firebase client SDK debe ejecutarse solo en el navegador
+const app =
+  typeof window !== 'undefined'
+    ? getApps().length === 0
+      ? initializeApp(firebaseConfig)
+      : getApp()
+    : null;
 
-export const auth = getAuth(app);
+export const auth = app ? getAuth(app) : null;

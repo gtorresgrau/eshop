@@ -6,7 +6,8 @@ import Order from "../../../../../models/Order"; // Asumiendo rutas correctas
 // Regex simple para validar formato de ObjectId (24 caracteres hexadecimales)
 const objectIdRegex = /^[0-9a-fA-F]{24}$/;
 
-export async function PUT(req, { params }) {
+export async function PUT(req, props) {
+  const params = await props.params;
   await connectDB();
 
   const { id } = params; // ID del pedido

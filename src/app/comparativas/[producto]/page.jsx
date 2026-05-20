@@ -15,7 +15,8 @@ const comparisonComponents = {
 
 };
 
-const ComparativaPage = ({ params }) => {
+const ComparativaPage = async props => {
+  const params = await props.params;
   const { producto } = params;
 
   // Si el producto no existe en el mapeo, devuelve un 404
