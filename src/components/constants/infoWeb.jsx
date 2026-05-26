@@ -200,29 +200,139 @@ export const fuenteOptions = [
 export const motherboardData = {
   intel: {
     sockets: ['LGA 1700', 'LGA 1200', 'LGA 1151'],
-    chipsets: ['Z790', 'B760', 'H610'],
-    compatibility: 'Compatibles con procesadores Intel Core de 12ª, 11ª y 10ª generación.',
+    chipsets: ['Z790', 'B760', 'H610', 'Z690', 'H670', 'B660'],
+    compatibility: 'Compatibles con procesadores Intel Core de 12ª, 13ª y 14ª generación (Alder Lake, Raptor Lake).',
   },
   amd: {
-    sockets: ['AM5', 'AM4', 'AM4+'],
-    chipsets: ['X670', 'B650', 'A620'],
-    compatibility: 'Compatibles con procesadores Ryzen de la serie 7000, 5000 y 3000.',
+    sockets: ['AM5', 'AM4'],
+    chipsets: ['X670E', 'X670', 'B650E', 'B650', 'A620', 'X570', 'B550', 'A520'],
+    compatibility: 'AM5 es compatible con Ryzen 7000 y 9000. AM4 es compatible con Ryzen 1000 a 5000.',
   },
   chipsetExplanation: {
-    intel: 'Los chipsets de Intel incluyen una letra y un número. La letra indica la serie (Z para entusiastas, B para gama media, H para básica) y el número representa la generación y características.',
-    amd: 'Los chipsets de AMD siguen una lógica similar. La "X" es para entusiastas, "B" para gama media y "A" para básica. Los números indican la generación y capacidades.',
+    intel: 'Z = Overclock desbloqueado (gama alta), B = Gama media sin OC completo, H = Básico sin OC. Número: generación (ej. Z790 = Intel 13ª/14ª gen).',
+    amd: 'X = Entusiasta con OC completo, B = Gama media, A = Básica. El sufijo "E" (X670E) indica mayor ancho de banda PCIe 5.0.',
   },
   formFactors: {
-    ATX: 'Tamaño estándar, más puertos y ranuras de expansión.',
-    MicroATX: 'Más compacto, menos ranuras de expansión.',
-    MiniITX: 'Muy pequeño, limitado en puertos y expansión.',
+    'E-ATX (305×330mm)': 'Máxima expansión, para workstations y servidores. Más ranuras PCIe y conectores.',
+    'ATX (305×244mm)': 'Estándar más común. Hasta 4 slots de RAM, múltiples PCIe y SATA.',
+    'MicroATX (244×244mm)': 'Compacto pero capaz. Hasta 4 slots RAM, menos slots PCIe.',
+    'Mini-ITX (170×170mm)': 'Ultra compacto para builds pequeños. 2 slots RAM, 1 PCIe x16.',
+    'Mini-DTX (170×203mm)': 'Compromiso entre Mini-ITX y MicroATX. Ideal para builds compactos gaming.',
   },
   additionalFeatures: {
-    ramSupport: 'Verificar la cantidad máxima de memoria RAM soportada y la compatibilidad con DDR3, DDR4 o DDR5.',
-    connectivity: 'Ver puertos disponibles: USB, HDMI, DisplayPort, Ethernet, WiFi integrado.',
-    storage: 'Compatibilidad con SSD NVMe, cantidad de puertos SATA disponibles.',
-    expansion: 'Número de ranuras PCIe para tarjetas gráficas y otras expansiones.',
+    ramSupport: 'Verificar la cantidad máxima de memoria RAM soportada y la compatibilidad con DDR4 o DDR5. Placas AM5 solo DDR5. LGA1700 admite ambas según modelo.',
+    connectivity: 'Puertos I/O trasero: USB 3.2 Gen2x2 (20Gbps), USB-C, Thunderbolt 4, Ethernet 2.5G/10G, WiFi 6E integrado en modelos premium.',
+    storage: 'Slots M.2: de 1 a 5 según modelo. PCIe 4.0 o 5.0. Puertos SATA III: 4-8 según chipset. RAID 0/1/5/10 en chipsets Z y X.',
+    expansion: 'PCIe x16 para GPU (Gen 4 o 5), PCIe x4/x1 para capturadoras, NIC, SSDs adicionales. Bifurcación en chipsets premium.',
+    audio: 'Codec Realtek ALC1220 o superior en placas de gama media-alta. Capacitores japoneses, aislamiento PCIe de audio.',
+    power: 'VRM (Voltage Regulator Module): más fases = mejor estabilidad para OC. Placas entusiastas: 16-20+ fases de potencia.',
   },
+};
+
+export const storageComparison = [
+  { tipo: 'HDD 5400 RPM', lectura: '80-100 MB/s', escritura: '80-100 MB/s', interfaz: 'SATA III', capacidadMax: '20 TB', precio: '💲', uso: 'Backup, NAS, archivos masivos' },
+  { tipo: 'HDD 7200 RPM', lectura: '120-160 MB/s', escritura: '120-160 MB/s', interfaz: 'SATA III', capacidadMax: '20 TB', precio: '💲', uso: 'Almacenamiento masivo general' },
+  { tipo: 'SSHD (Híbrido)', lectura: '160 MB/s', escritura: '160 MB/s', interfaz: 'SATA III', capacidadMax: '4 TB', precio: '💲💲', uso: 'Laptops con cache SSD integrada' },
+  { tipo: 'SSD SATA 2.5"', lectura: '500-560 MB/s', escritura: '500-530 MB/s', interfaz: 'SATA III', capacidadMax: '4 TB', precio: '💲💲', uso: 'OS, gaming básico, laptops' },
+  { tipo: 'SSD M.2 SATA', lectura: '500-560 MB/s', escritura: '500-530 MB/s', interfaz: 'M.2 (Key B+M)', capacidadMax: '4 TB', precio: '💲💲', uso: 'Laptops ultradelgadas, mini PCs' },
+  { tipo: 'SSD NVMe PCIe 3.0', lectura: '3000-3500 MB/s', escritura: '2500-3000 MB/s', interfaz: 'PCIe 3.0 x4', capacidadMax: '4 TB', precio: '💲💲💲', uso: 'Gaming, edición de video FHD/4K' },
+  { tipo: 'SSD NVMe PCIe 4.0', lectura: '5000-7000 MB/s', escritura: '4000-6500 MB/s', interfaz: 'PCIe 4.0 x4', capacidadMax: '8 TB', precio: '💲💲💲', uso: 'Gaming pro, workstation' },
+  { tipo: 'SSD NVMe PCIe 5.0', lectura: '10000-14000 MB/s', escritura: '9000-12000 MB/s', interfaz: 'PCIe 5.0 x4', capacidadMax: '4 TB', precio: '💲💲💲💲', uso: 'Workstation extremo, IA, 3D' },
+];
+
+export const procesadorOptions = [
+  {
+    title: 'Gama Entrada: i3 / Ryzen 3',
+    description: 'Ideal para ofimática, navegación web y tareas básicas. 4 núcleos, bajo consumo energético y precio accesible. Perfecto para el uso cotidiano.',
+    img: 'https://res.cloudinary.com/dnbrxpca3/image/upload/v1739372328/Almacenamiento_HDD_ayq3kf.webp',
+    alt: 'Procesadores Intel Core i3 y AMD Ryzen 3 de entrada'
+  },
+  {
+    title: 'Gama Media: i5 / Ryzen 5',
+    description: 'La mejor relación precio/rendimiento. Excelente para gaming 1080p-1440p, streaming, multitarea y trabajo creativo ligero. El favorito de la mayoría.',
+    img: 'https://res.cloudinary.com/dnbrxpca3/image/upload/v1739372328/Almacenamiento_HDD_ayq3kf.webp',
+    alt: 'Procesadores Intel Core i5 y AMD Ryzen 5'
+  },
+  {
+    title: 'Gama Alta: i7 / Ryzen 7',
+    description: 'Alto rendimiento para gaming 1440p-4K, streaming simultáneo, edición de video y desarrollo de software. 8+ núcleos con hyperthreading.',
+    img: 'https://res.cloudinary.com/dnbrxpca3/image/upload/v1739372328/Almacenamiento_HDD_ayq3kf.webp',
+    alt: 'Procesadores Intel Core i7 y AMD Ryzen 7'
+  },
+  {
+    title: 'Tope de Gama: i9 / Ryzen 9',
+    description: 'Máxima potencia para workstations: renderizado 3D, inteligencia artificial, compilación, servidores y gaming extremo. Para profesionales exigentes.',
+    img: 'https://res.cloudinary.com/dnbrxpca3/image/upload/v1739372328/Almacenamiento_HDD_ayq3kf.webp',
+    alt: 'Procesadores Intel Core i9 y AMD Ryzen 9 tope de gama'
+  }
+];
+
+export const procesadorComparison = [
+  { modelo: 'Intel Core i3-13100', nucleos: '4C / 8T', frecuencia: '3.4 - 4.5 GHz', tdp: '60W', socket: 'LGA1700', ram: 'DDR4/DDR5', precio: '💲', uso: 'Ofimática, streaming 1080p' },
+  { modelo: 'AMD Ryzen 5 5600', nucleos: '6C / 12T', frecuencia: '3.5 - 4.4 GHz', tdp: '65W', socket: 'AM4', ram: 'DDR4', precio: '💲💲', uso: 'Gaming 1080p, streaming' },
+  { modelo: 'Intel Core i5-13600K', nucleos: '14C / 20T', frecuencia: '3.5 - 5.1 GHz', tdp: '125W', socket: 'LGA1700', ram: 'DDR4/DDR5', precio: '💲💲', uso: 'Gaming 1440p, creación de contenido' },
+  { modelo: 'AMD Ryzen 5 7600X', nucleos: '6C / 12T', frecuencia: '4.7 - 5.3 GHz', tdp: '105W', socket: 'AM5', ram: 'DDR5', precio: '💲💲', uso: 'Gaming 1440p, eficiencia' },
+  { modelo: 'Intel Core i7-14700K', nucleos: '20C / 28T', frecuencia: '3.4 - 5.6 GHz', tdp: '125W', socket: 'LGA1700', ram: 'DDR4/DDR5', precio: '💲💲💲', uso: 'Gaming 4K, edición video 4K' },
+  { modelo: 'AMD Ryzen 7 7700X', nucleos: '8C / 16T', frecuencia: '4.5 - 5.4 GHz', tdp: '105W', socket: 'AM5', ram: 'DDR5', precio: '💲💲💲', uso: 'Gaming pro, streaming 4K' },
+  { modelo: 'Intel Core i9-14900K', nucleos: '24C / 32T', frecuencia: '3.2 - 6.0 GHz', tdp: '125W', socket: 'LGA1700', ram: 'DDR4/DDR5', precio: '💲💲💲💲', uso: 'Workstation, IA, renderizado 3D' },
+  { modelo: 'AMD Ryzen 9 7950X', nucleos: '16C / 32T', frecuencia: '4.5 - 5.7 GHz', tdp: '170W', socket: 'AM5', ram: 'DDR5', precio: '💲💲💲💲', uso: 'Workstation extremo, data science' },
+];
+
+export const fuenteComparison = [
+  { certificacion: 'Sin certificación', eficiencia50: '<80%', calidad: '⭐', modular: 'No', recomendado: 'PCs de muy baja carga' },
+  { certificacion: '80 PLUS White', eficiencia50: '80%', calidad: '⭐⭐', modular: 'No', recomendado: 'Ofimática, PCs de bajo consumo' },
+  { certificacion: '80 PLUS Bronze', eficiencia50: '85%', calidad: '⭐⭐⭐', modular: 'Semi', recomendado: 'Gaming básico, multitarea' },
+  { certificacion: '80 PLUS Silver', eficiencia50: '88%', calidad: '⭐⭐⭐', modular: 'Semi', recomendado: 'Gaming medio, workstation ligero' },
+  { certificacion: '80 PLUS Gold', eficiencia50: '90%', calidad: '⭐⭐⭐⭐', modular: 'Sí', recomendado: 'Gaming pro, servidores home' },
+  { certificacion: '80 PLUS Platinum', eficiencia50: '92%', calidad: '⭐⭐⭐⭐⭐', modular: 'Sí', recomendado: 'Workstation, minería, servidores' },
+  { certificacion: '80 PLUS Titanium', eficiencia50: '94%', calidad: '⭐⭐⭐⭐⭐', modular: 'Sí', recomendado: 'Data centers, máximo rendimiento' },
+];
+
+export const ramComparison = [
+  { tipo: 'DDR3', velocidad: '800 - 2133 MHz', voltaje: '1.5V', canales: 'Dual Channel', capacidadMax: '32 GB', precio: '💲', uso: 'PCs antiguas, sistemas legacy' },
+  { tipo: 'DDR3L', velocidad: '800 - 1600 MHz', voltaje: '1.35V', canales: 'Dual Channel', capacidadMax: '32 GB', precio: '💲', uso: 'Laptops y ultrabooks antiguos' },
+  { tipo: 'DDR4', velocidad: '2133 - 3200 MHz', voltaje: '1.2V', canales: 'Dual Channel', capacidadMax: '128 GB', precio: '💲💲', uso: 'PCs actuales, gaming, ofimática' },
+  { tipo: 'DDR4 OC (XMP)', velocidad: '3600 - 4800 MHz', voltaje: '1.35V', canales: 'Dual Channel', capacidadMax: '64 GB', precio: '💲💲', uso: 'Gaming, overclockers' },
+  { tipo: 'DDR5', velocidad: '4800 - 7200 MHz', voltaje: '1.1V', canales: 'Dual Channel (x2 subchan)', capacidadMax: '256 GB', precio: '💲💲💲', uso: 'PCs Intel 12/13/14 gen, AMD AM5' },
+  { tipo: 'DDR5 OC (XMP 3.0)', velocidad: '6000 - 9000+ MHz', voltaje: '1.4V', canales: 'Dual Channel', capacidadMax: '128 GB', precio: '💲💲💲', uso: 'Entusiastas, workstation' },
+  { tipo: 'LPDDR5 / LPDDR5X', velocidad: '6400 - 8533 MHz', voltaje: '0.9V', canales: 'Soldada en placa', capacidadMax: '64 GB', precio: '💲💲💲', uso: 'Laptops ultradelgadas, mini PCs' },
+  { tipo: 'ECC DDR5', velocidad: '4800 - 5600 MHz', voltaje: '1.1V', canales: 'Dual/Quad Channel', capacidadMax: '2 TB', precio: '💲💲💲💲', uso: 'Servidores, workstations críticas' },
+];
+
+export const tecnologiasData = {
+  interfaces: [
+    { nombre: 'USB 2.0', velocidad: '480 Mbps', uso: 'Teclado, mouse, dispositivos básicos', color: 'Negro' },
+    { nombre: 'USB 3.0 / USB 3.2 Gen1', velocidad: '5 Gbps (10x más)', uso: 'Pendrives, discos externos, webcams', color: 'Azul' },
+    { nombre: 'USB 3.1 / USB 3.2 Gen2', velocidad: '10 Gbps', uso: 'SSDs externos, hubs de alta velocidad', color: 'Rojo / Teal' },
+    { nombre: 'USB 3.2 Gen2x2', velocidad: '20 Gbps', uso: 'SSDs NVMe externos de alta velocidad', color: 'Blanco' },
+    { nombre: 'USB4 / Thunderbolt 4', velocidad: '40 Gbps', uso: 'eGPU, monitores 8K, docks profesionales', color: 'Negro / Rayo' },
+    { nombre: 'Thunderbolt 5', velocidad: '120 Gbps', uso: 'Workstations ultra, monitores 16K', color: 'Negro' },
+  ],
+  pcie: [
+    { version: 'PCIe 3.0 x16', ancho: '16 GB/s', uso: 'GPUs gama media-alta, compatibilidad amplia' },
+    { version: 'PCIe 4.0 x16', ancho: '32 GB/s', uso: 'GPUs actuales (RX 6000, RTX 3000/4000)' },
+    { version: 'PCIe 5.0 x16', ancho: '64 GB/s', uso: 'GPUs más nuevas (RTX 5000, RX 8000+)' },
+    { version: 'PCIe 3.0 x4 (M.2)', ancho: '4 GB/s', uso: 'SSDs NVMe Gen3' },
+    { version: 'PCIe 4.0 x4 (M.2)', ancho: '8 GB/s', uso: 'SSDs NVMe Gen4 (Samsung 990 Pro, etc.)' },
+    { version: 'PCIe 5.0 x4 (M.2)', ancho: '16 GB/s', uso: 'SSDs NVMe Gen5 de última generación' },
+  ],
+  display: [
+    { puerto: 'HDMI 1.4', resolucion: '4K @ 30Hz', uso: 'TVs antiguas, monitores básicos' },
+    { puerto: 'HDMI 2.0', resolucion: '4K @ 60Hz / 1080p @ 144Hz', uso: 'Gaming, streaming, consolas' },
+    { puerto: 'HDMI 2.1', resolucion: '8K @ 60Hz / 4K @ 144Hz+', uso: 'PS5, Xbox Series X, RTX 4000+' },
+    { puerto: 'DisplayPort 1.4', resolucion: '8K @ 30Hz / 4K @ 144Hz + HDR', uso: 'Gaming y diseño profesional' },
+    { puerto: 'DisplayPort 2.0 / 2.1', resolucion: '16K @ 60Hz / 4K @ 240Hz', uso: 'Monitores de alta gama, diseño 3D' },
+    { puerto: 'VGA (D-Sub)', resolucion: 'Hasta 2048×1536', uso: 'Legacy, proyectores, monitores viejos' },
+  ],
+  wireless: [
+    { estandar: 'Wi-Fi 4 (802.11n)', velocidad: 'Hasta 300 Mbps', banda: '2.4 / 5 GHz', uso: 'Navegación básica' },
+    { estandar: 'Wi-Fi 5 (802.11ac)', velocidad: 'Hasta 3.5 Gbps', banda: '2.4 / 5 GHz', uso: 'Streaming HD, uso cotidiano' },
+    { estandar: 'Wi-Fi 6 (802.11ax)', velocidad: 'Hasta 9.6 Gbps', banda: '2.4 / 5 GHz', uso: 'Gaming, múltiples dispositivos' },
+    { estandar: 'Wi-Fi 6E', velocidad: 'Hasta 9.6 Gbps', banda: '2.4 / 5 / 6 GHz', uso: 'Gaming sin latencia, 4K wireless' },
+    { estandar: 'Wi-Fi 7 (802.11be)', velocidad: 'Hasta 46 Gbps', banda: '2.4 / 5 / 6 GHz', uso: 'Ultra HD, VR, baja latencia extrema' },
+    { estandar: 'Bluetooth 5.0', velocidad: '2 Mbps', banda: '2.4 GHz', uso: 'Auriculares, controles, periféricos' },
+    { estandar: 'Bluetooth 5.3+', velocidad: '2 Mbps', banda: '2.4 GHz', uso: 'Mayor eficiencia y conexiones múltiples' },
+  ]
 };
 
 
@@ -359,3 +469,50 @@ export const consoles = {
     description: "Servicio de limpieza para Notebook, Netbook, Chromebook, PC y Pc mini. Optimización y limpieza profunda (eliminación de archivos basura, virus y programas innecesarios).",
   }
 }
+
+export const ramComparison = [
+  { tipo: 'DDR3', velocidad: '800 - 2133 MHz', voltaje: '1.5V', canales: 'Dual Channel', capacidadMax: '32 GB', precio: '💲', uso: 'PCs antiguas, sistemas legacy' },
+  { tipo: 'DDR3L', velocidad: '800 - 1600 MHz', voltaje: '1.35V', canales: 'Dual Channel', capacidadMax: '32 GB', precio: '💲', uso: 'Laptops y ultrabooks antiguos' },
+  { tipo: 'DDR4', velocidad: '2133 - 3200 MHz', voltaje: '1.2V', canales: 'Dual Channel', capacidadMax: '128 GB', precio: '💲💲', uso: 'PCs actuales, gaming, ofimática' },
+  { tipo: 'DDR4 OC (XMP)', velocidad: '3600 - 4800 MHz', voltaje: '1.35V', canales: 'Dual Channel', capacidadMax: '64 GB', precio: '💲💲', uso: 'Gaming, overclockers' },
+  { tipo: 'DDR5', velocidad: '4800 - 7200 MHz', voltaje: '1.1V', canales: 'Dual Channel (x2 subchan)', capacidadMax: '256 GB', precio: '💲💲💲', uso: 'Intel 12/13/14 gen, AMD AM5' },
+  { tipo: 'DDR5 OC (XMP 3.0)', velocidad: '6000 - 9000+ MHz', voltaje: '1.4V', canales: 'Dual Channel', capacidadMax: '128 GB', precio: '💲💲💲', uso: 'Entusiastas, workstation' },
+  { tipo: 'LPDDR5 / LPDDR5X', velocidad: '6400 - 8533 MHz', voltaje: '0.9V', canales: 'Soldada en placa', capacidadMax: '64 GB', precio: '💲💲💲', uso: 'Laptops ultradelgadas, mini PCs' },
+  { tipo: 'ECC DDR5', velocidad: '4800 - 5600 MHz', voltaje: '1.1V', canales: 'Dual/Quad Channel', capacidadMax: '2 TB', precio: '💲💲💲💲', uso: 'Servidores, workstations críticas' },
+];
+
+export const tecnologiasData = {
+  interfaces: [
+    { nombre: 'USB 2.0', velocidad: '480 Mbps', uso: 'Teclado, mouse, dispositivos básicos', color: 'Negro' },
+    { nombre: 'USB 3.0 / USB 3.2 Gen1', velocidad: '5 Gbps (10x más)', uso: 'Pendrives, discos externos, webcams', color: 'Azul' },
+    { nombre: 'USB 3.1 / USB 3.2 Gen2', velocidad: '10 Gbps', uso: 'SSDs externos, hubs de alta velocidad', color: 'Rojo / Teal' },
+    { nombre: 'USB 3.2 Gen2x2', velocidad: '20 Gbps', uso: 'SSDs NVMe externos de alta velocidad', color: 'Blanco' },
+    { nombre: 'USB4 / Thunderbolt 4', velocidad: '40 Gbps', uso: 'eGPU, monitores 8K, docks profesionales', color: 'Negro / Rayo' },
+    { nombre: 'Thunderbolt 5', velocidad: '120 Gbps', uso: 'Workstations ultra, monitores 16K', color: 'Negro' },
+  ],
+  pcie: [
+    { version: 'PCIe 3.0 x16', ancho: '16 GB/s', uso: 'GPUs gama media-alta, compatibilidad amplia' },
+    { version: 'PCIe 4.0 x16', ancho: '32 GB/s', uso: 'GPUs actuales (RX 6000, RTX 3000/4000)' },
+    { version: 'PCIe 5.0 x16', ancho: '64 GB/s', uso: 'GPUs más nuevas (RTX 5000, RX 8000+)' },
+    { version: 'PCIe 3.0 x4 (M.2)', ancho: '4 GB/s', uso: 'SSDs NVMe Gen3' },
+    { version: 'PCIe 4.0 x4 (M.2)', ancho: '8 GB/s', uso: 'SSDs NVMe Gen4 (Samsung 990 Pro, etc.)' },
+    { version: 'PCIe 5.0 x4 (M.2)', ancho: '16 GB/s', uso: 'SSDs NVMe Gen5 de última generación' },
+  ],
+  display: [
+    { puerto: 'VGA (D-Sub)', resolucion: 'Hasta 2048×1536', uso: 'Legacy, proyectores, monitores viejos' },
+    { puerto: 'HDMI 1.4', resolucion: '4K @ 30Hz', uso: 'TVs antiguas, monitores básicos' },
+    { puerto: 'HDMI 2.0', resolucion: '4K @ 60Hz / 1080p @ 144Hz', uso: 'Gaming, streaming, consolas' },
+    { puerto: 'HDMI 2.1', resolucion: '8K @ 60Hz / 4K @ 144Hz+', uso: 'PS5, Xbox Series X, RTX 4000+' },
+    { puerto: 'DisplayPort 1.4', resolucion: '8K @ 30Hz / 4K @ 144Hz + HDR', uso: 'Gaming y diseño profesional' },
+    { puerto: 'DisplayPort 2.0 / 2.1', resolucion: '16K @ 60Hz / 4K @ 240Hz', uso: 'Monitores de alta gama, diseño 3D' },
+  ],
+  wireless: [
+    { estandar: 'Wi-Fi 4 (802.11n)', velocidad: 'Hasta 300 Mbps', banda: '2.4 / 5 GHz', uso: 'Navegación básica' },
+    { estandar: 'Wi-Fi 5 (802.11ac)', velocidad: 'Hasta 3.5 Gbps', banda: '2.4 / 5 GHz', uso: 'Streaming HD, uso cotidiano' },
+    { estandar: 'Wi-Fi 6 (802.11ax)', velocidad: 'Hasta 9.6 Gbps', banda: '2.4 / 5 GHz', uso: 'Gaming, múltiples dispositivos' },
+    { estandar: 'Wi-Fi 6E', velocidad: 'Hasta 9.6 Gbps', banda: '2.4 / 5 / 6 GHz', uso: 'Gaming sin latencia, 4K wireless' },
+    { estandar: 'Wi-Fi 7 (802.11be)', velocidad: 'Hasta 46 Gbps', banda: '2.4 / 5 / 6 GHz', uso: 'Ultra HD, VR, baja latencia extrema' },
+    { estandar: 'Bluetooth 5.0', velocidad: '2 Mbps', banda: '2.4 GHz', uso: 'Auriculares, controles, periféricos' },
+    { estandar: 'Bluetooth 5.3+', velocidad: '2 Mbps', banda: '2.4 GHz', uso: 'Mayor eficiencia y conexiones múltiples' },
+  ]
+};

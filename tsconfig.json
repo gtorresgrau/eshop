@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",               
+    "ignoreDeprecations": "5.0",
+    "baseUrl": "src",
     "paths": {
-      "@/*": ["*"]                 
+      "@/*": ["*"]
     },
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
