@@ -11,7 +11,8 @@ const ClientLayout = NextDynamic (() => import('../../ClientLayout'));
 
 
 export async function generateMetadata({ params }) {
-  const product = await fetchProduct(params.nombre);
+  const { nombre } = await params;
+  const product = await fetchProduct(nombre);
   //console.log('producto de meta:', product);
   
   if (!product) {
@@ -34,7 +35,7 @@ export async function generateMetadata({ params }) {
       title: `${product.nombre} - ${product.modelo} - ${product.categoria} - ${product.marca} - E-ShopDevices` || defaultMetadata.openGraph.title,
       description: product.nombre? `${product.nombre} - ${product.modelo} - ${product.categoria} - ${product.marca} - E-Shop Devices ${product.descripcion.slice(0, 200)}`: defaultMetadata.description,
       images: [{ url: product.foto_1_1 || defaultMetadata.openGraph.images[0].url }],
-      url: `${process.env.NEXT_PUBLIC_SITE_URL}/productos/${params.nombre}`,
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/productos/${nombre}`,
       type: 'website',
     },
     twitter: {
@@ -44,13 +45,13 @@ export async function generateMetadata({ params }) {
       images: [{ url: product.foto_1_1 || defaultMetadata.twitter.images[0].url }],
     },
     alternates: {
-      canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/productos/${params.nombre}`,
+      canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/productos/${nombre}`,
     },
   };
 }
 
 export default async function ProductoPage({ params }) {
-  const prod = params?.nombre;
+  const prod = (await params)?.nombre;
   if (!prod) return notFound();
   const product = await fetchProduct(prod);
 

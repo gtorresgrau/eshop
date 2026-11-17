@@ -11,7 +11,7 @@ export async function GET(req, { params }) {
     //   return new Response(JSON.stringify({ error: 'No autorizado' }), { status: 401 });
     // }
 
-    const { external_ref } = params;
+    const { external_ref } = await params;
 
     if (!external_ref) {
       return new Response(JSON.stringify({ error: 'External reference es requerida' }), { status: 400 });

@@ -55,7 +55,7 @@ const metaByProducto = {
 };
 
 export async function generateMetadata({ params }) {
-  const { producto } = params;
+  const { producto } = await params;
   const meta = metaByProducto[producto];
   if (!meta) return {};
 
@@ -84,8 +84,8 @@ export async function generateMetadata({ params }) {
   };
 }
 
-const ComparativaPage = ({ params }) => {
-  const { producto } = params;
+const ComparativaPage = async ({ params }) => {
+  const { producto } = await params;
 
   if (!comparisonComponents[producto]) {
     notFound();

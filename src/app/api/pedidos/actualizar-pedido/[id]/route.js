@@ -9,7 +9,7 @@ const objectIdRegex = /^[0-9a-fA-F]{24}$/;
 export async function PUT(req, { params }) {
   await connectDB();
 
-  const { id } = params; // ID del pedido
+  const { id } = await params; // ID del pedido
   const { nuevoEstado } = await req.json();
 
   // Validación del formato del ID en el backend

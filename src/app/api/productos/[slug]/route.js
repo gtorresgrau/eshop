@@ -6,7 +6,7 @@ import Producto from '../../../../models/product';
 export async function GET(req, { params }) {
   try {
     await connectDB();
-    const slug = params?.slug || '';
+    const slug = (await params)?.slug || '';
     const formattedSlug = decodeURIComponent(slug).replace(/_/g, ' ');
     const escaped = formattedSlug.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const product = await Producto.findOne({ nombre: { $regex: new RegExp(`^${escaped}$`, 'i') } }).lean();

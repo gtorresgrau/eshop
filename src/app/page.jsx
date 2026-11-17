@@ -1,9 +1,8 @@
-import dynamic from 'next/dynamic';
 import ClientLayout from './ClientLayout';
 import { defaultMetadata } from '../lib/metadata';
 import fetchProduct from '../Utils/fetchProduct';
 
-const MainContent = dynamic(() => import('./home/MainContent'), { ssr: false });
+import MainContentClient from './home/MainContentClient';
 
 export async function generateMetadata({ params }) {
   const product = await fetchProduct(params.nombre);
@@ -39,7 +38,7 @@ export async function generateMetadata({ params }) {
 export default function HomePage() {
     return (
         <ClientLayout>
-          <MainContent />
+          <MainContentClient />
         </ClientLayout>
     );
 }

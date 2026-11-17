@@ -9,7 +9,7 @@ const objectIdRegex = /^[0-9a-fA-F]{24}$/;
 export async function GET(req, { params }) {
   await connectDB();
 
-  const { id } = params;
+  const { id } = await params;
 
   if (!id || !objectIdRegex.test(id)) {
     return new Response(JSON.stringify({ success: false, error: "Formato de ID de pedido no válido" }), {

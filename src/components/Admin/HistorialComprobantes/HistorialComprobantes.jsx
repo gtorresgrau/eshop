@@ -8,7 +8,7 @@ import { Button } from '../../ui/Buttons';
  * Componente para ver el historial de comprobantes generados
  * Permite filtrar por empresa, tipo y rango de fechas
  */
-export default function HistorialComprobantes() {
+export default function HistorialComprobantes({ onClonar }) {
   const [comprobantes, setComprobantes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filtros, setFiltros] = useState({
@@ -288,12 +288,22 @@ export default function HistorialComprobantes() {
                     })}
                   </td>
                   <td className="px-4 py-3 text-center">
+                    <div className="flex gap-2 justify-center">
                     <Button
                       onClick={() => verDetalle(comprobante)}
                       className="bg-gray-600 text-white px-3 py-1 rounded text-sm hover:bg-gray-700"
                     >
                       Ver Detalle
                     </Button>
+                    {onClonar && (
+                      <Button
+                        onClick={() => onClonar(comprobante)}
+                        className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700"
+                      >
+                        Clonar
+                      </Button>
+                    )}
+                    </div>
                   </td>
                 </tr>
               ))}

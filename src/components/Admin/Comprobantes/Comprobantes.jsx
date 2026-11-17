@@ -9,6 +9,7 @@ import useEmpresas from '../../../Hooks/useEmpresas'
 import { Button } from '../../ui/Buttons'
 import newFetchProductos from '../../../Hooks/useNewFetchProducts'
 import SearchInPresupuesto from './SearchAdmin'
+import HistorialComprobantes from '../HistorialComprobantes/HistorialComprobantes'
 
 const Comprobantes = () => {    
   const [tipoDocumento, setTipoDocumento] = useState('presupuesto')
@@ -17,7 +18,8 @@ const Comprobantes = () => {
   const [fecha, setFecha] = useState(new Date().toISOString().split('T')[0])
   const [pagos, setPagos] = useState([{tipo: '', monto: 0, CH_n:'', Bco:'',cuit:'', date:new Date().toISOString().split('T')[0] }])
   const [items, setItems] = useState([])
-  const [showModal, setShowModal] = useState(false)  
+  const [showModal, setShowModal] = useState(false)
+  const [showHistorial, setShowHistorial] = useState(false)
   const [empresa, setEmpresa] = useState({
     nombre: '',
     direccion: '',
@@ -47,6 +49,54 @@ const Comprobantes = () => {
       cuil: empresaSeleccionada.cuil || '',
       observaciones: empresaSeleccionada.observaciones || '',
       tipo: empresaSeleccionada.tipo || ''
+    })
+  }
+
+  // Clona un comprobante del historial al formulario para editarlo y generar uno nuevo
+  const handleClonar = (comprobante) => {
+    const hoy = new Date().toISOString().split('T')[0]
+    const aInputDate = (d) => (d ? new Date(d).toISOString().split('T')[0] : hoy)
+    const e = comprobante.empresa || {}
+
+    setTipoDocumento(comprobante.tipo || 'presupuesto')
+    setFecha(hoy)
+    setEmpresa({
+      nombre: e.nombre || '',
+      direccion: e.direccion || '',
+      mail: e.mail || '',
+      telefono: e.telefono || '',
+      cuil: e.cuil || '',
+      observaciones: e.observaciones || '',
+      tipo: e.tipo || ''
+    })
+    setItems((comprobante.items || []).map(item => ({
+      cantidad: item.cantidad,
+      producto: item.producto,
+      codigo: item.codigo || '',
+      precio: item.precio,
+      usd: item.usd || false,
+      dolar: item.dolar || 1
+    })))
+    setPagos(
+      comprobante.pagos?.length
+        ? comprobante.pagos.map(p => ({
+            tipo: p.tipo || '',
+            monto: p.monto || 0,
+            CH_n: p.CH_n || '',
+            Bco: p.Bco || '',
+            cuit: p.cuit || '',
+            date: aInputDate(p.date)
+          }))
+        : [{ tipo: '', monto: 0, CH_n: '', Bco: '', cuit: '', date: hoy }]
+    )
+    setShowHistorial(false)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    Swal.fire({
+      icon: 'success',
+      title: 'Comprobante clonado',
+      text: 'Modificá lo que necesites y generá el nuevo comprobante',
+      timer: 2000,
+      showConfirmButton: false
     })
   }
 
@@ -285,6 +335,17 @@ const Comprobantes = () => {
   return (
     <div className="max-w-5xl mx-auto p-4">
       <h2 className="text-lg md:text-2xl font-bold mb-2">Generar Presupuesto o Recibo</h2>
+      <Button
+        onClick={() => setShowHistorial(v => !v)}
+        className="bg-gray-600 text-white px-4 py-2 rounded mb-4"
+      >
+        {showHistorial ? 'Ocultar historial' : 'Ver historial / Clonar comprobante'}
+      </Button>
+      {showHistorial && (
+        <div className="mb-6 border rounded">
+          <HistorialComprobantes onClonar={handleClonar} />
+        </div>
+      )}
       {/* Tipo de documento y Fecha */}
       <div className="flex flex-col sm:flex-row gap-4 mb-4">
         <div>
