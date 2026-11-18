@@ -37,12 +37,15 @@ const handleAuthError = (error) => {
       return toast.error("El DNI o CUIT ya está registrado.");
     }
 
+    // Código técnico (ej. "[auth/argument-error]") que manda el servidor: ayuda a diagnosticar
+    const detalle = backendMsg?.match(/\[[^\]]+\]\s*$/)?.[0] || '';
+
     if (backendMsg?.includes('Invalid Firebase ID token')) {
-      return toast.error("Sesión inválida. Intente volver a iniciar sesión.");
+      return toast.error(`Sesión inválida. Intente volver a iniciar sesión. ${detalle}`.trim());
     }
 
     if (backendMsg?.includes('Unauthorized')) {
-      return toast.error("No autorizado.");
+      return toast.error(`No autorizado. ${detalle}`.trim());
     }
 
     return toast.error(backendMsg || "Error del servidor. Intente más tarde.");

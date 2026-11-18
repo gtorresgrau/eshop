@@ -33,7 +33,7 @@ const AuthForm = ({ mode = 'login' }) => {
 
   const createUserInMongoDB = async (user, additionalData = {}) => {
     const idToken = await user.getIdToken();
-    await fetch('/api/usuarios', {
+    const resp = await fetch('/api/usuarios', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -48,6 +48,11 @@ const AuthForm = ({ mode = 'login' }) => {
         direccion: additionalData.direccion || {},
       }),
     });
+    // Antes un fallo del servidor se ignoraba y el usuario volvía al inicio sin explicación
+    if (!resp.ok) {
+      const data = await resp.json().catch(() => ({}));
+      throw new Error(`${data.error || 'Error del servidor'} [${data.code || resp.status}]`);
+    }
   };
 
 // Nueva función reutilizable para redirigir según rol
@@ -85,7 +90,7 @@ const onSubmit = async (data) => {
       router.push('/');
     }
   } catch (error) {
-    handleAuthError(error.code);
+    handleAuthError(error.code ?? { message: error.message });
   } finally {
     setLoading(false);
   }
@@ -98,19 +103,21 @@ const loginWithGoogle = async () => {
     const res = await signInWithPopup(auth, provider);
     const token = await res.user.getIdToken();
 
-    await fetch('/api/usuarios', {
+    const resp = await fetch('/api/usuarios', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        uid: res.user.uid,
         nombreCompleto: res.user.displayName,
         correo: res.user.email,
-        rol: 'cliente',
       }),
     });
+    if (!resp.ok) {
+      const data = await resp.json().catch(() => ({}));
+      throw new Error(`${data.error || 'Error del servidor'} [${data.code || resp.status}]`);
+    }
 
     // Igual que en onSubmit, consultamos el rol y redirigimos
     const meRes = await fetch('/api/auth/me', { credentials: 'include' });
@@ -122,7 +129,7 @@ const loginWithGoogle = async () => {
           }
         } catch (error) {
           console.error(error);
-          handleAuthError(error.code);
+          handleAuthError(error.code ?? { message: error.message });
         } finally {
           setLoading(false);
         }

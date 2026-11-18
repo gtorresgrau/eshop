@@ -20,8 +20,17 @@ export async function POST(req: Request) {
         let decoded;
         try {
             decoded = await auth.verifyIdToken(idToken);
-        } catch {
-            return NextResponse.json({ error: 'Unauthorized: Invalid Firebase ID token' }, { status: 401 });
+        } catch (e: any) {
+            // Se devuelve solo el código técnico (sin secretos) para poder diagnosticar credenciales/proyecto de Firebase
+            console.error('[usuarios] verifyIdToken falló:', e?.code, e?.message);
+            return NextResponse.json(
+                { error: 'Unauthorized: Invalid Firebase ID token', code: e?.code || 'firebase-verify', motivo: String(e?.message || '').slice(0, 140) },
+                { status: 401 }
+            );
+        }
+        if (!process.env.JWT_SECRET) {
+            console.error('[usuarios] JWT_SECRET no está definido');
+            return NextResponse.json({ error: 'Configuración del servidor incompleta', code: 'JWT_SECRET_MISSING' }, { status: 500 });
         }
         const uid: string = decoded.uid; // identidad verificada
 
@@ -81,8 +90,11 @@ export async function POST(req: Request) {
 
         return response;
 
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error en /api/usuarios:', error);
-        return NextResponse.json({ error: 'Error al crear/actualizar usuario' }, { status: 500 });
+        return NextResponse.json(
+            { error: 'Error al crear/actualizar usuario', code: error?.name || 'error' },
+            { status: 500 }
+        );
     }
 }
