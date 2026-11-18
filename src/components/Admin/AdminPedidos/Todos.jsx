@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import userData from '../../constants/userData';
 import Image from 'next/image';
 import GenerarFacturaArcaModal from '../../Facturacion/GenerarFacturaArca';
+import NBPanel from './NBPanel';
 
 
 const Todos = ({search, filtroEstado, setSearch, setFiltroEstado, estados, pedidosPaginados, actualizandoId, setActualizandoId, paginaActual, totalPaginas, handleStados, cambiarPagina, setPedidosProcesando }) => {
@@ -390,6 +391,9 @@ const generarEtiquetas = async (pedidoUnico = null) => {
                   <tr key={pedido._id} className="border-t">
                     <td colSpan={8} className="p-4">
                       <div className="border rounded-lg shadow-sm p-4 space-y-4">
+
+                        {/* Dropshipping New Bytes: aprobación manual del envío del pedido */}
+                        <NBPanel pedido={pedido} />
 
                         {/* Encabezado: Estado, Fecha y Botón de etiqueta */}
                         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
