@@ -27,7 +27,8 @@ export function formatearTitulo(texto = '') {
     if (ESPECIALES[up]) return ESPECIALES[up];
     if (SIGLAS.has(up)) return w;
     if (PALABRAS_CORTAS.has(up) && offset > 0) return w.toLowerCase(); // y, de, con, para…
-    if (w.length <= 2) return w; // XL, AC, DC, HP, LG
+    // Hasta 3 letras suelen ser siglas o modelos (DAP, XL, HP, LG): se conservan, salvo palabras comunes
+    if (w.length <= 3 && !PALABRAS_COMUNES_3.has(up)) return w;
     return w.charAt(0) + w.slice(1).toLowerCase();
   });
 }
