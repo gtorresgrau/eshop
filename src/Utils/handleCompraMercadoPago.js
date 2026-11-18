@@ -16,6 +16,8 @@ const handleComprarMercadoPago = async ( cart, userCompleto ) => {
       body: JSON.stringify({ 
         cart, 
         uid: userCompleto.uid,
+        envio: userCompleto.envio ? { carrierId: userCompleto.envio.carrierId, codigoPostal: userCompleto.envio.codigoPostal } : null,
+        tipoEntrega: userCompleto.tipoEntrega || 'envio',
         shippingInfo: { 
           ...userCompleto.direccion,
           nombreCompleto: userCompleto.nombreCompleto,

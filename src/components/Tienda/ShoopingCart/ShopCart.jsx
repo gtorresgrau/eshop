@@ -110,7 +110,7 @@ const ShopCart = () => {
       };
 
       // Selección de tipo de entrega (retiro en local o envío) + teléfono
-      const entrega = await solicitarEntrega(datosFactura.telefono || '');
+      const entrega = await solicitarEntrega(datosFactura.telefono || '', { cart });
       if (!entrega) throw new Error('Debes seleccionar cómo recibís tu pedido');
 
       userCompleto.tipoEntrega = entrega.tipoEntrega;
@@ -120,16 +120,19 @@ const ShopCart = () => {
         userCompleto.dniOCuit || userCompleto.factura?.cuit || userCompleto.documento || '';
       userCompleto.telefono = entrega.telefono || datosFactura.telefono || userCompleto.telefono || '';
       userCompleto.correo = userCompleto.correo || userCompleto.email || '';
-      userCompleto.direccionEnvio = {
+      userCompleto.direccionEnvio = entrega.direccion || {
         tipoEntrega: entrega.tipoEntrega,
         telefono: entrega.telefono,
         referencia: entrega.tipoEntrega === 'retiro' ? 'Retiro en local' : 'Envío a coordinar',
       };
       userCompleto.direccion = userCompleto.direccionEnvio;
+      // Envío cotizado (solo carritos con productos de New Bytes). El servidor lo vuelve a calcular.
+      userCompleto.envio = entrega.envio || null;
+      const costoEnvio = Number(entrega.envio?.costoCliente) || 0;
 
-      // Precios por método de pago
-      const transferenciaPrecio = subtotal * (1 - (Number(descuento) / 100));
-      const mercadoPagoPrecio = subtotal;
+      // Precios por método de pago (el envío se suma al total; el descuento aplica solo a los productos)
+      const transferenciaPrecio = subtotal * (1 - (Number(descuento) / 100)) + costoEnvio;
+      const mercadoPagoPrecio = subtotal + costoEnvio;
 
       const result = await Swal.fire({
         title: '¿Cómo deseas pagar?',

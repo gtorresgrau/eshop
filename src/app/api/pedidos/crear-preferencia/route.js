@@ -1,7 +1,7 @@
 //app/api/pedidos/crear-preferencia/route.js
 import { MercadoPagoConfig, Preference } from 'mercadopago';
 import userData from '../../../../components/constants/userData';
-import { parsePrecio } from '../../../../Utils/parsePrecio';
+import { calcularCheckout } from '../../../../lib/checkout';
 
 
 const client = new MercadoPagoConfig({
@@ -12,17 +12,35 @@ const client = new MercadoPagoConfig({
 export async function POST(req) {
   try {
     //console.log("Iniciando creación de preferencia");
-    const { cart, uid } = await req.json();
+    const { cart, uid, envio, tipoEntrega } = await req.json();
     //console.log("cart:", cart);
     //console.log("uid:", uid);
 
-    const items = cart.map(item => ({
+    // Precios y envío recalculados en el servidor (no se confía en el navegador)
+    const calc = await calcularCheckout({ cart, metodo: 'mercadopago', envio, tipoEntrega: tipoEntrega || 'envio' });
+    if (calc.error) {
+      return new Response(JSON.stringify({ error: calc.error }), {
+        headers: { "Content-Type": "application/json" },
+        status: calc.status || 400,
+      });
+    }
+
+    const items = calc.items.map(item => ({
       id: item.cod_producto,
       title: item.nombre,
-      unit_price: parsePrecio(item.precio),
-      quantity: Number(item.quantity),
+      unit_price: item.precioUnitario,
+      quantity: item.quantity,
       currency_id: "ARS",
     }));
+    if (calc.envio && calc.envio.costoCliente > 0) {
+      items.push({
+        id: `envio-${calc.envio.carrierId}`,
+        title: `Envío (${calc.envio.nombre})`,
+        unit_price: calc.envio.costoCliente,
+        quantity: 1,
+        currency_id: "ARS",
+      });
+    }
 
     //console.log("Items para preferencia:", items);
 

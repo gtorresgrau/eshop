@@ -59,6 +59,7 @@ const handleGuardarPedido = async (user, cart,nuevoDescuento) => {
         },
         direccionEnvio: user.direccionEnvio || user.direccion,
         tipoEntrega: user.tipoEntrega || 'envio',
+        envio: user.envio ? { carrierId: user.envio.carrierId, codigoPostal: user.envio.codigoPostal } : null,
         tipoFactura:  {
           tipo: user.factura.tipo,
           razonSocial: user.factura.razonSocial,

@@ -4,6 +4,7 @@ import Order from "../../../../models/Order";
 import Product from "../../../../models/product";
 import User from "../../../../models/User";
 import { parsePrecio } from '../../../../Utils/parsePrecio';
+import { calcularCheckout } from '../../../../lib/checkout';
 
 export async function POST(req) {
   await connectDB();
@@ -18,17 +19,32 @@ export async function POST(req) {
     const uid = body.user?.uid;
     const external_reference = body.external_reference || "";
     let totalOrden = body.total;
-    
+
     if (!uid || !Array.isArray(cart) || cart.length === 0) {
       return new Response(
         JSON.stringify({ message: "Faltan datos esenciales (UID o carrito)" }),
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
-    
+
+    // Precios, descuento y envío se recalculan en el servidor: no se confía en el navegador.
+    const calc = await calcularCheckout({
+      cart,
+      metodo: paymentMethod === "transferencia" ? "transferencia" : "mercadopago",
+      envio: body.envio,
+      tipoEntrega: body.tipoEntrega || 'envio',
+    });
+    if (calc.error) {
+      return new Response(JSON.stringify({ message: calc.error }), {
+        status: calc.status || 400, headers: { "Content-Type": "application/json" },
+      });
+    }
+    totalOrden = calc.total;
+    const precioServidor = new Map(calc.items.map((i) => [i.cod_producto, i.precioUnitario]));
+
     let paymentId;
     let payment = null;
-    
+
 
     if (paymentMethod === "transferencia") {
       if (!totalOrden) {
@@ -61,7 +77,7 @@ export async function POST(req) {
           titulo_de_producto: producto?.titulo_de_producto || "",
           foto_1_1:item.foto_1_1,
           cantidad: item.quantity,
-          precioUnitario: parsePrecio(item.precio) || parsePrecio(producto?.precio),
+          precioUnitario: precioServidor.get(item.cod_producto) ?? parsePrecio(producto?.precio),
           foto: producto?.foto_1_1 || "",
         };
       })
@@ -96,6 +112,9 @@ export async function POST(req) {
       items,
       total: totalOrden,
     };
+    if (calc.envio) nuevaOrdenData.envio = calc.envio;
+    // Pedidos con productos de New Bytes: quedan a la espera de aprobación manual en el Admin.
+    nuevaOrdenData.nb = { estado: calc.hayNB ? 'pendiente_aprobacion' : 'no_aplica' };
     //console.log("Nueva orden a guardar:", nuevaOrdenData);
     if (paymentMethod === "mercadopago" && payment) {
       Object.assign(nuevaOrdenData, {
