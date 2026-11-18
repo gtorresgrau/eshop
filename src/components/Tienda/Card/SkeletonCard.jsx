@@ -1,36 +1,17 @@
 import React from 'react';
-import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
 
+/** Esquema de carga con la misma estructura que Card: campo liso para la foto, líneas de texto y dos botones. */
 export default function SkeletonCard() {
   return (
-    <div className="relative xs:w-44 sm:w-48 md:w-64 lg:w-56 xl:w-72 lg:h-80 xl:h-96 md:min-h-[290px] lg:min-h-[300px] xl:min-h-[380px] list-none">
-      <div className="relative flex flex-col justify-between w-full h-full bg-white border border-gray-200 rounded-lg shadow gap-4">
-        <div>
-        <div className="md:hidden relative aspect-square">
-            <Skeleton height={150} className="rounded-t-lg" />
-          </div>
-          <div className="hidden md:block xl:hidden relative aspect-square">
-            <Skeleton height={200} className="rounded-t-lg" />
-          </div>
-          <div className="hidden xl:block relative aspect-square">
-            <Skeleton height={300} className="rounded-t-lg" />
-          </div>
-          <div className="px-4 py-1">
-            <h2 className="text-sm font-semibold text-gray-900 md:text-base md:font-bold text-center h-10 md:h-5">
-              <Skeleton width={`80%`} />
-            </h2>
-            <p className="text-xs text-gray-700 md:text-base">
-              <Skeleton width={`60%`} />
-            </p>
-            <p className="text-xs text-gray-700 md:text-base">
-              <Skeleton width={`50%`} />
-            </p>
-          </div>
-        </div>
-        <div className="px-2 pb-1 flex gap-2 justify-center">
-          <Skeleton width={`100%`} height={40} className="rounded-lg" />
-        </div>
+    <div className="w-full list-none animate-pulse motion-reduce:animate-none" aria-hidden="true">
+      <div className="aspect-square bg-gray-100" />
+      <div className="mt-3 h-4 w-1/3 bg-gray-100" />
+      <div className="mt-2 h-5 w-5/6 bg-gray-100" />
+      <div className="mt-1 h-5 w-2/3 bg-gray-100" />
+      <div className="mt-4 h-6 w-1/2 bg-gray-100" />
+      <div className="mt-4 grid grid-cols-1 gap-2 md:grid-cols-2">
+        <div className="h-11 bg-gray-100" />
+        <div className="h-11 bg-gray-100" />
       </div>
     </div>
   );
