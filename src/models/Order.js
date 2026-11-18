@@ -34,6 +34,7 @@ const orderSchema = new mongoose.Schema({
   direccionEnvio: {
     pais: {type: String},
     provincia: {type: String},
+    provinciaId: {type: Number}, // id de provincia en New Bytes
     ciudad: {type: String},
     calle: {type: String},
     numero: {type: String},
@@ -62,6 +63,27 @@ const orderSchema = new mongoose.Schema({
   metadata: mongoose.Schema.Types.Mixed,
   etiquetaEnvio: { type: String, default: '' },
   trackingCode: { type: String, default: '' },
+  // Envío cotizado por NB y cobrado al cliente (0 si el subtotal supera el umbral de envío gratis)
+  envio: {
+    carrierId: { type: Number },
+    nombre: { type: String },
+    dias: { type: Number },
+    codigoPostal: { type: String },
+    costoCliente: { type: Number },
+    costoNB: { type: Number },
+    gratis: { type: Boolean },
+  },
+  // Dropshipping New Bytes: el pedido se carga en NB con aprobación manual desde el Admin.
+  nb: {
+    estado: { type: String, enum: ['no_aplica', 'pendiente_aprobacion', 'procesando', 'enviado', 'error'], default: 'no_aplica' },
+    cartId: { type: Number },
+    orderId: { type: String },
+    branch: { type: String },
+    status: { type: String },
+    statusDetail: { type: String },
+    error: { type: String },
+    enviadoAt: { type: Date },
+  },
   paymentDetails: {
     status: {type: String},
     status_detail: {type: String},

@@ -77,10 +77,21 @@ const productoSchema = new mongoose.Schema({
         min: 0,
         required: false
     },
-    medidas: { 
-        type: String, 
-        required: false 
+    medidas: {
+        type: String,
+        required: false
     },
+    // --- Dropshipping New Bytes ---
+    origen: { type: String, enum: ['propio', 'nb'], default: 'propio', index: true },
+    nbId: { type: Number, index: true, sparse: true },
+    nbSku: { type: String },
+    costoUSD: { type: Number },      // costo con IVA, en USD, según NB
+    nbCotizacion: { type: Number },  // cotización del dólar usada por NB al sincronizar
+    pesoGr: { type: Number },
+    altoCm: { type: Number },
+    anchoCm: { type: Number },
+    largoCm: { type: Number },
+    nbSyncAt: { type: Date },
     foto_1_1: { 
         type: String, 
         required: false 
