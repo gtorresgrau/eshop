@@ -25,8 +25,8 @@ const Cards = ({
 
       {/* ── Barra de resultados ── */}
       {!isLoading && (
-        <div className="flex items-center justify-between px-3 py-2 max-w-7xl mx-auto">
-          <p className="text-sm text-gray-500">
+        <div className="flex items-center justify-between py-2">
+          <p className="text-base text-gray-800">
             {hasActiveFilters ? (
               <>
                 <span className="font-semibold text-gray-800">{productos.length}</span>
@@ -44,7 +44,7 @@ const Cards = ({
           </p>
 
           {totalPages > 1 && (
-            <p className="text-xs text-gray-400">
+            <p className="text-sm text-gray-700">
               Página {currentPage} de {totalPages}
             </p>
           )}
@@ -71,7 +71,7 @@ const Cards = ({
       )}
 
       {/* ── Grid de productos ── */}
-      <ul className="grid grid-cols-2 gap-x-4 gap-y-10 py-3 w-full mx-auto md:max-w-7xl px-3 sm:px-6 md:grid-cols-3 xl:grid-cols-4 lg:px-8">
+      <ul className="grid grid-cols-2 gap-x-4 gap-y-10 py-3 w-full md:grid-cols-3 2xl:grid-cols-4">
         {isLoading ? (
           [...Array(9)].map((_, i) => (
             <li key={i} className="w-full">
@@ -86,7 +86,7 @@ const Cards = ({
           ))
         ) : (
           /* ── Estado vacío mejorado ── */
-          <li className="col-span-2 md:col-span-3 xl:col-span-4 py-12 w-full">
+          <li className="col-span-2 md:col-span-3 2xl:col-span-4 py-12 w-full">
             <div className="flex flex-col items-center gap-4 text-center px-6">
               <div className="text-5xl">🔍</div>
               <div>

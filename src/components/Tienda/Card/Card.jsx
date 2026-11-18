@@ -4,13 +4,12 @@ import React, { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../../Hooks/useAuth';
 import { MdStore } from 'react-icons/md';
-import { RiWhatsappLine, RiShareFill } from 'react-icons/ri';
+import { RiShareFill } from 'react-icons/ri';
 import IconShoopingCart from '../ShoopingCart/IconShoopingCart';
-import userData from '../../../components/constants/userData';
 import addToCart from '../../../Utils/addToCart';
 import { CartContext } from '../../../components/Context/ShoopingCartContext';
 import Image from 'next/image';
-import handleShare, { getProductUrl } from '../../../Utils/handleShare';
+import handleShare from '../../../Utils/handleShare';
 import { getProductPath } from '../../../Utils/productSlug';
 import { parsePrecio } from '../../../Utils/parsePrecio';
 import { estaAgotado } from '../../../Utils/estadoProducto';
@@ -29,8 +28,6 @@ const Card = ({ product, handleProductSelect }) => {
     addToCart(product, cart, setCart);
   };
 
-  const getProductLink = (p) => getProductUrl(p);
-
   // URL real de la ficha: la necesita Google para rastrear e indexar el producto.
   // El <a> es para el crawler; en el navegador interceptamos y abrimos el modal.
   // Ctrl/Cmd/Shift/click medio siguen abriendo la ficha en otra pestaña.
@@ -43,19 +40,6 @@ const Card = ({ product, handleProductSelect }) => {
     e.preventDefault();
     e.stopPropagation();
     handleProductSelect(product);
-  };
-
-  const linkProducto = getProductLink(product);
-
-  const consultMessage = `Hola, quería consultar por ${product.nombre} (${product.cod_producto}). Link: ${linkProducto}`;
-  const enviar = `https://wa.me/+${userData.codigoPais}${userData.contact}?text=${encodeURIComponent(
-    consultMessage || userData.textoPredefinido
-  )}`;
-
-  const handleConsult = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    window.open(enviar, '_blank');
   };
 
   const handleComprar = (e) => {
@@ -154,33 +138,19 @@ const Card = ({ product, handleProductSelect }) => {
           <p className="min-h-5 text-sm font-semibold text-green-800">{envioGratis ? 'Envío gratis' : ''}</p>
         </div>
 
-        <div className="mt-3 grid grid-cols-1 gap-2 md:grid-cols-2">
-          <button
-            type="button"
-            onClick={handleConsult}
-            className="inline-flex h-11 items-center justify-center gap-1.5 bg-gray-100 px-2 text-[15px] font-semibold text-gray-900 transition-colors hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-700 disabled:opacity-40"
-            title="Consultar por WhatsApp"
-            aria-label="Consultar por WhatsApp"
-            disabled={product.vendido}
-          >
-            <RiWhatsappLine size={18} className="text-green-700" />
-            Consultar
-          </button>
-
-          <button
-            type="button"
-            onClick={handleComprar}
-            className={`inline-flex h-11 items-center justify-center gap-1.5 px-2 text-[15px] font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-700 focus-visible:ring-offset-2 ${
-              agotado ? 'cursor-not-allowed bg-gray-200 text-gray-600' : 'bg-orange-700 text-white hover:bg-orange-800'
-            }`}
-            title="Comprar ahora"
-            aria-label="Comprar ahora"
-            disabled={agotado}
-          >
-            <MdStore size={18} />
-            Comprar
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={handleComprar}
+          className={`mt-3 inline-flex h-11 w-full items-center justify-center gap-2 px-3 text-base font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-700 focus-visible:ring-offset-2 ${
+            agotado ? 'cursor-not-allowed bg-gray-200 text-gray-600' : 'bg-orange-700 text-white hover:bg-orange-800'
+          }`}
+          title="Comprar ahora"
+          aria-label="Comprar ahora"
+          disabled={agotado}
+        >
+          <MdStore size={18} />
+          Comprar
+        </button>
       </div>
     </div>
   );

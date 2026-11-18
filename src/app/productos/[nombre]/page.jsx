@@ -6,7 +6,9 @@ import { getProductPath } from '../../../Utils/productSlug';
 import { categoriaUrl } from '../../../Utils/catalogSlug';
 import { parsePrecio } from '../../../Utils/parsePrecio';
 import { estaAgotado } from '../../../Utils/estadoProducto';
-import Productos from '../../../components/Tienda/Productos';
+import Link from 'next/link';
+import CatalogoGrid from '../../../components/Catalogo/CatalogoGrid';
+import { listarProductos } from '../../../lib/catalogo';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 60;
@@ -121,6 +123,17 @@ export default async function ProductoPage({ params }) {
   const url = `${SITE}${getProductPath(product)}`;
   const precio = parsePrecio(product.precio);
 
+  // Más productos de la misma categoría (reemplaza al catálogo completo que se cargaba debajo)
+  let relacionados = [];
+  if (categoria) {
+    try {
+      const { productos } = await listarProductos({ filtro: { categoria }, porPagina: 9 });
+      relacionados = productos.filter((p) => p.cod_producto !== product.cod_producto).slice(0, 8);
+    } catch (e) {
+      console.error('[PDP] relacionados:', e);
+    }
+  }
+
   const productJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -161,9 +174,29 @@ export default async function ProductoPage({ params }) {
     <ClientLayout className="flex flex-col h-screen" title={product.name}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
-      <main className="flex-1 flex-col items-center justify-center bg-white">
+      <main className="flex-1 bg-white">
+        <nav aria-label="Migas de pan" className="mx-auto w-full max-w-screen-xl px-4 pt-6 text-sm text-gray-700 lg:px-8">
+          <Link href="/" className="hover:underline">Inicio</Link> <span aria-hidden="true">/</span>{' '}
+          <Link href="/productos" className="hover:underline">Productos</Link>
+          {categoria ? (
+            <>
+              {' '}<span aria-hidden="true">/</span>{' '}
+              <Link href={categoriaUrl(categoria)} className="hover:underline">{categoria}</Link>
+            </>
+          ) : null}
+        </nav>
+
         <Modal selectedProduct={product} isDialog={false} />
-        <Productos />
+
+        {relacionados.length > 0 && (
+          <section className="mx-auto w-full max-w-screen-xl px-4 pb-16 pt-4 lg:px-8" aria-labelledby="relacionados-h2">
+            <div className="mb-6 flex items-baseline justify-between gap-4">
+              <h2 id="relacionados-h2" className="text-2xl font-extrabold tracking-tight text-gray-900">Más de {categoria}</h2>
+              <Link href={categoriaUrl(categoria)} className="text-base font-semibold text-orange-800 hover:underline">Ver todos</Link>
+            </div>
+            <CatalogoGrid productos={relacionados} />
+          </section>
+        )}
       </main>
     </ClientLayout>
   );

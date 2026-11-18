@@ -3,6 +3,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { useSearchParams } from 'next/navigation';
 import Cards from './Cards/Cards';
+import SidebarProductos from './SidebarProductos';
 import newFetchProductos, { startAutoUpdateProductos } from '../../Hooks/useNewFetchProducts';
 import useProductModal from '../../Hooks/useProductModal';
 import { parsePrecio } from '../../Utils/parsePrecio';
@@ -122,8 +123,11 @@ export default function Productos() {
   const totalDisponibles = productos.filter(p => !p.vendido && !p.stock).length;
 
   return (
-    <article id="productos" className="col-span-1 md:col-start-4 md:col-span-9 grid grid-rows-[auto_1fr_auto] min-h-screen">
-      <div className="md:justify-self-center w-full">
+    <section id="productos" className="mx-auto min-h-screen w-full max-w-screen-2xl px-3 py-8 sm:px-6 lg:grid lg:grid-cols-[18rem_minmax(0,1fr)] lg:gap-x-10 lg:px-8">
+      {/* Menú lateral con los filtros: orden, condición, categorías y marcas */}
+      <SidebarProductos productos={productos} isLoading={isLoading} />
+
+      <div className="min-w-0">
         <Cards
           productos={filteredProducts}
           isLoading={isLoading}
@@ -139,6 +143,6 @@ export default function Productos() {
       {isModalOpen && selectedProduct && (
         <Modal closeModal={closeModal} selectedProduct={selectedProduct} />
       )}
-    </article>
+    </section>
   );
 }
