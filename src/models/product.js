@@ -92,6 +92,7 @@ const productoSchema = new mongoose.Schema({
     anchoCm: { type: Number },
     largoCm: { type: Number },
     nbSyncAt: { type: Date },
+    ocultoPorMigracion: { type: Boolean, index: true, sparse: true }, // ocultado al pasar a solo-NB; permite revertir
     foto_1_1: { 
         type: String, 
         required: false 
