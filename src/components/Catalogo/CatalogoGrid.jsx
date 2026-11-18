@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getProductPath } from '../../Utils/productSlug';
 import { parsePrecio } from '../../Utils/parsePrecio';
 import { estaAgotado } from '../../Utils/estadoProducto';
+import { formatearTitulo } from '../../Utils/formatoTitulo';
 
 const fmt = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 });
 
@@ -54,7 +55,7 @@ export default function CatalogoGrid({ productos = [] }) {
                 <h2 className="mt-0.5 text-base font-medium leading-snug text-gray-900 line-clamp-2">
                   {/* Enlace extendido: toda la card es clicable pero el lector de pantalla lee un solo enlace */}
                   <Link href={href} className="after:absolute after:inset-0 after:content-[''] group-hover:underline">
-                    {titulo}
+                    {formatearTitulo(titulo)}
                   </Link>
                 </h2>
 

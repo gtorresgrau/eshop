@@ -67,7 +67,7 @@ export default function LandingCatalogo({
 
           <div className="min-w-0">
             <h1 className="max-w-3xl text-3xl font-extrabold leading-tight tracking-tight text-gray-900 sm:text-4xl">{h1}</h1>
-            <p className="mt-3 max-w-3xl text-base leading-relaxed text-gray-800">{intro}</p>
+            <p className="mt-3 max-w-[60ch] text-base leading-relaxed text-gray-800">{intro}</p>
 
             <div className="mt-6">
               <BuscadorCatalogo action={basePath} q={q} />

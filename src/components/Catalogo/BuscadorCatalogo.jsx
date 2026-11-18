@@ -2,7 +2,7 @@
  * Buscador del catálogo. Es un formulario GET común: funciona sin JavaScript y busca dentro
  * de la sección actual (todo el catálogo, una categoría o una marca).
  */
-export default function BuscadorCatalogo({ action, q = '', placeholder = 'Buscar por producto, marca o categoría' }) {
+export default function BuscadorCatalogo({ action, q = '', placeholder = 'Buscar productos' }) {
   return (
     <form action={action} method="get" role="search" className="flex">
       <label htmlFor="q-catalogo" className="sr-only">Buscar productos</label>

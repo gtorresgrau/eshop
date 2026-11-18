@@ -45,7 +45,7 @@ export default async function CatalogoPage({ searchParams }) {
 
   return (
     <LandingCatalogo
-      h1="Catálogo de insumos informáticos y dispositivos"
+      h1="Insumos informáticos y dispositivos"
       intro="Componentes, accesorios y dispositivos electrónicos con envío a todo el país. Elegí una categoría o una marca en el menú, o buscá lo que necesitás."
       productos={productos}
       total={total}
