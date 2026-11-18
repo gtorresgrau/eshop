@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import LandingCatalogo from '../../../components/Catalogo/LandingCatalogo';
-import { listarProductos, listarCategorias } from '../../../lib/catalogo';
+import { listarProductos, listarCategorias, listarMarcas, filtroBusqueda } from '../../../lib/catalogo';
 import { toKebab, resolveFromSlug, categoriaUrl } from '../../../Utils/catalogSlug';
 import { defaultMetadata } from '../../../lib/metadata';
 
@@ -25,6 +25,7 @@ async function resolver(slug) {
 }
 
 const parsePagina = (sp) => Math.max(1, Number(sp?.page) || 1);
+const parseQ = (sp) => String(sp?.q ?? '').trim().slice(0, 80);
 
 export async function generateMetadata({ params, searchParams }) {
   const [{ categoria }, sp] = await Promise.all([params, searchParams]);
@@ -33,7 +34,8 @@ export async function generateMetadata({ params, searchParams }) {
   const pagina = parsePagina(sp);
   const sufijo = pagina > 1 ? ` - Página ${pagina}` : '';
   const base = `${SITE}${categoriaUrl(nombre)}`;
-  const canonical = pagina > 1 ? `${base}?page=${pagina}` : base;
+  const q = parseQ(sp);
+  const canonical = pagina > 1 && !q ? `${base}?page=${pagina}` : base;
   const title = `${nombre}${sufijo} | Eshop Devices`;
   const description = `${nombre} en Eshop Devices, Wilde. Insumos informáticos y dispositivos electrónicos con atención personalizada y envíos a todo el país.`;
   return {
@@ -44,7 +46,9 @@ export async function generateMetadata({ params, searchParams }) {
     alternates: { canonical },
     openGraph: { ...defaultMetadata.openGraph, title, description, url: canonical },
     twitter: { ...defaultMetadata.twitter, title, description },
-    robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 } },
+    robots: q
+      ? { index: false, follow: true }
+      : { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 } },
   };
 }
 
@@ -54,17 +58,16 @@ export default async function CategoriaPage({ params, searchParams }) {
   if (!nombre) return notFound();
 
   const pagina = parsePagina(sp);
-  const { productos, total, totalPaginas } = await listarProductos({ filtro: { categoria: nombre }, pagina });
-
-  const relacionados = categorias
-    .filter((c) => c.valor !== nombre)
-    .slice(0, 24)
-    .map((c) => ({ href: categoriaUrl(c.valor), label: c.valor, total: c.total }));
+  const q = parseQ(sp);
+  const [{ productos, total, totalPaginas }, marcas] = await Promise.all([
+    listarProductos({ filtro: { categoria: nombre, ...filtroBusqueda(q) }, pagina }),
+    listarMarcas(),
+  ]);
 
   return (
     <LandingCatalogo
       h1={nombre}
-      intro={`${total} productos de ${nombre.toLowerCase()}. Mirá el detalle, el precio y la disponibilidad de cada uno y comprá con envío a todo el país.`}
+      intro={`Productos de ${nombre.toLowerCase()} con precio y disponibilidad al día. Comprás con envío a todo el país.`}
       productos={productos}
       total={total}
       totalPaginas={totalPaginas}
@@ -73,8 +76,10 @@ export default async function CategoriaPage({ params, searchParams }) {
       migaNombre={nombre}
       migaPadreUrl="/productos"
       migaPadreNombre="Productos"
-      relacionados={relacionados}
-      relacionadosTitulo="Otras categorías"
+      categorias={categorias}
+      marcas={marcas}
+      categoriaActiva={nombre}
+      q={q}
     />
   );
 }

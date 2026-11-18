@@ -14,7 +14,7 @@ const directives = [
   // Explicit element-level script policy (fallback otherwise uses script-src)
   `script-src-elem 'self'${isProd ? '' : " 'unsafe-eval'"} 'unsafe-inline' https://www.googletagmanager.com https://sdk.mercadopago.com https://apis.google.com https://www.gstatic.com`,
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-  "img-src 'self' data: blob: https://res.cloudinary.com https://*.mercadopago.com https://www.google-analytics.com https://www.googletagmanager.com",
+  "img-src 'self' data: blob: https://res.cloudinary.com https://static.nb.com.ar https://*.mercadopago.com https://www.google-analytics.com https://www.googletagmanager.com",
   "font-src 'self' https://fonts.gstatic.com",
   "connect-src 'self' https://api.mercadopago.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.google-analytics.com https://stats.g.doubleclick.net https://www.googleapis.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com",
   "frame-src https://www.googletagmanager.com https://www.youtube.com https://drive.google.com https://*.mercadopago.com https://eshop-34a07.firebaseapp.com https://*.firebaseapp.com https://*.web.app",

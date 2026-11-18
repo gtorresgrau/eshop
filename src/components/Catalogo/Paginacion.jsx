@@ -2,10 +2,17 @@ import Link from 'next/link';
 
 /**
  * Paginación por enlaces reales (no botones): cada página es rastreable.
+ * `q` conserva la búsqueda al cambiar de página.
  */
-export default function Paginacion({ pagina, totalPaginas, basePath }) {
+export default function Paginacion({ pagina, totalPaginas, basePath, q = '' }) {
   if (totalPaginas <= 1) return null;
-  const href = (n) => (n === 1 ? basePath : `${basePath}?page=${n}`);
+  const href = (n) => {
+    const p = new URLSearchParams();
+    if (q) p.set('q', q);
+    if (n > 1) p.set('page', String(n));
+    const s = p.toString();
+    return s ? `${basePath}?${s}` : basePath;
+  };
 
   // Ventana de 5 páginas alrededor de la actual
   const desde = Math.max(1, Math.min(pagina - 2, totalPaginas - 4));
@@ -13,30 +20,29 @@ export default function Paginacion({ pagina, totalPaginas, basePath }) {
   const paginas = [];
   for (let i = desde; i <= hasta; i++) paginas.push(i);
 
-  const base = 'inline-flex h-9 min-w-9 items-center justify-center rounded-md border px-3 text-sm';
+  const base = 'inline-flex h-11 min-w-11 items-center justify-center px-4 text-base transition-colors';
+  const normal = `${base} bg-gray-100 text-gray-900 hover:bg-gray-200`;
 
   return (
-    <nav aria-label="Paginación del catálogo" className="mt-8 flex flex-wrap items-center justify-center gap-2">
+    <nav aria-label="Paginación del catálogo" className="mt-14 flex flex-wrap items-center gap-2">
       {pagina > 1 && (
-        <Link href={href(pagina - 1)} rel="prev" className={`${base} border-gray-300 text-gray-700 hover:bg-gray-50`}>
+        <Link href={href(pagina - 1)} rel="prev" className={normal}>
           Anterior
         </Link>
       )}
-      {desde > 1 && <Link href={href(1)} className={`${base} border-gray-300 text-gray-700 hover:bg-gray-50`}>1</Link>}
-      {desde > 2 && <span className="px-1 text-gray-400">…</span>}
+      {desde > 1 && <Link href={href(1)} className={normal}>1</Link>}
+      {desde > 2 && <span className="px-1 text-gray-600">…</span>}
       {paginas.map((n) =>
         n === pagina ? (
-          <span key={n} aria-current="page" className={`${base} border-blue-700 bg-blue-700 font-semibold text-white`}>{n}</span>
+          <span key={n} aria-current="page" className={`${base} bg-gray-900 font-semibold text-white`}>{n}</span>
         ) : (
-          <Link key={n} href={href(n)} className={`${base} border-gray-300 text-gray-700 hover:bg-gray-50`}>{n}</Link>
+          <Link key={n} href={href(n)} className={normal}>{n}</Link>
         )
       )}
-      {hasta < totalPaginas - 1 && <span className="px-1 text-gray-400">…</span>}
-      {hasta < totalPaginas && (
-        <Link href={href(totalPaginas)} className={`${base} border-gray-300 text-gray-700 hover:bg-gray-50`}>{totalPaginas}</Link>
-      )}
+      {hasta < totalPaginas - 1 && <span className="px-1 text-gray-600">…</span>}
+      {hasta < totalPaginas && <Link href={href(totalPaginas)} className={normal}>{totalPaginas}</Link>}
       {pagina < totalPaginas && (
-        <Link href={href(pagina + 1)} rel="next" className={`${base} border-gray-300 text-gray-700 hover:bg-gray-50`}>
+        <Link href={href(pagina + 1)} rel="next" className={normal}>
           Siguiente
         </Link>
       )}

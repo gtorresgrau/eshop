@@ -16,6 +16,29 @@ const serialize = (docs) => JSON.parse(JSON.stringify(docs));
 /** Solo productos publicables: `hide: true` queda fuera del catálogo indexable. */
 const filtroBase = { hide: { $ne: true } };
 
+const escapar = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+/**
+ * Filtro de búsqueda por texto: cada palabra debe aparecer en el nombre, título, marca,
+ * categoría, modelo o código (sin importar mayúsculas). Devuelve {} si no hay texto.
+ */
+export function filtroBusqueda(q) {
+  const palabras = String(q ?? '')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 6)
+    .map((p) => p.slice(0, 40));
+  if (!palabras.length) return {};
+  const campos = ['nombre', 'titulo_de_producto', 'marca', 'categoria', 'modelo', 'cod_producto', 'nbSku'];
+  return {
+    $and: palabras.map((p) => {
+      const re = new RegExp(escapar(p), 'i');
+      return { $or: campos.map((c) => ({ [c]: re })) };
+    }),
+  };
+}
+
 export async function listarProductos({ filtro = {}, pagina = 1, porPagina = POR_PAGINA } = {}) {
   await connectDB();
   const query = { ...filtroBase, ...filtro };
