@@ -6,6 +6,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { MdStore } from "react-icons/md";
 import { RiShareFill } from "react-icons/ri";
 import { getInLocalStorage } from "@/Hooks/localStorage"; // ajustá si difiere
+import { parsePrecio } from "../../../Utils/parsePrecio";
+import { estaAgotado } from "../../../Utils/estadoProducto";
 
 const ProductoDetalle = ({
   selectedProduct,
@@ -19,16 +21,9 @@ const ProductoDetalle = ({
   const path = usePathname();
   const router = useRouter();
   const { user, isAuthenticated, isAdmin, isClient } = useAuth();
-  const agotado = selectedProduct.vendido === true ||
-    (selectedProduct.cantidad !== undefined
-      ? selectedProduct.cantidad <= 0
-      : selectedProduct.stock === false);
-  const precioNum = Number(
-    typeof selectedProduct.precio === "string"
-      ? selectedProduct.precio.replace(/[^\d.,-]/g, "").replace(".", "").replace(",", ".")
-      : selectedProduct.precio ?? 0
-  );
-  const precioFmt = isNaN(precioNum)
+  const agotado = estaAgotado(selectedProduct);
+  const precioNum = parsePrecio(selectedProduct.precio);
+  const precioFmt = precioNum <= 0
     ? ""
     : precioNum.toLocaleString("es-AR", { style: "currency", currency: "ARS" });
 

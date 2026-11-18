@@ -11,6 +11,9 @@ import addToCart from '../../../Utils/addToCart';
 import { CartContext } from '../../../components/Context/ShoopingCartContext';
 import Image from 'next/image';
 import handleShare, { getProductUrl } from '../../../Utils/handleShare';
+import { getProductPath } from '../../../Utils/productSlug';
+import { parsePrecio } from '../../../Utils/parsePrecio';
+import { estaAgotado } from '../../../Utils/estadoProducto';
 
 const Card = ({ product, handleProductSelect }) => {
   const [cart, setCart] = useContext(CartContext);
@@ -24,6 +27,20 @@ const Card = ({ product, handleProductSelect }) => {
   };
 
   const getProductLink = (p) => getProductUrl(p);
+
+  // URL real de la ficha: la necesita Google para rastrear e indexar el producto.
+  // El <a> es para el crawler; en el navegador interceptamos y abrimos el modal.
+  // Ctrl/Cmd/Shift/click medio siguen abriendo la ficha en otra pestaña.
+  const productPath = getProductPath(product);
+  const handleNavigate = (e) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1) {
+      e.stopPropagation();
+      return;
+    }
+    e.preventDefault();
+    e.stopPropagation();
+    handleProductSelect(product);
+  };
 
   const linkProducto = getProductLink(product);
 
@@ -49,7 +66,7 @@ const Card = ({ product, handleProductSelect }) => {
     }
   };
 
-  const agotado = product.vendido || (product.cantidad !== undefined ? product.cantidad <= 0 : product.stock);
+  const agotado = estaAgotado(product);
 
   return (
     <div className={`${product.hide ? 'hidden' : ''} relative sm:w-48 md:w-64 lg:w-56 xl:w-72 lg:h-80 xl:h-96 md:min-h-[320px] min-w-[150px] lg:min-h-[360px] xl:min-h-[420px] list-none cursor-pointer`}>
@@ -119,14 +136,16 @@ const Card = ({ product, handleProductSelect }) => {
             />
 
             <div className="absolute top-1 left-1 text-sm bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-bold px-3 py-1 rounded-tr-lg rounded-bl-lg shadow-md">
-              {Number(product.precio).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}
+              {parsePrecio(product.precio).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}
               {product.usd ? ' usd' : ''}
             </div>
           </div>
 
           <div className="px-4 py-1">
             <h2 className="text-sm font-semibold text-gray-900 md:text-base md:font-bold text-center h-10 md:h-5">
-              {product.nombre}
+              <a href={productPath} onClick={handleNavigate} className="hover:underline focus:outline-none focus:underline">
+                {product.nombre}
+              </a>
             </h2>
             <p className="text-xs text-gray-700 md:text-base"><strong>Marca:</strong> {product.marca}</p>
             <p className="text-xs text-gray-700 md:text-base h-8">

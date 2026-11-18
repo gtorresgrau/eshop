@@ -1,6 +1,7 @@
 //app/api/pedidos/crear-preferencia/route.js
 import { MercadoPagoConfig, Preference } from 'mercadopago';
 import userData from '../../../../components/constants/userData';
+import { parsePrecio } from '../../../../Utils/parsePrecio';
 
 
 const client = new MercadoPagoConfig({
@@ -14,13 +15,6 @@ export async function POST(req) {
     const { cart, uid } = await req.json();
     //console.log("cart:", cart);
     //console.log("uid:", uid);
-
-    const parsePrecio = (valor) => {
-      const raw = String(valor ?? '0').replace(/[^\d,.-]/g, '');
-      // Elimina el separador de miles (punto antes de 3 dígitos) y convierte coma decimal
-      const normalized = raw.replace(/\.(?=\d{3}(?:[,.]|$))/g, '').replace(',', '.');
-      return parseFloat(normalized) || 0;
-    };
 
     const items = cart.map(item => ({
       id: item.cod_producto,

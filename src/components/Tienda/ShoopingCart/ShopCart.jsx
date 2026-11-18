@@ -17,6 +17,7 @@ import handleGuardarPedidoMercado from '../../../Utils/handleGuardarPedidoMercad
 import FormularioFactura from '../../DashboardCliente/Perfil/FormularioFactura';
 import { solicitarEntrega } from '../../../Utils/solicitarEntrega';
 import notificador from '../../../Utils/notificador';
+import { parsePrecio } from '../../../Utils/parsePrecio';
 
 const ShopCart = () => {
   const router = useRouter();
@@ -26,7 +27,7 @@ const ShopCart = () => {
   const preguntarRef = useRef(null);
 
   // Subtotal y total items calculados desde el estado (no del DOM)
-  const subtotal = cart.reduce((acc, item) => acc + (item.precio * item.quantity), 0);
+  const subtotal = cart.reduce((acc, item) => acc + (parsePrecio(item.precio) * item.quantity), 0);
   const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   const formatCurrency = (num) =>
@@ -300,6 +301,24 @@ const ShopCart = () => {
   };
 
   const handleFinalizarCompra = async () => {
+    // Productos sin precio válido (cargados a mano o de carritos viejos) no se pueden cobrar
+    const sinPrecio = cart.filter((item) => parsePrecio(item.precio) <= 0);
+    if (sinPrecio.length > 0) {
+      const lista = sinPrecio
+        .map((item) => `<li style="text-align:left;">${item.nombre} <span style="color:#6b7280;">(${item.cod_producto})</span></li>`)
+        .join('');
+      const { isConfirmed } = await Swal.fire({
+        icon: 'warning',
+        title: 'Productos sin precio',
+        html: `<p style="margin-bottom:12px;font-size:0.92rem;">Estos productos no tienen precio publicado y no se pueden comprar online:</p><ul style="font-size:0.85rem;">${lista}</ul><p style="margin-top:14px;font-size:0.85rem;color:#6b7280;">Podés quitarlos del carrito y volver a finalizar la compra.</p>`,
+        showCancelButton: true,
+        confirmButtonText: 'Quitarlos del carrito',
+        cancelButtonText: 'Cancelar',
+        reverseButtons: true,
+      });
+      if (isConfirmed) setCart((prev) => prev.filter((item) => parsePrecio(item.precio) > 0));
+      return;
+    }
     const nuevoDescuento = Number(cart[0]?.descuento) || 0; // sin await y seguro
     await handleComprar(nuevoDescuento);
   };

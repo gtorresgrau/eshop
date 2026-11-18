@@ -1,6 +1,0 @@
-# https://www.robotstxt.org/robotstxt.html
-User-agent: *
-Disallow: /user/Login
-Disallow: /Admin
-Sitemap: https://eshopdevices.com/sitemap.xml
-

@@ -13,14 +13,14 @@ const comprobanteSchema = new mongoose.Schema({
     enum: ['presupuesto', 'recibo'],
     trim: true
   },
-  
+
   // Fecha del comprobante
   fecha: {
     type: Date,
     required: true,
     default: Date.now
   },
-  
+
   // Datos de la empresa/cliente
   empresa: {
     nombre: { type: String, required: true, trim: true },
@@ -31,7 +31,7 @@ const comprobanteSchema = new mongoose.Schema({
     tipo: { type: String, trim: true },
     observaciones: { type: String, trim: true }
   },
-  
+
   // Items/productos del comprobante
   items: [{
     cantidad: { type: Number, required: true, default: 1 },
@@ -41,7 +41,7 @@ const comprobanteSchema = new mongoose.Schema({
     usd: { type: Boolean, default: false },
     dolar: { type: Number, default: 1 }
   }],
-  
+
   // Pagos (para recibos)
   pagos: [{
     tipo: { type: String, trim: true },
@@ -51,24 +51,46 @@ const comprobanteSchema = new mongoose.Schema({
     cuit: { type: String, trim: true },
     date: { type: Date }
   }],
-  
+
   // Total del comprobante
   total: {
     type: Number,
     required: true,
     default: 0
   },
-  
+
   // URL del PDF generado (si se guarda en cloudinary o similar)
   pdfUrl: {
     type: String,
     trim: true
   },
-  
+
   // Número de comprobante (auto-generado)
   numeroComprobante: {
     type: String,
     unique: true
+  },
+
+  // Factura electrónica ARCA emitida a partir de este comprobante (Factura C)
+  factura: {
+    // procesando: emisión en curso | emitida: con CAE | incierto: sin respuesta de ARCA, verificar a mano
+    estado: { type: String, enum: ['procesando', 'emitida', 'incierto'] },
+    cbteTipo: { type: Number },      // 11 = Factura C
+    ptoVta: { type: Number },
+    nroCbte: { type: Number },
+    fecha: { type: String },         // yyyymmdd
+    cae: { type: String },
+    caeVto: { type: String },        // yyyymmdd
+    ambiente: { type: String, enum: ['homo', 'prod'] },
+    total: { type: Number },
+    receptor: {
+      docTipo: { type: Number },
+      docNro: { type: String },
+      razonSocial: { type: String },
+      condicionIva: { type: Number }
+    },
+    error: { type: String },
+    emitidaEn: { type: Date }
   }
 }, {
   timestamps: true // Agrega createdAt y updatedAt automáticamente

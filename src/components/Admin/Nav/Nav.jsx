@@ -123,6 +123,16 @@ export default function Nav({ handleSelectSection }) {
           <li>
             <DownloadCSVButton toggleMenu={toggleMenu} />
           </li>
+          <li>
+              <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-primary-hover group" onClick={() => { handleSelectSection("Pedidos"); toggleMenu()}} title='Pedidos'>
+                <span className="ml-3 text-gray-200">Pedidos</span>
+              </a>
+          </li>
+          <li>
+              <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-primary-hover group" onClick={() => { handleSelectSection("Estadisticas"); toggleMenu()}} title='Estadísticas'>
+                <span className="ml-3 text-gray-200">Estadísticas</span>
+              </a>
+          </li>
               {/* Presupuestos */}
           <li>
               <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-primary-hover group" onClick={() => { handleSelectSection("Comprobantes"); toggleMenu()}} title='Comprobantes '>

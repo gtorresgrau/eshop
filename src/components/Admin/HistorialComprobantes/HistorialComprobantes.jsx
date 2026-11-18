@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { Button } from '../../ui/Buttons';
+import FacturarComprobanteModal from '../../Facturacion/FacturarComprobanteModal';
 
 /**
  * Componente para ver el historial de comprobantes generados
@@ -11,6 +12,7 @@ import { Button } from '../../ui/Buttons';
 export default function HistorialComprobantes({ onClonar }) {
   const [comprobantes, setComprobantes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [facturando, setFacturando] = useState(null); // comprobante a facturar
   const [filtros, setFiltros] = useState({
     empresaNombre: '',
     tipo: '',
@@ -288,7 +290,29 @@ export default function HistorialComprobantes({ onClonar }) {
                     })}
                   </td>
                   <td className="px-4 py-3 text-center">
+                    {comprobante.factura?.estado === 'emitida' && (
+                      <div className="text-xs text-green-700 font-semibold mb-1" title={`CAE ${comprobante.factura.cae}`}>
+                        Fact. C {String(comprobante.factura.ptoVta).padStart(5, '0')}-{String(comprobante.factura.nroCbte).padStart(8, '0')}
+                        {comprobante.factura.ambiente === 'homo' ? ' (prueba)' : ''}
+                      </div>
+                    )}
+                    {comprobante.factura?.estado === 'procesando' && (
+                      <div className="text-xs text-yellow-700 font-semibold mb-1">Emitiendo…</div>
+                    )}
+                    {comprobante.factura?.estado === 'incierto' && (
+                      <div className="text-xs text-red-700 font-semibold mb-1" title={comprobante.factura.error}>
+                        Verificar en ARCA
+                      </div>
+                    )}
                     <div className="flex gap-2 justify-center">
+                    {comprobante.tipo === 'presupuesto' && !comprobante.factura?.estado && (
+                      <Button
+                        onClick={() => setFacturando(comprobante)}
+                        className="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700"
+                      >
+                        Facturar
+                      </Button>
+                    )}
                     <Button
                       onClick={() => verDetalle(comprobante)}
                       className="bg-gray-600 text-white px-3 py-1 rounded text-sm hover:bg-gray-700"
@@ -310,6 +334,14 @@ export default function HistorialComprobantes({ onClonar }) {
             </tbody>
           </table>
         </div>
+      )}
+
+      {facturando && (
+        <FacturarComprobanteModal
+          comprobante={facturando}
+          onClose={() => setFacturando(null)}
+          onEmitida={() => fetchComprobantes()}
+        />
       )}
 
       {/* Resumen */}

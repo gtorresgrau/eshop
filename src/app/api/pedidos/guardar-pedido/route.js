@@ -3,6 +3,7 @@ import { connectDB } from "../../../../lib/mongodb";
 import Order from "../../../../models/Order";
 import Product from "../../../../models/product";
 import User from "../../../../models/User";
+import { parsePrecio } from '../../../../Utils/parsePrecio';
 
 export async function POST(req) {
   await connectDB();
@@ -60,7 +61,7 @@ export async function POST(req) {
           titulo_de_producto: producto?.titulo_de_producto || "",
           foto_1_1:item.foto_1_1,
           cantidad: item.quantity,
-          precioUnitario: item.precio,
+          precioUnitario: parsePrecio(item.precio) || parsePrecio(producto?.precio),
           foto: producto?.foto_1_1 || "",
         };
       })

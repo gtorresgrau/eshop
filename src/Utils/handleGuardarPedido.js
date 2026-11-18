@@ -1,3 +1,5 @@
+import { parsePrecio } from './parsePrecio';
+
 const handleGuardarPedido = async (user, cart,nuevoDescuento) => {
   // Validaciones iniciales
   if (!user?.uid) {
@@ -23,7 +25,7 @@ const handleGuardarPedido = async (user, cart,nuevoDescuento) => {
   const carritoValido = cart.every(item => 
     item.cod_producto && 
     item.quantity > 0 && 
-    item.precio > 0 &&
+    parsePrecio(item.precio) > 0 &&
     item.nombre
   );
 
@@ -44,7 +46,7 @@ const handleGuardarPedido = async (user, cart,nuevoDescuento) => {
           cod_producto: item.cod_producto,
           foto_1_1:item.foto_1_1,
           nombre: item.nombre,
-          precio: item.precio * (1 - (nuevoDescuento / 100)),
+          precio: parsePrecio(item.precio) * (1 - (nuevoDescuento / 100)),
           quantity: item.quantity,
           titulo_de_producto: item.titulo_de_producto || '',
         })),
@@ -72,7 +74,7 @@ const handleGuardarPedido = async (user, cart,nuevoDescuento) => {
         paymentId: `transf_intent_${new Date().getTime()}`,
         paymentMethod: 'transferencia',
         estado: 'pendiente',
-        total: cart.reduce((acc, item) => acc + (item.precio * item.quantity), 0)* (1 - (nuevoDescuento / 100)),
+        total: cart.reduce((acc, item) => acc + (parsePrecio(item.precio) * item.quantity), 0)* (1 - (nuevoDescuento / 100)),
       }),
     });
 

@@ -2,6 +2,34 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
+// Evento `purchase` de GA4 (sirve como conversión en Google Ads).
+// Solo para pagos aprobados y una única vez por pago aunque se recargue la página.
+function trackPurchase(paymentData, paymentId) {
+  if (paymentData?.status !== "approved") return;
+  const transactionId = String(paymentId);
+  const claveVisto = `ga_purchase_${transactionId}`;
+  try {
+    if (localStorage.getItem(claveVisto)) return;
+    localStorage.setItem(claveVisto, "1");
+  } catch {
+    // sin localStorage: se envía igual, GA4 deduplica por transaction_id
+  }
+
+  window.dataLayer = window.dataLayer || [];
+  const gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+  gtag("event", "purchase", {
+    transaction_id: transactionId,
+    value: Number(paymentData.transaction_amount) || 0,
+    currency: paymentData.currency_id || "ARS",
+    items: (paymentData.additional_info?.items || []).map((it) => ({
+      item_id: String(it.id || it.title || ""),
+      item_name: it.title,
+      price: Number(it.unit_price) || 0,
+      quantity: Number(it.quantity) || 1,
+    })),
+  });
+}
+
 export default function SuccessPage() {
   const router = useRouter();
 
@@ -14,6 +42,7 @@ export default function SuccessPage() {
         .then((res) => res.json())
         .then((data) => {
           console.log("Pago verificado:");
+          trackPurchase(data?.paymentData, paymentId);
         })
         .catch((err) => {
           console.error("Error al verificar el pago:", err);

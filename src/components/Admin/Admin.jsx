@@ -11,6 +11,13 @@ import AddProduct from "./AddProduct/AddProduct";
 import Etiquetas from "./Etiquetas/Etiquetas";
 import EmpresaForm from "./Empresas/Empresas";
 import Comprobantes from "./Comprobantes/Comprobantes";
+import Estadisticas from "./Estadisticas/Estadisticas";
+
+// Carga solo en el cliente: usa librerías de navegador (html2pdf, etc.)
+const AdminPedidos = dynamic(() => import('./AdminPedidos/AdminPedidos'), {
+  ssr: false,
+  loading: () => <div className="p-4">Cargando pedidos…</div>,
+});
 import fetchFiltersData, { startAutoUpdateFilters } from "../../Hooks/useBrandsCategories";
 import AdminConfigPage from "./Configuracion/configuracion";
 import { useAuth } from '../../Hooks/useAuth';
@@ -390,6 +397,16 @@ export default function Admin() {
           {section === 'DescargarCSV' && (
             <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
               <DownloadCSVButton />
+            </div>
+          )}
+          {section === 'Pedidos' && (
+            <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
+              <AdminPedidos />
+            </div>
+          )}
+          {section === 'Estadisticas' && (
+            <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
+              <Estadisticas />
             </div>
           )}
           {section === 'Comprobantes' && (

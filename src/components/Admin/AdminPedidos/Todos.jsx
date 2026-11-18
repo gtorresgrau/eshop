@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { toast } from 'react-toastify';
 import userData from '../../constants/userData';
 import Image from 'next/image';
-import GenerarFacturaArcaModal from '../../Facturacion/GenerarFacturaArcaModal';
+import GenerarFacturaArcaModal from '../../Facturacion/GenerarFacturaArca';
 
 
 const Todos = ({search, filtroEstado, setSearch, setFiltroEstado, estados, pedidosPaginados, actualizandoId, setActualizandoId, paginaActual, totalPaginas, handleStados, cambiarPagina, setPedidosProcesando }) => {
@@ -361,7 +361,7 @@ const generarEtiquetas = async (pedidoUnico = null) => {
             />
             <select value={filtroEstado} onChange={(e) => {setFiltroEstado(e.target.value); cambiarPagina(1);; }} className="border px-3 py-2 rounded w-full sm:w-auto">
               <option value="todos">Todos los estados</option>
-              {estados.map((estado) => (
+              {estados.filter((estado) => estado !== 'cancelado').map((estado) => (
                 <option key={estado} value={estado}>{estado}</option>
               ))}
             </select>

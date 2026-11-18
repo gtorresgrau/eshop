@@ -5,17 +5,9 @@ import { useSearchParams } from 'next/navigation';
 import Cards from './Cards/Cards';
 import newFetchProductos, { startAutoUpdateProductos } from '../../Hooks/useNewFetchProducts';
 import useProductModal from '../../Hooks/useProductModal';
+import { parsePrecio } from '../../Utils/parsePrecio';
 
 const Modal = dynamic(() => import('./Modal/Modals'));
-
-// Normaliza precio a número para ordenar
-const parsePrecio = (precio) => {
-  if (!precio) return 0;
-  const n = typeof precio === 'string'
-    ? parseFloat(precio.replace(/[^\d.,-]/g, '').replace('.', '').replace(',', '.'))
-    : Number(precio);
-  return isNaN(n) ? 0 : n;
-};
 
 // Función de ordenamiento
 const sortProductos = (lista, orden) => {

@@ -3,6 +3,24 @@
 
 import { useEffect, useState } from 'react';
 import { FaWhatsapp } from 'react-icons/fa';
+import { trackEvent } from '../../Utils/analytics';
+
+// Registra el clic para GA4 y para las estadísticas internas de WhatsApp.
+// Nunca bloquea la apertura del chat ni lanza errores.
+const registrarClic = (label = '') => {
+  trackEvent('generate_lead', { method: 'whatsapp', lead_type: label });
+  const tipo = /admin/i.test(label) ? 'administracion' : 'ventas';
+  try {
+    fetch('/api/whatsapp-stats', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tipo }),
+      keepalive: true,
+    }).catch(() => {});
+  } catch {
+    // ignorar
+  }
+};
 
 const BotonWsp = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,6 +58,7 @@ const BotonWsp = () => {
           <a
             key={c.label}
             href={generarLink(c.contacto, c.codigoPais, c.textoPredefinido)}
+            onClick={() => registrarClic(c.label)}
             target="_blank"
             rel="noopener noreferrer"
             title={`Chatear con ${c.label}`}

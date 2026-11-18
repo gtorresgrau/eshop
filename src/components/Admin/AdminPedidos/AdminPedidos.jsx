@@ -1,10 +1,11 @@
 // componentes/Admin/AdminPedidos/AdminPedidos.jsx
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Loading from "../../Loading/Loading";
 import EnTransito from "./EnTransito";
 import Pagados from "./Pagados";
-import Estadisticas from "./Estadisticas";
+import EstadisticasNegocio from "../Estadisticas/EstadisticasNegocio/EstadisticasNegocio";
 import Entregado from "./Entregado";
+import Cancelados from "./Cancelados";
 import Todos from "./Todos";
 import cargarPedidos from "../../../Utils/cargarPedidos";
 import actualizarEstado from "../../../Utils/actualizarEstado";
@@ -30,6 +31,7 @@ export default function AdminPedidos() {
     ESTADISTICAS: "ESTADISTICAS",
     TRANSITO: "TRANSITO",
     ENTREGADO: "ENTREGADO",
+    CANCELADOS: "CANCELADOS",
     ENVIAR: "ENVIAR"
   };
 
@@ -52,19 +54,22 @@ const handleStados = (id, nuevoEstado) => {
   actualizarEstado(id, nuevoEstado, setActualizandoId, setPedidos,false,userData);
 };
 
-  const pedidosFiltrados = pedidos.filter((pedido) => {
+  const pedidosFiltrados = useMemo(() => pedidos.filter((pedido) => {
     const texto = search.toLowerCase();
     const coincideBusqueda =
-      pedido.usuarioInfo?.nombreCompleto?.toLowerCase().includes(texto) ||
-      pedido.usuarioInfo?.correo?.toLowerCase().includes(texto);
+      (pedido.usuarioInfo?.nombreCompleto || "").toLowerCase().includes(texto) ||
+      (pedido.usuarioInfo?.correo || "").toLowerCase().includes(texto) ||
+      (pedido._id || "").toLowerCase().includes(texto);
     const coincideEstado = filtroEstado === "todos" || pedido.estado === filtroEstado;
-    return coincideBusqueda && coincideEstado;
-  });
+    // Los cancelados solo se ven en la pestaña "Cancelados"
+    const noCancelado = pedido.estado !== "cancelado";
+    return coincideBusqueda && coincideEstado && noCancelado;
+  }), [pedidos, search, filtroEstado]);
 
   const totalPaginas = Math.ceil(pedidosFiltrados.length / pedidosPorPagina);
-  const pedidosPaginados = pedidosFiltrados.slice(
-    (paginaActual - 1) * pedidosPorPagina,
-    paginaActual * pedidosPorPagina
+  const pedidosPaginados = useMemo(
+    () => pedidosFiltrados.slice((paginaActual - 1) * pedidosPorPagina, paginaActual * pedidosPorPagina),
+    [pedidosFiltrados, paginaActual]
   );
 
   const cambiarPagina = (nuevaPagina) => {
@@ -85,6 +90,7 @@ const handleStados = (id, nuevoEstado) => {
         <button className={`px-4 py-2 font-medium ${tabActivo === TABS.PAGADOS ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500'}`} onClick={() => setTabActivo(TABS.PAGADOS)}>PAGADOS</button>
         <button className={`px-4 py-2 font-medium ${tabActivo === TABS.TRANSITO ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500'}`} onClick={() => setTabActivo(TABS.TRANSITO)}>EN TRANSITO</button>
         <button className={`px-4 py-2 font-medium ${tabActivo === TABS.ENTREGADO ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500'}`} onClick={() => setTabActivo(TABS.ENTREGADO)}>ENTREGADO</button>
+        <button className={`px-4 py-2 font-medium ${tabActivo === TABS.CANCELADOS ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500'}`} onClick={() => setTabActivo(TABS.CANCELADOS)}>CANCELADOS</button>
         <button className={`px-4 py-2 font-medium ${tabActivo === TABS.ESTADISTICAS ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500'}`} onClick={() => setTabActivo(TABS.ESTADISTICAS)}>ESTADISTICAS</button>
       </div>
 
@@ -101,8 +107,11 @@ const handleStados = (id, nuevoEstado) => {
       {tabActivo === TABS.ENTREGADO && (
         <Entregado />
       )}
+      {tabActivo === TABS.CANCELADOS && (
+        <Cancelados />
+      )}
       {tabActivo === TABS.ESTADISTICAS && (
-        <Estadisticas />
+        <EstadisticasNegocio />
       )}
     </div>
   );

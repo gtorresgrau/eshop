@@ -1,4 +1,5 @@
 //app/Utils/handleGuardarPedidoMercado.js
+import { parsePrecio } from './parsePrecio';
 
 const handleGuardarPedidoMercado = async (user, cart, compraData) => {
   // Validaciones iniciales
@@ -25,7 +26,7 @@ const handleGuardarPedidoMercado = async (user, cart, compraData) => {
   const carritoValido = cart.every(item =>
     item.cod_producto &&
     item.quantity > 0 &&
-    Number(item.precio) > 0 &&
+    parsePrecio(item.precio) > 0 &&
     item.nombre
   );
 
@@ -49,7 +50,7 @@ const handleGuardarPedidoMercado = async (user, cart, compraData) => {
         cart: cart.map(item => ({
           cod_producto: item.cod_producto,
           nombre: item.nombre,
-          precio: item.precio,
+          precio: parsePrecio(item.precio),
           quantity: item.quantity,
           titulo_de_producto: item.titulo_de_producto || '',
           foto_1_1: item.foto_1_1 || '',
@@ -78,7 +79,7 @@ const handleGuardarPedidoMercado = async (user, cart, compraData) => {
         paymentId: prefId,
         paymentMethod: 'mercadopago',
         estado: 'pendiente',
-        total: cart.reduce((acc, item) => acc + (Number(item.precio) * item.quantity), 0),
+        total: cart.reduce((acc, item) => acc + (parsePrecio(item.precio) * item.quantity), 0),
       }),
     });
 

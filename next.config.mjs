@@ -32,6 +32,8 @@ const nextConfig = {
     unoptimized: true,
   },
   compress: true,
+  // Paquetes de Node usados por la facturación ARCA (src/lib/arca.js): no se empaquetan
+  serverExternalPackages: ['soap', 'node-forge', 'xml2js'],
   async headers() {
     return [
       {

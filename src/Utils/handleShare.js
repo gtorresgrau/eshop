@@ -1,3 +1,6 @@
+import { getProductUrl as getUrl } from './productSlug';
+import { parsePrecio } from './parsePrecio';
+
 /**
  * Muestra un toast temporal en pantalla para confirmar acciones de compartir/copiar.
  */
@@ -25,12 +28,17 @@ const showToast = (message, type = 'success') => {
 };
 
 /**
- * Construye la URL pública de un producto de forma segura.
+ * URL pública de un producto. Usa la misma función que sitemap, canonical y cards
+ * (Utils/productSlug) para que el link compartido sea siempre el canónico.
+ * Usa NEXT_PUBLIC_SITE_URL y, si no está definida, el origen del navegador.
  */
 export const getProductUrl = (product) => {
-  const origin = typeof window !== 'undefined' ? window.location.origin : '';
-  const slug = product.nombre.trim().replace(/\s+/g, '_');
-  return `${origin}/productos/${encodeURIComponent(slug)}`;
+  // Dominio canónico primero: así el link compartido es siempre el mismo
+  // (sin www, sin dominios de preview de Vercel, sin localhost).
+  const canonico = (process.env.NEXT_PUBLIC_SITE_URL || '').replace(/\/+$/, '');
+  const esLocal = /localhost|127\.0\.0\.1/.test(canonico);
+  const origin = canonico && !esLocal ? canonico : (typeof window !== 'undefined' ? window.location.origin : canonico);
+  return getUrl(product, origin);
 };
 
 const handleShare = async (arg1, arg2) => {
@@ -69,8 +77,9 @@ const handleShare = async (arg1, arg2) => {
     e.stopPropagation();
 
     const productUrl = getProductUrl(product);
-    const precioText = product.precio
-      ? ` | Precio: $${Number(product.precio).toLocaleString('es-AR')}${product.usd ? ' USD' : ''}`
+    const precioNum = parsePrecio(product.precio);
+    const precioText = precioNum > 0
+      ? ` | Precio: $${precioNum.toLocaleString('es-AR')}${product.usd ? ' USD' : ''}`
       : '';
     const shareData = {
       title: product.titulo_de_producto || product.nombre,
