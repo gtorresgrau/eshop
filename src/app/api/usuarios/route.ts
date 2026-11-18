@@ -61,12 +61,19 @@ export async function POST(req: Request) {
             await usuario.save();
             isNew = true;
         } else {
-            usuario.nombreCompleto = nombreCompleto || usuario.nombreCompleto;
-            usuario.correo = correo || usuario.correo;
-            usuario.dniOCuit = cleanDniOCuit || usuario.dniOCuit;
-            usuario.telefono = telefono || usuario.telefono;
-            usuario.direccion = direccion || usuario.direccion;
-            await usuario.save();
+            // Se actualiza solo lo recibido con $set (sin save()): un dato viejo e inválido en otro campo
+            // del usuario no debe impedir el inicio de sesión.
+            const cambios: Record<string, unknown> = {};
+            if (nombreCompleto) cambios.nombreCompleto = nombreCompleto;
+            if (correo) cambios.correo = correo;
+            if (cleanDniOCuit) cambios.dniOCuit = cleanDniOCuit;
+            if (telefono) cambios.telefono = telefono;
+            // Una dirección vacía ({}) no debe borrar la que ya existe
+            if (direccion && typeof direccion === 'object' && Object.keys(direccion).length > 0) cambios.direccion = direccion;
+            if (Object.keys(cambios).length > 0) {
+                const actualizado = await Usuario.findOneAndUpdate({ uid }, { $set: cambios }, { new: true });
+                if (actualizado) usuario = actualizado;
+            }
         }
         const token = jwt.sign(
             {

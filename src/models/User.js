@@ -17,7 +17,8 @@ const facturaSchema = new mongoose.Schema({
   cuit: { type: String },
   domicilio: { type: String },
   codigoPostal: { type: String },
-  condicionIva: { type: String, enum: ['responsableInscripto', 'monotributista', 'exento', 'consumidorFinal'], default: 'consumidorFinal' }
+  // El formulario de facturación guarda los textos con espacios ("Consumidor Final"); se aceptan ambos formatos
+  condicionIva: { type: String, enum: ['responsableInscripto', 'monotributista', 'exento', 'consumidorFinal', 'Responsable Inscripto', 'Monotributista', 'IVA Exento', 'Consumidor Final'], default: 'consumidorFinal' }
 }, { _id: false });
 
 const userSchema = new mongoose.Schema({
