@@ -127,7 +127,7 @@ export default function UpdateProduct({ isOpenModal, toggleModal, product, categ
       const res = await fetch('api/updateProduct', { method: 'PUT', body: formData });
       const data = await res.json();
       Swal.fire({ icon: 'success', title: 'Cambios guardados', showConfirmButton: false, timer: 1500 });
-      removeFromLocalStorage('productos');
+      removeFromLocalStorage('productos'); removeFromLocalStorage('productos_admin');
       toggleModal();
     } catch (err) {
       Swal.fire({ icon: 'error', title: 'Error al guardar cambios', text: 'Por favor, inténtelo de nuevo más tarde.' });

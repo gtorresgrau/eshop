@@ -1,46 +1,54 @@
 import { getInLocalStorage, setInLocalStorage } from "../Hooks/localStorage";
 
-const newFetchProductos = async () => {
+// Si el catálogo serializado supera esto, no se guarda en localStorage (cuota ~5 MB): se sigue
+// funcionando sin caché en vez de perder los productos.
+const MAX_CACHE_CHARS = 2_000_000;
+
+/**
+ * @param {{ todos?: boolean }} [opts] todos=true (solo admin): incluye los productos ocultos y los datos internos.
+ */
+const newFetchProductos = async ({ todos = false } = {}) => {
+    const keyDatos = todos ? "productos_admin" : "productos";
+    const keyTime = todos ? "productos_admin_timestamp" : "productos_timestamp";
     try {
-        const lastUpdate = getInLocalStorage("productos_timestamp");
+        const lastUpdate = getInLocalStorage(keyTime);
         const now = Date.now();
 
         if (lastUpdate && now - lastUpdate < 3 * 60 * 1000) {
-            const productosGuardados = getInLocalStorage("productos");
-            if (productosGuardados) {
-                console.log('[Productos] Cache HIT — cantidad:', productosGuardados.length);
-                return productosGuardados;
-            }
-            console.warn('[Productos] Cache timestamp existe pero datos vacíos, recargando...');
-        } else {
-            console.log('[Productos] Cache MISS — haciendo fetch...');
+            const productosGuardados = getInLocalStorage(keyDatos);
+            if (productosGuardados) return productosGuardados;
         }
 
-        const res = await fetch("/api/productos");
-        console.log('[Productos] Fetch status:', res.status);
-
+        const res = await fetch(todos ? "/api/productos?todos=1" : "/api/productos", { credentials: 'include' });
         if (!res.ok) {
             throw new Error(`Error al cargar los productos: ${res.status}`);
         }
 
         const data = await res.json();
-        console.log('[Productos] Respuesta API — keys:', Object.keys(data), '— cantidad:', data.productos?.length ?? 'undefined');
+        const productos = Array.isArray(data.productos) ? data.productos : [];
 
-        setInLocalStorage("productos", data.productos);
-        setInLocalStorage("productos_timestamp", now);
+        // El caché es opcional: si no entra o falla, igual se devuelven los productos
+        try {
+            if (JSON.stringify(productos).length <= MAX_CACHE_CHARS) {
+                setInLocalStorage(keyDatos, productos);
+                setInLocalStorage(keyTime, now);
+            }
+        } catch (e) {
+            console.warn("[Productos] No se pudo guardar el caché:", e?.name);
+        }
 
-        return data.productos;
+        return productos;
     } catch (error) {
         console.error("[Productos] Error en newFetchProductos:", error);
         return [];
     }
 };
 
-export const startAutoUpdateProductos = () => {
-    newFetchProductos();
+export const startAutoUpdateProductos = (opts) => {
+    newFetchProductos(opts);
 
     const intervalId = setInterval(() => {
-        newFetchProductos();
+        newFetchProductos(opts);
     }, 3 * 60 * 1000);
 
     return intervalId;

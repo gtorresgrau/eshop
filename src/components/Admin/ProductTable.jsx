@@ -32,7 +32,7 @@ const ProductTable = ({ handleEliminarArchivos }) => {
 
 
   const fetchProductos = async () => {
-    const res = await newFetchProductos();
+    const res = await newFetchProductos({ todos: true });
     const filteredProducts = searchQuery? res.filter(producto => producto.nombre.toLowerCase().includes(searchQuery.toLowerCase())): res;
     setProductos(filteredProducts);
   };

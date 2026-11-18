@@ -122,7 +122,7 @@ export default function AddProduct({ isOpenModal, toggleModal, categoria, marca 
       if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
       const data = await res.json();
       Swal.fire({ icon: 'success', title: 'Producto agregado', showConfirmButton: false, timer: 1500 });
-      removeFromLocalStorage('productos');
+      removeFromLocalStorage('productos'); removeFromLocalStorage('productos_admin');
       toggleModal();
     } catch (err) {
       Swal.fire({ icon: 'error', title: 'Error al agregar producto', text: 'Por favor, inténtelo de nuevo más tarde.' });

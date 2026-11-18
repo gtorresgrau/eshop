@@ -31,7 +31,7 @@ const Comprobantes = () => {
   })
 
     const fetchProductos = async () => {
-    const res = await newFetchProductos()
+    const res = await newFetchProductos({ todos: true })
     setProductos(res);
   };
 

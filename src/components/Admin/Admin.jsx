@@ -68,7 +68,7 @@ export default function Admin() {
   
 
   const fetchProductos = async () => {
-    const res = await newFetchProductos();
+    const res = await newFetchProductos({ todos: true });
     const q = searchQuery.toLowerCase();
     const filteredProducts = searchQuery
       ? res.filter(producto =>
@@ -219,7 +219,7 @@ export default function Admin() {
       });
       setProductos(prev => prev.map(p => p._id === productId ? { ...p, ...fields } : p));
       setInlineEdits(prev => { const n = { ...prev }; delete n[productId]; return n; });
-      removeFromLocalStorage('productos');
+      removeFromLocalStorage('productos'); removeFromLocalStorage('productos_admin');
     } catch (err) {
       console.error('Error guardando campo:', err);
     }
