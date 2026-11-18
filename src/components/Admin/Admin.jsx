@@ -262,12 +262,14 @@ export default function Admin() {
 
   return (
     <Suspense fallback={<Loading/>}>
-      <div className="flex flex-col min-h-screen">
+      {/* En pantallas grandes (xl): menú lateral siempre abierto a la izquierda y contenido a todo el ancho */}
+      <div className="flex flex-col xl:flex-row min-h-screen">
         <Nav handleSelectSection={handleSelectSection} />
+        <div className="flex-1 min-w-0 flex flex-col">
         {section === 'Productos' && (
           <div>
             <section id="tablaProductosAdmin" className="bg-primary-background p-2 sm:p-3 md:p-5">
-              <div className="mx-auto max-w-screen-xl px-0 lg:px-12">
+              <div className="mx-auto max-w-screen-xl xl:max-w-none px-0 lg:px-12 xl:px-2">
                 <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
                   <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                     <div className="w-full md:w-1/2">
@@ -389,46 +391,47 @@ export default function Admin() {
 
         <div className="flex-1 bg-primary-background p-3 sm:p-5">
           {section === 'Destacados' && (
-            <div className="mx-auto max-w-screen-xl lg:px-12">
+            <div className="mx-auto max-w-screen-xl xl:max-w-none lg:px-12 xl:px-2">
               <TablaDestacados />
             </div>
           )}
 
           {section === 'DescargarCSV' && (
-            <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
+            <div className="mx-auto max-w-screen-xl xl:max-w-none px-4 lg:px-12 xl:px-2">
               <DownloadCSVButton />
             </div>
           )}
           {section === 'Pedidos' && (
-            <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
+            <div className="mx-auto max-w-screen-xl xl:max-w-none px-4 lg:px-12 xl:px-2">
               <AdminPedidos />
             </div>
           )}
           {section === 'Estadisticas' && (
-            <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
+            <div className="mx-auto max-w-screen-xl xl:max-w-none px-4 lg:px-12 xl:px-2">
               <Estadisticas />
             </div>
           )}
           {section === 'Comprobantes' && (
-            <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
+            <div className="mx-auto max-w-screen-xl xl:max-w-none px-4 lg:px-12 xl:px-2">
               <Comprobantes />
             </div>
           )}
           {section === 'Etiquetas' && (
-            <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
+            <div className="mx-auto max-w-screen-xl xl:max-w-none px-4 lg:px-12 xl:px-2">
               <Etiquetas />
             </div>
           )}
           {section === 'Empresas' && (
-            <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
+            <div className="mx-auto max-w-screen-xl xl:max-w-none px-4 lg:px-12 xl:px-2">
               <EmpresaForm />
             </div>
           )}
           {section === 'Configuracion' && (
-            <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
+            <div className="mx-auto max-w-screen-xl xl:max-w-none px-4 lg:px-12 xl:px-2">
               <AdminConfigPage />
             </div>
           )}
+        </div>
         </div>
       </div>
     </Suspense>

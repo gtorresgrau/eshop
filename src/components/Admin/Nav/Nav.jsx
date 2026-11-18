@@ -47,8 +47,9 @@ export default function Nav({ handleSelectSection }) {
   };
 
   return (
-    <section className="border-gray-200 bg-[url('/bg/bg-banner.webp')]">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between flex-row-reverse mx-auto p-4">
+    <section className="border-gray-200 bg-[url('/bg/bg-banner.webp')] xl:w-64 xl:shrink-0 xl:bg-primary xl:bg-none">
+      {/* Barra superior con hamburguesa: solo en pantallas menores a xl (en xl el menú está siempre abierto) */}
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between flex-row-reverse mx-auto p-4 xl:hidden">
         <Link href="/" className="flex items-center space-x-3" title="Volver al home">
           <Image
             src="/logos/logo.webp"
@@ -79,16 +80,19 @@ export default function Nav({ handleSelectSection }) {
         id="drawer-navigation"
         className={`fixed top-0 left-0 z-50 h-screen p-4 overflow-y-auto transition-transform transform ${
           isMenuOpen ? 'translate-x-0' : '-translate-x-full'
-        } bg-primary w-64`}
+        } bg-primary w-64 xl:sticky xl:top-0 xl:translate-x-0 xl:z-10`}
         tabIndex="-1"
         aria-labelledby="drawer-navigation-label"
       >
+        <Link href="/" className="hidden xl:flex items-center gap-3 mb-3" title="Volver al home">
+          <Image src="/logos/logo.webp" width={48} height={48} className="rounded-full" alt="Logo eshop device" />
+        </Link>
         <h5 id="drawer-navigation-label" className="text-base font-semibold text-gray-200 uppercase">Menú</h5>
 
         <button
           aria-label="Cerrar menú"
           onClick={toggleMenu}
-          className="bg-gray-300 text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 rounded-lg w-8 h-8 absolute top-2.5 right-2.5 flex items-center justify-center"
+          className="xl:hidden bg-gray-300 text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 rounded-lg w-8 h-8 absolute top-2.5 right-2.5 flex items-center justify-center"
         >
           <svg className="w-3 h-3" viewBox="0 0 14 14">
             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
