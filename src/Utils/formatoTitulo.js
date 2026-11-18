@@ -9,7 +9,8 @@ const SIGLAS = new Set([
 ]);
 SIGLAS.add('AMD'); SIGLAS.add('MSI'); SIGLAS.add('RTX'); SIGLAS.add('GTX'); SIGLAS.add('TUF'); SIGLAS.add('ROG'); SIGLAS.add('GPS'); SIGLAS.add('NFC');
 const PALABRAS_CORTAS = new Set(['Y', 'DE', 'CON', 'SIN', 'POR', 'EN', 'LA', 'EL', 'LOS', 'LAS', 'UN', 'UNA', 'DEL', 'AL', 'O', 'E', 'A', 'PARA']);
-const ESPECIALES ={ WIFI: 'WiFi', BLUETOOTH: 'Bluetooth', POE: 'PoE', GAMER: 'Gamer' };
+const PALABRAS_COMUNES_3 = new Set(['KIT', 'PRO', 'MAX', 'AIR', 'SET', 'PAR', 'USO', 'TOP', 'NEW', 'BOX', 'PAD', 'PEN', 'MIC', 'CAM', 'LUZ']);
+const ESPECIALES = { WIFI: 'WiFi', BLUETOOTH: 'Bluetooth', POE: 'PoE', GAMER: 'Gamer' };
 
 const esMayuscula = (s) => s === s.toUpperCase() && s !== s.toLowerCase();
 
