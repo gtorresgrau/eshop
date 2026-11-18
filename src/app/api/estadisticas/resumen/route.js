@@ -2,11 +2,13 @@ import { NextResponse } from 'next/server';
 import Order from '../../../../models/Order';
 import { getDateRange } from '../statsUtils';
 import {connectDB} from '../../../../lib/mongodb';
+import { guardAdmin } from '../../../../lib/sesion';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export async function GET(request) {
+  { const denied = await guardAdmin(); if (denied) return denied; }
   await connectDB();
   const { searchParams } = new URL(request.url);
   const timeRange = searchParams.get('rango') || 'mes';

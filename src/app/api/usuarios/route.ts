@@ -6,37 +6,33 @@ import Usuario from '../../../models/User';
 import jwt from 'jsonwebtoken';
 import { auth } from '../../../lib/firebaseAdmin';
 
+// Alta / actualización del propio perfil + inicio de sesión.
+// SEGURIDAD: la identidad sale SIEMPRE del token de Firebase verificado, nunca del cuerpo de la request.
+// El rol nunca se toma del cliente: los usuarios nuevos son 'cliente'.
 export async function POST(req: Request) {
     try {
-        await connectDB();
-        const { uid, nombreCompleto, correo, dniOCuit, telefono, direccion } = await req.json();
         const authorizationHeader = req.headers.get('Authorization');
-        //console.log('Request Body back:', { uid, nombreCompleto, correo, dniOCuit, telefono, direccion });
-        //console.log('Authorization Header back:', authorizationHeader);
         if (!authorizationHeader || !authorizationHeader.startsWith('Bearer ')) {
-            //console.error('Error: Missing or invalid Authorization header');
             return NextResponse.json({ error: 'Unauthorized: Missing or invalid Authorization header' }, { status: 401 });
         }
 
         const idToken = authorizationHeader.split(' ')[1];
-        //console.log('Firebase ID Token:', idToken);
+        let decoded;
         try {
-            await auth.verifyIdToken(idToken);
-            //console.log('Firebase ID Token Verified:', decodedToken);
-        } catch (error) {
-            //console.error("Error verifying Firebase ID token:", error);
+            decoded = await auth.verifyIdToken(idToken);
+        } catch {
             return NextResponse.json({ error: 'Unauthorized: Invalid Firebase ID token' }, { status: 401 });
         }
-        
-        const cleanDniOCuit = dniOCuit?.trim() || undefined;
-        //  Validación de dniOCuit
+        const uid: string = decoded.uid; // identidad verificada
+
+        await connectDB();
+        const { nombreCompleto, correo, dniOCuit, telefono, direccion } = await req.json();
+
+        const cleanDniOCuit = typeof dniOCuit === 'string' ? dniOCuit.trim() || undefined : undefined;
         if (cleanDniOCuit) {
             const usuarioConMismoDni = await Usuario.findOne({ dniOCuit: cleanDniOCuit, uid: { $ne: uid } });
             if (usuarioConMismoDni) {
-                return NextResponse.json(
-                    { error: 'DNI/CUIT ya está en uso' },
-                    { status: 400 }
-                );
+                return NextResponse.json({ error: 'DNI/CUIT ya está en uso' }, { status: 400 });
             }
         }
 
@@ -47,7 +43,7 @@ export async function POST(req: Request) {
             usuario = new Usuario({
                 uid,
                 nombreCompleto,
-                correo,
+                correo: decoded.email || correo,
                 dniOCuit: cleanDniOCuit,
                 telefono,
                 direccion,
@@ -55,11 +51,10 @@ export async function POST(req: Request) {
             });
             await usuario.save();
             isNew = true;
-            //console.log('usuario creado:', usuario);
         } else {
             usuario.nombreCompleto = nombreCompleto || usuario.nombreCompleto;
             usuario.correo = correo || usuario.correo;
-            usuario.dniOCuit = dniOCuit || usuario.dniOCuit;
+            usuario.dniOCuit = cleanDniOCuit || usuario.dniOCuit;
             usuario.telefono = telefono || usuario.telefono;
             usuario.direccion = direccion || usuario.direccion;
             await usuario.save();
@@ -91,4 +86,3 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: 'Error al crear/actualizar usuario' }, { status: 500 });
     }
 }
-

@@ -2,11 +2,14 @@
 
 import { connectDB } from "../../../../../lib/mongodb";
 import Order from "../../../../../models/Order";
+import { getSesion } from "../../../../../lib/sesion";
 
 // Regex simple para validar formato de ObjectId (24 caracteres hexadecimales)
 const objectIdRegex = /^[0-9a-fA-F]{24}$/;
 
 export async function GET(req, { params }) {
+  const sesion = await getSesion();
+  if (!sesion) return new Response(JSON.stringify({ success: false, error: "No autorizado" }), { status: 401, headers: { 'Content-Type': 'application/json' } });
   await connectDB();
 
   const { id } = await params;
@@ -26,6 +29,10 @@ export async function GET(req, { params }) {
         status: 404,
         headers: { 'Content-Type': 'application/json' }
       });
+    }
+
+    if (sesion.rol !== 'admin' && pedido.usuarioUid !== sesion.uid) {
+      return new Response(JSON.stringify({ success: false, error: "Acceso denegado" }), { status: 403, headers: { 'Content-Type': 'application/json' } });
     }
 
     return new Response(JSON.stringify({ success: true, pedido }), {

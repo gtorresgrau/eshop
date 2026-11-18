@@ -1,9 +1,11 @@
 // app/api/pedidos/payment-status/route.js
 import { NextResponse } from 'next/server';
+import { guardAdmin } from '../../../../lib/sesion';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(req) {
+  { const denied = await guardAdmin(); if (denied) return denied; }
   try {
     const { searchParams } = new URL(req.url);
     const externalReference = searchParams.get('external_reference');

@@ -3,12 +3,14 @@ import { connectDB } from '../../../../lib/mongodb';
 import Order from '../../../../models/Order';
 import cloudinary from '../../../../lib/cloudinary';
 import mongoose from 'mongoose';
+import { guardAdmin } from '../../../../lib/sesion';
 
 // Máximo tamaño permitido: 5MB
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'application/pdf'];
 
 export async function POST(req: NextRequest) {
+  { const denied = await guardAdmin(); if (denied) return denied; }
   try {
     await connectDB();
 

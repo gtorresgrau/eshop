@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { connectDB } from '../../../lib/mongodb';
 import WhatsappStats from '../../../models/whatsappStatsSchema';
+import { guardAdmin } from '../../../lib/sesion';
 
 export async function POST(request) {
   try {
@@ -33,6 +34,7 @@ export async function POST(request) {
 }
 
 export async function GET(request) {
+  { const denied = await guardAdmin(); if (denied) return denied; }
   try {
     await connectDB();
 

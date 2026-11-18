@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import mongoose from 'mongoose';
 import UserConfig from '../../../models/UserConfig';
+import { guardAdmin } from '../../../lib/sesion';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
@@ -36,6 +37,7 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  { const denied = await guardAdmin(); if (denied) return denied; }
   try {
     await connectDB();
     const data = await request.json();
@@ -73,6 +75,7 @@ export async function POST(request: Request) {
 }
 
 export async function DELETE() {
+  { const denied = await guardAdmin(); if (denied) return denied; }
   try {
     await connectDB();
     await UserConfig.deleteMany();

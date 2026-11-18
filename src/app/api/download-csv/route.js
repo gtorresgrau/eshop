@@ -4,8 +4,10 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '../../../../src/lib/mongodb';
 import Producto from '../../../../src/models/product';
 import { parse } from 'json2csv';
+import { guardAdmin } from '../../../lib/sesion';
 
 export async function GET() {
+  { const denied = await guardAdmin(); if (denied) return denied; }
   try {
     await connectDB();
     const products = await Producto.find().lean();

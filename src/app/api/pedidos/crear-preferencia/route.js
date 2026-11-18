@@ -2,6 +2,7 @@
 import { MercadoPagoConfig, Preference } from 'mercadopago';
 import userData from '../../../../components/constants/userData';
 import { calcularCheckout } from '../../../../lib/checkout';
+import { getSesion } from '../../../../lib/sesion';
 
 
 const client = new MercadoPagoConfig({
@@ -12,7 +13,12 @@ const client = new MercadoPagoConfig({
 export async function POST(req) {
   try {
     //console.log("Iniciando creación de preferencia");
-    const { cart, uid, envio, tipoEntrega } = await req.json();
+    const sesion = await getSesion();
+    if (!sesion) {
+      return new Response(JSON.stringify({ error: 'No autorizado' }), { headers: { "Content-Type": "application/json" }, status: 401 });
+    }
+    const uid = sesion.uid; // identidad de la sesión
+    const { cart, envio, tipoEntrega } = await req.json();
     //console.log("cart:", cart);
     //console.log("uid:", uid);
 

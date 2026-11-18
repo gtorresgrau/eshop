@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
+import { guardAdmin } from '../../../lib/sesion';
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -8,6 +9,7 @@ cloudinary.config({
 })
 
 export async function DELETE(request) {
+  { const denied = await guardAdmin(); if (denied) return denied; }
     // Parse the request body
     const data = await request.json();
     const image = data.file; // Adjust based on the exact request structure

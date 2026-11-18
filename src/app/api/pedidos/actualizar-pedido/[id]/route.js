@@ -2,11 +2,13 @@
 
 import { connectDB } from "../../../../../lib/mongodb"; // Asumiendo rutas correctas
 import Order from "../../../../../models/Order"; // Asumiendo rutas correctas
+import { guardAdmin } from '../../../../../lib/sesion';
 
 // Regex simple para validar formato de ObjectId (24 caracteres hexadecimales)
 const objectIdRegex = /^[0-9a-fA-F]{24}$/;
 
 export async function PUT(req, { params }) {
+  { const denied = await guardAdmin(); if (denied) return denied; }
   await connectDB();
 
   const { id } = await params; // ID del pedido

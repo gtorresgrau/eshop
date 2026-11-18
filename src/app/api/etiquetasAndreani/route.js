@@ -2,8 +2,10 @@
 import Order from "../../../models/Order";
 import { connectDB } from "../../../lib/mongodb";
 import { obtenerTokenAndreani, crearEnvio, obtenerEtiquetaPDF } from "../../../lib/andreani";
+import { guardAdmin } from '../../../lib/sesion';
 
 export async function POST(req) {
+  { const denied = await guardAdmin(); if (denied) return denied; }
   await connectDB();
 
   try {

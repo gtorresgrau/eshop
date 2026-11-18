@@ -3,8 +3,11 @@ import { connectDB } from '../../../../lib/mongodb';
 import Order from '../../../../models/Order';
 import cloudinary from '../../../../lib/cloudinary';
 import mongoose from 'mongoose';
+import { getSesion } from '../../../../lib/sesion';
 
 export async function POST(req: NextRequest) {
+  const sesion = await getSesion();
+  if (!sesion) return Response.json({ success: false, error: 'No autorizado' }, { status: 401 });
   await connectDB();
 
   const formData = await req.formData();
@@ -23,6 +26,10 @@ export async function POST(req: NextRequest) {
   const pedido = await Order.findById(pedidoId);
   if (!pedido) {
     return Response.json({ success: false, error: 'Pedido no encontrado' }, { status: 404 });
+  }
+
+  if (sesion.rol !== 'admin' && pedido.usuarioUid !== sesion.uid) {
+    return Response.json({ success: false, error: 'Acceso denegado' }, { status: 403 });
   }
 
   if (pedido.paymentMethod !== 'transferencia' || pedido.estado !== 'pendiente') {

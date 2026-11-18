@@ -3,8 +3,10 @@ import { connectDB } from '../../../../lib/mongodb';
 import Order from '../../../../models/Order';
 import cloudinary from '../../../../lib/cloudinary';
 import mongoose from 'mongoose';
+import { guardAdmin } from '../../../../lib/sesion';
 
 export async function POST(req: NextRequest) {
+  { const denied = await guardAdmin(); if (denied) return denied; }
   try {
     await connectDB();
 

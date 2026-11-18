@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { connectDB } from '../../../../lib/mongodb';
 import Order from '../../../../models/Order';
+import { guardAdmin } from '../../../../lib/sesion';
 
 const DIAS_ES = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
 const MESES_ES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
@@ -12,6 +13,7 @@ const METHOD_LABEL = {
 };
 
 export async function GET(request) {
+  { const denied = await guardAdmin(); if (denied) return denied; }
   try {
     const { searchParams } = new URL(request.url);
     const dias = Math.min(365, Math.max(7, parseInt(searchParams.get('dias') || '30', 10)));

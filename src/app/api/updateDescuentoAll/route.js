@@ -2,8 +2,10 @@
 import { NextResponse } from 'next/server';
 import { connectDB } from '../../../lib/mongodb';
 import Producto from '../../../models/product';
+import { guardAdmin } from '../../../lib/sesion';
 
 export async function PUT(request) {
+  { const denied = await guardAdmin(); if (denied) return denied; }
   await connectDB();
 
   try {

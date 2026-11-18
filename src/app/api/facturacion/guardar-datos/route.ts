@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server'
 import { connectDB } from '../../../../lib/mongodb'
 import User from '../../../../models/User'
+import { getSesion } from '../../../../lib/sesion'
 
 export async function PUT(request: Request) {
+  const sesion = await getSesion()
+  if (!sesion) return NextResponse.json({ message: 'No autorizado' }, { status: 401 })
   const body = await request.json()
   const { usuarioUid, ...datosFactura } = body
+  if (sesion.rol !== 'admin' && usuarioUid !== sesion.uid) return NextResponse.json({ message: 'Acceso denegado' }, { status: 403 })
 
   if (!usuarioUid) {
     return NextResponse.json({ message: 'Falta el UID del usuario' }, { status: 400 })
@@ -31,9 +35,11 @@ export async function PUT(request: Request) {
 }
 
 export async function POST(request: Request) {
-  // Ejemplo: Crear o actualizar datos de facturación con POST también
+  const sesion = await getSesion()
+  if (!sesion) return NextResponse.json({ message: 'No autorizado' }, { status: 401 })
   const body = await request.json()
   const { usuarioUid, ...datosFactura } = body
+  if (sesion.rol !== 'admin' && usuarioUid !== sesion.uid) return NextResponse.json({ message: 'Acceso denegado' }, { status: 403 })
 
   if (!usuarioUid) {
     return NextResponse.json({ message: 'Falta el UID del usuario' }, { status: 400 })

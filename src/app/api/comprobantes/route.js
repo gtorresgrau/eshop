@@ -1,5 +1,6 @@
 import { connectDB } from '../../../lib/mongodb';
 import Comprobante from '../../../models/Comprobante';
+import { guardAdmin } from '../../../lib/sesion';
 
 /**
  * GET: Obtener todos los comprobantes o filtrar por empresa/tipo
@@ -10,6 +11,7 @@ import Comprobante from '../../../models/Comprobante';
  * - hasta: fecha hasta (YYYY-MM-DD)
  */
 export async function GET(req) {
+  { const denied = await guardAdmin(); if (denied) return denied; }
   try {
     await connectDB();
     
@@ -54,6 +56,7 @@ export async function GET(req) {
  * Body: { tipo, fecha, empresa, items, pagos?, total }
  */
 export async function POST(req) {
+  { const denied = await guardAdmin(); if (denied) return denied; }
   try {
     await connectDB();
     const data = await req.json();

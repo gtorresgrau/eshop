@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '../../../lib/mongodb';
 import Order from '../../../models/Order';
 import Product from '../../../models/product';
+import { guardAdmin } from '../../../lib/sesion';
 
 const TZ = 'America/Argentina/Buenos_Aires';
 const ESTADOS_COBRADOS = ['pagado', 'enviado', 'entregado'];
@@ -16,6 +17,7 @@ const claveDia = (fecha) =>
 const etiquetaDia = (clave) => `${clave.slice(8, 10)}/${clave.slice(5, 7)}`;
 
 export async function GET(request) {
+  { const denied = await guardAdmin(); if (denied) return denied; }
   try {
     const { searchParams } = new URL(request.url);
     const diasAtras = Math.min(365, Math.max(1, parseInt(searchParams.get('periodo') || '30', 10) || 30));

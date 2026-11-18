@@ -5,8 +5,13 @@ import Product from "../../../../models/product";
 import User from "../../../../models/User";
 import { parsePrecio } from '../../../../Utils/parsePrecio';
 import { calcularCheckout } from '../../../../lib/checkout';
+import { getSesion } from '../../../../lib/sesion';
 
 export async function POST(req) {
+  const sesion = await getSesion();
+  if (!sesion) {
+    return new Response(JSON.stringify({ message: "No autorizado" }), { status: 401, headers: { "Content-Type": "application/json" } });
+  }
   await connectDB();
 
   try {
@@ -16,7 +21,7 @@ export async function POST(req) {
     const cart = body.cart;
     const init_point = body.init_point || "";
     const pref_id = body.pref_id
-    const uid = body.user?.uid;
+    const uid = sesion.uid; // identidad de la sesión: se ignora el uid que mande el navegador
     const external_reference = body.external_reference || "";
     let totalOrden = body.total;
 

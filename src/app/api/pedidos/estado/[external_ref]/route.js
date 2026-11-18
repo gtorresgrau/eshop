@@ -2,9 +2,12 @@
 
 import { connectDB } from '../../../../../lib/mongodb';
 import Order from '../../../../../models/Order';
+import { getSesion } from '../../../../../lib/sesion';
 // import { verifyUserOrAdminToken } from '@/lib/auth'; // Implementa tu lógica de autenticación
 
 export async function GET(req, { params }) {
+  const sesion = await getSesion();
+  if (!sesion) return new Response(JSON.stringify({ error: 'No autorizado' }), { status: 401 });
   try {
     // const isAuthenticated = await verifyUserOrAdminToken(req);
     // if (!isAuthenticated) {
@@ -19,10 +22,14 @@ export async function GET(req, { params }) {
 
     await connectDB();
     const order = await Order.findOne({ external_reference: external_ref })
-      .select('estado external_reference createdAt paymentDetails items'); // Selecciona los campos que quieres devolver
+      .select('estado external_reference createdAt paymentDetails items usuarioUid'); // Selecciona los campos que quieres devolver
 
     if (!order) {
       return new Response(JSON.stringify({ error: 'Pedido no encontrado' }), { status: 404 });
+    }
+
+    if (sesion.rol !== 'admin' && order.usuarioUid !== sesion.uid) {
+      return new Response(JSON.stringify({ error: 'Acceso denegado' }), { status: 403 });
     }
 
     return new Response(JSON.stringify(order), {

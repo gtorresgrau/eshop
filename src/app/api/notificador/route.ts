@@ -1,17 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sendEmail } from '../../../lib/mailer'; // ajustá el path según la ubicación real
+import { getSesion } from '../../../lib/sesion';
+import { connectDB } from '../../../lib/mongodb';
+import Usuario from '../../../models/User';
+
+const esc = (v: unknown) =>
+  String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string));
 
 export async function POST(req: NextRequest) {
+  // Antes era un relé de emails abierto: cualquiera podía mandar mails con tu marca a cualquier dirección.
+  const sesion = await getSesion();
+  if (!sesion) return NextResponse.json({ ok: false, error: 'No autorizado' }, { status: 401 });
+
   try {
-    const {
-      clienteEmail,
-      clienteNombre,
-      estadoPedido,
-      adminEmail,
-      tracking,
-      numeroPedido,
-      montoTotal,
-    } = await req.json();
+    const body = await req.json();
+    let clienteEmail = body.clienteEmail;
+    let adminEmail = body.adminEmail;
+    const tracking = body.tracking ?? '';
+    const estadoPedido = esc(body.estadoPedido);
+    const clienteNombre = esc(body.clienteNombre);
+    const numeroPedido = esc(body.numeroPedido);
+    const montoTotal = esc(body.montoTotal);
+
+    if (sesion.rol !== 'admin') {
+      // Un cliente solo puede disparar el aviso a SU correo y al admin configurado en el servidor
+      await connectDB();
+      const yo: any = await (Usuario as any).findOne({ uid: sesion.uid }).select('correo').lean();
+      if (!yo?.correo) return NextResponse.json({ ok: false, error: 'Usuario sin correo' }, { status: 400 });
+      clienteEmail = yo.correo;
+      adminEmail = process.env.TO || undefined;
+    }
     // console.log('clienteEmail:',clienteEmail)
     // console.log('clienteNombre:',clienteNombre)
     // console.log('estadoPedido:', estadoPedido)
@@ -56,7 +74,7 @@ export async function POST(req: NextRequest) {
     });
 
     // Enviar email al administrador si el estado es "pagado"
-    if (estadoPedido.toLowerCase() === 'pagado' || tracking !== "") {
+    if (adminEmail && (estadoPedido.toLowerCase() === 'pagado' || tracking !== "")) {
       await sendEmail({
         to: adminEmail,
         subject: `🔔 Pedido #${numeroPedido} pagado`,

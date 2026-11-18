@@ -13,7 +13,7 @@ export async function GET() {
   }
 
   try {
-    const decoded = verify(token, process.env.JWT_SECRET!) as any;
+    const decoded = verify(token, process.env.JWT_SECRET!, { algorithms: ['HS256'] }) as any;
 
     return NextResponse.json({
       authenticated: true,

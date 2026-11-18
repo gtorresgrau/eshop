@@ -1,11 +1,13 @@
 import { NextResponse } from 'next/server';
 import User from '../../../../models/User';
 import {connectDB} from '../../../../lib/mongodb';
+import { guardAdmin } from '../../../../lib/sesion';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export async function GET(request) {
+  { const denied = await guardAdmin(); if (denied) return denied; }
     await connectDB();
   
   try {

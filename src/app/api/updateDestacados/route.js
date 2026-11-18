@@ -3,8 +3,10 @@ export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
 import { connectDB } from '../../../../src/lib/mongodb';
 import Producto from '../../../../src/models/product';
+import { guardAdmin } from '../../../lib/sesion';
 
 export async function POST(req) {
+  { const denied = await guardAdmin(); if (denied) return denied; }
   try {
     await connectDB();
     const { productoId, destacados } = await req.json();

@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
 import { connectDB } from '../../../../src/lib/mongodb';
 import Producto from '../../../../src/models/product';
+import { guardAdmin } from '../../../lib/sesion';
 
 export async function GET(req) {
   try {
@@ -21,6 +22,7 @@ export async function GET(req) {
 }
 
 export async function POST(req) {
+  { const denied = await guardAdmin(); if (denied) return denied; }
   try {
     await connectDB();
     const data = await req.json();

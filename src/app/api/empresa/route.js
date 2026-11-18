@@ -1,13 +1,16 @@
 import { connectDB } from '../../../lib/mongodb';
 import Empresa from '../../../models/empresaSchema';
+import { guardAdmin } from '../../../lib/sesion';
 
 export async function GET() {
+  { const denied = await guardAdmin(); if (denied) return denied; }
   await connectDB();
   const empresas = await Empresa.find();
   return Response.json(empresas);
 }
 
 export async function POST(req) {
+  { const denied = await guardAdmin(); if (denied) return denied; }
   //console.log('back:',req.body)
   try {
     await connectDB();

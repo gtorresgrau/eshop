@@ -4,10 +4,13 @@ import { NextResponse } from "next/server";
 import { connectDB } from "../../../../lib/mongodb";
 import Order from "../../../../models/Order";
 import mapEstadoMP from "../../../../Utils/mapEstadoMP"; 
+import { requireSesion, esAdmin } from "../../../../lib/sesion";
 
 
 
 export async function GET(req) {
+  const { sesion, denied } = await requireSesion();
+  if (denied) return denied;
   try {
     await connectDB();
 
@@ -19,8 +22,13 @@ export async function GET(req) {
     const limit = parseInt(searchParams.get("limit") || "100", 10);
 
     const filtros = {};
-    if (usuarioUid) filtros.usuarioUid = usuarioUid;
-    if (empresa) filtros.empresa = empresa;
+    if (esAdmin(sesion)) {
+      if (usuarioUid) filtros.usuarioUid = usuarioUid;
+      if (empresa) filtros.empresa = empresa;
+    } else {
+      // Un cliente solo puede ver sus propios pedidos, sin importar lo que pida
+      filtros.usuarioUid = sesion.uid;
+    }
     if (estado) filtros.estado = estado;    
     
     const pedidos = await Order.find(filtros)

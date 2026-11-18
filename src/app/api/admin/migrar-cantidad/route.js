@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server';
 import { connectDB } from '../../../../lib/mongodb';
 import Producto from '../../../../models/product';
+import { guardAdmin } from '../../../../lib/sesion';
 
 export async function POST() {
+  { const denied = await guardAdmin(); if (denied) return denied; }
   await connectDB();
 
   const vendidos = await Producto.updateMany(
