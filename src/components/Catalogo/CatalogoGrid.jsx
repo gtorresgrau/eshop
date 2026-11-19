@@ -4,6 +4,14 @@ import { parsePrecio } from '../../Utils/parsePrecio';
 import { estaAgotado } from '../../Utils/estadoProducto';
 import { formatearTitulo } from '../../Utils/formatoTitulo';
 import { fotoLiviana } from '../../Utils/fotoNB';
+import BotonFavorito from '../Tienda/BotonFavorito';
+
+// Solo datos simples hacia el componente de cliente (los documentos de Mongo traen ObjectId y fechas, que no se pueden pasar)
+const paraFavorito = (p) => ({
+  cod_producto: p.cod_producto, nombre: p.nombre, titulo_de_producto: p.titulo_de_producto, marca: p.marca,
+  categoria: p.categoria, precio: p.precio, usd: p.usd, descuento: p.descuento, foto_1_1: p.foto_1_1,
+  destacados: p.destacados, usado: p.usado, vendido: p.vendido, stock: p.stock, cantidad: p.cantidad, origen: p.origen,
+});
 
 const fmt = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 });
 
@@ -37,6 +45,7 @@ export default function CatalogoGrid({ productos = [] }) {
         return (
           <li key={p.cod_producto || p._id} className="list-none">
             <article className="group relative flex h-full flex-col">
+              {p.cod_producto ? <BotonFavorito product={paraFavorito(p)} className="absolute right-2 top-2 z-10 h-10 w-10" /> : null}
               <div className="flex aspect-square items-center justify-center overflow-hidden bg-gray-100">
                 <img
                   className={`h-full w-full object-contain p-5 mix-blend-multiply transition-transform duration-300 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100${
