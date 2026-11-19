@@ -10,7 +10,7 @@ export default function SeccionWeb({ web, conversion }) {
     <div className="space-y-4">
       <GrillaTarjetas>
         <Tarjeta titulo="Usuarios" valor={fmt(t.usuarios)} />
-        <Tarjeta titulo="Sesiones" valor={fmt(t.sesiones)} />
+        <Tarjeta titulo="Sesiones" valor={fmt(t.sesiones)} detalle={`${fmt(t.sesionesConInteraccion)} con interacción`} />
         <Tarjeta titulo="Páginas vistas" valor={fmt(t.paginasVistas)} />
         <Tarjeta titulo="Interacción" valor={pct(t.engagement)} detalle={`Duración ${seg(t.duracionProm)}`} />
         <Tarjeta titulo="Compras" valor={fmt(t.compras)} />
@@ -50,6 +50,20 @@ export default function SeccionWeb({ web, conversion }) {
           />
         </Panel>
       </div>
+
+      <Panel
+        titulo="Usuarios por país"
+        descripcion="Siempre sin filtro. Los que no tienen sesiones con interacción abrieron una página y se fueron: casi siempre son bots"
+      >
+        <BarraLista
+          items={(web.paises || []).map((p) => ({
+            clave: p.pais,
+            etiqueta: p.pais || '(sin definir)',
+            valor: p.usuarios,
+            extra: `· ${fmt(p.sesionesConInteraccion)} con interacción`,
+          }))}
+        />
+      </Panel>
 
       <Panel titulo="Dispositivos" descripcion="Sesiones por tipo de dispositivo">
         <BarraLista

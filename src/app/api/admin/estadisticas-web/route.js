@@ -65,7 +65,12 @@ const convertir = (obj, campos, k) => {
   return o;
 };
 
-async function datosWeb(run, dateRanges, k, moneda) {
+// `soloArgentina`: la mayor parte del tráfico de otros países son bots (abren una página y se van), así que el
+// Admin muestra por defecto solo las visitas de Argentina; el panel por país muestra el total real.
+const FILTRO_ARGENTINA = { filter: { fieldName: 'country', stringFilter: { matchType: 'EXACT', value: 'Argentina' } } };
+
+async function datosWeb(runBase, dateRanges, k, moneda, soloArgentina = false) {
+  const run = (body) => runBase(soloArgentina ? { ...body, dimensionFilter: FILTRO_ARGENTINA } : body);
   const r = await Promise.allSettled([
     run({
       dateRanges,
@@ -73,6 +78,7 @@ async function datosWeb(run, dateRanges, k, moneda) {
         { name: 'activeUsers' }, { name: 'sessions' }, { name: 'screenPageViews' },
         { name: 'engagementRate' }, { name: 'averageSessionDuration' },
         { name: 'ecommercePurchases' }, { name: 'purchaseRevenue' },
+        { name: 'engagedSessions' },
       ],
     }),
     run({
@@ -100,8 +106,16 @@ async function datosWeb(run, dateRanges, k, moneda) {
       dimensions: [{ name: 'deviceCategory' }],
       metrics: [{ name: 'sessions' }],
     }),
+    // Por país, siempre sin filtro: permite ver cuánto del tráfico es de fuera de Argentina y sin interacción
+    runBase({
+      dateRanges,
+      dimensions: [{ name: 'country' }],
+      metrics: [{ name: 'activeUsers' }, { name: 'engagedSessions' }],
+      orderBys: [{ metric: { metricName: 'activeUsers' }, desc: true }],
+      limit: 10,
+    }),
   ]);
-  const [rTot, rDia, rCanal, rPag, rDisp] = r;
+  const [rTot, rDia, rCanal, rPag, rDisp, rPais] = r;
 
   // Si falla el reporte principal es un problema de acceso o configuración
   if (rTot.status === 'rejected') throw rTot.reason;
@@ -117,7 +131,10 @@ async function datosWeb(run, dateRanges, k, moneda) {
       duracionProm: num(t[4]?.value),
       compras: num(t[5]?.value),
       ingresos: num(t[6]?.value) * k,
+      sesionesConInteraccion: num(t[7]?.value),
     },
+    soloArgentina,
+    paises: rPais.status === 'fulfilled' ? filas(rPais.value, ['pais'], ['usuarios', 'sesionesConInteraccion']) : [],
     porDia: rDia.status === 'fulfilled'
       ? filas(rDia.value, ['date'], ['sesiones', 'usuarios']).map((x) => ({ ...x, fecha: fechaGa(x.date) }))
       : [],
@@ -202,6 +219,7 @@ export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const dias = Math.min(365, Math.max(7, parseInt(searchParams.get('dias') || '30', 10)));
   const parte = searchParams.get('parte'); // 'web' | 'ads' | null (ambas)
+  const soloArgentina = searchParams.get('pais') === 'AR';
   const dateRanges = [{ startDate: `${dias}daysAgo`, endDate: 'today' }];
   const property = `properties/${propertyId}`;
 
@@ -227,7 +245,7 @@ export async function GET(request) {
     }
 
     const respuesta = { dias, moneda, conversion };
-    if (parte !== 'ads') respuesta.web = await datosWeb(run, dateRanges, k, moneda);
+    if (parte !== 'ads') respuesta.web = await datosWeb(run, dateRanges, k, moneda, soloArgentina);
     if (parte !== 'web') respuesta.ads = await datosAds(run, dateRanges, k, moneda);
 
     return NextResponse.json(respuesta);
