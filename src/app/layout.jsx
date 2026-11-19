@@ -2,6 +2,7 @@ import React from 'react';
 import "./globals.css";
 import { Toaster } from 'react-hot-toast';
 import { ShoppingCartProvider } from '../components/Context/ShoopingCartContext';
+import { FavoritosProvider } from '../components/Context/FavoritosContext';
 import Script from 'next/script';
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-K7JJH3KT';
@@ -38,8 +39,10 @@ export default function RootLayout({ children }) {
           <iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} height="0" width="0" style={{ display: 'none', visibility: 'hidden' }} title="Google Tag Manager" />
         </noscript>
         <ShoppingCartProvider>
-          {children}
-          <Toaster />
+          <FavoritosProvider>
+            {children}
+            <Toaster />
+          </FavoritosProvider>
         </ShoppingCartProvider>
       </body>
     </html>

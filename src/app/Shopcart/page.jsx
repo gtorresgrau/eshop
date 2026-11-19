@@ -7,8 +7,8 @@ const ClientLayout = dynamic(() => import("../ClientLayout"));
 
 const Shopcart = () => {
   return (
-    <ClientLayout title="Carrito de Consultas" className="flex flex-col h-screen">
-      <main className="flex-1 flex items-center justify-center bg-white" >
+    <ClientLayout>
+      <main className="bg-white">
         <ShopCart />
       </main>
     </ClientLayout>

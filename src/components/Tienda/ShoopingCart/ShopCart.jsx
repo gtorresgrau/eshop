@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { createRoot } from 'react-dom/client';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../../Hooks/useAuth';
@@ -9,7 +9,6 @@ import Swal from 'sweetalert2';
 import Loading from '../../Loading/Loading';
 import userBank from '../../constants/userBank';
 import producto from '../../../../public/images/sinFoto.webp';
-import EmptyCart from '../EmptyCart/EmptyCart';
 import { CartContext } from '../../Context/ShoopingCartContext';
 import handleGuardarPedido  from '../../../Utils/handleGuardarPedido';
 import handleComprarMercadoPago from '../../../Utils/handleCompraMercadoPago';
@@ -18,20 +17,27 @@ import FormularioFactura from '../../DashboardCliente/Perfil/FormularioFactura';
 import { solicitarEntrega } from '../../../Utils/solicitarEntrega';
 import notificador from '../../../Utils/notificador';
 import { parsePrecio } from '../../../Utils/parsePrecio';
+import { formatearTitulo } from '../../../Utils/formatoTitulo';
+import { fotoLiviana } from '../../../Utils/fotoNB';
+import { getProductPath } from '../../../Utils/productSlug';
+import addToCart from '../../../Utils/addToCart';
+import { useFavoritos } from '../../Context/FavoritosContext';
+
+const ENVIO_GRATIS_DESDE = 100000; // mismo umbral que el checkout
 
 const ShopCart = () => {
   const router = useRouter();
   const { user, isAuthenticated } = useAuth();
   const [cart, setCart] = useContext(CartContext);
   const [loading, setLoading] = useState(false);
-  const preguntarRef = useRef(null);
+  const { favoritos, esFavorito, alternar } = useFavoritos();
 
   // Subtotal y total items calculados desde el estado (no del DOM)
   const subtotal = cart.reduce((acc, item) => acc + (parsePrecio(item.precio) * item.quantity), 0);
   const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   const formatCurrency = (num) =>
-    num.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
+    num.toLocaleString('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 });
 
   const handleComprar = async (descuento = 0) => {
     if (cart.length === 0) {
@@ -364,157 +370,175 @@ const ShopCart = () => {
     });
   };
 
+  const CONT = 'mx-auto w-full max-w-screen-2xl px-4 sm:px-6 lg:px-8';
+  const descuento = Number(cart[0]?.descuento) || 0;
+  const conTransferencia = subtotal * (1 - descuento / 100);
+  const faltaEnvioGratis = Math.max(0, ENVIO_GRATIS_DESDE - subtotal);
+  const progreso = Math.min(100, Math.round((subtotal / ENVIO_GRATIS_DESDE) * 100));
+  const sugeridos = favoritos.filter((f) => !cart.some((c) => c.cod_producto === f.cod_producto)).slice(0, 4);
+
+  const boton = 'inline-flex h-10 items-center justify-center bg-gray-100 px-3 text-base font-semibold text-gray-900 transition-colors hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900';
+
   return (
-    <section className="flex flex-col items-center md:items-start mb-6">
-      <article className="flex flex-col max-w-7xl m-2 self-center">
-        <div className="flex items-end p-4">
-          <Link
-            href="/"
-            title="Volver a la tienda"
-            aria-label="Volver a la tienda"
-            className="text-gray-500 bg-transparent hover:bg-gray-200 rounded-lg w-10 h-10 flex justify-center items-center"
-          >
-            <svg className="w-5 h-5" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
-              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-            </svg>
+    <section aria-labelledby="carrito-h1" className="w-full bg-white">
+      <div className={`${CONT} py-10 lg:py-16`}>
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <h1 id="carrito-h1" className="text-4xl font-extrabold leading-[1.05] tracking-tight text-gray-900 sm:text-5xl">
+            Tu carrito
+          </h1>
+          <Link href="/productos" className="text-lg font-semibold text-gray-900 underline underline-offset-4 hover:text-orange-800">
+            Seguir comprando
           </Link>
         </div>
 
-        <h1 className="md:text-3xl text-xl font-bold text-primary text-center mb-6 md:mb-10 max-w-7xl mx-auto">
-          CARRITO DE COMPRAS
-        </h1>
+        {cart.length === 0 ? (
+          <div className="mt-12 bg-gray-100 p-8 sm:p-12">
+            <p className="text-2xl font-bold text-gray-900">Tu carrito está vacío</p>
+            <p className="mt-2 max-w-[48ch] text-lg text-gray-900">Elegí productos del catálogo o revisá los que guardaste en favoritos.</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link href="/productos" className="inline-flex h-14 items-center bg-orange-700 px-8 text-lg font-semibold text-white transition-colors hover:bg-orange-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-700 focus-visible:ring-offset-2">
+                Ver el catálogo
+              </Link>
+              <Link href="/favoritos" className="inline-flex h-14 items-center bg-white px-8 text-lg font-semibold text-gray-900 transition-colors hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900">
+                Mis favoritos{favoritos.length > 0 ? ` (${favoritos.length})` : ''}
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <div className="mt-10 grid gap-12 lg:grid-cols-12 lg:gap-16">
+            {/* Productos */}
+            <div className="lg:col-span-8">
+              <ul>
+                {cart.map((item) => {
+                  const unit = parsePrecio(item.precio);
+                  const esFav = esFavorito(item.cod_producto);
+                  return (
+                    <li key={item.cod_producto} className="grid grid-cols-[88px_1fr] gap-4 border-t border-gray-300 py-6 sm:grid-cols-[128px_1fr_auto] sm:gap-6">
+                      <Link href={getProductPath(item)} className="relative block aspect-square bg-gray-100" aria-hidden="true" tabIndex={-1}>
+                        <Image
+                          src={fotoLiviana(item.foto_1_1) || producto.src}
+                          alt=""
+                          fill
+                          sizes="128px"
+                          className="object-contain p-2 mix-blend-multiply"
+                          loading="lazy"
+                        />
+                      </Link>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-7xl mx-auto">
-          <div className="flex flex-col">
-            {cart.length ? (
-              cart.map((item) => (
-                <div
-                  key={item.cod_producto}
-                  className="w-full relative flex items-center shadow-xl rounded-lg bg-white border border-gray-50 gap-2 m-2 p-2"
-                >
-                  <Image
-                    src={item.foto_1_1 || producto.src}
-                    alt={item.nombre}
-                    title={item.nombre}
-                    width={112}
-                    height={112}
-                    className="m-2 max-h-28 max-w-28 min-h-28 min-w-28"
-                    loading="lazy"
-                  />
-                  <div className="flex flex-col text-sm md:text-base p-2">
-                    <p>{item.nombre}</p>
-                    <p>{item.cod_producto}</p>
+                      <div className="min-w-0">
+                        {item.marca ? <p className="text-sm text-gray-700">{item.marca}</p> : null}
+                        <h2 className="text-lg font-medium leading-snug text-gray-900">
+                          <Link href={getProductPath(item)} className="hover:underline">{formatearTitulo(item.nombre)}</Link>
+                        </h2>
+                        <p className="mt-1 text-sm text-gray-700">Código {item.cod_producto}</p>
 
-                    <div className="absolute bottom-2 right-2 flex justify-center items-center">
-                      <button
-                        type="button"
-                        className="text-gray-700 cursor-pointer font-bold text-2xl px-2"
-                        onClick={() => handleDecrement(item)}
-                        title="Disminuir cantidad"
-                        aria-label="Disminuir cantidad"
-                      >
-                        −
-                      </button>
-                      <div className="px-2">
-                        <span className="text-blue-700 font-semibold text-3xl">{item.quantity}</span>
+                        <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-3">
+                          <div className="inline-flex items-center" role="group" aria-label={`Cantidad de ${item.nombre}`}>
+                            <button type="button" onClick={() => handleDecrement(item)} className={`${boton} w-10 text-2xl`} aria-label="Disminuir cantidad" title="Disminuir cantidad">−</button>
+                            <span className="inline-flex h-10 min-w-12 items-center justify-center text-lg font-bold tabular-nums text-gray-900" aria-live="polite">{item.quantity}</span>
+                            <button type="button" onClick={() => handleIncrement(item)} className={`${boton} w-10 text-2xl`} aria-label="Aumentar cantidad" title="Aumentar cantidad">+</button>
+                          </div>
+                          <button type="button" onClick={() => alternar(item)} aria-pressed={esFav} className="text-base font-semibold text-gray-900 underline underline-offset-4 hover:text-orange-800">
+                            {esFav ? '❤ En favoritos' : 'Guardar en favoritos'}
+                          </button>
+                          <button type="button" onClick={() => handleRemove(item)} className="text-base font-semibold text-gray-900 underline underline-offset-4 hover:text-red-700">
+                            Quitar
+                          </button>
+                        </div>
                       </div>
-                      <button
-                        type="button"
-                        className="text-gray-700 cursor-pointer font-bold text-2xl px-2"
-                        onClick={() => handleIncrement(item)}
-                        title="Aumentar cantidad"
-                        aria-label="Aumentar cantidad"
-                      >
-                        +
-                      </button>
-                    </div>
 
-                    <button
-                      type="button"
-                      onClick={() => handleRemove(item)}
-                      className="absolute top-2 right-2 text-gray-500 bg-transparent hover:bg-red-400 rounded-lg w-6 h-6 flex justify-center items-center"
-                      title="Quitar del carrito"
-                      aria-label="Quitar del carrito"
-                    >
-                      <svg className="w-3 h-3" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
-                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <EmptyCart />
-            )}
-
-            {cart.length > 0 && (
-              <div className="py-4 px-2 flex flex-col md:flex-row justify-between items-center text-center uppercase">
-                <Link
-                  href="/#productos"
-                  className="h-10 w-full text-base p-2 text-white bg-secondary hover:bg-primary-hover rounded-lg"
-                  title="Continuar seleccionando ITEMS"
-                >
-                  Agregar + ITEMS
-                </Link>
-                <button
-                  type="button"
-                  onClick={handleDeleteAll}
-                  className="underline my-5 block text-sm hover:text-red-600"
-                  title="Vaciar carrito"
-                  aria-label="Vaciar carrito"
-                >
-                  VACIAR CARRITO
+                      <div className="col-span-2 text-left sm:col-span-1 sm:text-right">
+                        <p className="text-2xl font-extrabold tabular-nums text-gray-900">{formatCurrency(unit * item.quantity)}</p>
+                        {item.quantity > 1 && <p className="text-sm text-gray-700">{formatCurrency(unit)} c/u</p>}
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+              <div className="border-t border-gray-300 pt-4">
+                <button type="button" onClick={handleDeleteAll} className="text-base font-semibold text-gray-900 underline underline-offset-4 hover:text-red-700">
+                  Vaciar carrito
                 </button>
               </div>
-            )}
-          </div>
+            </div>
 
-          <div>
-            <div
-              id="resumen"
-              className="bg-slate-100 rounded-lg shadow-xl p-7 relative flex flex-col justify-between"
-              style={{ alignSelf: 'start' }}
-            >
-              <h2 className="text-2xl mb-2">Resumen de Compra</h2>
+            {/* Resumen */}
+            <aside id="resumen" aria-labelledby="resumen-h2" className="self-start bg-gray-100 p-6 sm:p-8 lg:sticky lg:top-28 lg:col-span-4">
+              <h2 id="resumen-h2" className="text-2xl font-extrabold text-gray-900">Resumen</h2>
 
-              <div className="grid grid-cols-1">
-                <span>
-                  <strong>Subtotal: </strong>
-                  {formatCurrency(subtotal)}
-                </span>
-                <span>
-                  <strong>Cant. de productos en el carrito: </strong>
-                  {totalItems}
-                </span>
-                <span>
-                  <strong>Usted va a COMPRAR: </strong>
-                </span>
-                <span id="preguntar" ref={preguntarRef}>
-                  <br />
-                  {cart.map((item) => (
-                    <span key={item.cod_producto} className="text-right">
-                      {item.nombre} - cod: {item.cod_producto}
-                      <br />
-                    </span>
-                  ))}
-                </span>
+              <dl className="mt-6 space-y-3 text-lg text-gray-900">
+                <div className="flex justify-between gap-4">
+                  <dt>{totalItems} {totalItems === 1 ? 'producto' : 'productos'}</dt>
+                  <dd className="font-semibold tabular-nums">{formatCurrency(subtotal)}</dd>
+                </div>
+                <div className="flex justify-between gap-4">
+                  <dt>Envío</dt>
+                  <dd className="font-semibold">{faltaEnvioGratis === 0 ? 'Gratis' : 'Se cotiza al finalizar'}</dd>
+                </div>
+              </dl>
+
+              <div className="mt-5">
+                {faltaEnvioGratis === 0 ? (
+                  <p className="text-base font-semibold text-green-800">Tu compra tiene envío gratis.</p>
+                ) : (
+                  <p className="text-base text-gray-900">Sumá {formatCurrency(faltaEnvioGratis)} y el envío es gratis.</p>
+                )}
+                <div className="mt-2 h-2 bg-gray-300" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progreso} aria-label="Avance hacia el envío gratis">
+                  <div className="h-full bg-green-700" style={{ width: `${progreso}%` }} />
+                </div>
               </div>
 
-              <div className="flex justify-between items-center mt-4"></div>
+              <div className="mt-6 border-t border-gray-300 pt-5">
+                <div className="flex items-baseline justify-between gap-4">
+                  <span className="text-lg font-semibold text-gray-900">Subtotal</span>
+                  <span className="text-3xl font-extrabold tabular-nums text-gray-900">{formatCurrency(subtotal)}</span>
+                </div>
+                {descuento > 0 && (
+                  <p className="mt-2 text-base font-semibold text-green-800">
+                    Pagando por transferencia: {formatCurrency(conTransferencia)} ({descuento}% OFF)
+                  </p>
+                )}
+              </div>
+
               <button
                 type="button"
                 onClick={handleFinalizarCompra}
                 disabled={loading}
-                className="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-lg w-full"
+                className="mt-6 inline-flex h-14 w-full items-center justify-center bg-orange-700 px-6 text-lg font-semibold text-white transition-colors hover:bg-orange-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-700 focus-visible:ring-offset-2 disabled:opacity-60"
                 title="Finalizar compra"
                 aria-label="Finalizar compra"
               >
-                {loading ? <Loading /> : 'Finalizar Compra'}
+                {loading ? <Loading /> : 'Finalizar compra'}
               </button>
-            </div>
+              <p className="mt-3 text-sm text-gray-700">El método de pago y el envío los elegís en el siguiente paso.</p>
+            </aside>
           </div>
-        </div>
-      </article>
+        )}
+
+        {/* Favoritos que todavía no están en el carrito */}
+        {sugeridos.length > 0 && (
+          <div className="mt-16 border-t border-gray-300 pt-10">
+            <div className="flex flex-wrap items-end justify-between gap-3">
+              <h2 className="text-2xl font-extrabold text-gray-900">De tus favoritos</h2>
+              <Link href="/favoritos" className="text-base font-semibold text-gray-900 underline underline-offset-4 hover:text-orange-800">Ver todos</Link>
+            </div>
+            <ul className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
+              {sugeridos.map((p) => (
+                <li key={p.cod_producto}>
+                  <Link href={getProductPath(p)} className="relative block aspect-square bg-gray-100">
+                    <Image src={fotoLiviana(p.foto_1_1) || producto.src} alt="" fill sizes="(min-width: 1024px) 20vw, 45vw" className="object-contain p-3 mix-blend-multiply" loading="lazy" />
+                  </Link>
+                  <p className="mt-2 line-clamp-2 min-h-[2.75rem] text-base font-medium leading-snug text-gray-900">{formatearTitulo(p.nombre)}</p>
+                  <p className="text-lg font-extrabold tabular-nums text-gray-900">{formatCurrency(parsePrecio(p.precio))}</p>
+                  <button type="button" onClick={() => addToCart(p, cart, setCart)} className="mt-2 inline-flex h-11 w-full items-center justify-center bg-gray-900 px-3 text-base font-semibold text-white transition-colors hover:bg-black focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2">
+                    Agregar al carrito
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
     </section>
   );
 };

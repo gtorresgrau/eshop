@@ -15,6 +15,7 @@ import { parsePrecio } from '../../../Utils/parsePrecio';
 import { estaAgotado } from '../../../Utils/estadoProducto';
 import { formatearTitulo } from '../../../Utils/formatoTitulo';
 import { fotoLiviana } from '../../../Utils/fotoNB';
+import BotonFavorito from '../BotonFavorito';
 
 const ENVIO_GRATIS_DESDE = 100000; // mismo umbral que el checkout
 
@@ -96,10 +97,11 @@ const Card = ({ product, handleProductSelect }) => {
             </span>
           )}
 
+          <BotonFavorito product={product} className="absolute right-2 top-2 z-10 h-10 w-10" />
           <button
             type="button"
             onClick={handleAddToCart}
-            className={`${botonFoto} top-2`}
+            className={`${botonFoto} top-14`}
             disabled={agotado}
             aria-label="Agregar al carrito"
             title="Agregar al carrito"
@@ -109,7 +111,7 @@ const Card = ({ product, handleProductSelect }) => {
           <button
             type="button"
             onClick={(e) => handleShare(e, product)}
-            className={`${botonFoto} top-14`}
+            className={`${botonFoto} top-[6.5rem]`}
             disabled={agotado}
             aria-label="Compartir producto"
             title="Compartir"

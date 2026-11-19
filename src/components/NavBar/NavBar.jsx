@@ -6,7 +6,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Logo from '../../../public/logos/logo.webp';
 import UserMenu from './UserMenu';
-import { IoCartOutline } from 'react-icons/io5';
+import { IoCartOutline, IoHeartOutline } from 'react-icons/io5';
+import { useFavoritos } from '../Context/FavoritosContext';
 import { CartContext } from '../Context/ShoopingCartContext';
 import Swal from 'sweetalert2';
 import useLinks from '../../components/constants/Links';
@@ -21,6 +22,7 @@ const NavBar = () => {
   const router = useRouter();
 
   const quantity = cart ? cart.reduce((acc, curr) => acc + curr.quantity, 0) : 0;
+  const { favoritos } = useFavoritos();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -94,6 +96,11 @@ const NavBar = () => {
               </button>
             )}
           </div>
+          {/* Favoritos (mobile) */}
+          <Link href='/favoritos' className="relative block md:hidden" title="Favoritos" aria-label="Favoritos">
+            <IoHeartOutline size={28} />
+            {favoritos.length > 0 && <span className="absolute -right-2 -top-2 min-w-5 rounded-full bg-orange-700 px-1 text-center text-xs font-semibold text-white">{favoritos.length}</span>}
+          </Link>
           {/* Cart icon for mobile */}
           <Link href='/Shopcart' className="relative block md:hidden" title="Shopcart">
             <div className={` absolute px-2 m-1 text-white rounded-full right-[-10px] top-[-15px] ${quantity > 0 ? 'bg-boton-primary hover:bg-boton-primary-hover active:bg-boton-primary-active block' : 'bg-transparent hidden'}`}>{quantity}</div>
@@ -141,6 +148,11 @@ const NavBar = () => {
                 <UserMenu user={user} toggleDropdown={toggleDropdown} isDropdownOpen={isDropdownOpen} handleLogOut={handleLogOut} />
               </div>
             )}
+            {/* Favoritos (desktop) */}
+            <Link href='/favoritos' className='relative hidden md:block' title='Favoritos' aria-label='Favoritos'>
+              <IoHeartOutline size={30} />
+              {favoritos.length > 0 && <span className='absolute -right-2 -top-2 min-w-5 rounded-full bg-orange-700 px-1 text-center text-xs font-semibold text-white'>{favoritos.length}</span>}
+            </Link>
             {/* Desktop cart icon */}
             <Link href='/Shopcart' className='relative' title='Carrito de compras'>
               <div className={`hidden md:block absolute text-white px-2 m-1 rounded-full right-[-10px] top-[-15px] ${quantity > 0 ? 'bg-boton-primary hover:bg-boton-primary-hover active:bg-boton-primary-active block' : 'bg-transparent hidden'}`}>{quantity}</div>
