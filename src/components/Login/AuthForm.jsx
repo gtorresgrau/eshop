@@ -1,7 +1,7 @@
 //src/componentes/AuthForm.jsx
 
 'use client';
-import React, { useState, Suspense } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../Hooks/useAuth';
@@ -135,6 +135,12 @@ const loginWithGoogle = async () => {
         }
   };
 
+
+  // Con la sesión ya iniciada el formulario no corresponde: va directo al panel que le toca
+  // (antes quedaba el spinner para siempre porque nada redirigía).
+  useEffect(() => {
+    if (isAuthenticated) redirectByRole(router, user?.rol);
+  }, [isAuthenticated]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (authLoading || isAuthenticated) {
     return <Loading />;
