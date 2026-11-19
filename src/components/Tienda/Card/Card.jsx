@@ -14,6 +14,7 @@ import { getProductPath } from '../../../Utils/productSlug';
 import { parsePrecio } from '../../../Utils/parsePrecio';
 import { estaAgotado } from '../../../Utils/estadoProducto';
 import { formatearTitulo } from '../../../Utils/formatoTitulo';
+import { fotoLiviana } from '../../../Utils/fotoNB';
 
 const ENVIO_GRATIS_DESDE = 100000; // mismo umbral que el checkout
 
@@ -76,7 +77,7 @@ const Card = ({ product, handleProductSelect }) => {
             className={`object-contain p-5 mix-blend-multiply transition-transform duration-300 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100${
               agotado ? ' opacity-50 grayscale' : ''
             }`}
-            src={product.foto_1_1 || '/images/sinFoto.webp'}
+            src={fotoLiviana(product.foto_1_1) || '/images/sinFoto.webp'}
             alt=""
             fill
             sizes="(min-width: 1024px) 25vw, 50vw"

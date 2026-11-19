@@ -3,6 +3,7 @@ import { getProductPath } from '../../Utils/productSlug';
 import { parsePrecio } from '../../Utils/parsePrecio';
 import { estaAgotado } from '../../Utils/estadoProducto';
 import { formatearTitulo } from '../../Utils/formatoTitulo';
+import { fotoLiviana } from '../../Utils/fotoNB';
 
 const fmt = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 });
 
@@ -41,7 +42,7 @@ export default function CatalogoGrid({ productos = [] }) {
                   className={`h-full w-full object-contain p-5 mix-blend-multiply transition-transform duration-300 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100${
                     agotado ? ' opacity-50 grayscale' : ''
                   }`}
-                  src={p.foto_1_1 || '/images/sinFoto.webp'}
+                  src={fotoLiviana(p.foto_1_1) || '/images/sinFoto.webp'}
                   alt=""
                   width={400}
                   height={400}

@@ -63,6 +63,44 @@ async function distintos(campo) {
   return filas.map((f) => ({ valor: String(f._id).trim(), total: f.total })).filter((f) => f.valor);
 }
 
+export async function contarProductos() {
+  await connectDB();
+  return Producto.countDocuments(filtroBase);
+}
+
+// Categorías cuyas fotos de estudio (fondo blanco) quedan bien ampliadas en el hero
+const CATEGORIAS_HERO = [
+  'TECLADOS', 'MOUSES', 'AURICULARES', 'GABINETE GAMER', 'COOLERS', 'FUENTES', 'PROCESADORES', 'PARLANTES',
+  'MONITORES', 'MEMORIAS', 'DISCOS SSD', 'PLACA DE VIDEO', 'NOTEBOOKS Y PORTATILES', 'CAMARAS IP', 'JOYSTICKS', 'WEBCAMS',
+];
+
+/** Productos reales con stock y foto de NB para el hero: `n` de categorías distintas, al azar. */
+export async function productosParaHero(n = 3) {
+  await connectDB();
+  const docs = await Producto.aggregate([
+    {
+      $match: {
+        ...filtroBase,
+        origen: 'nb',
+        cantidad: { $gt: 0 },
+        foto_1_1: { $regex: '^https://static\\.nb\\.com\\.ar/' },
+        categoria: { $in: CATEGORIAS_HERO },
+      },
+    },
+    { $sample: { size: 40 } },
+    { $project: { cod_producto: 1, nombre: 1, titulo_de_producto: 1, marca: 1, categoria: 1, precio: 1, foto_1_1: 1, usd: 1 } },
+  ]);
+  const vistas = new Set();
+  const elegidos = [];
+  for (const d of docs) {
+    if (vistas.has(d.categoria)) continue;
+    vistas.add(d.categoria);
+    elegidos.push(d);
+    if (elegidos.length >= n) break;
+  }
+  return serialize(elegidos);
+}
+
 // cache() dedupe por request: generateMetadata y el componente piden lo mismo.
 export const listarCategorias = cache(() => distintos('categoria'));
 export const listarMarcas = cache(() => distintos('marca'));
