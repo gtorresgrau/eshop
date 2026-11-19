@@ -154,6 +154,11 @@ export default function Nav({ handleSelectSection }) {
               </a>
           </li>
           <li>
+              <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-primary-hover group" onClick={() => { handleSelectSection("Usuarios"); toggleMenu()}} title='Usuarios'>
+                <span className="ml-3 text-gray-200">Usuarios</span>
+              </a>
+          </li>
+          <li>
               <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-primary-hover group" onClick={() => { handleSelectSection("Configuracion"); toggleMenu()}} title='Configuracion '>
                 <span className="ml-3 text-gray-200">Configuracion</span>
               </a>

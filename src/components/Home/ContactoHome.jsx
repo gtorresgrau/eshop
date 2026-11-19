@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Reveal from './Reveal';
 import userData from '../constants/userData';
@@ -15,15 +15,18 @@ const campo =
 export default function ContactoHome() {
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm({ mode: 'onTouched' });
   const [resultado, setResultado] = useState(null); // null | { ok, texto }
+  const inicio = useRef(Date.now()); // para el control anti-bots: tiempo que tardó en completarse
 
   const wa = `https://wa.me/+${userData.codigoPais}${userData.contact}?text=${encodeURIComponent(userData.textoPredefinido)}`;
 
   const onSubmit = async (data) => {
     try {
-      const res = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+      const res = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...data, t: Date.now() - inicio.current }) });
       if (res.status === 200) {
         setResultado({ ok: true, texto: 'Recibimos tu mensaje. Te respondemos por correo lo antes posible.' });
         reset();
+      } else if (res.status === 429) {
+        setResultado({ ok: false, texto: 'Enviaste muchos mensajes seguidos. Probá de nuevo más tarde o escribinos por WhatsApp.' });
       } else {
         setResultado({ ok: false, texto: 'No pudimos enviar el mensaje. Probá de nuevo o escribinos por WhatsApp.' });
       }
@@ -79,7 +82,11 @@ export default function ContactoHome() {
             <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
               <input type="hidden" value="Consulta" {...register('subject')} />
               <input type="hidden" value="Enviado desde la WEB" {...register('from_name')} />
-              <input type="checkbox" tabIndex={-1} autoComplete="off" className="hidden" style={{ display: 'none' }} {...register('botcheck')} />
+              {/* Trampa para bots: fuera de pantalla, una persona no la ve ni la completa */}
+              <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+                <label htmlFor="c-web">No completar este campo</label>
+                <input id="c-web" type="text" tabIndex={-1} autoComplete="off" {...register('website')} />
+              </div>
 
               <div>
                 <label htmlFor="c-nombre" className="mb-1 block text-base font-medium text-gray-900">Nombre</label>

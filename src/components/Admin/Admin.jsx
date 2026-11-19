@@ -20,6 +20,7 @@ const AdminPedidos = dynamic(() => import('./AdminPedidos/AdminPedidos'), {
 });
 import fetchFiltersData, { startAutoUpdateFilters } from "../../Hooks/useBrandsCategories";
 import AdminConfigPage from "./Configuracion/configuracion";
+import Usuarios from "./Usuarios/Usuarios";
 import { useAuth } from '../../Hooks/useAuth';
 import { useRouter } from 'next/navigation';
 
@@ -424,6 +425,11 @@ export default function Admin() {
           {section === 'Empresas' && (
             <div className="mx-auto max-w-screen-xl xl:max-w-none px-4 lg:px-12 xl:px-2">
               <EmpresaForm />
+            </div>
+          )}
+          {section === 'Usuarios' && (
+            <div className="mx-auto max-w-screen-xl xl:max-w-none px-4 lg:px-12 xl:px-2">
+              <Usuarios />
             </div>
           )}
           {section === 'Configuracion' && (

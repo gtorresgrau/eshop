@@ -5,6 +5,7 @@ import { connectDB } from '../../../lib/mongodb';
 import Usuario from '../../../models/User';
 import jwt from 'jsonwebtoken';
 import { auth } from '../../../lib/firebaseAdmin';
+import { permitir } from '../../../lib/antiBot';
 
 // Alta / actualización del propio perfil + inicio de sesión.
 // SEGURIDAD: la identidad sale SIEMPRE del token de Firebase verificado, nunca del cuerpo de la request.
@@ -49,6 +50,10 @@ export async function POST(req: Request) {
         let isNew = false;
 
         if (!usuario) {
+            // Altas nuevas: máximo 5 por hora desde la misma IP (frena el registro masivo con bots)
+            if (!(await permitir(req, 'alta-usuario', 5, 3600))) {
+                return NextResponse.json({ error: 'Demasiados registros desde esta conexión. Probá más tarde.', code: 'rate-limit' }, { status: 429 });
+            }
             usuario = new Usuario({
                 uid,
                 nombreCompleto,
