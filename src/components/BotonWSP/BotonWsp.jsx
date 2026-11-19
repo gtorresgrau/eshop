@@ -63,7 +63,7 @@ const BotonWsp = () => {
             rel="noopener noreferrer"
             title={`Chatear con ${c.label}`}
           >
-            <button className="bg-green-600 text-white px-4 py-2 rounded-full shadow-md hover:bg-green-700 transition">
+            <button className="bg-green-800 text-white px-4 py-2 rounded-full shadow-md hover:bg-green-900 transition">
               {c.label}
             </button>
           </a>

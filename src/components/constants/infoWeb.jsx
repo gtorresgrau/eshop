@@ -69,7 +69,7 @@ export const faqData = [
     id: 7,
     question: "¿Cómo optimiza el Cable Adaptador para Antena Starlink Mini tu conexión en ruta?",
     answer: "El Cable Adaptador para Antena Starlink Mini convierte la energía de 12V de tu vehículo en una salida estable de 35V 5A, asegurando una conexión continua y confiable. Además, cuenta con protección avanzada contra sobrecargas y cortocircuitos, y una tensión estabilizada, lo que lo hace ideal para viajes largos o instalaciones fijas, maximizando la eficiencia y seguridad de tu conexión a internet.",
-    linkText: "Ver más detalles",
+    linkText: "Ver la fuente para Starlink Mini",
     linkUrl: "https://eshopdevices.com/productos/StarLinkmini"
   }
   
