@@ -25,12 +25,11 @@ export function generateMetadata() {
   return defaultMetadata;
 }
 
-const STARLINK_FOTO = 'https://res.cloudinary.com/dnbrxpca3/image/upload/f_auto,q_auto,w_900/v1739838346/FuenteStarlink4_zodve5.webp';
 const ars = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 });
 
 async function datosPortada() {
   try {
-    const [total, hero] = await Promise.all([contarProductos(), productosParaHero(3)]);
+    const [total, hero] = await Promise.all([contarProductos(), productosParaHero(4)]);
     return { total, hero };
   } catch (e) {
     console.error('[home] datos de portada:', e?.message);
@@ -41,17 +40,8 @@ async function datosPortada() {
 export default async function HomePage() {
   const { total, hero } = await datosPortada();
 
-  // Primer objeto: lo que solo distribuye esta tienda. Después, productos reales del catálogo.
+  // Objetos del hero: productos reales del catálogo.
   const objetos = [
-    {
-      key: 'starlink',
-      href: '/productos/StarLinkmini',
-      nombre: 'Fuente para Starlink Mini',
-      marca: 'Distribuidor autorizado',
-      precio: '',
-      src: STARLINK_FOTO,
-      alt: 'Fuente adaptador con cable para antena Starlink Mini, Trifix SL1230',
-    },
     ...hero.map((p) => {
       const precio = parsePrecio(p.precio);
       const nombre = formatearTitulo(p.titulo_de_producto || p.nombre);
