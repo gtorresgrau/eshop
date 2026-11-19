@@ -5,6 +5,7 @@ import { connectDB } from "../../../../lib/mongodb";
 import Order from "../../../../models/Order";
 import mapEstadoMP from "../../../../Utils/mapEstadoMP"; 
 import { requireSesion, esAdmin } from "../../../../lib/sesion";
+import { paraCliente } from "../../../../lib/pedidoPublico";
 
 
 
@@ -91,7 +92,9 @@ export async function GET(req) {
       .limit(limit)
       .lean();
 
-    return NextResponse.json({ pedidos: pedidosActualizados, total });
+    // El cliente no recibe costos ni datos internos del proveedor
+    const salida = esAdmin(sesion) ? pedidosActualizados : pedidosActualizados.map(paraCliente);
+    return NextResponse.json({ pedidos: salida, total });
   } catch (error) {
     console.error("❌ Error al obtener pedidos:", error);
     return NextResponse.json(

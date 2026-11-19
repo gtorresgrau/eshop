@@ -3,6 +3,7 @@
 import { connectDB } from "../../../../../lib/mongodb";
 import Order from "../../../../../models/Order";
 import { getSesion } from "../../../../../lib/sesion";
+import { paraCliente } from "../../../../../lib/pedidoPublico";
 
 // Regex simple para validar formato de ObjectId (24 caracteres hexadecimales)
 const objectIdRegex = /^[0-9a-fA-F]{24}$/;
@@ -35,7 +36,7 @@ export async function GET(req, { params }) {
       return new Response(JSON.stringify({ success: false, error: "Acceso denegado" }), { status: 403, headers: { 'Content-Type': 'application/json' } });
     }
 
-    return new Response(JSON.stringify({ success: true, pedido }), {
+    return new Response(JSON.stringify({ success: true, pedido: sesion.rol === 'admin' ? pedido : paraCliente(pedido) }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });

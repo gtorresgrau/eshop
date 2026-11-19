@@ -44,6 +44,8 @@
     external_reference?: string
     etiquetaEnvio?: string
     trackingCode?: string
+    seguimiento?: string
+    envio?: { nombre?: string; dias?: number; costoCliente?: number; gratis?: boolean }
   }
 
 const Dashboard = () => {

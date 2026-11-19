@@ -208,6 +208,20 @@ const PedidoCard = ({ pedido }: { pedido: Pedido }) => {
         )}
       </div>
 
+      {/* Envío y seguimiento: lo que el cliente necesita saber de su compra */}
+      {(pedido.seguimiento || pedido.envio?.nombre || (pedido.trackingCode && !pedido.etiquetaEnvio)) && (
+        <div className="mb-2 space-y-1 text-center text-xs text-gray-900 md:text-sm">
+          {pedido.seguimiento && <p className="font-semibold">{pedido.seguimiento}</p>}
+          {pedido.envio?.nombre && (
+            <p>
+              Envío por {pedido.envio.nombre}
+              {pedido.envio.dias ? ` · llega en unos ${pedido.envio.dias} días hábiles` : ''}
+              {pedido.envio.gratis ? ' · envío gratis' : ''}
+            </p>
+          )}
+          {pedido.trackingCode && !pedido.etiquetaEnvio && <p>Código de seguimiento: <span className="font-semibold">{pedido.trackingCode}</span></p>}
+        </div>
+      )}
 
       {/* Modal */}
       {showUploadModal && (
