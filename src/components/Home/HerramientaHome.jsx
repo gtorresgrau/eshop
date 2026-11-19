@@ -48,7 +48,7 @@ export default function HerramientaHome() {
           <Reveal delay={160}>
             <div className="mt-10 flex flex-wrap gap-3">
               <a
-                href="/docs/CleanTool_v2.1.exe"
+                href="/docs/CleanTool.exe"
                 download
                 className="inline-flex h-14 items-center bg-orange-700 px-8 text-lg font-semibold text-white transition-colors hover:bg-orange-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-700 focus-visible:ring-offset-2"
               >
