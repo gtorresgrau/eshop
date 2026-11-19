@@ -6,66 +6,42 @@ import Link from 'next/link';
 const CADA_MS = 6000;
 
 /**
- * Hero: el nombre de la tienda a todo el ancho y, encima, UN objeto real ampliado hasta que el borde de
- * la pantalla lo recorta. El objeto se cruza lentamente con el siguiente (productos reales del catálogo
- * y la fuente de Starlink). Con "reducir movimiento" se ve solo el primero.
- *
- * El campo del hero es gris liso y el contenedor del objeto usa mix-blend-multiply: el fondo blanco de la
- * foto desaparece y el objeto queda apoyado directamente sobre el campo.
+ * Hero: a la izquierda qué es la tienda y qué hacer (título, buscador, catálogo); a la derecha un panel liso
+ * con UN producto real grande. Los productos se cruzan solos cada 6 s y también se eligen con las miniaturas.
+ * Con "reducir movimiento" no hay rotación automática. Nada se superpone con el texto.
  *
  * objetos: [{ key, href, nombre, marca, precio (texto ya formateado), src, alt }]
  */
 export default function HeroObjeto({ objetos = [], total = 0 }) {
   const [activo, setActivo] = useState(0);
+  const [manual, setManual] = useState(false); // si el visitante eligió uno, no rotamos más
 
   useEffect(() => {
-    if (objetos.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    if (manual || objetos.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
     let id;
     const arrancar = () => { id = setInterval(() => setActivo((i) => (i + 1) % objetos.length), CADA_MS); };
     const onVis = () => { clearInterval(id); if (!document.hidden) arrancar(); }; // pausa con la pestaña oculta
     arrancar();
     document.addEventListener('visibilitychange', onVis);
     return () => { clearInterval(id); document.removeEventListener('visibilitychange', onVis); };
-  }, [objetos.length]);
+  }, [objetos.length, manual]);
 
   const actual = objetos[activo] || objetos[0];
   const cuenta = new Intl.NumberFormat('es-AR').format(total);
 
   return (
-    <section aria-labelledby="hero-h1" className="relative isolate overflow-hidden bg-gray-100 xl:h-[calc(100svh-6.5rem)] xl:min-h-[680px]">
-      <div className="mx-auto flex w-full max-w-screen-2xl flex-col px-4 pb-10 pt-6 sm:px-6 lg:px-8 xl:static xl:h-full xl:pb-0 xl:pt-0">
-        {/* Nombre de la tienda: es el titular. El objeto lo cruza */}
-        <h1
-          id="hero-h1"
-          className="select-none text-center text-[21vw] font-black leading-[0.82] tracking-[-0.045em] text-[#005FA3] md:whitespace-nowrap md:text-[12.4vw] md:leading-[0.9] xl:absolute xl:inset-x-0 xl:top-[1%]"
-        >
-          Eshop Devices
-        </h1>
-
-        {/* Objeto: más de la mitad de la altura, cruza el nombre y el borde inferior lo recorta */}
-        <div className="pointer-events-none relative z-10 mx-auto -mt-[7vw] h-[76vw] w-[76vw] max-w-[620px] mix-blend-multiply md:-mt-[5vw] md:h-[52vw] md:w-[52vw] xl:absolute xl:bottom-[-10%] xl:left-1/2 xl:mt-0 xl:aspect-square xl:h-[104%] xl:w-auto xl:max-w-none xl:-translate-x-1/2">
-          {objetos.map((o, i) => (
-            <Image
-              key={o.key}
-              src={o.src}
-              alt={i === activo ? o.alt : ''}
-              fill
-              priority={i === 0}
-              loading={i === 0 ? 'eager' : 'lazy'}
-              sizes="(min-width: 1280px) 760px, 76vw"
-              className={`object-contain transition-opacity duration-[1600ms] ease-in-out motion-reduce:transition-none ${
-                i === activo ? 'opacity-100' : 'opacity-0'
-              }`}
-            />
-          ))}
-        </div>
-
-        {/* Texto pequeño en las esquinas: lo que es y qué hacer */}
-        <div className="relative z-20 mt-6 max-w-xl xl:absolute xl:bottom-12 xl:left-8 xl:mt-0 xl:w-[19rem]">
-          <p className="text-xl font-medium leading-snug text-gray-900 sm:text-2xl xl:text-xl">
-            {total > 0 ? `${cuenta} productos de ` : 'Productos de '}informática y dispositivos, con envío a todo el país.
+    <section aria-labelledby="hero-h1" className="bg-white">
+      <div className="mx-auto grid w-full max-w-screen-2xl gap-10 px-4 py-10 sm:px-6 lg:grid-cols-12 lg:items-center lg:gap-12 lg:px-8 lg:py-16">
+        {/* Texto: qué es y qué hacer */}
+        <div className="lg:col-span-5">
+          <h1 id="hero-h1" className="text-balance text-5xl font-extrabold leading-[1.02] tracking-tight text-gray-900 sm:text-6xl lg:text-5xl xl:text-6xl 2xl:text-7xl">
+            Tecnología en todo el país
+          </h1>
+          <p className="mt-6 max-w-[44ch] text-xl leading-relaxed text-gray-900">
+            {total > 0 ? `${cuenta} productos` : 'Productos'} de informática y dispositivos. Elegís, pagás y lo recibís en tu casa.
           </p>
-          <form action="/productos" method="get" role="search" className="mt-5 flex">
+
+          <form action="/productos" method="get" role="search" className="mt-8 flex max-w-xl">
             <label htmlFor="hero-q" className="sr-only">Buscar productos</label>
             <input
               id="hero-q"
@@ -74,11 +50,11 @@ export default function HeroObjeto({ objetos = [], total = 0 }) {
               maxLength={80}
               autoComplete="off"
               placeholder="Buscar productos"
-              className="h-14 min-w-0 flex-1 bg-white px-4 text-base text-gray-900 placeholder:text-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900"
+              className="h-14 min-w-0 flex-1 bg-gray-100 px-4 text-base text-gray-900 placeholder:text-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900"
             />
             <button
               type="submit"
-              className="h-14 shrink-0 bg-gray-900 px-5 text-base font-semibold text-white transition-colors hover:bg-black focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2"
+              className="h-14 shrink-0 bg-gray-900 px-6 text-base font-semibold text-white transition-colors hover:bg-black focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2"
             >
               Buscar
             </button>
@@ -91,17 +67,58 @@ export default function HeroObjeto({ objetos = [], total = 0 }) {
           </Link>
         </div>
 
-        {actual && (
-          <Link
-            href={actual.href}
-            aria-label={`Ver ${actual.nombre}`}
-            className="group relative z-20 mt-8 block text-left xl:absolute xl:right-8 xl:top-[52%] xl:mt-0 xl:w-[19rem] xl:-translate-y-1/2 xl:text-right"
-          >
-            {actual.marca ? <span className="block text-base text-gray-700">{actual.marca}</span> : null}
-            <span className="mt-0.5 block text-xl font-bold leading-snug text-gray-900 group-hover:underline">{actual.nombre}</span>
-            {actual.precio ? <span className="mt-1 block text-3xl font-extrabold tabular-nums text-gray-900">{actual.precio}</span> : null}
-          </Link>
-        )}
+        {/* Producto: panel liso; la foto (fondo blanco) se funde con él */}
+        <div className="lg:col-span-7">
+          <div className="relative isolate aspect-square w-full overflow-hidden bg-gray-100 sm:aspect-[4/3] lg:aspect-[6/5]">
+            {objetos.map((o, i) => (
+              <Image
+                key={o.key}
+                src={o.src}
+                alt={i === activo ? o.alt : ''}
+                fill
+                priority={i === 0}
+                loading={i === 0 ? 'eager' : 'lazy'}
+                sizes="(min-width: 1024px) 58vw, 100vw"
+                className={`object-contain p-8 pb-24 mix-blend-multiply transition-opacity duration-[1200ms] ease-in-out sm:p-10 sm:pb-24 lg:p-12 lg:pb-24 motion-reduce:transition-none ${
+                  i === activo ? 'opacity-100' : 'opacity-0'
+                }`}
+              />
+            ))}
+
+            {actual && (
+              <Link
+                href={actual.href}
+                aria-label={`Ver ${actual.nombre}`}
+                className="group absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-4 bg-gray-100 px-5 py-4 sm:px-6"
+              >
+                <span className="min-w-0">
+                  {actual.marca ? <span className="block text-sm text-gray-700">{actual.marca}</span> : null}
+                  <span className="block truncate text-lg font-bold leading-snug text-gray-900 group-hover:underline">{actual.nombre}</span>
+                </span>
+                {actual.precio ? <span className="shrink-0 text-2xl font-extrabold tabular-nums text-gray-900">{actual.precio}</span> : null}
+              </Link>
+            )}
+          </div>
+
+          {objetos.length > 1 && (
+            <div className="mt-3 flex gap-2" role="group" aria-label="Elegir producto destacado">
+              {objetos.map((o, i) => (
+                <button
+                  key={o.key}
+                  type="button"
+                  onClick={() => { setManual(true); setActivo(i); }}
+                  aria-label={`Mostrar ${o.nombre}`}
+                  aria-pressed={i === activo}
+                  className={`relative h-16 w-16 overflow-hidden bg-gray-100 transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 sm:h-20 sm:w-20 ${
+                    i === activo ? 'opacity-100 ring-2 ring-gray-900' : 'opacity-60 hover:opacity-100'
+                  }`}
+                >
+                  <Image src={o.src} alt="" fill sizes="80px" className="object-contain p-1.5 mix-blend-multiply" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );
