@@ -28,14 +28,17 @@ export default function FaqHome() {
                   <span aria-hidden="true" className="shrink-0 text-3xl font-light leading-none text-orange-800 transition-transform group-open:rotate-45 motion-reduce:transition-none">+</span>
                 </summary>
                 <div className="px-4 pb-6 text-lg leading-relaxed text-gray-900 lg:px-6">
-                  <p className="max-w-[62ch]">{faq.answer}</p>
-                  {faq.linkText && faq.linkUrl ? (
-                    <p className="mt-3">
-                      <Link href={faq.linkUrl} target="_blank" rel="noopener noreferrer" className="font-semibold text-orange-800 underline-offset-2 hover:underline">
-                        {faq.linkText}
-                      </Link>
-                    </p>
-                  ) : null}
+                  <p className="max-w-[62ch]">
+                    {faq.answer}
+                    {faq.linkText && faq.linkUrl ? (
+                      <>
+                        {' '}
+                        <Link href={faq.linkUrl} target="_blank" rel="noopener noreferrer" className="font-semibold text-orange-800 underline-offset-2 hover:underline">
+                          {faq.linkText}
+                        </Link>
+                      </>
+                    ) : null}
+                  </p>
                   {faq.additionalInfo?.length > 0 ? (
                     <div className="mt-3">
                       <p className="max-w-[62ch]">{faq.additionalInfo[0].text}</p>

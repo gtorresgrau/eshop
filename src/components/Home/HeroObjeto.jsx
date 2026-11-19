@@ -43,7 +43,7 @@ export default function HeroObjeto({ objetos = [], total = 0 }) {
         </h1>
 
         {/* Objeto: más de la mitad de la altura, cruza el nombre y el borde inferior lo recorta */}
-        <div className="pointer-events-none relative z-10 mx-auto -mt-[7vw] h-[76vw] w-[76vw] max-w-[620px] mix-blend-multiply md:-mt-[5vw] md:h-[52vw] md:w-[52vw] xl:absolute xl:bottom-[-3%] xl:left-1/2 xl:mt-0 xl:aspect-square xl:h-[90%] xl:w-auto xl:max-w-none xl:-translate-x-1/2">
+        <div className="pointer-events-none relative z-10 mx-auto -mt-[7vw] h-[76vw] w-[76vw] max-w-[620px] mix-blend-multiply md:-mt-[5vw] md:h-[52vw] md:w-[52vw] xl:absolute xl:bottom-[-10%] xl:left-1/2 xl:mt-0 xl:aspect-square xl:h-[104%] xl:w-auto xl:max-w-none xl:-translate-x-1/2">
           {objetos.map((o, i) => (
             <Image
               key={o.key}
@@ -63,7 +63,7 @@ export default function HeroObjeto({ objetos = [], total = 0 }) {
         {/* Texto pequeño en las esquinas: lo que es y qué hacer */}
         <div className="relative z-20 mt-6 max-w-xl xl:absolute xl:bottom-12 xl:left-8 xl:mt-0 xl:w-[19rem]">
           <p className="text-xl font-medium leading-snug text-gray-900 sm:text-2xl xl:text-xl">
-            Insumos informáticos y dispositivos, con envío a todo el país.
+            {total > 0 ? `${cuenta} productos de ` : 'Productos de '}informática y dispositivos, con envío a todo el país.
           </p>
           <form action="/productos" method="get" role="search" className="mt-5 flex">
             <label htmlFor="hero-q" className="sr-only">Buscar productos</label>
@@ -73,7 +73,7 @@ export default function HeroObjeto({ objetos = [], total = 0 }) {
               type="search"
               maxLength={80}
               autoComplete="off"
-              placeholder={total > 0 ? `Buscar entre ${cuenta} productos` : 'Buscar productos'}
+              placeholder="Buscar productos"
               className="h-14 min-w-0 flex-1 bg-white px-4 text-base text-gray-900 placeholder:text-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900"
             />
             <button
