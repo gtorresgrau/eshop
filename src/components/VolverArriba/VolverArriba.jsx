@@ -1,63 +1,41 @@
-'use client'
-import { useState, useEffect } from "react";
+'use client';
+import { useState, useEffect } from 'react';
 
+/**
+ * Botón "Volver arriba": aparece pasados 500px de scroll, a la izquierda del botón de WhatsApp
+ * (así el menú de contactos, que se abre hacia arriba, no lo tapa). Cuadrado, fondo liso, sin sombra.
+ */
 const VolverArriba = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const shouldShowButton = scrollY > 500;
+    const onScroll = () => setVisible(window.scrollY > 500); // React ignora el set si no cambia
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
-      if (shouldShowButton !== isVisible) {
-        setIsVisible(shouldShowButton);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [isVisible]);
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
+  const subir = () => {
+    const reducir = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reducir ? 'auto' : 'smooth' });
   };
 
   return (
-<button
-  className="fixed bottom-24 right-9 rounded-md w-10 z-40 active:animate-ping hover:scale-110"
-  style={{ visibility: isVisible ? "visible" : "hidden" }}
-  onClick={scrollToTop}
-  aria-label="Volver arriba"
->
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className="bg-primary rounded-lg"
-    strokeWidth="2.4"
-  >
-    <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-    <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-    <g id="SVGRepo_iconCarrier">
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M12 7C12.2652 7 12.5196 7.10536 12.7071 7.29289L19.7071 14.2929C20.0976 14.6834 20.0976 15.3166 19.7071 15.7071C19.3166 16.0976 18.6834 16.0976 18.2929 15.7071L12 9.41421L5.70711 15.7071C5.31658 16.0976 4.68342 16.0976 4.29289 15.7071C3.90237 15.3166 3.90237 14.6834 4.29289 14.2929L11.2929 7.29289C11.4804 7.10536 11.7348 7 12 7Z"
-        fill="#000000"
-        stroke="#ffffff" // Aquí se establece el color del borde blanco
-        strokeWidth="2.4" // Puedes ajustar el grosor del borde aquí
-      ></path>
-    </g>
-  </svg>
-</button>
-
-
+    <button
+      type="button"
+      onClick={subir}
+      aria-label="Volver arriba"
+      title="Volver arriba"
+      tabIndex={visible ? 0 : -1}
+      aria-hidden={!visible}
+      className={`fixed bottom-[31px] right-[98px] z-40 inline-flex h-12 w-12 items-center justify-center bg-gray-900 text-white transition-[opacity,background-color] duration-200 hover:bg-black focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 motion-reduce:transition-none ${
+        visible ? 'opacity-100' : 'pointer-events-none opacity-0'
+      }`}
+    >
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="square" aria-hidden="true">
+        <path d="M12 19V5M5 12l7-7 7 7" />
+      </svg>
+    </button>
   );
 };
 
