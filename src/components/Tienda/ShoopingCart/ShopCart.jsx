@@ -439,7 +439,7 @@ const ShopCart = () => {
                             <button type="button" onClick={() => handleIncrement(item)} className={`${boton} w-10 text-2xl`} aria-label="Aumentar cantidad" title="Aumentar cantidad">+</button>
                           </div>
                           <button type="button" onClick={() => alternar(item)} aria-pressed={esFav} className="text-base font-semibold text-gray-900 underline underline-offset-4 hover:text-orange-800">
-                            {esFav ? '❤ En favoritos' : 'Guardar en favoritos'}
+                            {esFav ? 'En favoritos' : 'Guardar en favoritos'}
                           </button>
                           <button type="button" onClick={() => handleRemove(item)} className="text-base font-semibold text-gray-900 underline underline-offset-4 hover:text-red-700">
                             Quitar
