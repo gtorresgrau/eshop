@@ -4,6 +4,17 @@ import { notFound } from "next/navigation";
 
 const Loading = dynamic(() => import('../../../components/Loading/Loading'));
 const ClientLayout = dynamic(() => import('../../ClientLayout'));
+import ProductosComparativa from '../../../components/Comparativas/ProductosComparativa';
+
+// Productos del catálogo que se ofrecen al pie de cada comparativa (nombres de categoría tal como están en la base)
+const productosByProducto = {
+  memoria: { titulo: 'Memorias RAM disponibles', categorias: ['MEMORIAS'] },
+  almacenamiento: { titulo: 'Discos SSD y HDD disponibles', categorias: ['DISCOS SSD', 'DISCOS HDD'] },
+  fuente: { titulo: 'Fuentes de alimentación disponibles', categorias: ['FUENTES'] },
+  mothers: { titulo: 'Motherboards disponibles', categorias: ['MOTHER ASROCK', 'MOTHER ASUS', 'MOTHER GIGABYTE'] },
+  procesadores: { titulo: 'Procesadores disponibles', categorias: ['PROCESADORES'] },
+  tecnologias: { titulo: 'Conectividad disponible', categorias: ['CONECTIVIDAD'] },
+};
 
 // Mapeo de los componentes según el producto
 const comparisonComponents = {
@@ -100,6 +111,7 @@ const ComparativaPage = async ({ params }) => {
           <SelectedComponent />
         </Suspense>
       </main>
+      {productosByProducto[producto] && <ProductosComparativa {...productosByProducto[producto]} />}
     </ClientLayout>
   );
 };

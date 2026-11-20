@@ -1,6 +1,7 @@
 import { cache } from 'react';
 import { connectDB } from './mongodb';
 import Producto from '../models/product';
+import { parsePrecio } from '../Utils/parsePrecio';
 
 export { estaAgotado } from '../Utils/estadoProducto';
 
@@ -104,3 +105,32 @@ export async function productosParaHero(n = 3) {
 // cache() dedupe por request: generateMetadata y el componente piden lo mismo.
 export const listarCategorias = cache(() => distintos('categoria'));
 export const listarMarcas = cache(() => distintos('marca'));
+
+/**
+ * Selección para las comparativas: `n` productos disponibles de las categorías dadas, con foto y precio,
+ * repartidos de menor a mayor precio para que haya opciones de entrada y de gama alta.
+ */
+export async function productosParaComparativa(categorias, n = 8) {
+  await connectDB();
+  const docs = await Producto.find(
+    {
+      ...filtroBase,
+      categoria: { $in: categorias },
+      vendido: { $ne: true },
+      stock: { $ne: true },
+      cantidad: { $gt: 0 },
+      foto_1_1: { $nin: [null, ''] },
+    },
+    CAMPOS,
+  ).limit(150).lean();
+
+  const conPrecio = docs
+    .map((d) => ({ d, precio: parsePrecio(d.precio) }))
+    .filter((x) => x.precio > 0)
+    .sort((a, b) => a.precio - b.precio);
+  if (conPrecio.length <= n) return serialize(conPrecio.map((x) => x.d));
+
+  const elegidos = [];
+  for (let i = 0; i < n; i++) elegidos.push(conPrecio[Math.round((i * (conPrecio.length - 1)) / (n - 1))].d);
+  return serialize([...new Set(elegidos)]);
+}
