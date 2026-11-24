@@ -36,7 +36,8 @@ const ProcesadoresPage = () => {
             <li>✅ <strong>Arquitectura híbrida</strong> (P-cores + E-cores) desde Gen 12</li>
             <li>✅ <strong>Compatibilidad amplia</strong> DDR4 y DDR5 en LGA1700</li>
             <li>⚠️ Mayor consumo (TDP) en los modelos K sin límite de potencia</li>
-            <li>⚠️ Socket LGA1700 sin planes de continuidad más allá de Gen 14</li>
+            <li>✅ <strong>Core Ultra (serie 200S)</strong>: nueva plataforma LGA1851 con DDR5, más eficiente que Gen 14</li>
+            <li>⚠️ LGA1700 termina en Gen 14 y Core Ultra exige placa nueva (Z890/B860/H810) y DDR5</li>
           </ul>
         </div>
         <div className="border rounded-lg p-5 shadow-lg bg-red-50">
@@ -55,7 +56,7 @@ const ProcesadoresPage = () => {
       {/* Tabla comparativa */}
       <article className="mb-10">
         <h2 className="text-xl md:text-2xl font-bold text-center mb-4 text-primary uppercase">
-          Tabla Comparativa de Procesadores 2025
+          Tabla Comparativa de Procesadores (incluye Ryzen 9000 y Core Ultra 200S)
         </h2>
         <div className="overflow-x-auto rounded-lg shadow">
           <table className="w-full text-sm text-left border-collapse">
@@ -125,11 +126,11 @@ const ProcesadoresPage = () => {
             <p>🎮 <strong>Gaming 1080p casual</strong>: Intel i3-13100 / Ryzen 5 5600</p>
             <p className="mt-2">🎮 <strong>Gaming 1440p / Streaming</strong>: i5-13600K / Ryzen 5 7600X</p>
             <p className="mt-2">🎮 <strong>Gaming 4K / Streaming 4K</strong>: i7-14700K / Ryzen 7 7700X</p>
-            <p className="mt-2">🏆 <strong>Gaming extremo (frames máximos)</strong>: Ryzen 7 7800X3D (3D V-Cache)</p>
+            <p className="mt-2">🏆 <strong>Gaming extremo (frames máximos)</strong>: Ryzen 7 9800X3D (3D V-Cache)</p>
           </div>
           <div>
-            <p>🎬 <strong>Edición de video FHD/4K</strong>: i7-14700K / Ryzen 9 7900X</p>
-            <p className="mt-2">🖥️ <strong>Workstation / Renderizado 3D</strong>: Ryzen 9 7950X / i9-14900K</p>
+            <p>🎬 <strong>Edición de video FHD/4K</strong>: Core Ultra 7 265K / Ryzen 9 9900X</p>
+            <p className="mt-2">🖥️ <strong>Workstation / Renderizado 3D</strong>: Ryzen 9 9950X / Core Ultra 9 285K</p>
             <p className="mt-2">💼 <strong>Ofimática y uso cotidiano</strong>: i3-13100 / Ryzen 3 4100</p>
             <p className="mt-2">🤖 <strong>Inteligencia Artificial / Data Science</strong>: Ryzen Threadripper Pro</p>
           </div>

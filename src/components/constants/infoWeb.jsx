@@ -276,6 +276,14 @@ export const procesadorComparison = [
   { modelo: 'AMD Ryzen 7 7700X', nucleos: '8C / 16T', frecuencia: '4.5 - 5.4 GHz', tdp: '105W', socket: 'AM5', ram: 'DDR5', precio: '💲💲💲', uso: 'Gaming pro, streaming 4K' },
   { modelo: 'Intel Core i9-14900K', nucleos: '24C / 32T', frecuencia: '3.2 - 6.0 GHz', tdp: '125W', socket: 'LGA1700', ram: 'DDR4/DDR5', precio: '💲💲💲💲', uso: 'Workstation, IA, renderizado 3D' },
   { modelo: 'AMD Ryzen 9 7950X', nucleos: '16C / 32T', frecuencia: '4.5 - 5.7 GHz', tdp: '170W', socket: 'AM5', ram: 'DDR5', precio: '💲💲💲💲', uso: 'Workstation extremo, data science' },
+  { modelo: 'AMD Ryzen 5 9600X (Zen 5)', nucleos: '6C / 12T', frecuencia: '3.9 - 5.4 GHz', tdp: '65W', socket: 'AM5', ram: 'DDR5', precio: '💲💲', uso: 'Gaming 1440p, bajo consumo' },
+  { modelo: 'AMD Ryzen 7 9700X (Zen 5)', nucleos: '8C / 16T', frecuencia: '3.8 - 5.5 GHz', tdp: '65W', socket: 'AM5', ram: 'DDR5', precio: '💲💲💲', uso: 'Gaming, streaming, multitarea' },
+  { modelo: 'AMD Ryzen 7 9800X3D (Zen 5 + 3D V-Cache)', nucleos: '8C / 16T', frecuencia: '4.7 - 5.2 GHz', tdp: '120W', socket: 'AM5', ram: 'DDR5', precio: '💲💲💲💲', uso: 'Gaming extremo (máximos FPS)' },
+  { modelo: 'AMD Ryzen 9 9900X (Zen 5)', nucleos: '12C / 24T', frecuencia: '4.4 - 5.6 GHz', tdp: '120W', socket: 'AM5', ram: 'DDR5', precio: '💲💲💲💲', uso: 'Edición de video, creación de contenido' },
+  { modelo: 'AMD Ryzen 9 9950X (Zen 5)', nucleos: '16C / 32T', frecuencia: '4.3 - 5.7 GHz', tdp: '170W', socket: 'AM5', ram: 'DDR5', precio: '💲💲💲💲', uso: 'Workstation, renderizado, compilación' },
+  { modelo: 'Intel Core Ultra 5 245K (Arrow Lake)', nucleos: '14C (6P+8E) / 14T', frecuencia: '4.2 - 5.2 GHz', tdp: '125W', socket: 'LGA1851', ram: 'DDR5', precio: '💲💲', uso: 'Gaming 1440p, ofimática exigente' },
+  { modelo: 'Intel Core Ultra 7 265K (Arrow Lake)', nucleos: '20C (8P+12E) / 20T', frecuencia: '3.9 - 5.5 GHz', tdp: '125W', socket: 'LGA1851', ram: 'DDR5', precio: '💲💲💲', uso: 'Gaming + creación de contenido' },
+  { modelo: 'Intel Core Ultra 9 285K (Arrow Lake)', nucleos: '24C (8P+16E) / 24T', frecuencia: '3.7 - 5.7 GHz', tdp: '125W', socket: 'LGA1851', ram: 'DDR5', precio: '💲💲💲💲', uso: 'Workstation, IA, renderizado 3D' },
 ];
 
 export const fuenteComparison = [
