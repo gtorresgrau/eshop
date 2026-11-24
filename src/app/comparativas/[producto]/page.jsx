@@ -24,6 +24,10 @@ const comparisonComponents = {
   mothers: dynamic(() => import("../../../components/Comparativas/Mother/MothersPage")),
   procesadores: dynamic(() => import("../../../components/Comparativas/Procesadores/ProcesadoresPage")),
   tecnologias: dynamic(() => import("../../../components/Comparativas/Tecnologias/TecnologiasPage")),
+  switches: dynamic(() => import("../../../components/Comparativas/Redes/SwitchesPage")),
+  core: dynamic(() => import("../../../components/Comparativas/Redes/CorePage")),
+  patcheras: dynamic(() => import("../../../components/Comparativas/Redes/PatcherasPage")),
+  servidores: dynamic(() => import("../../../components/Comparativas/Redes/ServidoresPage")),
 };
 
 const metaByProducto = {
@@ -62,6 +66,30 @@ const metaByProducto = {
     description: "Entendé las diferencias entre USB 2.0 al USB4/Thunderbolt 5, PCIe 3/4/5, HDMI vs DisplayPort, WiFi 6/6E/7. Guía técnica completa para armar o actualizar tu PC.",
     keywords: "USB4 vs Thunderbolt, PCIe 4 vs PCIe 5, HDMI 2.1 vs DisplayPort, WiFi 6E Argentina, guía tecnología PC 2025, eshop devices wilde",
     canonical: "/comparativas/tecnologias",
+  },
+  switches: {
+    title: "Comparativa de Switches: PoE, VLAN, Gigabit y 10G | Eshop Devices",
+    description: "Diferencias entre switches no administrables, smart, administrables y capa 3. PoE, VLAN, puertos SFP+ y cuál elegir para tu oficina, cámaras IP o red empresarial.",
+    keywords: "switch administrable vs no administrable, switch PoE Argentina, switch gigabit, switch capa 3, switch 24 puertos, VLAN, eshop devices wilde",
+    canonical: "/comparativas/switches",
+  },
+  core: {
+    title: "Switch Core, Distribución y Acceso: Guía de Red | Eshop Devices",
+    description: "Cómo armar una red empresarial en tres capas: acceso, distribución y core. Redundancia, capa 3, 10G/25G/100G y qué exigirle a un switch core.",
+    keywords: "switch core, red tres capas, switch capa 3, core colapsado, switch 10G, LACP stacking, red empresarial, eshop devices wilde",
+    canonical: "/comparativas/core",
+  },
+  patcheras: {
+    title: "Comparativa de Patcheras y Cableado Cat5e, Cat6, Cat6A | Eshop Devices",
+    description: "Patch panels de 12, 24 y 48 puertos y categorías Cat5e, Cat6, Cat6A, Cat8 y fibra óptica. Velocidades, distancias, blindaje y cuál elegir para tu rack.",
+    keywords: "patchera 24 puertos, patch panel Cat6, cableado estructurado, Cat6A vs Cat6, ODF fibra óptica, rack 19 pulgadas, eshop devices wilde",
+    canonical: "/comparativas/patcheras",
+  },
+  servidores: {
+    title: "Comparativa de Servidores: Torre, Rack y Blade | Eshop Devices",
+    description: "Diferencias entre servidores torre, rack 1U/2U/4U y blade. Procesadores Xeon y EPYC, memoria ECC, RAID, fuentes redundantes y cuál elegir para tu empresa.",
+    keywords: "servidor torre vs rack, servidor Xeon EPYC, memoria ECC, RAID 5 RAID 10, servidor para pyme, virtualización, eshop devices wilde",
+    canonical: "/comparativas/servidores",
   },
 };
 
@@ -126,6 +154,10 @@ export async function generateStaticParams() {
     { producto: "mothers" },
     { producto: "procesadores" },
     { producto: "tecnologias" },
+    { producto: "switches" },
+    { producto: "core" },
+    { producto: "patcheras" },
+    { producto: "servidores" },
   ];
 }
 

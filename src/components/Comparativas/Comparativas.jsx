@@ -1,6 +1,6 @@
 import React from "react"
 import Link from "next/link"
-import { HardDrive, MemoryStick, SquarePower, CircuitBoard, Cpu, Wifi } from "lucide-react"
+import { HardDrive, MemoryStick, SquarePower, CircuitBoard, Cpu, Wifi, Network, Server, Cable, Router } from "lucide-react"
 
 const comparisonData = [
   { href: "/comparativas/almacenamiento", title: "Almacenamiento", description: "HDD, SSD SATA, M.2 NVMe Gen3/4/5. Velocidades, precios y usos recomendados.", icon: <HardDrive className="h-8 w-8" /> },
@@ -9,6 +9,10 @@ const comparisonData = [
   { href: "/comparativas/mothers", title: "Motherboard", description: "Intel vs AMD, chipsets, sockets, formatos ATX/MicroATX/Mini-ITX.", icon: <CircuitBoard className="h-8 w-8" /> },
   { href: "/comparativas/procesadores", title: "Procesadores", description: "Intel Core i3/i5/i7/i9 vs AMD Ryzen 3/5/7/9. Núcleos, GHz, TDP y usos.", icon: <Cpu className="h-8 w-8" /> },
   { href: "/comparativas/tecnologias", title: "Tecnologías y Conectividad", description: "USB, PCIe, HDMI, DisplayPort, Wi-Fi 6/7, Thunderbolt. Guía completa.", icon: <Wifi className="h-8 w-8" /> },
+  { href: "/comparativas/switches", title: "Switches", description: "No administrables, smart, L2 y L3. PoE, VLAN, Gigabit y 10G.", icon: <Network className="h-8 w-8" /> },
+  { href: "/comparativas/core", title: "Switch Core", description: "Capas de acceso, distribución y core. Redundancia y capa 3.", icon: <Router className="h-8 w-8" /> },
+  { href: "/comparativas/patcheras", title: "Patcheras y Cableado", description: "Patch panel, Cat5e, Cat6, Cat6A y fibra óptica para tu rack.", icon: <Cable className="h-8 w-8" /> },
+  { href: "/comparativas/servidores", title: "Servidores", description: "Torre, rack y blade. Xeon/EPYC, memoria ECC y RAID.", icon: <Server className="h-8 w-8" /> },
 ]
 
 const Comparativas = () => {

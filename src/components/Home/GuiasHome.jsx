@@ -10,9 +10,13 @@ const GUIAS = [
   { href: '/comparativas/mothers', titulo: 'Motherboards', texto: 'Intel vs AMD, chipsets, sockets y formatos ATX, MicroATX y Mini-ITX.' },
   { href: '/comparativas/procesadores', titulo: 'Procesadores', texto: 'Intel Core i3 a i9 vs AMD Ryzen 3 a 9: núcleos, GHz, TDP y usos.' },
   { href: '/comparativas/tecnologias', titulo: 'Tecnologías y conectividad', texto: 'USB, PCIe, HDMI, DisplayPort, Wi-Fi 6/7 y Thunderbolt: guía completa.' },
+  { href: '/comparativas/switches', titulo: 'Switches', texto: 'No administrables, smart, L2 y L3: PoE, VLAN, Gigabit y 10G.' },
+  { href: '/comparativas/core', titulo: 'Switch core', texto: 'Capas de acceso, distribución y core: redundancia y capa 3.' },
+  { href: '/comparativas/patcheras', titulo: 'Patcheras y cableado', texto: 'Patch panel, Cat5e, Cat6, Cat6A y fibra óptica para tu rack.' },
+  { href: '/comparativas/servidores', titulo: 'Servidores', texto: 'Torre, rack y blade: Xeon, EPYC, memoria ECC y RAID.' },
 ];
 
-/** Seis guías como una lista grande de enlaces en dos columnas: sin tarjetas ni íconos. */
+/** Guías como una lista grande de enlaces en dos columnas: sin tarjetas ni íconos. */
 export default function GuiasHome() {
   return (
     <section id="comparaciones" aria-labelledby="guias-h2" className="bg-white py-20 lg:py-32">

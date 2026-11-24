@@ -10,7 +10,7 @@ import { categoriaUrl, marcaUrl } from '../Utils/catalogSlug';
 
 const SITE = (process.env.NEXT_PUBLIC_SITE_URL || 'https://eshopdevices.com').replace(/\/+$/, '');
 
-const COMPARATIVAS = ['almacenamiento', 'memoria', 'fuente', 'mothers', 'procesadores', 'tecnologias'];
+const COMPARATIVAS = ['almacenamiento', 'memoria', 'fuente', 'mothers', 'procesadores', 'tecnologias', 'switches', 'core', 'patcheras', 'servidores'];
 
 export default async function sitemap() {
   const ahora = new Date();
